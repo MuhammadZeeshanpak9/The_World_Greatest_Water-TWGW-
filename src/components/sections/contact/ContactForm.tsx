@@ -1,0 +1,98 @@
+"use client";
+
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { ArrowRight, Check } from "lucide-react";
+import FormField from "@/components/ui/FormField";
+import { useFormSubmit, isValidEmail } from "@/lib/forms";
+
+type Errors = Partial<Record<"name" | "email" | "subject" | "message", string>>;
+
+export default function ContactForm() {
+  const [values, setValues] = useState({ name: "", email: "", subject: "", message: "" });
+  const [errors, setErrors] = useState<Errors>({});
+  const { status, submit } = useFormSubmit();
+
+  const update = (field: keyof typeof values) => (value: string) =>
+    setValues((v) => ({ ...v, [field]: value }));
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const nextErrors: Errors = {};
+    if (!values.name.trim()) nextErrors.name = "Name is required.";
+    if (!isValidEmail(values.email)) nextErrors.email = "Enter a valid email address.";
+    if (!values.subject.trim()) nextErrors.subject = "Subject is required.";
+    if (!values.message.trim()) nextErrors.message = "Message is required.";
+    setErrors(nextErrors);
+    if (Object.keys(nextErrors).length > 0) return;
+
+    submit(() => new Promise((resolve) => setTimeout(resolve, 900)));
+  };
+
+  return (
+    <section className="bg-white py-24 md:py-32">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        className="mx-auto max-w-[600px] rounded-[24px] border border-violet/10 bg-white/70 p-8 shadow-[0_20px_60px_rgba(107,47,160,0.1)] backdrop-blur md:p-12"
+      >
+        {status === "success" ? (
+          <p className="flex items-center justify-center gap-2 py-8 font-inter text-[14px] font-semibold uppercase tracking-[0.15em] text-violet">
+            <Check size={18} /> Message Sent — We&apos;ll Be In Touch Soon
+          </p>
+        ) : (
+          <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+            <FormField
+              label="Name"
+              name="name"
+              value={values.name}
+              onChange={update("name")}
+              placeholder="Your name"
+              required
+              error={errors.name}
+            />
+            <FormField
+              label="Email"
+              name="email"
+              type="email"
+              value={values.email}
+              onChange={update("email")}
+              placeholder="you@example.com"
+              required
+              error={errors.email}
+            />
+            <FormField
+              label="Subject"
+              name="subject"
+              value={values.subject}
+              onChange={update("subject")}
+              placeholder="What's this about?"
+              required
+              error={errors.subject}
+            />
+            <FormField
+              label="Message"
+              name="message"
+              type="textarea"
+              rows={4}
+              value={values.message}
+              onChange={update("message")}
+              placeholder="Tell us more..."
+              required
+              error={errors.message}
+            />
+            <button
+              type="submit"
+              disabled={status === "submitting"}
+              className="group mt-2 flex h-[52px] w-full items-center justify-center gap-2 rounded bg-violet font-inter text-[12px] font-semibold uppercase tracking-[0.15em] text-white transition-transform duration-300 hover:scale-[1.01] disabled:opacity-60"
+            >
+              {status === "submitting" ? "Sending…" : "Send Message"}
+              <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+            </button>
+          </form>
+        )}
+      </motion.div>
+    </section>
+  );
+}

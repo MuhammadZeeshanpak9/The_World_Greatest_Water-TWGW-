@@ -1,26 +1,247 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ============================================================
+   ELEV8 — THE WORLD'S GREATEST WATER
+   Tailwind v4 theme: palette, fonts, animations
+   ============================================================ */
+@theme {
+  /* ---- Color system ---- */
+  --color-cream: #f8f5f0;
+  --color-violet-tint: #f0e8f8;
+  --color-violet: #6b2fa0;
+  --color-violet-mid: #9f81b9;
+  --color-violet-pale: #e8d5f5;
+  --color-violet-deep: #3d1a5e;
+  --color-dark-base: #0a0a0a;
+  --color-dark-violet: #1a0a2e;
+  --color-teal: #4ecdc4;
+  --color-teal-light: #a8ede9;
+  --color-gold: #c9a84c;
+  --color-ink: #1a1a2e;
+  --color-body: #555555;
+  --color-muted: #999999;
+
+  /* ---- Fonts ---- */
+  --font-cormorant: var(--font-cormorant-garamond), Georgia, serif;
+  --font-inter: var(--font-inter), system-ui, sans-serif;
+
+  /* ---- Animation utilities (reference keyframes below) ---- */
+  --animate-float-y: floatY 6s ease-in-out infinite;
+  --animate-glow-pulse: glowPulse 4s ease-in-out infinite;
+  --animate-wave-flow: waveFlow 10s linear infinite;
+  --animate-particle-rise: particleRise 4s ease-out infinite;
+  --animate-shimmer: shimmer 3s linear infinite;
+  --animate-gradient-shift: gradientShift 4s ease infinite;
+  --animate-border-glow: borderGlow 3s ease-in-out infinite;
+  --animate-spin-slow: spin 8s linear infinite;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* ============================================================
+   GLOBAL KEYFRAMES (per spec)
+   ============================================================ */
+@keyframes floatY {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-14px);
+  }
 }
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@keyframes glowPulse {
+  0%,
+  100% {
+    opacity: 0.6;
+    filter: blur(20px);
+  }
+  50% {
+    opacity: 1;
+    filter: blur(30px);
+  }
+}
+@keyframes waveFlow {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+@keyframes particleRise {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(-120px) scale(0);
+    opacity: 0;
+  }
+}
+@keyframes shimmer {
+  0%,
+  100% {
+    background-position: -200% center;
+  }
+  50% {
+    background-position: 200% center;
+  }
+}
+@keyframes gradientShift {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+@keyframes borderGlow {
+  0%,
+  100% {
+    box-shadow: 0 0 0px rgba(107, 47, 160, 0);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(107, 47, 160, 0.4);
+  }
+}
+/* Orb drift keyframes (PageBackground) */
+@keyframes orbDrift1 {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  33% {
+    transform: translate(80px, 60px);
+  }
+  66% {
+    transform: translate(-40px, 40px);
+  }
+}
+@keyframes orbDrift2 {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(-70px, -50px);
+  }
+}
+@keyframes orbPulse {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.3);
   }
 }
 
+/* ============================================================
+   BASE
+   ============================================================ */
+html {
+  scroll-behavior: smooth;
+}
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: #ffffff;
+  color: var(--color-ink);
+  font-family: var(--font-inter);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+::selection {
+  background: rgba(107, 47, 160, 0.85);
+  color: #fff;
+}
+
+/* ============================================================
+   GRADIENT UTILITIES (spec gradient system)
+   ============================================================ */
+@layer utilities {
+  .bg-gradient-hero {
+    background: linear-gradient(135deg, #0f0518 0%, #1a0a2e 50%, #0a0a0a 100%);
+  }
+  .bg-gradient-violet {
+    background: linear-gradient(135deg, #6b2fa0 0%, #9f81b9 100%);
+  }
+  .bg-gradient-brand {
+    background: linear-gradient(135deg, #6b2fa0 0%, #4ecdc4 100%);
+  }
+  .bg-gradient-pale {
+    background: linear-gradient(135deg, #f0e8f8 0%, #ffffff 100%);
+  }
+  .bg-gradient-dark {
+    background: linear-gradient(180deg, #0a0a0a 0%, #1a0a2e 100%);
+  }
+
+  /* Animated gradient text (brand: violet -> teal) */
+  .text-gradient-brand {
+    background: linear-gradient(135deg, #6b2fa0 0%, #4ecdc4 50%, #6b2fa0 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    animation: gradientShift 4s ease infinite;
+  }
+  .text-gradient-violet {
+    background: linear-gradient(135deg, #6b2fa0 0%, #9f81b9 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+
+  /* Glow helpers */
+  .text-glow-white {
+    text-shadow: 0 0 40px rgba(255, 255, 255, 0.35);
+  }
+  .text-glow-violet {
+    text-shadow: 0 0 40px rgba(107, 47, 160, 0.4);
+  }
+
+  /* Shimmer sweep for hover (logo) */
+  .shimmer-text {
+    background: linear-gradient(
+      90deg,
+      #6b2fa0 0%,
+      #9f81b9 25%,
+      #4ecdc4 50%,
+      #9f81b9 75%,
+      #6b2fa0 100%
+    );
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+  .shimmer-text:hover {
+    animation: shimmer 1.5s linear infinite;
+  }
+
+  .will-change-transform {
+    will-change: transform;
+  }
+}
+
+/* Reduced motion: calm everything down */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Hide scrollbar utility for carousels where needed */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
