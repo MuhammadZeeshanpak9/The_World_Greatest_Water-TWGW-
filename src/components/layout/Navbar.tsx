@@ -79,9 +79,9 @@ export default function Navbar() {
 
             {/* Actions */}
             <div className="flex shrink-0 items-center gap-4">
-              <button aria-label="Account" className={`hidden sm:block ${iconColor}`}>
+              <Link href="/account" aria-label="Account" className={`hidden sm:block ${iconColor}`}>
                 <User size={18} />
-              </button>
+              </Link>
               <button aria-label="Search" className={`hidden sm:block ${iconColor}`}>
                 <Search size={18} />
               </button>
@@ -134,12 +134,23 @@ function MegaDropdown({ open, items }: { open: boolean; items: NavLink[] }) {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: i * 0.04 }}
               >
-                <Link
-                  href={item.href}
-                  className="block rounded-lg border-l-2 border-transparent px-3 py-2 font-inter text-[13px] text-body transition-all hover:border-violet hover:bg-violet/5 hover:text-violet"
-                >
-                  {item.label}
-                </Link>
+                {item.external ? (
+                  <a
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block rounded-lg border-l-2 border-transparent px-3 py-2 font-inter text-[13px] text-body transition-all hover:border-violet hover:bg-violet/5 hover:text-violet"
+                  >
+                    {item.label}
+                  </a>
+                ) : (
+                  <Link
+                    href={item.href}
+                    className="block rounded-lg border-l-2 border-transparent px-3 py-2 font-inter text-[13px] text-body transition-all hover:border-violet hover:bg-violet/5 hover:text-violet"
+                  >
+                    {item.label}
+                  </Link>
+                )}
               </motion.div>
             ))}
           </div>

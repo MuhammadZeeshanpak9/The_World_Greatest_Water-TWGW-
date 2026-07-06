@@ -1,6 +1,7 @@
 export type NavLink = {
   label: string;
   href: string;
+  external?: boolean;
   children?: NavLink[];
 };
 
@@ -12,6 +13,47 @@ export type WellnessCard = {
   blurb: string;
   price?: string;
   description?: string;
+  href?: string;
+};
+
+export type WellnessFeature = {
+  title: string;
+  description: string;
+};
+
+export type FaqItem = { question: string; answer: string };
+export type FaqCategory = { category: string; items: FaqItem[] };
+
+/** Generic {title, description} shape reused by steps + course benefit cards. */
+export type TitledItem = { title: string; description: string };
+
+export type SubscriptionPlan = {
+  name: string;
+  badge: string;
+  badgeTone: "teal" | "violet";
+  price16oz: string;
+  price1L: string;
+  features: string[];
+  ctaLabel: string;
+};
+
+export type GiftTier = { name: string; price: string; description: string };
+export type PolicySection = { heading: string; body: string };
+export type ShippingInfoCard = { title: string; value: string };
+
+export type WellnessSubPage = {
+  slug: string;
+  title: string;
+  subtitle: string;
+  price: string;
+  description: string;
+  video: string;
+  features: WellnessFeature[];
+  bookingHeading: string;
+  bookingBody: string;
+  ctaLabel: string;
+  tone: "standard" | "premium";
+  showCalendar: boolean;
 };
 
 export type Feature = string;

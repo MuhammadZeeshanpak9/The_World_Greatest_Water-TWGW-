@@ -2,6 +2,7 @@ import type {
   NavLink,
   AnnouncementMessage,
   WellnessCard,
+  WellnessSubPage,
   Feature,
   Bottle,
   Product,
@@ -13,6 +14,13 @@ import type {
   Social,
   TrendingCircle,
   VideoCard,
+  FaqItem,
+  FaqCategory,
+  TitledItem,
+  SubscriptionPlan,
+  GiftTier,
+  PolicySection,
+  ShippingInfoCard,
 } from "@/types";
 
 /* ------------------------------------------------------------------
@@ -132,13 +140,13 @@ export const BLOG_POSTS: BlogPost[] = [
    NAVIGATION (real site structure)
 ------------------------------------------------------------------ */
 export const NAV_LINKS: NavLink[] = [
-  { label: "Hi YOU", href: "/hi-you" },
+  { label: "Hi YOU", href: "/" },
   { label: "Our Story", href: "/our-story" },
   {
     label: "Wellness",
     href: "/wellness",
     children: [
-      { label: "With You In Mind", href: "/wellness/with-you-in-mind" },
+      { label: "With You In Mind", href: "/wellness" },
       { label: "Body", href: "/wellness/body" },
       { label: "Mind", href: "/wellness/mind" },
       { label: "Soul", href: "/wellness/soul" },
@@ -149,10 +157,12 @@ export const NAV_LINKS: NavLink[] = [
     label: "Shop To ELEV8",
     href: "/shop",
     children: [
-      { label: "Your Personal Water", href: "/shop/personal-water" },
-      { label: "Subscription", href: "/shop/subscription" },
+      { label: "Your Personal Water", href: "/shop" },
+      { label: "Subscription", href: "/subscription" },
       { label: "Love Gift", href: "/shop/love-gift" },
-      { label: "Clothing", href: "/shop/clothing" },
+      { label: "Gift Cards", href: "/gift-cards" },
+      { label: "Courses", href: "/courses" },
+      { label: "Clothing", href: "https://www.ielev8my.com", external: true },
     ],
   },
   { label: "Trending", href: "/trending" },
@@ -190,6 +200,7 @@ export const WELLNESS_CARDS: WellnessCard[] = [
     price: "$5,000+",
     description:
       "Physical and mental wellness experience. Complete body transformation.",
+    href: "/wellness/body",
   },
   {
     name: "Thank You Mind",
@@ -198,6 +209,7 @@ export const WELLNESS_CARDS: WellnessCard[] = [
     price: "$2,500+",
     description:
       "Mental clarity, consciousness elevation. Unlock the power of your mind.",
+    href: "/wellness/mind",
   },
   {
     name: "Thank You Soul",
@@ -205,6 +217,7 @@ export const WELLNESS_CARDS: WellnessCard[] = [
     blurb: "Inner peace & alignment",
     price: "$5,000+",
     description: "Deep spiritual wellness. Reconnect with your highest self.",
+    href: "/wellness/soul",
   },
   {
     name: "Unlock The Lock",
@@ -212,6 +225,94 @@ export const WELLNESS_CARDS: WellnessCard[] = [
     blurb: "The ultimate transformation",
     price: "$1,000,000+",
     description: "The ultimate transformation experience.",
+    href: "/wellness/unlock-the-lock",
+  },
+];
+
+/* ------------------------------------------------------------------
+   WELLNESS SUB-PAGES — dedicated /wellness/{body,mind,soul,unlock-the-lock}
+------------------------------------------------------------------ */
+export const WELLNESS_SUBPAGES: WellnessSubPage[] = [
+  {
+    slug: "body",
+    title: "THANK YOU BODY",
+    subtitle: "PHYSICAL WELLNESS EXPERIENCE",
+    price: "$5,000+",
+    description:
+      "A complete physical and mental wellness experience. Your body is your temple — we help you treat it as one. A premium, consciousness-driven transformation designed to elevate your physical experience from the inside out.",
+    video: "/videos/wellness-body.mp4",
+    features: [
+      { title: "BODY TRANSFORMATION", description: "Complete physical wellness overhaul" },
+      { title: "MENTAL ALIGNMENT", description: "Mind-body connection techniques" },
+      { title: "NUTRITIONAL GUIDANCE", description: "Ultra-purified water nutrition integration" },
+      { title: "ONGOING SUPPORT", description: "Continued wellness journey support" },
+    ],
+    bookingHeading: "READY TO TRANSFORM?",
+    bookingBody: "Book your THANK YOU BODY session today. Limited availability.",
+    ctaLabel: "ENQUIRE NOW",
+    tone: "standard",
+    showCalendar: true,
+  },
+  {
+    slug: "mind",
+    title: "THANK YOU MIND",
+    subtitle: "MENTAL CLARITY EXPERIENCE",
+    price: "$2,500+",
+    description:
+      "Mental clarity, consciousness elevation, and unlocking the true power of your mind. THE WORLD'S GREATEST WATER believes that the mind creates reality — this session gives you the tools to direct that creation intentionally.",
+    video: "/videos/wellness-mind.mp4",
+    features: [
+      { title: "CONSCIOUSNESS EXPANSION", description: "Elevate your awareness to new levels" },
+      { title: "THOUGHT MASTERY", description: "Control and direct your thoughts intentionally" },
+      { title: "MENTAL CLARITY", description: "Remove blocks and achieve crystal clear focus" },
+      { title: "MINDSET REPROGRAMMING", description: "Replace limiting beliefs with empowering ones" },
+    ],
+    bookingHeading: "READY TO ELEVATE YOUR MIND?",
+    bookingBody: "Book your THANK YOU MIND session today. Limited availability.",
+    ctaLabel: "ENQUIRE NOW",
+    tone: "standard",
+    showCalendar: true,
+  },
+  {
+    slug: "soul",
+    title: "THANK YOU SOUL",
+    subtitle: "SPIRITUAL WELLNESS EXPERIENCE",
+    price: "$5,000+",
+    description:
+      "Deep spiritual wellness. Reconnect with your highest self and experience the profound connection between your soul and the universe. This is the most sacred offering in the ELEV8 WATER wellness ecosystem.",
+    video: "/videos/wellness-soul.mp4",
+    features: [
+      { title: "SOUL RECONNECTION", description: "Rediscover your true spiritual essence" },
+      { title: "ENERGY ALIGNMENT", description: "Align your chakras and energy centers" },
+      { title: "528HZ IMMERSION", description: "Deep frequency healing experience" },
+      { title: "SPIRITUAL GUIDANCE", description: "Personal spiritual mentorship journey" },
+    ],
+    bookingHeading: "READY TO RECONNECT WITH YOUR SOUL?",
+    bookingBody: "Book your THANK YOU SOUL session today. Limited availability.",
+    ctaLabel: "ENQUIRE NOW",
+    tone: "standard",
+    showCalendar: true,
+  },
+  {
+    slug: "unlock-the-lock",
+    title: "UNLOCK THE LOCK",
+    subtitle: "THE ULTIMATE TRANSFORMATION",
+    price: "$1,000,000+",
+    description:
+      "The ultimate transformation experience. This is not a service — this is a complete life reinvention. Reserved for those who are truly ready to unlock every limitation and step into their greatest version. The most premium wellness experience in the YOUNIVERSE.",
+    video: "/videos/wellness-unlock.mp4",
+    features: [
+      { title: "COMPLETE LIFE REINVENTION", description: "Every area of life elevated simultaneously" },
+      { title: "PRIVATE MENTORSHIP", description: "Exclusive 1-on-1 access to the creators" },
+      { title: "UNLIMITED ACCESS", description: "Full ELEV8 ecosystem access for life" },
+      { title: "LEGACY BUILDING", description: "Create your greatest version for future generations" },
+    ],
+    bookingHeading: "ARE YOU READY?",
+    bookingBody:
+      "This experience is by invitation and application only. If you feel called to this level of transformation — reach out.",
+    ctaLabel: "APPLY NOW",
+    tone: "premium",
+    showCalendar: false,
   },
 ];
 
@@ -392,7 +493,7 @@ export const FOOTER_COLUMNS: FooterColumn[] = [
   {
     heading: "Explore",
     links: [
-      { label: "Know More", href: "/know-more" },
+      { label: "Know More", href: "/faq" },
       { label: "Our Story", href: "/our-story" },
       { label: "Trending", href: "/trending" },
       { label: "Creators", href: "/creators" },
@@ -411,7 +512,7 @@ export const FOOTER_COLUMNS: FooterColumn[] = [
     heading: "Legal",
     links: [
       { label: "Privacy Policy", href: "/privacy-policy" },
-      { label: "Terms of Service", href: "/terms-of-service" },
+      { label: "Terms of Service", href: "/terms" },
     ],
   },
 ];
@@ -434,3 +535,134 @@ export const PAYMENTS = [
   "Shop Pay",
   "Visa",
 ] as const;
+
+/* ------------------------------------------------------------------
+   SUBSCRIPTION
+------------------------------------------------------------------ */
+export const SUBSCRIPTION_PLANS: SubscriptionPlan[] = [
+  {
+    name: "WEEKLY",
+    badge: "MOST FLEXIBLE",
+    badgeTone: "teal",
+    price16oz: "$47.77/week",
+    price1L: "$77.77/week",
+    features: [
+      "Fresh delivery every week",
+      "Pause or cancel anytime",
+      "Priority shipping",
+      "Exclusive subscriber discounts",
+    ],
+    ctaLabel: "SUBSCRIBE WEEKLY",
+  },
+  {
+    name: "MONTHLY",
+    badge: "BEST VALUE",
+    badgeTone: "violet",
+    price16oz: "$47.77/month",
+    price1L: "$77.77/month",
+    features: [
+      "Monthly delivery to your door",
+      "Save 15% vs single orders",
+      "Pause or cancel anytime",
+      "Free shipping on all orders",
+    ],
+    ctaLabel: "SUBSCRIBE MONTHLY",
+  },
+];
+
+export const SUBSCRIPTION_STEPS: TitledItem[] = [
+  { title: "CHOOSE YOUR PLAN", description: "Select weekly or monthly delivery" },
+  { title: "RECEIVE YOUR WATER", description: "Fresh ELEV8 WATER delivered to your door" },
+  { title: "ELEV8 YOUR LIFE", description: "Set your intention. Drink consciously. Transform." },
+];
+
+export const SUBSCRIPTION_FAQ: FaqItem[] = [
+  { question: "Can I pause my subscription?", answer: "Yes, pause anytime from your account dashboard with no penalty." },
+  { question: "Can I cancel anytime?", answer: "Yes, cancel anytime before your next billing date." },
+  { question: "What if I'm not home for delivery?", answer: "Your order will be left safely or returned to depot." },
+  { question: "Can I change my plan?", answer: "Yes, switch between weekly and monthly anytime." },
+];
+
+/* ------------------------------------------------------------------
+   GIFT CARDS
+------------------------------------------------------------------ */
+export const GIFT_TIERS: GiftTier[] = [
+  { name: "STARTER GIFT", price: "$44.99", description: "Perfect introduction to ELEV8 WATER" },
+  { name: "PREMIUM GIFT", price: "$77.77", description: "The most popular gift choice" },
+  { name: "ULTIMATE GIFT", price: "$147.77", description: "The complete ELEV8 experience" },
+];
+
+export const GIFT_STEPS: TitledItem[] = [
+  { title: "PURCHASE", description: "Choose your gift card value" },
+  { title: "SEND", description: "Delivered instantly to their email" },
+  { title: "ELEV8", description: "They choose their ELEV8 WATER products" },
+];
+
+/* ------------------------------------------------------------------
+   COURSES
+------------------------------------------------------------------ */
+export const COURSE_BENEFITS: TitledItem[] = [
+  { title: "AI-GENERATED CONTENT", description: "Cutting-edge course content created with the most advanced AI" },
+  { title: "EVERGREEN ACCESS", description: "Purchase once, access forever — content that never expires" },
+  { title: "SELF-DEVELOPMENT", description: "The 12 most important understandings of SELF, delivered digitally" },
+];
+
+/* ------------------------------------------------------------------
+   FAQ (real content from live site)
+------------------------------------------------------------------ */
+export const FAQ_CATEGORIES: FaqCategory[] = [
+  {
+    category: "THE PRODUCT",
+    items: [
+      { question: "What other brand or product in the world can be compared to THE WORLD'S GREATEST WATER. ELEV8 WATER?", answer: "NONE and NONE will. THE WORLD'S GREATEST WATER. ELEV8 WATER is in its own special lane of GREATNESS!" },
+      { question: "What is the simple overview for the brand?", answer: "THE WORLD'S GREATEST WATER. ELEV8 WATER is a proof! The expansion of consciousness birth THE GREATEST BRAND WITH THE GREATEST PRODUCT IN THE WORLD." },
+      { question: "Who created THE WORLD'S GREATEST WATER?", answer: "THE GRAND DESIGNER." },
+      { question: "What is ELEV8 WATER ultimately?", answer: "The definition of ultra-pure bottled water with a TDS level of 0.00 perfect extraction of chemical additives. Our 7-stage purification process meticulously filters every drop of water over the course of 24 hours." },
+      { question: "Is ELEV8 WATER free from harmful chemicals?", answer: "Yes. ELEV8 WATER is arsenic-free, chlorine-free, chromium 6-free, fluoride-free, MTBE-free, pharmaceutical-free, sodium bicarbonate-free, and BPA/BPS-free." },
+    ],
+  },
+  {
+    category: "THE ORDERS",
+    items: [
+      { question: "How do I track my order?", answer: "Order tracking information will be sent to your email once your order ships." },
+      { question: "What payment methods do you accept?", answer: "We accept all major credit cards, PayPal, Apple Pay, Google Pay, and cryptocurrency." },
+      { question: "Do you ship worldwide?", answer: "Yes, we ship worldwide. Shipping rates are calculated at checkout based on location and weight." },
+    ],
+  },
+  {
+    category: "THE SUBSCRIPTION",
+    items: [
+      { question: "Can I pause my subscription?", answer: "Yes, pause anytime from your account dashboard." },
+      { question: "Can I cancel anytime?", answer: "Yes, cancel before your next billing date with no penalty." },
+    ],
+  },
+];
+
+/* ------------------------------------------------------------------
+   SHIPPING
+------------------------------------------------------------------ */
+export const SHIPPING_INFO: ShippingInfoCard[] = [
+  { title: "Processing Time", value: "2-3 business days" },
+  { title: "Domestic Shipping", value: "5-7 business days" },
+  { title: "International Shipping", value: "10-21 business days" },
+];
+
+/* ------------------------------------------------------------------
+   LEGAL (placeholder professional copy, not legally reviewed)
+------------------------------------------------------------------ */
+export const PRIVACY_POLICY_SECTIONS: PolicySection[] = [
+  { heading: "Information We Collect", body: "We collect information you provide directly to us, such as your name, email address, shipping address, and payment details when you place an order, subscribe to our newsletter, or contact us. We also automatically collect certain technical information, including your IP address, browser type, and browsing behavior on our site." },
+  { heading: "How We Use Your Information", body: "We use the information we collect to process orders, deliver products, communicate with you about your account or purchases, improve our products and services, and send marketing communications where you have opted in. We never sell your personal information to third parties." },
+  { heading: "Cookies", body: "Our site uses cookies and similar tracking technologies to remember your preferences, understand how you use our site, and personalize your experience. You can control cookie settings through your browser at any time." },
+  { heading: "Third Party Services", body: "We work with trusted third-party providers for payment processing, shipping, analytics, and email communications. These providers only receive the information necessary to perform their services and are contractually obligated to protect your data." },
+  { heading: "Your Rights", body: "Depending on your location, you may have the right to access, correct, delete, or export your personal information, and to opt out of marketing communications at any time. To exercise any of these rights, please contact us using the details below." },
+  { heading: "Contact Us", body: "If you have any questions about this Privacy Policy or how we handle your personal information, please reach out to us through our Say Hello page and our team will respond as soon as possible." },
+];
+
+export const TERMS_SECTIONS: PolicySection[] = [
+  { heading: "Acceptance", body: "By accessing or using this website, purchasing our products, or creating an account, you agree to be bound by these Terms of Service. If you do not agree with any part of these terms, please do not use our site or services." },
+  { heading: "Products", body: "All product descriptions, images, and details are provided for informational purposes and are updated periodically. We reserve the right to modify, discontinue, or limit the availability of any product at any time without prior notice." },
+  { heading: "Pricing", body: "All prices are listed in U.S. dollars and are subject to change without notice. We make every effort to display accurate pricing, but in the event of an error, we reserve the right to cancel any order placed at an incorrect price." },
+  { heading: "Returns", body: "If you are not fully satisfied with your order, please contact us within 30 days of delivery to arrange a return or exchange. Products must be unopened and in their original condition unless otherwise stated." },
+  { heading: "Limitation of Liability", body: "To the fullest extent permitted by law, THE WORLD'S GREATEST WATER shall not be liable for any indirect, incidental, or consequential damages arising from your use of our products or website." },
+];

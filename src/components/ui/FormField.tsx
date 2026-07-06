@@ -1,7 +1,8 @@
 type FormFieldProps = {
   label: string;
   name: string;
-  type?: "text" | "email" | "tel" | "number" | "textarea";
+  type?: "text" | "email" | "tel" | "number" | "password" | "textarea" | "select";
+  options?: { label: string; value: string }[];
   value: string;
   onChange: (value: string) => void;
   placeholder?: string;
@@ -16,6 +17,7 @@ export default function FormField({
   label,
   name,
   type = "text",
+  options,
   value,
   onChange,
   placeholder,
@@ -52,6 +54,23 @@ export default function FormField({
           rows={rows}
           className={`${base} ${toneClass} resize-none`}
         />
+      ) : type === "select" ? (
+        <select
+          name={name}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          required={required}
+          className={`${base} ${toneClass}`}
+        >
+          <option value="" disabled>
+            {placeholder ?? "Select..."}
+          </option>
+          {options?.map((o) => (
+            <option key={o.value} value={o.value}>
+              {o.label}
+            </option>
+          ))}
+        </select>
       ) : (
         <input
           name={name}

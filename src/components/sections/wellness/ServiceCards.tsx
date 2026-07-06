@@ -43,7 +43,7 @@ export default function ServiceCards() {
               {card.description}
             </p>
             <Link
-              href="/contact"
+              href={card.href ?? "/contact"}
               className="group mt-6 inline-flex items-center gap-1 font-inter text-[11px] font-semibold uppercase tracking-[0.15em] text-violet"
             >
               {card.cta === "Enquire" ? "Enquire Now" : "Book Session"}
