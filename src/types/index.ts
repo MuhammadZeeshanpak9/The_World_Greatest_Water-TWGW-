@@ -92,6 +92,10 @@ export type BlogPost = {
   title: string;
   teaser: string;
   topic?: string;
+  openingStatement?: string;
+  bodyParagraphs?: string[];
+  pullQuote?: string;
+  closingReflection?: string;
 };
 
 export type ProcessStep = {

@@ -46,21 +46,27 @@ export default function BlogDetailContent({ post }: { post: BlogPost }) {
             <GradientPlaceholder watermark="Video coming soon" className="rounded-2xl" />
           </div>
 
+          {post.openingStatement && (
+            <p className="mt-8 font-cormorant text-[26px] italic leading-[1.6] text-ink">
+              {post.openingStatement}
+            </p>
+          )}
+
           <div className="mt-8 flex flex-col gap-5">
-            <p className="font-inter text-[18px] leading-[1.95] text-[#333]">
-              {post.teaser}
-            </p>
-            <p className="font-inter text-[18px] leading-[1.95] text-[#333]">
-              Every understanding in the ELEV8 collection is a doorway — a
-              single word carrying a lifetime of practice. {post.topic} is no
-              exception: it asks you to slow down, notice where you already
-              live it, and where there&apos;s room to grow.
-            </p>
+            {post.bodyParagraphs?.map((paragraph, i) => (
+              <p key={i} className="font-inter text-base leading-[1.95] text-[#333]">
+                {paragraph}
+              </p>
+            ))}
           </div>
 
-          <span className="mt-8 inline-block rounded-full bg-violet/10 px-4 py-1.5 font-inter text-[10px] font-semibold uppercase tracking-[0.3em] text-violet">
-            Full article coming soon
-          </span>
+          {post.pullQuote && <PullQuote quote={post.pullQuote} className="my-12" />}
+
+          {post.closingReflection && (
+            <p className="font-cormorant text-[22px] italic leading-[1.6] text-ink">
+              {post.closingReflection}
+            </p>
+          )}
         </>
       )}
 

@@ -62,72 +62,186 @@ export const BLOG_POSTS: BlogPost[] = [
     topic: "ALL",
     title: "How to ELEV8 ALL",
     teaser: "Everyone without Exception. The GRAND DESIGN.",
+    openingStatement:
+      "ALL is not a number. ALL is a state of being. When you understand ALL, you understand that nothing and no one is excluded from the grand design of life.",
+    bodyParagraphs: [
+      "ELEV8 ALL begins with the radical understanding that every soul on this planet — without exception — carries the same divine spark within them. The person next to you on the street, the stranger across the world, the one who challenges you most — ALL are expressions of the same universal consciousness experiencing itself in different forms.",
+      "When we choose to see ALL as ONE, competition dissolves into collaboration. Judgment transforms into curiosity. Fear becomes love. This is not a spiritual concept reserved for monks and mystics — this is the practical understanding that the most successful, fulfilled human beings on earth have always known.",
+      "Every bottle of ELEV8 WATER labeled ALL is a daily reminder. Before you drink, set the intention: I add value to ALL. I see myself in ALL. I elevate ALL. Watch how this single shift in awareness begins to change every relationship, every opportunity, and every experience in your life.",
+    ],
+    pullQuote:
+      "The greatest gift you can give the world is your own elevation. When you rise, ALL rises with you.",
+    closingReflection: "Today, choose to see ALL — not as a concept, but as your lived reality.",
   },
   {
     slug: "how-to-elev8-you",
     topic: "YOU",
     title: "How to ELEV8 YOU",
     teaser: "The power within YOU. Discover your highest self.",
+    openingStatement:
+      "YOU are the most important project you will ever work on. Not your career. Not your relationships. Not your goals. YOU.",
+    bodyParagraphs: [
+      "ELEV8 YOU starts with a simple but profound question: Who am I beyond the labels the world has given me? Beyond your name, your job, your nationality, your history — there is a version of YOU that has never been touched by limitation, never been diminished by circumstance, never forgotten its own greatness.",
+      "The journey to ELEV8 YOU is not about becoming someone new. It is about remembering who you have always been. Every experience you have had — the victories and the wounds — has been preparing you for the version of YOU that you are becoming right now in this moment.",
+      "ELEV8 WATER was created with YOU in mind. Not a general you. Not a demographic. YOU specifically — the individual reading these words right now. Before you drink, look in the mirror and say: I AM ELEVATING. I AM GROWING. I AM BECOMING. Feel what happens in your body when you speak those words into existence.",
+    ],
+    pullQuote: "You are not a work in progress. You are a masterpiece in motion.",
+    closingReflection: "The world needs the elevated version of YOU — not tomorrow, but now.",
   },
   {
     slug: "how-to-elev8-love",
     topic: "LOVE",
     title: "How to ELEV8 LOVE",
     teaser: "Love is the highest vibration. Learn to embody it.",
+    openingStatement:
+      "Love is not something you find. Love is something you remember. It was always there — underneath everything.",
+    bodyParagraphs: [
+      "ELEV8 LOVE begins with understanding that love is not an emotion that comes and goes like weather. It is the fundamental frequency of the universe itself. Scientists have identified 528hz — the frequency at which ELEV8 WATER is infused — as the Love Frequency. The frequency of healing, of connection, of creation. Love is literally a vibration that science can measure.",
+      "The most powerful thing you can do to ELEV8 LOVE in your life is to start with yourself. Not in an arrogant, self-absorbed way — but in the deep, nourishing way that a parent loves a child. Give yourself the same grace, the same patience, the same unconditional acceptance that you freely offer to those you love most.",
+      "When you drink ELEV8 WATER with the intention of love — you are infusing your body, which is 60-75% water, with that very frequency. Dr. Masaru Emoto's research showed that water exposed to the word LOVE forms the most beautiful crystalline structures imaginable. You are what you drink. You are what you intend.",
+    ],
+    pullQuote: "Love is not the reward at the end of the journey. Love is the path itself.",
+    closingReflection:
+      "Choose love — not as a feeling to wait for, but as a decision to make right now.",
   },
   {
     slug: "how-to-elev8-desire",
     topic: "DESIRE",
     title: "How to ELEV8 DESIRE",
     teaser: "Desire is the beginning of all creation.",
+    openingStatement:
+      "Desire is not weakness. Desire is the universe speaking through you, telling you who you are meant to become.",
+    bodyParagraphs: [
+      "ELEV8 DESIRE is about understanding the sacred nature of your deepest wants. Every genuine desire you carry was placed in you for a reason. The desire to create, to connect, to contribute, to experience beauty, to know yourself deeply — these are not accidents of personality. They are the blueprint of your purpose.",
+      "The problem most people have with desire is that they have been taught to suppress it, to feel guilty about it, to see it as selfish. But a desire that comes from your highest self — not from ego, not from fear, but from genuine creative impulse — is one of the most powerful forces in the universe.",
+      "Set your desire as an intention before drinking your ELEV8 WATER. State it clearly, feel it fully, and release it completely. This is the ancient formula for manifestation that the greatest minds in human history have always known. Imagination plus emotion plus action equals reality. Your desire is the seed. Water is the catalyst.",
+    ],
+    pullQuote: "A desire aligned with your highest self is not a want. It is a calling.",
+    closingReflection: "Honor your desires — they are the universe's way of directing you home.",
   },
   {
     slug: "how-to-elev8-energy",
     topic: "ENERGY",
     title: "How to ELEV8 ENERGY",
     teaser: "Energy flows where attention goes.",
+    openingStatement:
+      "You are not a human being with energy. You ARE energy, temporarily experiencing a human form.",
+    bodyParagraphs: [
+      "ELEV8 ENERGY starts with recognizing that everything in your life — your relationships, your finances, your health, your creativity — is a direct reflection of the energy you are operating at. High energy attracts high-quality experiences. Low energy attracts more of what drains you. This is not metaphor — this is the physics of how reality works.",
+      "Your physical energy is the foundation. Sleep, nutrition, movement, hydration — these are not luxuries. They are the biological basis of everything you want to create. When your body is running on ultra-purified water, clean fuel, and intentional rest, your capacity to think, create, love and contribute expands exponentially.",
+      "ELEV8 WATER was designed to support your energy at the cellular level. When you remove the chemical additives that burden your body's filtration systems, when you hydrate with water your cells can actually use efficiently, when you add the 528hz frequency that resonates with your body's natural healing state — you are not just drinking water. You are investing in your energetic potential.",
+    ],
+    pullQuote: "Protect your energy like your life depends on it. Because it does.",
+    closingReflection:
+      "Choose today to guard, cultivate, and direct your energy with full intention.",
   },
   {
     slug: "how-to-elev8-believe",
     topic: "BELIEVE",
     title: "How to ELEV8 BELIEVE",
     teaser: "Belief is the foundation of all achievement.",
+    openingStatement:
+      "What you believe about yourself is the ceiling of your life. And ceilings, unlike roofs, can always be raised.",
+    bodyParagraphs: [
+      "ELEV8 BELIEVE is about confronting the most powerful force shaping your reality: your beliefs. Not your circumstances, not your past, not the opinions of others — but the stories you have accepted as true about who you are and what is possible for you. These beliefs were largely formed before you were seven years old. And you have been living inside them ever since.",
+      "The science of neuroplasticity has confirmed what spiritual teachers have always known — the brain can be rewired at any age. Every time you choose a new thought, reinforce a new belief, or act in alignment with the person you are becoming rather than the person you have been — you are literally building new neural pathways. You are architecturally redesigning yourself.",
+      "Before you drink your ELEV8 WATER today, choose one belief you are ready to release and one belief you are ready to install. Say them aloud. Feel the old one dissolve. Feel the new one take root. Then drink with the intention that every cell in your body is receiving and accepting this new truth. Because Dr. Emoto showed us — water listens.",
+    ],
+    pullQuote: "Believe in the version of yourself that has already become who you are working to be.",
+    closingReflection: "Your beliefs are not facts — they are choices. Choose again.",
   },
   {
     slug: "how-to-elev8-vibration",
     topic: "VIBRATION",
     title: "How to ELEV8 VIBRATION",
     teaser: "Raise your vibration. Raise your reality.",
+    openingStatement:
+      "Everything in the universe is vibrating. The question is never whether you are vibrating — it is always at what frequency.",
+    bodyParagraphs: [
+      "ELEV8 VIBRATION begins with understanding that your emotional state is a frequency. Joy, gratitude, love and peace vibrate at high frequencies that attract more of the same. Fear, resentment, shame and anxiety vibrate at low frequencies that contract your world and limit what is possible for you. This is not woo — this is measurable electromagnetic reality.",
+      "The fastest way to shift your vibration is not to think your way up — it is to feel your way up. Gratitude is the most reliable elevator to high vibration that exists. When you find genuine appreciation for what you already have — your breath, your body, the water in your hand — your frequency shifts immediately, without conditions, without waiting.",
+      "ELEV8 WATER at 528hz is the Love Frequency. When you drink it consciously, with awareness of what you are doing, you are introducing a high-frequency input directly into a body that is mostly water. You are tuning yourself like an instrument. Stay active, connect with nature, listen to music that moves you, speak kind words to yourself and others — and watch your vibration rise.",
+    ],
+    pullQuote: "You cannot attract a high-vibration life from a low-vibration state. Elevate first.",
+    closingReflection:
+      "Today commit to one thought, one action, one intention that raises your frequency.",
   },
   {
     slug: "how-to-elev8-mindset",
     topic: "MINDSET",
     title: "How to ELEV8 MINDSET",
     teaser: "Your mindset creates your world.",
+    openingStatement:
+      "Your mindset is not your personality. It is a lens. And lenses can be changed, cleaned, and upgraded.",
+    bodyParagraphs: [
+      "ELEV8 MINDSET is about making the shift from a fixed perspective to a growth perspective — from 'this is who I am' to 'this is who I am becoming.' This single mental shift is the difference between people who transform their lives and people who repeat the same year over and over with increasing frustration.",
+      "A growth mindset does not mean toxic positivity or denying reality. It means that when you face a challenge, your first question is not 'why is this happening to me' but 'what is this teaching me.' It means that failure is not a verdict on your worth — it is data for your next attempt. It means that other people's success is not a threat but a proof of what is possible.",
+      "Start each morning with your ELEV8 WATER and a single mindset intention. Not a long list of affirmations you race through while checking your phone — one clear, felt statement of who you are choosing to be today. Drink slowly. Breathe. Let the intention settle into your body, not just your mind. The body is where mindset becomes behavior.",
+    ],
+    pullQuote: "The mind is the most powerful creation tool in the universe — and it is yours.",
+    closingReflection: "Choose your thoughts today as deliberately as you choose your water.",
   },
   {
     slug: "how-to-elev8-gratitude",
     topic: "GRATITUDE",
     title: "How to ELEV8 GRATITUDE",
     teaser: "Gratitude transforms what you have into enough.",
+    openingStatement:
+      "Gratitude is not a feeling you wait for. It is a practice you choose — and it changes everything it touches.",
+    bodyParagraphs: [
+      "ELEV8 GRATITUDE is about discovering that appreciation is not a passive response to good things happening — it is an active force that creates good things. Neuroscience confirms that a consistent gratitude practice rewires the brain toward optimism, reduces cortisol, strengthens the immune system, and improves sleep. Gratitude is one of the most evidence-backed wellness practices that exists.",
+      "The deepest level of gratitude is not for the things going right — it is for the things that challenged you most. The relationship that broke you open. The failure that redirected you. The loss that taught you what truly matters. When you can find genuine appreciation for your most difficult experiences, you have reached a level of consciousness that very few people ever access.",
+      "ELEV8 WATER gives you a daily gratitude ritual built into something you already do. Before each sip, pause. Feel one genuine moment of appreciation — for the water, for your body that receives it, for the life you are living. This is not performance. This is practice. And practice, done consistently, becomes who you are.",
+    ],
+    pullQuote: "What you appreciate, appreciates. This is the law of gratitude in action.",
+    closingReflection: "Find one thing today — just one — that you are genuinely grateful for. Start there.",
   },
   {
     slug: "how-to-elev8-frequency",
     topic: "FREQUENCY",
     title: "How to ELEV8 FREQUENCY",
     teaser: "528Hz — the frequency of love and healing.",
+    openingStatement:
+      "528hz is not just a number. It is the mathematical signature of transformation — the frequency at which the universe repairs, creates, and loves.",
+    bodyParagraphs: [
+      "ELEV8 FREQUENCY begins with the understanding that you are a vibrational being living in a vibrational universe. Every thought you think, every emotion you feel, every word you speak carries a measurable frequency. And the world around you — including the people, opportunities, and experiences that find you — responds to that frequency like a tuning fork responds to its matching note.",
+      "The 528hz frequency — known as the Love Frequency and the Miracle Tone — has been used by healers, musicians, scientists and spiritual traditions across thousands of years. It is the frequency of DNA repair, of cellular regeneration, of emotional healing. When ELEV8 WATER is infused with 528hz binaural frequency, it carries that signature into every cell of your body with every sip.",
+      "You can actively work with frequency in your daily life. Listen to 528hz music while you work, meditate or rest. Speak words of love and encouragement — to others and to yourself. Choose environments that feel high-frequency: nature, creativity, meaningful connection. And drink your ELEV8 WATER with the conscious intention that you are aligning yourself with the frequency of healing and love.",
+    ],
+    pullQuote: "Tune your frequency deliberately. The universe will match it exactly.",
+    closingReflection:
+      "Today, choose to vibrate at the frequency of the life you want — not the life you have had.",
   },
   {
     slug: "how-to-elev8-thoughts",
     topic: "THOUGHTS",
     title: "How to ELEV8 THOUGHTS",
     teaser: "Your thoughts are the driving force of your reality.",
+    openingStatement:
+      "You have approximately 60,000 thoughts today. Most of them are the same ones you had yesterday. This is either the greatest problem or the greatest opportunity of your life.",
+    bodyParagraphs: [
+      "ELEV8 THOUGHTS begins with becoming the observer of your own mind — not the victim of it. Most people experience their thoughts as reality, as fact, as themselves. But you are not your thoughts. You are the awareness that notices them. And once you truly know that, you are no longer at the mercy of every passing mental event.",
+      "The thoughts you give consistent attention to become beliefs. The beliefs you act on become habits. The habits you maintain become your character. And your character becomes your destiny. This is why the single most important thing you can do to change your life is to change what you habitually think about — not occasionally, but moment by moment, day by day.",
+      "Dr. Masaru Emoto's water research demonstrated that human thoughts and intentions physically alter the molecular structure of water. When subjects directed thoughts of love toward water, its crystals formed breathtaking symmetrical patterns. When thoughts of hatred were directed at water, the crystals were chaotic and broken. You are 60-75% water. Think about what your habitual thoughts are doing to your internal environment — and choose differently.",
+    ],
+    pullQuote: "Your thoughts are not who you are. But they are building who you will become.",
+    closingReflection:
+      "Watch your thoughts today — not to judge them, but to choose which ones deserve your energy.",
   },
   {
     slug: "how-to-elev8-consciousness",
     topic: "CONSCIOUSNESS",
     title: "How to ELEV8 CONSCIOUSNESS",
     teaser: "Expand your awareness. Expand your life.",
+    openingStatement:
+      "Consciousness is not something you have. It is what you are. Everything else — your body, your thoughts, your story — is arising within it.",
+    bodyParagraphs: [
+      "ELEV8 CONSCIOUSNESS is the deepest and most expansive of the 12 understandings — because it contains all the others. When you expand your consciousness, you expand your capacity for love, your ability to perceive opportunity, your tolerance for complexity, your creativity, your peace. Consciousness is the field in which everything else in your life grows.",
+      "Expanding consciousness does not require a monastery or a decade of meditation — though both can help. It requires consistent, intentional practice of presence. Being fully here, fully now, fully awake to this moment rather than lost in the mental commentary about this moment. The gap between stimulus and response is where consciousness lives. Your work is to make that gap wider.",
+      "ELEV8 WATER was born from a vision of elevated consciousness — a world in which every individual awakens to the power within them, to their connection to all of life, to their capacity to create reality through intention and awareness. Every bottle is a small act of that vision made physical. Every sip, taken consciously, is a practice of the very thing we are all here to cultivate: the awareness of awareness itself.",
+    ],
+    pullQuote: "You do not need to seek consciousness. You need to stop hiding from it.",
+    closingReflection: "Be here. Be aware. Be the consciousness that you already are.",
   },
   {
     slug: "how-our-thoughts-can-affect-water",
