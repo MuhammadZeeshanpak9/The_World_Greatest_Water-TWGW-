@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { Percent, TrendingUp, Users } from "lucide-react";
 
 const BENEFITS = [
@@ -14,7 +14,7 @@ export default function BenefitCards() {
     <section className="bg-white py-24 md:py-32">
       <div className="mx-auto grid max-w-5xl grid-cols-1 gap-6 px-6 sm:grid-cols-3">
         {BENEFITS.map((b, i) => (
-          <motion.div
+          <m.div
             key={b.name}
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -29,7 +29,7 @@ export default function BenefitCards() {
               {b.name}
             </h3>
             <p className="mt-2 font-inter text-[14px] text-body">{b.text}</p>
-          </motion.div>
+          </m.div>
         ))}
       </div>
     </section>

@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 
 const PARAGRAPHS = [
   "How healthy or wealthy I become is a factor of my mental understanding of my MIND.",
@@ -15,18 +15,18 @@ export default function Philosophy() {
   return (
     <section className="bg-white py-24 md:py-32">
       <div className="mx-auto max-w-[800px] px-6 text-center">
-        <motion.h2
+        <m.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="font-cormorant text-[36px] text-violet"
         >
           WELLNESS in the most simple form is a positive THOUGHT of well-being.
-        </motion.h2>
+        </m.h2>
 
         <div className="mt-8 flex flex-col gap-5">
           {PARAGRAPHS.map((p, i) => (
-            <motion.p
+            <m.p
               key={i}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -35,7 +35,7 @@ export default function Philosophy() {
               className="font-inter text-base leading-[1.9] text-body"
             >
               {p}
-            </motion.p>
+            </m.p>
           ))}
         </div>
       </div>

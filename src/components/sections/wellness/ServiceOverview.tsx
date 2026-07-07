@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { GradientPlaceholder, VideoWithFallback } from "@/components/ui/MediaWithFallback";
 
 type ServiceOverviewProps = {
@@ -21,7 +21,7 @@ export default function ServiceOverview({
   return (
     <section
       className={`relative overflow-hidden py-24 md:py-32 ${
-        premium ? "bg-dark-base" : "bg-white"
+        premium ? "bg-gradient-hero" : "bg-white"
       }`}
     >
       {premium && (
@@ -48,7 +48,7 @@ export default function ServiceOverview({
       )}
 
       <div className="relative mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 px-6 md:grid-cols-2">
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -67,9 +67,9 @@ export default function ServiceOverview({
           >
             {description}
           </p>
-        </motion.div>
+        </m.div>
 
-        <motion.div
+        <m.div
           initial={{ opacity: 0, x: 40 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
@@ -82,7 +82,7 @@ export default function ServiceOverview({
           <div className="absolute inset-0">
             <VideoWithFallback src={video} className="rounded-2xl" />
           </div>
-        </motion.div>
+        </m.div>
       </div>
     </section>
   );

@@ -9,7 +9,8 @@ const WHITE = "#ffffff";
 const TINT = "#f0e8f8";
 
 export const metadata = {
-  title: "My Orders — ELEV8 WATER",
+  title: "My Orders",
+  description: "Your ELEV8 WATER order history.",
 };
 
 export default function AccountOrdersPage() {

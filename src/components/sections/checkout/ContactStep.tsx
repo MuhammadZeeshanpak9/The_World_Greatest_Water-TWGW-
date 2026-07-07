@@ -59,7 +59,7 @@ export default function ContactStep({ onContinue }: { onContinue: () => void }) 
 
       <button
         type="submit"
-        className="group mt-2 flex h-[52px] items-center justify-center gap-2 rounded bg-violet font-inter text-[12px] font-semibold uppercase tracking-[0.15em] text-white transition-transform duration-300 hover:scale-[1.01]"
+        className="group mt-2 flex h-[52px] items-center justify-center gap-2 rounded-full bg-gradient-brand btn-glow font-inter text-[12px] font-semibold uppercase tracking-[0.15em] text-white transition-transform duration-300 hover:scale-[1.01]"
       >
         Continue To Shipping
         <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />

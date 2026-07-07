@@ -9,7 +9,8 @@ const TINT = "#f0e8f8";
 const WHITE = "#ffffff";
 
 export const metadata = {
-  title: "Your Cart — ELEV8 WATER",
+  title: "Your Cart",
+  description: "Review your ELEV8 WATER order before checkout.",
 };
 
 export default function CartPage() {

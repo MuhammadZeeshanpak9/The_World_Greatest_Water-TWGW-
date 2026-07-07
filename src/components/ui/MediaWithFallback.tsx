@@ -9,7 +9,17 @@ type BaseProps = {
   className?: string;
   watermark?: string;
   rounded?: string; // tailwind rounding class
+  /** Set for above-the-fold images (hero, first-viewport content) — disables lazy loading. */
+  priority?: boolean;
+  /** Defaults to a generic violet blur swatch when a real image has no blurDataURL of its own. */
+  placeholder?: "blur" | "empty";
+  blurDataURL?: string;
+  sizes?: string;
 };
+
+/** Generic 8x8 violet blur swatch, used as the default `blurDataURL` below. */
+const DEFAULT_BLUR_DATA_URL =
+  "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4IiBoZWlnaHQ9IjgiPjxyZWN0IHdpZHRoPSI4IiBoZWlnaHQ9IjgiIGZpbGw9IiM2YjJmYTAiIGZpbGwtb3BhY2l0eT0iMC4xOCIvPjwvc3ZnPg==";
 
 /**
  * Renders a real asset if `src` is provided, otherwise a violet-gradient
@@ -22,6 +32,10 @@ export function ImageWithFallback({
   className = "",
   watermark,
   rounded = "rounded-2xl",
+  priority = false,
+  placeholder = "blur",
+  blurDataURL = DEFAULT_BLUR_DATA_URL,
+  sizes = "(max-width: 768px) 100vw, 50vw",
 }: BaseProps) {
   if (src) {
     return (
@@ -29,8 +43,11 @@ export function ImageWithFallback({
         src={src}
         alt={alt}
         fill
-        loading="lazy"
-        sizes="(max-width: 768px) 100vw, 50vw"
+        priority={priority}
+        loading={priority ? undefined : "lazy"}
+        placeholder={placeholder}
+        blurDataURL={placeholder === "blur" ? blurDataURL : undefined}
+        sizes={sizes}
         className={`object-cover ${rounded} ${className}`}
       />
     );

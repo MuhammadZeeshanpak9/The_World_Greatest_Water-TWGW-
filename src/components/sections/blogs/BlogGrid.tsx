@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { BLOG_POSTS } from "@/data/content";
@@ -12,7 +12,7 @@ export default function BlogGrid() {
       <div className="mx-auto max-w-7xl px-6">
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {BLOG_POSTS.map((post, i) => (
-            <motion.div
+            <m.div
               key={post.slug}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -37,7 +37,7 @@ export default function BlogGrid() {
                 Read More
                 <ArrowRight size={13} className="transition-transform group-hover:translate-x-1" />
               </Link>
-            </motion.div>
+            </m.div>
           ))}
         </div>
       </div>

@@ -9,7 +9,8 @@ const TINT = "#f0e8f8";
 const WHITE = "#ffffff";
 
 export const metadata = {
-  title: "Join To ELEV8 — ELEV8 WATER",
+  title: "Join To ELEV8",
+  description: "Available at these retailers — find ELEV8 WATER near you.",
 };
 
 export default function JoinPage() {

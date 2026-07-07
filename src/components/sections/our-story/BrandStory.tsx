@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { ImageWithFallback } from "@/components/ui/MediaWithFallback";
 
 const PARAGRAPHS = [
@@ -14,7 +14,7 @@ export default function BrandStory() {
   return (
     <section className="bg-white py-24 md:py-32">
       <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 px-6 md:grid-cols-2">
-        <motion.div
+        <m.div
           initial={{ opacity: 0, x: -40 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
@@ -25,21 +25,21 @@ export default function BrandStory() {
             alt="ELEV8 bottles"
             watermark="our-story-bottles.jpg"
           />
-        </motion.div>
+        </m.div>
 
         <div>
-          <motion.h2
+          <m.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="font-cormorant text-[36px] font-bold text-gradient-brand"
           >
             1 WATER. 12 UNDERSTANDING
-          </motion.h2>
+          </m.h2>
 
           <div className="mt-6 flex flex-col gap-5">
             {PARAGRAPHS.map((p, i) => (
-              <motion.p
+              <m.p
                 key={i}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -48,7 +48,7 @@ export default function BrandStory() {
                 className="font-inter text-base leading-[1.9] text-body"
               >
                 {p}
-              </motion.p>
+              </m.p>
             ))}
           </div>
         </div>

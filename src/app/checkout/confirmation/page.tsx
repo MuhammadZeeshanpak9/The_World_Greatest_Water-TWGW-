@@ -8,7 +8,8 @@ const WHITE = "#ffffff";
 const TINT = "#f0e8f8";
 
 export const metadata = {
-  title: "Order Confirmed — ELEV8 WATER",
+  title: "Order Confirmed",
+  description: "Your ELEV8 WATER order has been confirmed.",
 };
 
 export default function CheckoutConfirmationPage() {

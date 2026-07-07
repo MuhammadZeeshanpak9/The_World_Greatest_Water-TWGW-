@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { SHIPPING_INFO } from "@/data/content";
 
 export default function ShippingInfo() {
@@ -9,7 +9,7 @@ export default function ShippingInfo() {
       <div className="mx-auto max-w-5xl px-6">
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
           {SHIPPING_INFO.map((info, i) => (
-            <motion.div
+            <m.div
               key={info.title}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -21,7 +21,7 @@ export default function ShippingInfo() {
                 {info.title}
               </h3>
               <p className="mt-3 font-cormorant text-[24px] text-violet">{info.value}</p>
-            </motion.div>
+            </m.div>
           ))}
         </div>
 

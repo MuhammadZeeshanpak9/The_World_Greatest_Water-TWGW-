@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 
 type PullQuoteProps = {
   quote: string;
@@ -19,7 +19,7 @@ export default function PullQuote({
   const markColor = tone === "dark" ? "text-white/20" : "text-violet/25";
 
   return (
-    <motion.div
+    <m.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
@@ -39,6 +39,6 @@ export default function PullQuote({
           — {attribution}
         </p>
       )}
-    </motion.div>
+    </m.div>
   );
 }

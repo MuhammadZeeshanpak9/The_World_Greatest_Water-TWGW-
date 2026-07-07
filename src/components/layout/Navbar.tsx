@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
 import { Menu, Search, ShoppingBag, User } from "lucide-react";
 import { NAV_LINKS } from "@/data/content";
 import { useScrollPosition } from "@/lib/hooks";
@@ -25,26 +25,24 @@ export default function Navbar() {
     <>
       <header className="fixed inset-x-0 top-0 z-[70]">
         <AnnouncementBar />
-        <motion.div
+        <m.div
           animate={{
             boxShadow: scrolled
-              ? "0 4px 30px rgba(107,47,160,0.1)"
-              : "0 2px 20px rgba(107,47,160,0.06)",
+              ? "0 10px 40px rgba(94,45,145,0.08), inset 0 1px 0 rgba(255,255,255,0.6)"
+              : "0 2px 20px rgba(94,45,145,0.04), inset 0 1px 0 rgba(255,255,255,0.2)",
             borderColor: scrolled
-              ? "rgba(107,47,160,0.15)"
-              : "rgba(107,47,160,0.1)",
+              ? "rgba(255,255,255,0.4)"
+              : "rgba(255,255,255,0.1)",
           }}
           transition={{ duration: 0.4 }}
-          // Solid (non-transparent) at all scroll depths so hero media never
-          // bleeds through and visually clashes with nav content.
-          className="border-b bg-white backdrop-blur-xl"
+          className="border-b bg-white/80 backdrop-blur-2xl"
           onMouseLeave={() => setOpenMenu(null)}
         >
           <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-6">
             {/* Logo */}
             <Link href="/" className="group flex shrink-0 items-center gap-2">
               <WaterDrop />
-              <span className="font-cormorant text-[20px] font-medium tracking-[0.15em] text-violet transition-colors group-hover:shimmer-text">
+              <span className="font-cormorant text-[20px] font-medium tracking-[0.15em] shimmer-text">
                 ELEV8 WATER
               </span>
             </Link>
@@ -100,7 +98,7 @@ export default function Navbar() {
               </button>
             </div>
           </div>
-        </motion.div>
+        </m.div>
       </header>
 
       <MobileMenu open={mobileOpen} onClose={() => setMobileOpen(false)} />
@@ -112,49 +110,48 @@ function MegaDropdown({ open, items }: { open: boolean; items: NavLink[] }) {
   return (
     <AnimatePresence>
       {open && (
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: -10, scale: 0.97 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: -10, scale: 0.97 }}
-          transition={{ duration: 0.25, ease: "easeOut" }}
-          className="absolute left-1/2 top-full mt-4 w-64 -translate-x-1/2 rounded-2xl border p-4"
-          style={{
-            background: "rgba(255,255,255,0.95)",
-            backdropFilter: "blur(30px)",
-            borderColor: "rgba(107,47,160,0.12)",
-            boxShadow:
-              "0 20px 60px rgba(107,47,160,0.12), 0 4px 16px rgba(0,0,0,0.06)",
-          }}
+          transition={{ duration: 0.2, type: "spring", bounce: 0, stiffness: 200, damping: 20 }}
+          className="absolute left-1/2 top-full mt-4 w-64 -translate-x-1/2 rounded-2xl glass-card-light p-4"
         >
           <div className="flex flex-col">
             {items.map((item, i) => (
-              <motion.div
+              <m.div
                 key={item.label}
                 initial={{ opacity: 0, x: -8 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: i * 0.04 }}
+                transition={{ delay: i * 0.03 }}
               >
                 {item.external ? (
                   <a
                     href={item.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="block rounded-lg border-l-2 border-transparent px-3 py-2 font-inter text-[13px] text-body transition-all hover:border-violet hover:bg-violet/5 hover:text-violet"
+                    className="group relative flex items-center overflow-hidden rounded-lg px-3 py-2 font-inter text-[13px] text-body transition-all hover:bg-violet/5 hover:text-violet"
                   >
-                    {item.label}
+                    <span className="absolute bottom-0 left-0 top-0 w-[3px] -translate-x-full bg-gradient-brand transition-transform duration-200 group-hover:translate-x-0" />
+                    <span className="transition-transform duration-200 group-hover:translate-x-2">
+                      {item.label}
+                    </span>
                   </a>
                 ) : (
                   <Link
                     href={item.href}
-                    className="block rounded-lg border-l-2 border-transparent px-3 py-2 font-inter text-[13px] text-body transition-all hover:border-violet hover:bg-violet/5 hover:text-violet"
+                    className="group relative flex items-center overflow-hidden rounded-lg px-3 py-2 font-inter text-[13px] text-body transition-all hover:bg-violet/5 hover:text-violet"
                   >
-                    {item.label}
+                    <span className="absolute bottom-0 left-0 top-0 w-[3px] -translate-x-full bg-gradient-brand transition-transform duration-200 group-hover:translate-x-0" />
+                    <span className="transition-transform duration-200 group-hover:translate-x-2">
+                      {item.label}
+                    </span>
                   </Link>
                 )}
-              </motion.div>
+              </m.div>
             ))}
           </div>
-        </motion.div>
+        </m.div>
       )}
     </AnimatePresence>
   );

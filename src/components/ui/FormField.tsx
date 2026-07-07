@@ -28,11 +28,11 @@ export default function FormField({
   className = "",
 }: FormFieldProps) {
   const base =
-    "w-full rounded-xl px-4 py-3 font-inter text-[14px] outline-none transition-colors backdrop-blur";
+    "w-full rounded-xl px-4 py-3 font-inter text-[14px] outline-none transition-all duration-300";
   const toneClass =
     tone === "dark"
-      ? "border border-white/15 bg-white/5 text-white placeholder:text-white/35 focus:border-violet-mid"
-      : "border border-violet/15 bg-white/70 text-ink placeholder:text-muted focus:border-violet";
+      ? "glass-card-dark text-white placeholder:text-white/35 input-glow-focus"
+      : "glass-card-light text-ink placeholder:text-muted input-glow-focus";
 
   return (
     <label className={`flex flex-col gap-2 ${className}`}>

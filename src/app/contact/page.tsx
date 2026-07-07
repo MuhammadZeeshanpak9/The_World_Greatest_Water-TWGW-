@@ -9,7 +9,8 @@ const TINT = "#f0e8f8";
 const WHITE = "#ffffff";
 
 export const metadata = {
-  title: "Say Hello — ELEV8 WATER",
+  title: "Say Hello",
+  description: "Get in touch with THE WORLD'S GREATEST WATER team — we'd love to hear from you.",
 };
 
 export default function ContactPage() {

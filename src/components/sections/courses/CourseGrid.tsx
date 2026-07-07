@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { BLOG_POSTS } from "@/data/content";
@@ -12,7 +12,7 @@ export default function CourseGrid() {
   return (
     <section className="bg-white py-24 md:py-32">
       <div className="mx-auto max-w-7xl px-6">
-        <h2 className="text-center font-cormorant text-[40px] text-ink md:text-[52px]">
+        <h2 className="text-center font-cormorant text-[40px] text-ink md:text-[52px] text-glow-violet">
           12 Courses. 12 Understandings.
         </h2>
         <p className="mx-auto mt-4 max-w-xl text-center font-inter text-base text-body">
@@ -22,13 +22,13 @@ export default function CourseGrid() {
 
         <div className="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {COURSES.map((post, i) => (
-            <motion.div
+            <m.div
               key={post.slug}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.06 }}
-              className="flex flex-col overflow-hidden rounded-2xl border border-violet/10 bg-white p-5"
+              className="flex flex-col overflow-hidden rounded-2xl glass-card-light p-5"
             >
               <Link href={`/courses/${post.slug}`} className="relative h-[160px] overflow-hidden rounded-xl">
                 <GradientPlaceholder watermark={post.topic} className="rounded-xl" />
@@ -57,7 +57,7 @@ export default function CourseGrid() {
                 Enroll Now
                 <ArrowRight size={13} />
               </button>
-            </motion.div>
+            </m.div>
           ))}
         </div>
       </div>

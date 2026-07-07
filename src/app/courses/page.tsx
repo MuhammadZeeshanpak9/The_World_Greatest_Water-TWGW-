@@ -9,7 +9,8 @@ const WHITE = "#ffffff";
 const DARK = "#0a0a0a";
 
 export const metadata = {
-  title: "How To ELEV8 — Courses — ELEV8 WATER",
+  title: "How To ELEV8 — Courses",
+  description: "12 digital wellness courses — one for each of the 12 understandings of SELF.",
 };
 
 export default function CoursesPage() {

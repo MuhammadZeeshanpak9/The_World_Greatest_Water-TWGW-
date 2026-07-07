@@ -9,7 +9,8 @@ const WHITE = "#ffffff";
 const TINT = "#f0e8f8";
 
 export const metadata = {
-  title: "Privacy Policy — ELEV8 WATER",
+  title: "Privacy Policy",
+  description: "Privacy Policy for THE WORLD'S GREATEST WATER.",
 };
 
 export default function PrivacyPolicyPage() {

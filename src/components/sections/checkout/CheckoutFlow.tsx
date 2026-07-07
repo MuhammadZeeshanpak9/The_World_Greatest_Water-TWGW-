@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
 import StepIndicator from "./StepIndicator";
 import ContactStep from "./ContactStep";
 import ShippingStep from "./ShippingStep";
@@ -16,7 +16,7 @@ export default function CheckoutFlow() {
         <StepIndicator step={step} />
 
         <AnimatePresence mode="wait">
-          <motion.div
+          <m.div
             key={step}
             initial={{ opacity: 0, x: 40 }}
             animate={{ opacity: 1, x: 0 }}
@@ -26,7 +26,7 @@ export default function CheckoutFlow() {
             {step === 1 && <ContactStep onContinue={() => setStep(2)} />}
             {step === 2 && <ShippingStep onContinue={() => setStep(3)} />}
             {step === 3 && <PaymentStep />}
-          </motion.div>
+          </m.div>
         </AnimatePresence>
       </div>
     </section>

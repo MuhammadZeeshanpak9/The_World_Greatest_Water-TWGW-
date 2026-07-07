@@ -15,7 +15,13 @@ type Props = { params: Promise<{ slug: string }> };
 export async function generateMetadata({ params }: Props) {
   const { slug } = await params;
   const product = SHOP_PRODUCTS.find((p) => p.slug === slug);
-  return { title: product ? `${product.name} — ELEV8 WATER` : "Product — ELEV8 WATER" };
+  return {
+    title: product ? product.name : "Product",
+    description: product?.description,
+    openGraph: product
+      ? { title: product.name, description: product.description, type: "website" }
+      : undefined,
+  };
 }
 
 export default async function ProductPage({ params }: Props) {

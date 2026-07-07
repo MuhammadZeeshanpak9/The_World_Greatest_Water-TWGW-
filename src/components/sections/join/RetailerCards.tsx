@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { GradientPlaceholder } from "@/components/ui/MediaWithFallback";
 
 const RETAILERS = ["Retailer One", "Retailer Two", "Retailer Three"];
@@ -10,7 +10,7 @@ export default function RetailerCards() {
     <section className="bg-white py-24 md:py-32">
       <div className="mx-auto grid max-w-5xl grid-cols-1 gap-6 px-6 sm:grid-cols-3">
         {RETAILERS.map((name, i) => (
-          <motion.div
+          <m.div
             key={name}
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -24,7 +24,7 @@ export default function RetailerCards() {
             <span className="mt-4 inline-block rounded-full bg-violet/10 px-3 py-1 font-inter text-[10px] font-semibold uppercase tracking-[0.2em] text-violet">
               Coming Soon
             </span>
-          </motion.div>
+          </m.div>
         ))}
       </div>
     </section>

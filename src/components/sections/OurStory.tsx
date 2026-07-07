@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { SectionLabel, GradientDivider } from "@/components/ui/primitives";
 
@@ -29,7 +29,7 @@ export default function OurStory() {
 
         <div className="mt-8 flex flex-col gap-6">
           {PARAGRAPHS.map((p, i) => (
-            <motion.p
+            <m.p
               key={i}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -38,11 +38,11 @@ export default function OurStory() {
               className="font-inter text-base leading-[1.95] text-body"
             >
               {p}
-            </motion.p>
+            </m.p>
           ))}
         </div>
 
-        <motion.p
+        <m.p
           initial={{ opacity: 0, scale: 0.9 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
@@ -50,18 +50,18 @@ export default function OurStory() {
           className="text-glow-violet mt-14 font-cormorant text-[42px] italic text-violet"
         >
           I. AM. YOU.
-        </motion.p>
+        </m.p>
 
-        <motion.a
+        <m.a
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           href="#"
-          className="group mt-12 inline-flex items-center gap-2 rounded border border-violet px-8 py-3 font-inter text-[11px] font-semibold uppercase tracking-[0.2em] text-violet transition-colors hover:bg-violet hover:text-white"
+          className="group mt-12 inline-flex items-center gap-2 rounded-full bg-gradient-brand px-8 py-3 font-inter text-[11px] font-semibold uppercase tracking-[0.2em] text-white btn-glow"
         >
           Know More
           <ArrowRight size={15} className="transition-transform group-hover:translate-x-1" />
-        </motion.a>
+        </m.a>
       </div>
     </section>
   );

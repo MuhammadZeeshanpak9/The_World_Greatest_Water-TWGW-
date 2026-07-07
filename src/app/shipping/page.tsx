@@ -8,7 +8,8 @@ const WHITE = "#ffffff";
 const TINT = "#f0e8f8";
 
 export const metadata = {
-  title: "Shipping & Delivery — ELEV8 WATER",
+  title: "Shipping & Delivery",
+  description: "Shipping rates, delivery windows, and friendly assist for ELEV8 WATER orders.",
 };
 
 export default function ShippingPage() {

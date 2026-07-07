@@ -9,7 +9,8 @@ const WHITE = "#ffffff";
 const TINT = "#f0e8f8";
 
 export const metadata = {
-  title: "My Courses — ELEV8 WATER",
+  title: "My Courses",
+  description: "Your enrolled ELEV8 digital wellness courses.",
 };
 
 export default function AccountCoursesPage() {

@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import type { TitledItem } from "@/types";
 
 type NumberedStepsProps = {
@@ -16,7 +16,7 @@ export default function NumberedSteps({ heading, steps }: NumberedStepsProps) {
 
         <div className="mt-14 grid grid-cols-1 gap-10 sm:grid-cols-3">
           {steps.map((step, i) => (
-            <motion.div
+            <m.div
               key={step.title}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -33,7 +33,7 @@ export default function NumberedSteps({ heading, steps }: NumberedStepsProps) {
               <p className="mt-2 max-w-[220px] font-inter text-[14px] text-body">
                 {step.description}
               </p>
-            </motion.div>
+            </m.div>
           ))}
         </div>
       </div>

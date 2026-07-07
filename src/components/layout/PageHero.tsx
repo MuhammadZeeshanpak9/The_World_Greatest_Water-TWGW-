@@ -28,7 +28,7 @@ export default function PageHero({
   return (
     <section
       className={`relative overflow-hidden pt-40 pb-20 md:pt-48 md:pb-28 ${
-        dark ? "bg-dark-base" : "bg-violet-tint"
+        dark ? "bg-gradient-hero" : "bg-violet-tint"
       }`}
     >
       {dark && <SectionParticles count={30} />}

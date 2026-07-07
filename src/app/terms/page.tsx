@@ -9,7 +9,8 @@ const WHITE = "#ffffff";
 const TINT = "#f0e8f8";
 
 export const metadata = {
-  title: "Terms of Service — ELEV8 WATER",
+  title: "Terms of Service",
+  description: "Terms of Service for THE WORLD'S GREATEST WATER.",
 };
 
 export default function TermsPage() {

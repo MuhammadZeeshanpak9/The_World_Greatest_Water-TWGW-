@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import Link from "next/link";
 import { ArrowRight, Check } from "lucide-react";
 import { SUBSCRIPTION_PLANS } from "@/data/content";
@@ -9,19 +9,19 @@ export default function PlanComparison() {
   return (
     <section className="bg-white py-24 md:py-32">
       <div className="mx-auto max-w-5xl px-6">
-        <h2 className="text-center font-cormorant text-[40px] text-ink md:text-[52px]">
+        <h2 className="text-center font-cormorant text-[40px] text-ink md:text-[52px] text-glow-violet">
           Choose Your Plan
         </h2>
 
         <div className="mt-14 grid grid-cols-1 gap-8 md:grid-cols-2">
           {SUBSCRIPTION_PLANS.map((plan, i) => (
-            <motion.div
+            <m.div
               key={plan.name}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.15 }}
-              className="rounded-[24px] border border-violet/10 bg-white p-10 shadow-[0_20px_60px_rgba(107,47,160,0.08)]"
+              className="rounded-[24px] glass-card-light p-10 shadow-[0_20px_60px_rgba(107,47,160,0.08)]"
             >
               <span
                 className={`inline-block rounded-full px-4 py-1.5 font-inter text-[10px] font-semibold uppercase tracking-[0.25em] ${
@@ -55,12 +55,12 @@ export default function PlanComparison() {
 
               <Link
                 href="/contact"
-                className="group mt-8 flex h-[52px] items-center justify-center gap-2 rounded bg-violet font-inter text-[12px] font-semibold uppercase tracking-[0.15em] text-white transition-transform duration-300 hover:scale-[1.02]"
+                className="group mt-8 flex h-[52px] items-center justify-center gap-2 rounded-full bg-gradient-brand btn-glow font-inter text-[12px] font-semibold uppercase tracking-[0.15em] text-white transition-transform duration-300 hover:scale-[1.02]"
               >
                 {plan.ctaLabel}
                 <ArrowRight size={15} className="transition-transform group-hover:translate-x-1" />
               </Link>
-            </motion.div>
+            </m.div>
           ))}
         </div>
       </div>

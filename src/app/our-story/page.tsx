@@ -14,7 +14,8 @@ const TINT = "#f0e8f8";
 const DARK = "#0a0a0a";
 
 export const metadata = {
-  title: "Our Story — ELEV8 WATER",
+  title: "Our Story",
+  description: "The story behind THE WORLD'S GREATEST WATER.",
 };
 
 export default function OurStoryPage() {

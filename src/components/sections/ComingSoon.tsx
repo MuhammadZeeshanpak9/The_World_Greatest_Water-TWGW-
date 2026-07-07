@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { COMING_SOON } from "@/data/content";
 import { GradientPlaceholder } from "@/components/ui/MediaWithFallback";
 
@@ -18,7 +18,7 @@ export default function ComingSoon() {
 
         <div className="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-3">
           {COMING_SOON.map((item, i) => (
-            <motion.div
+            <m.div
               key={item.type}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -38,7 +38,7 @@ export default function ComingSoon() {
               <button className="mt-5 rounded border border-violet px-6 py-2.5 font-inter text-[11px] font-semibold uppercase tracking-[0.15em] text-violet transition-colors hover:bg-violet hover:text-white">
                 Notify Me
               </button>
-            </motion.div>
+            </m.div>
           ))}
         </div>
       </div>

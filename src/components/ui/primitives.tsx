@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import type { ReactNode } from "react";
 
 /** Small tracked violet section label with an optional draw-in underline. */
@@ -23,7 +23,7 @@ export function SectionLabel({
         {children}
       </span>
       {underline && (
-        <motion.span
+        <m.span
           initial={{ scaleX: 0 }}
           whileInView={{ scaleX: 1 }}
           viewport={{ once: true }}
@@ -49,7 +49,7 @@ export function GradientDivider({
 /** Animated water-drop SVG (gentle bob loop). */
 export function WaterDrop({ className = "" }: { className?: string }) {
   return (
-    <motion.svg
+    <m.svg
       width="16"
       height="20"
       viewBox="0 0 16 20"
@@ -68,7 +68,7 @@ export function WaterDrop({ className = "" }: { className?: string }) {
           <stop offset="1" stopColor="#4ECDC4" />
         </linearGradient>
       </defs>
-    </motion.svg>
+    </m.svg>
   );
 }
 
@@ -76,7 +76,7 @@ export function WaterDrop({ className = "" }: { className?: string }) {
  * Organic curved underline that draws in on hover (stroke-dasharray).
  * Used per nav link. Parent must have `group` + `relative`.
  */
-export function CurvedUnderline({ color = "#6B2FA0" }: { color?: string }) {
+export function CurvedUnderline() {
   return (
     <svg
       className="pointer-events-none absolute -bottom-1 left-0 w-full"
@@ -85,15 +85,34 @@ export function CurvedUnderline({ color = "#6B2FA0" }: { color?: string }) {
       preserveAspectRatio="none"
       aria-hidden
     >
+      <defs>
+        <linearGradient id="curveGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stopColor="#5e2d91" />
+          <stop offset="100%" stopColor="#3dd6cb" />
+        </linearGradient>
+      </defs>
       <path
         d="M1,4 C25,1 50,6 75,3 C88,1.5 95,3 99,2"
         fill="none"
-        stroke={color}
+        stroke="url(#curveGrad)"
         strokeWidth="1.5"
         strokeLinecap="round"
         pathLength={1}
         className="[stroke-dasharray:1] [stroke-dashoffset:1] transition-[stroke-dashoffset] duration-300 ease-out group-hover:[stroke-dashoffset:0]"
       />
     </svg>
+  );
+}
+
+/** Animated wrapper for icons, floating with a glow. */
+export function AnimatedIconWrapper({ children }: { children: ReactNode }) {
+  return (
+    <m.span 
+      animate={{ y: [0, -8, 0] }}
+      transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+      className="flex h-20 w-20 items-center justify-center rounded-full bg-gradient-brand text-white shadow-lg shadow-violet/20"
+    >
+      {children}
+    </m.span>
   );
 }

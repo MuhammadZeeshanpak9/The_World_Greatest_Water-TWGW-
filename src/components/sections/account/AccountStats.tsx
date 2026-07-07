@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
@@ -37,7 +37,7 @@ export default function AccountStats() {
             );
 
             return (
-              <motion.div
+              <m.div
                 key={stat.label}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -47,16 +47,16 @@ export default function AccountStats() {
                 {stat.href ? (
                   <Link
                     href={stat.href}
-                    className="group block rounded-[20px] border border-violet/10 bg-white p-6 transition-shadow hover:shadow-[0_20px_50px_rgba(107,47,160,0.12)]"
+                    className="group block rounded-[20px] glass-card-light p-6 transition-shadow hover:shadow-[0_20px_50px_rgba(107,47,160,0.12)]"
                   >
                     {content}
                   </Link>
                 ) : (
-                  <div className="rounded-[20px] border border-violet/10 bg-white p-6 opacity-70">
+                  <div className="rounded-[20px] glass-card-light p-6 opacity-70">
                     {content}
                   </div>
                 )}
-              </motion.div>
+              </m.div>
             );
           })}
         </div>

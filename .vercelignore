@@ -1,0 +1,4 @@
+# Local-only tooling and scratch files — not needed in the deployed build
+.claude
+*.md
+!README.md

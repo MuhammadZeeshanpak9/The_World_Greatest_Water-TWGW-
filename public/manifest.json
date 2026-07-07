@@ -1,0 +1,16 @@
+{
+  "name": "ELEV8 WATER — The World's Greatest Water",
+  "short_name": "ELEV8 WATER",
+  "description": "Ultra-purified water infused with 528hz binaural frequency. 1 Water. 12 Understanding. ELEV8 your life.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#6b2fa0",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "48x48",
+      "type": "image/x-icon"
+    }
+  ]
+}

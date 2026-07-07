@@ -22,7 +22,11 @@ type Props = { params: Promise<{ slug: string }> };
 export async function generateMetadata({ params }: Props) {
   const { slug } = await params;
   const post = COURSES.find((p) => p.slug === slug);
-  return { title: post ? `${post.title} — ELEV8 WATER` : "Course — ELEV8 WATER" };
+  return {
+    title: post ? post.title : "Course",
+    description: post?.teaser,
+    openGraph: post ? { title: post.title, description: post.teaser, type: "website" } : undefined,
+  };
 }
 
 export default async function CoursePage({ params }: Props) {

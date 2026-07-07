@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { GIFT_TIERS } from "@/data/content";
@@ -9,7 +9,7 @@ export default function GiftTiers() {
   return (
     <section className="bg-white py-24 md:py-32">
       <div className="mx-auto max-w-5xl px-6 text-center">
-        <h2 className="font-cormorant text-[40px] text-ink md:text-[52px]">
+        <h2 className="font-cormorant text-[40px] text-ink md:text-[52px] text-glow-violet">
           Gift THE WORLD&apos;S GREATEST WATER
         </h2>
         <p className="mx-auto mt-4 max-w-xl font-inter text-base text-body">
@@ -18,7 +18,7 @@ export default function GiftTiers() {
 
         <div className="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-3">
           {GIFT_TIERS.map((tier, i) => (
-            <motion.div
+            <m.div
               key={tier.name}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -34,12 +34,12 @@ export default function GiftTiers() {
 
               <Link
                 href="/contact"
-                className="group mt-6 inline-flex items-center gap-2 rounded border border-violet px-6 py-3 font-inter text-[11px] font-semibold uppercase tracking-[0.15em] text-violet transition-colors hover:bg-violet hover:text-white"
+                className="group mt-6 inline-flex items-center gap-2 rounded-full bg-gradient-brand  px-6 py-3 font-inter text-[11px] font-semibold uppercase tracking-[0.15em] text-white btn-glow transition-transform hover:scale-[1.02]"
               >
                 Select
                 <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
               </Link>
-            </motion.div>
+            </m.div>
           ))}
         </div>
       </div>

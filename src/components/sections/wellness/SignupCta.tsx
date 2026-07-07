@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { ArrowRight, Check } from "lucide-react";
 import FormField from "@/components/ui/FormField";
 import { useFormSubmit, isValidEmail } from "@/lib/forms";
@@ -34,14 +34,14 @@ export default function SignupCta() {
       />
 
       <div className="relative mx-auto max-w-xl px-6 text-center">
-        <motion.h2
+        <m.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="font-cormorant text-[36px] font-semibold text-white md:text-[52px]"
         >
           Sign Up Today To ELEV8 Your Life
-        </motion.h2>
+        </m.h2>
         <p className="mt-4 font-inter text-base text-white/65">
           And drink your ultra-purified personal water created with you in
           mind.

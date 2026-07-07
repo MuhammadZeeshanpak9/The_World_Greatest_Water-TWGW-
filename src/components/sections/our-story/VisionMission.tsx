@@ -1,12 +1,12 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 
 export default function VisionMission() {
   return (
     <section className="bg-white py-24 md:py-32">
       <div className="mx-auto flex max-w-2xl flex-col items-center gap-14 px-6 text-center">
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -17,9 +17,9 @@ export default function VisionMission() {
             individual to aspire for more enjoyable life experiences in this
             beautiful GRAND DESIGN called LIFE.
           </p>
-        </motion.div>
+        </m.div>
 
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -29,7 +29,7 @@ export default function VisionMission() {
           <p className="mt-4 font-inter text-base leading-[1.9] text-body">
             To ELEV8 YOUR LIFE.
           </p>
-        </motion.div>
+        </m.div>
       </div>
     </section>
   );

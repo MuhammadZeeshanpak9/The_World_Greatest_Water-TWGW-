@@ -8,7 +8,8 @@ const WHITE = "#ffffff";
 const TINT = "#f0e8f8";
 
 export const metadata = {
-  title: "Sign In — ELEV8 WATER",
+  title: "Sign In",
+  description: "Sign in to your ELEV8 WATER account.",
 };
 
 export default function LoginPage() {

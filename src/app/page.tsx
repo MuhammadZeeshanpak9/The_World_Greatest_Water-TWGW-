@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+import dynamic from "next/dynamic";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import WaveTransition from "@/components/ui/WaveTransition";
@@ -5,7 +7,6 @@ import Hero from "@/components/sections/Hero";
 import Wellness from "@/components/sections/Wellness";
 import ProductBanner from "@/components/sections/ProductBanner";
 import OurStory from "@/components/sections/OurStory";
-import TwelveBottles from "@/components/sections/TwelveBottles";
 import ShopSection from "@/components/sections/ShopSection";
 import ScientificProcess from "@/components/sections/ScientificProcess";
 import WhyElev8 from "@/components/sections/WhyElev8";
@@ -18,6 +19,29 @@ const WHITE = "#ffffff";
 const TINT = "#f0e8f8";
 const DARK = "#0a0a0a";
 const DARK_VIOLET = "#1a0a2e";
+
+const TwelveBottles = dynamic(() => import("@/components/sections/TwelveBottles"), {
+  loading: () => <div className="h-[720px] w-full bg-gradient-hero" aria-hidden />,
+});
+
+const DESCRIPTION =
+  "Ultra-purified water infused with 528hz binaural frequency. 1 Water. 12 Understanding. ELEV8 your life.";
+
+export const metadata: Metadata = {
+  description: DESCRIPTION,
+  alternates: { canonical: "/" },
+  openGraph: {
+    title: "ELEV8 WATER — The World's Greatest Water",
+    description: DESCRIPTION,
+    url: "/",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "ELEV8 WATER — The World's Greatest Water",
+    description: DESCRIPTION,
+  },
+};
 
 export default function Home() {
   return (

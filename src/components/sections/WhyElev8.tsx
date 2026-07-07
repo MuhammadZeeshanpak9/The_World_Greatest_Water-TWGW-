@@ -1,12 +1,12 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { ImageWithFallback } from "@/components/ui/MediaWithFallback";
 import { GradientDivider } from "@/components/ui/primitives";
 
 export default function WhyElev8() {
   return (
-    <section className="relative overflow-hidden bg-dark-violet py-24 md:py-32">
+    <section className="relative overflow-hidden bg-gradient-hero py-24 md:py-32">
       {/* drifting violet orbs */}
       <div
         className="pointer-events-none absolute -left-20 top-10 h-80 w-80 rounded-full will-change-transform"
@@ -50,7 +50,7 @@ export default function WhyElev8() {
             elevate every part of your life — body, mind and soul.
           </p>
 
-          <motion.p
+          <m.p
             initial={{ opacity: 0, scale: 0.8 }}
             whileInView={{ opacity: 1, scale: [0.8, 1.05, 1] }}
             viewport={{ once: true }}
@@ -59,11 +59,11 @@ export default function WhyElev8() {
             style={{ textShadow: "0 0 60px rgba(107,47,160,0.6)" }}
           >
             I. AM. YOU.
-          </motion.p>
+          </m.p>
         </div>
 
         {/* Right image */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, x: 60 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
@@ -85,7 +85,7 @@ export default function WhyElev8() {
             className="absolute -inset-6 -z-10 blur-3xl"
             style={{ background: "rgba(107,47,160,0.3)", borderRadius: "50%" }}
           />
-        </motion.div>
+        </m.div>
       </div>
     </section>
   );

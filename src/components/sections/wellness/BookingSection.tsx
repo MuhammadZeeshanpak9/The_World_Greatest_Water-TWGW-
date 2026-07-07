@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import Link from "next/link";
 import { ArrowRight, Calendar } from "lucide-react";
 
@@ -24,9 +24,9 @@ export default function BookingSection({
   const premium = tone === "premium";
 
   return (
-    <section className="bg-dark-base py-24 md:py-32">
+    <section className="bg-gradient-hero py-24 md:py-32">
       <div className="mx-auto max-w-xl px-6 text-center">
-        <motion.h2
+        <m.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -35,7 +35,7 @@ export default function BookingSection({
           }`}
         >
           {heading}
-        </motion.h2>
+        </m.h2>
         <p className="mx-auto mt-4 max-w-md font-inter text-base text-white/65">{body}</p>
 
         {showCalendar && (

@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import type { WellnessFeature } from "@/types";
 
 type FeatureGridProps = {
@@ -15,7 +15,7 @@ export default function FeatureGrid({ features, tone }: FeatureGridProps) {
     <section className={`py-24 md:py-32 ${premium ? "bg-dark-violet" : "bg-violet-tint"}`}>
       <div className="mx-auto grid max-w-5xl grid-cols-1 gap-6 px-6 sm:grid-cols-2">
         {features.map((feature, i) => (
-          <motion.div
+          <m.div
             key={feature.title}
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -41,7 +41,7 @@ export default function FeatureGrid({ features, tone }: FeatureGridProps) {
             >
               {feature.description}
             </p>
-          </motion.div>
+          </m.div>
         ))}
       </div>
     </section>

@@ -1,15 +1,19 @@
 import { notFound } from "next/navigation";
+import dynamic from "next/dynamic";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import PageHero from "@/components/layout/PageHero";
 import WaveTransition from "@/components/ui/WaveTransition";
 import BlogDetailContent from "@/components/sections/blogs/BlogDetailContent";
 import BlogSidebar from "@/components/sections/blogs/BlogSidebar";
-import RelatedCarousel from "@/components/sections/blogs/RelatedCarousel";
 import { BLOG_POSTS } from "@/data/content";
 
 const TINT = "#f0e8f8";
 const WHITE = "#ffffff";
+
+const RelatedCarousel = dynamic(() => import("@/components/sections/blogs/RelatedCarousel"), {
+  loading: () => <div className="h-[280px] w-full rounded-2xl bg-violet-tint" aria-hidden />,
+});
 
 export async function generateStaticParams() {
   return BLOG_POSTS.map((p) => ({ slug: p.slug }));
@@ -22,7 +26,11 @@ type Props = { params: Promise<{ slug: string }> };
 export async function generateMetadata({ params }: Props) {
   const { slug } = await params;
   const post = BLOG_POSTS.find((p) => p.slug === slug);
-  return { title: post ? `${post.title} — ELEV8 WATER` : "Blog — ELEV8 WATER" };
+  return {
+    title: post ? post.title : "Blog",
+    description: post?.teaser,
+    openGraph: post ? { title: post.title, description: post.teaser, type: "article" } : undefined,
+  };
 }
 
 export default async function BlogPostPage({ params }: Props) {

@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { m } from "framer-motion";
 import { ArrowRight, ChevronDown } from "lucide-react";
 import { VideoWithFallback } from "@/components/ui/MediaWithFallback";
 
@@ -11,6 +12,8 @@ const TRUST = [
 ];
 
 export default function Hero() {
+  const [rippling, setRippling] = useState(false);
+
   return (
     <section className="relative flex min-h-screen items-center overflow-hidden pt-28 pb-16">
       {/* Full-bleed video background */}
@@ -23,7 +26,7 @@ export default function Hero() {
       </div>
 
       {/* Editorial depth text */}
-      <motion.span
+      <m.span
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.5, duration: 1.5 }}
@@ -32,55 +35,55 @@ export default function Hero() {
         aria-hidden
       >
         ELEV8
-      </motion.span>
+      </m.span>
 
       {/* Content overlay */}
       <div className="relative z-10 mx-auto grid w-full max-w-7xl grid-cols-1 items-center gap-12 px-6 lg:grid-cols-2">
         {/* LEFT — headline */}
         <div className="text-center lg:text-left">
-          <motion.p
+          <m.p
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
             className="font-inter text-[10px] font-semibold uppercase tracking-[0.5em] text-violet"
           >
             The World&apos;s Greatest
-          </motion.p>
+          </m.p>
 
-          <motion.h1
+          <m.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.35 }}
-            className="mt-3 font-cormorant font-bold leading-[0.9] text-violet text-[52px] md:text-[80px] lg:text-[96px]"
+            className="mt-3 font-cormorant font-bold leading-[0.9] text-gradient-brand text-[52px] md:text-[80px] lg:text-[96px]"
           >
             ELEV8
-          </motion.h1>
-          <motion.h1
+          </m.h1>
+          <m.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5 }}
-            className="font-cormorant font-bold leading-[0.9] text-violet text-[52px] md:text-[80px] lg:text-[96px]"
+            className="font-cormorant font-bold leading-[0.9] text-gradient-brand text-[52px] md:text-[80px] lg:text-[96px]"
           >
             WATER.
-          </motion.h1>
+          </m.h1>
 
-          <motion.span
+          <m.span
             initial={{ scaleX: 0 }}
             animate={{ scaleX: 1 }}
             transition={{ delay: 0.7, duration: 0.6 }}
             className="mx-auto mt-6 block h-[2px] w-20 origin-left bg-violet lg:mx-0"
           />
 
-          <motion.p
+          <m.p
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.65 }}
             className="mx-auto mt-6 max-w-md font-inter text-[15px] leading-relaxed text-violet/80 lg:mx-0"
           >
             Ultra-Purified · 528hz Frequency Infused. 1 Water. 12 Understanding.
-          </motion.p>
+          </m.p>
 
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.8 }}
@@ -88,18 +91,27 @@ export default function Hero() {
           >
             <a
               href="#shop"
-              className="group flex h-[52px] items-center gap-2 rounded bg-violet px-8 font-inter text-[12px] font-semibold uppercase tracking-[0.15em] text-white shadow-lg shadow-violet/30 transition-transform duration-300 hover:scale-[1.03]"
+              onClick={() => {
+                setRippling(true);
+                setTimeout(() => setRippling(false), 600);
+              }}
+              className="group relative overflow-hidden flex h-[52px] items-center gap-2 rounded-full bg-gradient-brand px-8 font-inter text-[12px] font-semibold uppercase tracking-[0.15em] text-white shadow-lg btn-glow transition-transform duration-300 active:scale-95"
             >
-              Shop Now
-              <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+              <span className="relative z-10 flex items-center gap-2">
+                Shop Now
+                <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+              </span>
+              {rippling && (
+                <span className="absolute inset-0 z-0 animate-water-ripple rounded-full bg-white/40" />
+              )}
             </a>
-          </motion.div>
+          </m.div>
         </div>
 
         {/* RIGHT — trust points */}
         <div className="flex flex-col items-center gap-5 text-center lg:items-end lg:text-right">
           {TRUST.map((t, i) => (
-            <motion.div
+            <m.div
               key={t.title}
               initial={{ opacity: 0, x: 30 }}
               animate={{ opacity: 1, x: 0 }}
@@ -113,10 +125,10 @@ export default function Hero() {
                 </p>
                 <p className="font-inter text-[11px] text-violet/60">{t.sub}</p>
               </div>
-            </motion.div>
+            </m.div>
           ))}
 
-          <motion.a
+          <m.a
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 1.3 }}
@@ -125,25 +137,25 @@ export default function Hero() {
           >
             Our Story
             <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
-          </motion.a>
+          </m.a>
         </div>
       </div>
 
       {/* Scroll indicator */}
-      <motion.div
+      <m.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.5 }}
         className="absolute bottom-6 left-1/2 z-10 -translate-x-1/2"
       >
-        <motion.div
+        <m.div
           animate={{ y: [0, 10, 0] }}
           transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
           className="flex h-10 w-10 items-center justify-center rounded-full border border-violet/40 text-violet"
         >
           <ChevronDown size={18} />
-        </motion.div>
-      </motion.div>
+        </m.div>
+      </m.div>
     </section>
   );
 }

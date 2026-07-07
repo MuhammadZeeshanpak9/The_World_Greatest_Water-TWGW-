@@ -26,7 +26,7 @@ export default function CourseDetail({ post }: { post: BlogPost }) {
           Back to Courses
         </Link>
 
-        <h1 className="mt-6 font-cormorant text-[40px] leading-tight text-ink md:text-[52px]">
+        <h1 className="mt-6 font-cormorant text-[40px] leading-tight text-ink md:text-[52px] text-glow-violet">
           {post.title}
         </h1>
 
@@ -51,7 +51,7 @@ export default function CourseDetail({ post }: { post: BlogPost }) {
 
         <button
           disabled
-          className="mt-10 flex h-[52px] items-center justify-center gap-2 rounded bg-violet px-8 font-inter text-[12px] font-semibold uppercase tracking-[0.15em] text-white disabled:cursor-not-allowed disabled:bg-muted/40"
+          className="mt-10 flex h-[52px] items-center justify-center gap-2 rounded-full bg-gradient-brand btn-glow px-8 font-inter text-[12px] font-semibold uppercase tracking-[0.15em] text-white disabled:cursor-not-allowed disabled:bg-muted/40"
         >
           Enroll Now
           <ArrowRight size={16} />

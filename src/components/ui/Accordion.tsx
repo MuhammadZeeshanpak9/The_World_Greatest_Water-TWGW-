@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import type { FaqItem } from "@/types";
 
@@ -21,28 +21,30 @@ export default function Accordion({ items, tone = "light" }: AccordionProps) {
         return (
           <div
             key={item.question}
-            className={`overflow-hidden rounded-2xl border ${
-              dark ? "border-white/10 bg-white/5 backdrop-blur-xl" : "border-violet/10 bg-white"
+            className={`overflow-hidden rounded-2xl transition-colors duration-300 ${
+              dark 
+                ? "glass-card-dark hover:bg-white/10" 
+                : "glass-card-light hover:bg-white/90"
             }`}
           >
             <button
               onClick={() => setOpenIndex(open ? null : i)}
-              className={`flex w-full items-center justify-between gap-4 px-6 py-5 text-left font-inter text-[15px] font-semibold ${
+              className={`flex w-full items-center justify-between gap-4 px-6 py-5 text-left font-inter text-[15px] font-semibold transition-colors ${
                 dark ? "text-white" : "text-ink"
               }`}
             >
               {item.question}
-              <motion.span
+              <m.span
                 animate={{ rotate: open ? 180 : 0 }}
-                transition={{ duration: 0.3 }}
+                transition={{ duration: 0.5, ease: "anticipate" }}
                 className="shrink-0 text-violet"
               >
                 <ChevronDown size={18} />
-              </motion.span>
+              </m.span>
             </button>
             <AnimatePresence initial={false}>
               {open && (
-                <motion.div
+                <m.div
                   initial={{ height: 0, opacity: 0 }}
                   animate={{ height: "auto", opacity: 1 }}
                   exit={{ height: 0, opacity: 0 }}
@@ -56,7 +58,7 @@ export default function Accordion({ items, tone = "light" }: AccordionProps) {
                   >
                     {item.answer}
                   </p>
-                </motion.div>
+                </m.div>
               )}
             </AnimatePresence>
           </div>

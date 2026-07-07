@@ -8,7 +8,8 @@ const WHITE = "#ffffff";
 const TINT = "#f0e8f8";
 
 export const metadata = {
-  title: "Create Account — ELEV8 WATER",
+  title: "Create Account",
+  description: "Create your ELEV8 WATER account and join the movement.",
 };
 
 export default function RegisterPage() {

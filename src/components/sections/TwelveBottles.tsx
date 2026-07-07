@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { BOTTLES } from "@/data/content";
 import { GradientPlaceholder } from "@/components/ui/MediaWithFallback";
@@ -47,7 +47,7 @@ export default function TwelveBottles() {
   }, [emblaApi]);
 
   return (
-    <section className="relative overflow-hidden bg-dark-base py-24 md:py-32">
+    <section className="relative overflow-hidden bg-gradient-hero py-24 md:py-32">
       <SectionParticles count={40} />
 
       {/* giant faint 12 */}
@@ -62,7 +62,7 @@ export default function TwelveBottles() {
       <div className="relative mx-auto max-w-7xl px-6">
         <h2 className="mx-auto max-w-4xl text-center font-cormorant text-[36px] font-semibold leading-tight text-white md:text-[56px]">
           {HEADING.map((c, i) => (
-            <motion.span
+            <m.span
               key={i}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -70,7 +70,7 @@ export default function TwelveBottles() {
               transition={{ delay: i * 0.02 }}
             >
               {c === " " ? " " : c}
-            </motion.span>
+            </m.span>
           ))}
         </h2>
         <p className="mt-4 text-center font-inter text-[13px] uppercase tracking-[0.4em] text-teal">
@@ -87,11 +87,7 @@ export default function TwelveBottles() {
                   className="min-w-0 flex-[0_0_80%] sm:flex-[0_0_45%] lg:flex-[0_0_28%]"
                 >
                   <div
-                    className="group h-full rounded-[20px] border border-white/10 p-7 transition-all duration-300 hover:-translate-y-1.5"
-                    style={{
-                      background: "rgba(255,255,255,0.05)",
-                      backdropFilter: "blur(20px)",
-                    }}
+                    className="group h-full rounded-[20px] p-7 transition-all duration-300 hover:-translate-y-1.5 glass-card-dark"
                     onMouseEnter={(e) => {
                       e.currentTarget.style.borderColor = bottle.color;
                       e.currentTarget.style.boxShadow = `0 0 30px ${bottle.color}55`;

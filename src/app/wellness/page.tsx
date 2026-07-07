@@ -12,7 +12,8 @@ const DARK = "#0a0a0a";
 const DARK_VIOLET = "#1a0a2e";
 
 export const metadata = {
-  title: "Wellness — ELEV8 WATER",
+  title: "Wellness",
+  description: "Wellness experiences designed With You In Mind — Body, Mind, Soul, and Unlock The Lock.",
 };
 
 export default function WellnessPage() {

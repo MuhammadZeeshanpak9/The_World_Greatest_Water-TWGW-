@@ -13,7 +13,8 @@ const DARK_VIOLET = "#1a0a2e";
 const data = WELLNESS_SUBPAGES.find((w) => w.slug === "unlock-the-lock")!;
 
 export const metadata = {
-  title: "Unlock The Lock — ELEV8 WATER",
+  title: "Unlock The Lock",
+  description: data.description,
 };
 
 export default function WellnessUnlockTheLockPage() {

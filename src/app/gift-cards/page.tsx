@@ -11,7 +11,8 @@ const WHITE = "#ffffff";
 const TINT = "#f0e8f8";
 
 export const metadata = {
-  title: "Love Gift — ELEV8 WATER",
+  title: "Love Gift",
+  description: "Give the gift of elevation — ELEV8 WATER gift cards.",
 };
 
 export default function GiftCardsPage() {

@@ -53,7 +53,7 @@ export default function ProductDetail({ product }: { product: Product }) {
 
             <button
               disabled={cta.disabled}
-              className="group mt-8 flex h-[52px] items-center justify-center gap-2 rounded bg-violet px-8 font-inter text-[12px] font-semibold uppercase tracking-[0.15em] text-white transition-transform duration-300 hover:scale-[1.02] disabled:cursor-not-allowed disabled:bg-muted/40 disabled:hover:scale-100"
+              className="group mt-8 flex h-[52px] items-center justify-center gap-2 rounded-full bg-gradient-brand btn-glow px-8 font-inter text-[12px] font-semibold uppercase tracking-[0.15em] text-white transition-transform duration-300 hover:scale-[1.02] disabled:cursor-not-allowed disabled:bg-muted/40 disabled:hover:scale-100"
             >
               {cta.label}
               <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />

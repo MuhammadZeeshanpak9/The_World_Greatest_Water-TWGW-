@@ -8,7 +8,8 @@ const DARK = "#0a0a0a";
 const WHITE = "#ffffff";
 
 export const metadata = {
-  title: "Shop To ELEV8 — ELEV8 WATER",
+  title: "Shop To ELEV8",
+  description: "Products created to add value to your life.",
 };
 
 export default function ShopPage() {

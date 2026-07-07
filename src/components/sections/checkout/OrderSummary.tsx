@@ -1,6 +1,6 @@
 export default function OrderSummary() {
   return (
-    <div className="rounded-[20px] border border-violet/10 bg-white/70 p-6 shadow-[0_20px_60px_rgba(107,47,160,0.1)] backdrop-blur">
+    <div className="rounded-[20px] glass-card-light p-6 ">
       <h3 className="font-cormorant text-[22px] text-ink">Order Summary</h3>
       <p className="mt-4 font-inter text-[13px] italic text-muted">Your Cart is Empty</p>
 

@@ -15,7 +15,7 @@ export default function SectionParticles({ count = 40 }: { count?: number }) {
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext("2d", { willReadFrequently: false });
     if (!ctx) return;
     if (reduced) return;
 
@@ -78,8 +78,20 @@ export default function SectionParticles({ count = 40 }: { count?: number }) {
       seed();
     };
     window.addEventListener("resize", onResize);
+
+    const onVisibilityChange = () => {
+      if (document.hidden) {
+        if (raf) cancelAnimationFrame(raf);
+        raf = 0;
+      } else if (!raf) {
+        raf = requestAnimationFrame(draw);
+      }
+    };
+    document.addEventListener("visibilitychange", onVisibilityChange);
+
     return () => {
       window.removeEventListener("resize", onResize);
+      document.removeEventListener("visibilitychange", onVisibilityChange);
       if (raf) cancelAnimationFrame(raf);
     };
   }, [count, isMobile, reduced]);

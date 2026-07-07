@@ -8,7 +8,8 @@ const DARK = "#0a0a0a";
 const WHITE = "#ffffff";
 
 export const metadata = {
-  title: "Blogs — ELEV8 WATER",
+  title: "Blogs",
+  description: "How to ELEV8 — 12 understandings for elevating every part of your life.",
 };
 
 export default function BlogsPage() {

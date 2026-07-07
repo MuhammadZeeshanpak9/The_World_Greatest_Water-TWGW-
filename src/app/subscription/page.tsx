@@ -12,7 +12,8 @@ const TINT = "#f0e8f8";
 const DARK = "#0a0a0a";
 
 export const metadata = {
-  title: "Subscribe To ELEV8 — ELEV8 WATER",
+  title: "Subscribe To ELEV8",
+  description: "Weekly or monthly ELEV8 WATER delivery — choose your plan.",
 };
 
 export default function SubscriptionPage() {

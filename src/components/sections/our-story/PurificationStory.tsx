@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { ImageWithFallback } from "@/components/ui/MediaWithFallback";
 import PullQuote from "@/components/ui/PullQuote";
 
@@ -18,12 +18,12 @@ const PARAGRAPHS_2 = [
 
 export default function PurificationStory() {
   return (
-    <section className="bg-dark-base py-24 md:py-32">
+    <section className="bg-gradient-hero py-24 md:py-32">
       <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 px-6 md:grid-cols-2">
         <div>
           <div className="flex flex-col gap-5">
             {PARAGRAPHS.map((p, i) => (
-              <motion.p
+              <m.p
                 key={i}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -32,7 +32,7 @@ export default function PurificationStory() {
                 className="font-inter text-base leading-[1.9] text-white/65"
               >
                 {p}
-              </motion.p>
+              </m.p>
             ))}
           </div>
 
@@ -44,7 +44,7 @@ export default function PurificationStory() {
 
           <div className="flex flex-col gap-5">
             {PARAGRAPHS_2.map((p, i) => (
-              <motion.p
+              <m.p
                 key={i}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -53,12 +53,12 @@ export default function PurificationStory() {
                 className="font-inter text-base leading-[1.9] text-white/65"
               >
                 {p}
-              </motion.p>
+              </m.p>
             ))}
           </div>
         </div>
 
-        <motion.div
+        <m.div
           initial={{ opacity: 0, x: 40 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
@@ -69,7 +69,7 @@ export default function PurificationStory() {
             alt="ELEV8 purification"
             watermark="purification.jpg"
           />
-        </motion.div>
+        </m.div>
       </div>
     </section>
   );

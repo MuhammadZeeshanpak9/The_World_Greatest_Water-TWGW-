@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import type { Product } from "@/types";
@@ -11,14 +11,14 @@ export default function ProductCard({ product, index }: { product: Product; inde
   const cta = getProductCta(product.status);
 
   return (
-    <motion.div
+    <m.div
       layout
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ delay: index * 0.08 }}
       whileHover={{ y: -6 }}
-      className="group flex flex-col overflow-hidden rounded-[16px] border border-violet/10 bg-white p-5 transition-shadow hover:shadow-[0_20px_50px_rgba(107,47,160,0.14)]"
+      className="group flex flex-col overflow-hidden rounded-[16px] glass-card-light p-5 transition-shadow hover:shadow-[0_20px_50px_rgba(107,47,160,0.14)]"
     >
       <Link href={`/shop/${product.slug}`} className="relative h-[240px] overflow-hidden rounded-xl">
         <GradientPlaceholder watermark={product.name} className="rounded-xl" />
@@ -47,11 +47,11 @@ export default function ProductCard({ product, index }: { product: Product; inde
 
       <button
         disabled={cta.disabled}
-        className="group/btn mt-5 inline-flex items-center justify-center gap-2 rounded border border-violet px-6 py-3 font-inter text-[11px] font-semibold uppercase tracking-[0.15em] text-violet transition-colors hover:bg-violet hover:text-white disabled:cursor-not-allowed disabled:border-muted/40 disabled:text-muted disabled:hover:bg-transparent"
+        className="group/btn mt-5 inline-flex items-center justify-center gap-2 rounded-full bg-gradient-brand  px-6 py-3 font-inter text-[11px] font-semibold uppercase tracking-[0.15em] text-white btn-glow transition-transform hover:scale-[1.02] disabled:cursor-not-allowed disabled:border-muted/40 disabled:text-muted disabled:hover:bg-transparent"
       >
         {cta.label}
         <ArrowRight size={14} className="transition-transform group-hover/btn:translate-x-1" />
       </button>
-    </motion.div>
+    </m.div>
   );
 }

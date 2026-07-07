@@ -10,7 +10,8 @@ const WHITE = "#ffffff";
 const TINT = "#f0e8f8";
 
 export const metadata = {
-  title: "Creators — ELEV8 WATER",
+  title: "Creators",
+  description: "Join the ELEV8 movement — become an affiliate, partner with the brand, and grow together.",
 };
 
 export default function CreatorsPage() {

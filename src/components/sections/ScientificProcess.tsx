@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { Sparkles } from "lucide-react";
 import { PROCESS_STEPS } from "@/data/content";
 import { SectionLabel, GradientDivider } from "@/components/ui/primitives";
@@ -32,7 +32,7 @@ export default function ScientificProcess() {
             preserveAspectRatio="none"
             aria-hidden
           >
-            <motion.path
+            <m.path
               d="M70,10 C210,-6 300,26 430,10 C560,-6 650,26 780,10 C860,2 900,14 930,10"
               fill="none"
               stroke="#6b2fa0"
@@ -46,7 +46,7 @@ export default function ScientificProcess() {
           </svg>
 
           {PROCESS_STEPS.map((step, i) => (
-            <motion.div
+            <m.div
               key={step.label}
               initial={{ opacity: 0, scale: 0 }}
               whileInView={{ opacity: 1, scale: 1 }}
@@ -66,7 +66,7 @@ export default function ScientificProcess() {
               <span className="mt-1 font-inter text-[9px] uppercase tracking-[0.2em] text-muted">
                 {step.chakra}
               </span>
-            </motion.div>
+            </m.div>
           ))}
         </div>
       </div>

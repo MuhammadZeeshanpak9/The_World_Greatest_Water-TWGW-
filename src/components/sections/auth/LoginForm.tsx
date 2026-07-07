@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import FormField from "@/components/ui/FormField";
 import { useFormSubmit, isValidEmail } from "@/lib/forms";
@@ -30,11 +30,11 @@ export default function LoginForm() {
 
   return (
     <section className="bg-white py-24 md:py-32">
-      <motion.div
+      <m.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="mx-auto max-w-[480px] rounded-[20px] border border-violet/10 bg-white/70 p-8 shadow-[0_20px_60px_rgba(107,47,160,0.1)] backdrop-blur md:p-12"
+        className="mx-auto max-w-[480px] rounded-[20px] glass-card-light p-8  md:p-12"
       >
         {status === "success" ? (
           <p className="flex items-center justify-center gap-2 py-8 font-inter text-[14px] font-semibold uppercase tracking-[0.15em] text-violet">
@@ -66,7 +66,7 @@ export default function LoginForm() {
             <button
               type="submit"
               disabled={status === "submitting"}
-              className="group mt-2 flex h-[52px] w-full items-center justify-center gap-2 rounded bg-violet font-inter text-[12px] font-semibold uppercase tracking-[0.15em] text-white transition-transform duration-300 hover:scale-[1.01] disabled:opacity-60"
+              className="group mt-2 flex h-[52px] w-full items-center justify-center gap-2 rounded-full bg-gradient-brand btn-glow font-inter text-[12px] font-semibold uppercase tracking-[0.15em] text-white transition-transform duration-300 hover:scale-[1.01] disabled:opacity-60"
             >
               {status === "submitting" ? "Signing In…" : "Sign In"}
               <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
@@ -89,14 +89,14 @@ export default function LoginForm() {
 
             <Link
               href="/register"
-              className="group flex h-[52px] w-full items-center justify-center gap-2 rounded border border-violet font-inter text-[12px] font-semibold uppercase tracking-[0.15em] text-violet transition-colors hover:bg-violet hover:text-white"
+              className="group flex h-[52px] w-full items-center justify-center gap-2 rounded-full bg-gradient-brand  font-inter text-[12px] font-semibold uppercase tracking-[0.15em] text-white btn-glow transition-transform hover:scale-[1.02]"
             >
               Create An Account
               <ArrowRight size={15} className="transition-transform group-hover:translate-x-1" />
             </Link>
           </form>
         )}
-      </motion.div>
+      </m.div>
     </section>
   );
 }

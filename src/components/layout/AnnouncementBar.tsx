@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
 import { ANNOUNCEMENTS } from "@/data/content";
 
 export default function AnnouncementBar() {
@@ -20,7 +20,7 @@ export default function AnnouncementBar() {
 
       <span className="mr-2 inline-block h-1.5 w-1.5 animate-glow-pulse rounded-full bg-violet" />
       <AnimatePresence mode="wait">
-        <motion.span
+        <m.span
           key={index}
           initial={{ opacity: 0, y: 6 }}
           animate={{ opacity: 1, y: 0 }}
@@ -29,7 +29,7 @@ export default function AnnouncementBar() {
           className="font-inter text-[10px] font-medium uppercase tracking-[0.3em] text-white/85"
         >
           {ANNOUNCEMENTS[index]}
-        </motion.span>
+        </m.span>
       </AnimatePresence>
     </div>
   );

@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { Check } from "lucide-react";
 import { NOT_IN_WATER } from "@/data/content";
 import { ImageWithFallback } from "@/components/ui/MediaWithFallback";
@@ -11,7 +11,7 @@ export default function ProductBanner() {
     <section className="relative overflow-hidden bg-violet-tint py-24 md:py-32">
       <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 px-6 md:grid-cols-2">
         {/* Left: organic-masked image */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, x: -60 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
@@ -33,12 +33,12 @@ export default function ProductBanner() {
             className="absolute -inset-4 -z-10 blur-3xl"
             style={{ background: "rgba(107,47,160,0.15)", borderRadius: "50%" }}
           />
-        </motion.div>
+        </m.div>
 
         {/* Right: text */}
         <div>
           <SectionLabel className="items-start">With You In Mind</SectionLabel>
-          <motion.p
+          <m.p
             initial={{ opacity: 0, x: 40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -48,9 +48,9 @@ export default function ProductBanner() {
             ELEV8 WATER is ultra-purified and infused with binaural frequency
             528hz — crafted with nothing but you in mind. Pure hydration for a
             higher level of being.
-          </motion.p>
+          </m.p>
 
-          <motion.h3
+          <m.h3
             initial={{ opacity: 0, x: 40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -58,11 +58,11 @@ export default function ProductBanner() {
             className="mt-8 font-inter text-sm font-bold uppercase tracking-[0.2em] text-violet"
           >
             What&apos;s not in your personal water:
-          </motion.h3>
+          </m.h3>
 
           <ul className="mt-5 flex flex-col gap-3">
             {NOT_IN_WATER.map((item, i) => (
-              <motion.li
+              <m.li
                 key={item}
                 initial={{ opacity: 0, x: 40 }}
                 whileInView={{ opacity: 1, x: 0 }}
@@ -74,7 +74,7 @@ export default function ProductBanner() {
                   <Check size={14} strokeWidth={3} />
                 </span>
                 {item}
-              </motion.li>
+              </m.li>
             ))}
           </ul>
         </div>

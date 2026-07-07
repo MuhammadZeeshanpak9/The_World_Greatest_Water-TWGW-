@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 
 const PILLARS = [
   {
@@ -22,13 +22,13 @@ export default function Pillars() {
     <section className="bg-violet-tint py-24 md:py-32">
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-6 px-6 md:grid-cols-3">
         {PILLARS.map((p, i) => (
-          <motion.div
+          <m.div
             key={p.name}
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: i * 0.15 }}
-            className="rounded-[20px] border border-violet/10 bg-white p-8"
+            className="rounded-[20px] glass-card-light p-8"
           >
             <h3 className="font-inter text-[13px] font-semibold uppercase tracking-[0.25em] text-violet">
               {p.name}
@@ -36,7 +36,7 @@ export default function Pillars() {
             <p className="mt-5 font-inter text-[15px] leading-[1.85] text-body">
               {p.text}
             </p>
-          </motion.div>
+          </m.div>
         ))}
       </div>
     </section>

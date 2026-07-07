@@ -14,7 +14,8 @@ const DARK = "#0a0a0a";
 const data = WELLNESS_SUBPAGES.find((w) => w.slug === "soul")!;
 
 export const metadata = {
-  title: "Thank You Soul — ELEV8 WATER",
+  title: "Thank You Soul",
+  description: data.description,
 };
 
 export default function WellnessSoulPage() {

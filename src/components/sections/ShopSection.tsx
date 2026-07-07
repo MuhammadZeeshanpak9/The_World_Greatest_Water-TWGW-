@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { SHOP_PRODUCTS } from "@/data/content";
@@ -27,15 +27,14 @@ export default function ShopSection() {
 
         <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {FEATURED.map((product, i) => (
-            <motion.div
+            <m.div
               key={product.name}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.12 }}
               whileHover={{ y: -6 }}
-              className="group flex flex-col overflow-hidden rounded-[16px] border border-violet/10 p-5 transition-shadow hover:shadow-[0_20px_50px_rgba(107,47,160,0.14)]"
-              style={{ background: "rgba(255,255,255,0.8)", backdropFilter: "blur(10px)" }}
+              className="group flex flex-col overflow-hidden rounded-[16px] transition-shadow hover:shadow-[0_20px_50px_rgba(107,47,160,0.14)] glass-card-light p-5"
             >
               <div className="relative h-[280px] overflow-hidden rounded-xl">
                 <GradientPlaceholder watermark="ELEV8 WATER" className="rounded-xl" />
@@ -55,12 +54,12 @@ export default function ShopSection() {
 
               <Link
                 href={`/shop/${product.slug}`}
-                className="group/btn mt-5 inline-flex items-center justify-center gap-2 rounded border border-violet px-6 py-3 font-inter text-[11px] font-semibold uppercase tracking-[0.15em] text-violet transition-colors hover:bg-violet hover:text-white"
+                className="group/btn mt-5 inline-flex items-center justify-center gap-2 rounded-full bg-gradient-brand px-6 py-3 font-inter text-[11px] font-semibold uppercase tracking-[0.15em] text-white btn-glow"
               >
                 {product.cta}
                 <ArrowRight size={14} className="transition-transform group-hover/btn:translate-x-1" />
               </Link>
-            </motion.div>
+            </m.div>
           ))}
         </div>
       </div>

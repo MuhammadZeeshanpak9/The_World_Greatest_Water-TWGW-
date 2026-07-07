@@ -22,7 +22,7 @@ export default function OrderConfirmation() {
           <Check size={36} />
         </span>
 
-        <h1 className="mt-8 font-cormorant text-[40px] text-ink md:text-[48px]">
+        <h1 className="mt-8 font-cormorant text-[40px] text-ink md:text-[48px] text-glow-violet">
           Your order has been confirmed!
         </h1>
 
@@ -42,14 +42,14 @@ export default function OrderConfirmation() {
         <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
           <Link
             href="/shop"
-            className="group flex items-center gap-2 rounded bg-violet px-8 py-3.5 font-inter text-[12px] font-semibold uppercase tracking-[0.15em] text-white transition-transform duration-300 hover:scale-[1.02]"
+            className="group flex items-center gap-2 rounded-full bg-gradient-brand btn-glow px-8 py-3.5 font-inter text-[12px] font-semibold uppercase tracking-[0.15em] text-white transition-transform duration-300 hover:scale-[1.02]"
           >
             Continue Shopping
             <ArrowRight size={15} className="transition-transform group-hover:translate-x-1" />
           </Link>
           <Link
             href="/account"
-            className="group flex items-center gap-2 rounded border border-violet px-8 py-3.5 font-inter text-[12px] font-semibold uppercase tracking-[0.15em] text-violet transition-colors hover:bg-violet hover:text-white"
+            className="group flex items-center gap-2 rounded-full bg-gradient-brand  px-8 py-3.5 font-inter text-[12px] font-semibold uppercase tracking-[0.15em] text-white btn-glow transition-transform hover:scale-[1.02]"
           >
             My Account
             <ArrowRight size={15} className="transition-transform group-hover:translate-x-1" />

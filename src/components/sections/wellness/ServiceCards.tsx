@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { WELLNESS_CARDS } from "@/data/content";
@@ -10,14 +10,14 @@ export default function ServiceCards() {
     <section className="bg-violet-tint py-24 md:py-32">
       <div className="mx-auto grid max-w-5xl grid-cols-1 gap-6 px-6 sm:grid-cols-2">
         {WELLNESS_CARDS.map((card, i) => (
-          <motion.div
+          <m.div
             key={card.name}
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: i * 0.15 }}
             whileHover={{ y: -8 }}
-            className="relative overflow-hidden rounded-[20px] border border-violet/10 bg-white p-8 transition-shadow hover:shadow-[0_20px_60px_rgba(107,47,160,0.15)]"
+            className="relative overflow-hidden rounded-[20px] glass-card-light p-8 transition-shadow hover:shadow-[0_20px_60px_rgba(107,47,160,0.15)]"
           >
             <svg
               className="absolute inset-x-0 top-0 h-3 w-full"
@@ -49,7 +49,7 @@ export default function ServiceCards() {
               {card.cta === "Enquire" ? "Enquire Now" : "Book Session"}
               <ArrowRight size={13} className="transition-transform group-hover:translate-x-1" />
             </Link>
-          </motion.div>
+          </m.div>
         ))}
       </div>
     </section>

@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
 import Link from "next/link";
 import { X } from "lucide-react";
 import { NAV_LINKS } from "@/data/content";
@@ -15,13 +15,12 @@ export default function MobileMenu({
   return (
     <AnimatePresence>
       {open && (
-        <motion.div
+        <m.div
           initial={{ x: "100%" }}
           animate={{ x: 0 }}
           exit={{ x: "100%" }}
           transition={{ type: "tween", duration: 0.4, ease: "easeInOut" }}
-          className="fixed inset-0 z-[80] flex flex-col overflow-y-auto px-6 py-8 backdrop-blur-2xl lg:hidden"
-          style={{ background: "rgba(255,255,255,0.97)" }}
+          className="fixed inset-0 z-[80] flex flex-col overflow-y-auto px-6 py-8 backdrop-blur-2xl bg-white/80 lg:hidden"
         >
           <div className="flex items-center justify-between">
             <span className="font-cormorant text-lg tracking-[0.15em] text-violet">
@@ -38,7 +37,7 @@ export default function MobileMenu({
 
           <nav className="mt-10 flex flex-col gap-5">
             {NAV_LINKS.map((link, i) => (
-              <motion.div
+              <m.div
                 key={link.label}
                 initial={{ opacity: 0, x: 24 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -51,10 +50,10 @@ export default function MobileMenu({
                 >
                   {link.label}
                 </Link>
-              </motion.div>
+              </m.div>
             ))}
           </nav>
-        </motion.div>
+        </m.div>
       )}
     </AnimatePresence>
   );

@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { WELLNESS_CARDS } from "@/data/content";
 
@@ -40,7 +40,7 @@ export default function Wellness() {
         <div className="flex items-center justify-center gap-4 md:gap-10">
           <h2 className="flex font-cormorant font-light leading-none text-ink text-[20vw] md:text-[15vw]">
             {INHALE.map((c, i) => (
-              <motion.span
+              <m.span
                 key={i}
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -48,13 +48,13 @@ export default function Wellness() {
                 transition={{ delay: i * 0.05 }}
               >
                 {c}
-              </motion.span>
+              </m.span>
             ))}
           </h2>
           <span className="h-[60px] w-px bg-violet" />
           <h2 className="flex font-cormorant font-light leading-none text-[20vw] md:text-[15vw]">
             {EXHALE.map((c, i) => (
-              <motion.span
+              <m.span
                 key={i}
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -63,12 +63,12 @@ export default function Wellness() {
                 className="text-gradient-brand"
               >
                 {c}
-              </motion.span>
+              </m.span>
             ))}
           </h2>
         </div>
 
-        <motion.p
+        <m.p
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
@@ -76,19 +76,19 @@ export default function Wellness() {
           className="mt-4 text-center font-cormorant text-2xl italic text-violet/70"
         >
           Reinvent · Renew · Rise
-        </motion.p>
+        </m.p>
 
         {/* Cards */}
         <div className="mt-16 grid grid-cols-2 gap-5 lg:grid-cols-4">
           {WELLNESS_CARDS.map((card, i) => (
-            <motion.div
+            <m.div
               key={card.name}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.15 }}
               whileHover={{ y: -8 }}
-              className="group relative overflow-hidden rounded-[20px] border border-violet/10 bg-white p-6 transition-shadow hover:border-violet/30 hover:shadow-[0_20px_60px_rgba(107,47,160,0.15)]"
+              className="group relative overflow-hidden rounded-[20px] transition-shadow hover:shadow-[0_20px_60px_rgba(107,47,160,0.15)] glass-card-light p-6"
             >
               {/* curved wave accent */}
               <svg
@@ -121,7 +121,7 @@ export default function Wellness() {
                   className="transition-transform group-hover:translate-x-1"
                 />
               </a>
-            </motion.div>
+            </m.div>
           ))}
         </div>
       </div>
