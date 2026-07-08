@@ -38,17 +38,17 @@ export default function Navbar() {
           className="border-b bg-white/80 backdrop-blur-2xl"
           onMouseLeave={() => setOpenMenu(null)}
         >
-          <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-6">
+          <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-2 px-4 xl:gap-4 xl:px-6">
             {/* Logo */}
             <Link href="/" className="group flex shrink-0 items-center gap-2">
-              <WaterDrop />
-              <span className="font-cormorant text-[20px] font-medium tracking-[0.15em] shimmer-text">
-                ELEV8 WATER
+              <WaterDrop size={48} />
+              <span className="hidden font-cormorant text-[14px] font-medium tracking-[0.03em] shimmer-text whitespace-nowrap xl:inline">
+                THE WORLD&apos;S GREATEST WATER
               </span>
             </Link>
 
             {/* Desktop nav */}
-            <nav className="hidden items-center gap-6 lg:flex">
+            <nav className="hidden items-center gap-3 xl:gap-6 lg:flex">
               {NAV_LINKS.map((link) => (
                 <div
                   key={link.label}
@@ -62,7 +62,7 @@ export default function Navbar() {
                       href={link.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className={`group relative inline-block font-inter text-[11px] font-medium uppercase tracking-[0.15em] transition-colors hover:text-violet ${textColor}`}
+                      className={`group relative inline-block whitespace-nowrap font-inter text-[11px] font-medium uppercase tracking-[0.1em] transition-colors hover:text-violet ${textColor}`}
                     >
                       {link.label}
                       <CurvedUnderline />
@@ -70,7 +70,7 @@ export default function Navbar() {
                   ) : (
                     <Link
                       href={link.href}
-                      className={`group relative inline-block font-inter text-[11px] font-medium uppercase tracking-[0.15em] transition-colors hover:text-violet ${textColor}`}
+                      className={`group relative inline-block whitespace-nowrap font-inter text-[11px] font-medium uppercase tracking-[0.1em] transition-colors hover:text-violet ${textColor}`}
                     >
                       {link.label}
                       <CurvedUnderline />
@@ -88,7 +88,7 @@ export default function Navbar() {
             </nav>
 
             {/* Actions */}
-            <div className="flex shrink-0 items-center gap-4">
+            <div className="flex shrink-0 items-center gap-2 xl:gap-4">
               <Link href="/account" aria-label="Account" className={`hidden sm:block ${iconColor}`}>
                 <User size={18} />
               </Link>
