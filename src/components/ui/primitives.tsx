@@ -47,9 +47,9 @@ export function GradientDivider({
 }
 
 /**
- * ELEV8 logo mark, clipped into a circle (gentle bob loop, same animation
- * as the original hand-drawn drop). The source image is a square crop of
- * the "8 WATER" emblem, centered so it fills the circle cleanly.
+ * ELEV8 logo mark in a circle (gentle bob loop, same animation as the
+ * original hand-drawn drop). Shows the complete, uncropped logo image,
+ * scaled down to fit entirely inside the circle — nothing is cut off.
  */
 export function WaterDrop({
   className = "",
@@ -75,11 +75,11 @@ export function WaterDrop({
       </defs>
       <circle cx="12" cy="12" r="12" fill="#ffffff" />
       <image
-        href="/logo/elev8-emblem.jpg"
-        x="4.5"
-        y="4.5"
-        width="15"
-        height="15"
+        href="/logo/elev8-full.jpg"
+        x="0"
+        y="0"
+        width="24"
+        height="24"
         preserveAspectRatio="xMidYMid meet"
         clipPath="url(#dropClip)"
       />
