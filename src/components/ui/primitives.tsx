@@ -47,8 +47,9 @@ export function GradientDivider({
 }
 
 /**
- * ELEV8 logo mark, clipped into the brand's water-drop silhouette
- * (gentle bob loop, same animation as the original hand-drawn drop).
+ * ELEV8 logo mark, clipped into a circle (gentle bob loop, same animation
+ * as the original hand-drawn drop). The source image is a square crop of
+ * the "8 WATER" emblem, centered so it fills the circle cleanly.
  */
 export function WaterDrop({
   className = "",
@@ -57,12 +58,11 @@ export function WaterDrop({
   className?: string;
   size?: number;
 }) {
-  const height = Math.round(size * 1.25); // preserves the 16:20 drop proportions
   return (
     <m.svg
       width={size}
-      height={height}
-      viewBox="0 0 16 20"
+      height={size}
+      viewBox="0 0 24 24"
       fill="none"
       className={className}
       animate={{ y: [0, -3, 0] }}
@@ -70,13 +70,13 @@ export function WaterDrop({
     >
       <defs>
         <clipPath id="dropClip">
-          <path d="M8 1C8 1 1 9.5 1 13.5C1 17.09 4.13 20 8 20C11.87 20 15 17.09 15 13.5C15 9.5 8 1 8 1Z" />
+          <circle cx="12" cy="12" r="12" />
         </clipPath>
       </defs>
       <image
         href="/logo/elev8-emblem.jpg"
-        x="-4"
-        y="-2"
+        x="0"
+        y="0"
         width="24"
         height="24"
         preserveAspectRatio="xMidYMid slice"

@@ -48,8 +48,12 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${cormorant.variable} ${inter.variable} antialiased`}
+      suppressHydrationWarning
     >
-      <body className="relative min-h-screen bg-white font-inter text-ink">
+      <body
+        className="relative min-h-screen bg-white font-inter text-ink"
+        suppressHydrationWarning
+      >
         <LazyMotion features={domAnimation}>
           <PageBackground />
           <div className="relative z-[1]">{children}</div>
