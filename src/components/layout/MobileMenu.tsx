@@ -43,13 +43,25 @@ export default function MobileMenu({
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.1 + i * 0.05 }}
               >
-                <Link
-                  href={link.href}
-                  onClick={onClose}
-                  className="font-cormorant text-4xl font-light text-ink transition-colors hover:text-violet"
-                >
-                  {link.label}
-                </Link>
+                {link.external ? (
+                  <a
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={onClose}
+                    className="font-cormorant text-4xl font-light text-ink transition-colors hover:text-violet"
+                  >
+                    {link.label}
+                  </a>
+                ) : (
+                  <Link
+                    href={link.href}
+                    onClick={onClose}
+                    className="font-cormorant text-4xl font-light text-ink transition-colors hover:text-violet"
+                  >
+                    {link.label}
+                  </Link>
+                )}
               </m.div>
             ))}
           </nav>

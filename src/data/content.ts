@@ -279,7 +279,7 @@ export const NAV_LINKS: NavLink[] = [
       { label: "Clothing", href: "https://www.ielev8my.com", external: true },
     ],
   },
-  { label: "Trending", href: "/trending" },
+  { label: "TRENDING", href: "https://www.youtube.com", external: true },
   {
     label: "Blogs",
     href: "/blogs",

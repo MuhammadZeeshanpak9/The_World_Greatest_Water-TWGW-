@@ -57,13 +57,25 @@ export default function Navbar() {
                     setOpenMenu(link.children ? link.label : null)
                   }
                 >
-                  <Link
-                    href={link.href}
-                    className={`group relative inline-block font-inter text-[11px] font-medium uppercase tracking-[0.15em] transition-colors hover:text-violet ${textColor}`}
-                  >
-                    {link.label}
-                    <CurvedUnderline />
-                  </Link>
+                  {link.external ? (
+                    <a
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`group relative inline-block font-inter text-[11px] font-medium uppercase tracking-[0.15em] transition-colors hover:text-violet ${textColor}`}
+                    >
+                      {link.label}
+                      <CurvedUnderline />
+                    </a>
+                  ) : (
+                    <Link
+                      href={link.href}
+                      className={`group relative inline-block font-inter text-[11px] font-medium uppercase tracking-[0.15em] transition-colors hover:text-violet ${textColor}`}
+                    >
+                      {link.label}
+                      <CurvedUnderline />
+                    </Link>
+                  )}
 
                   {link.children && (
                     <MegaDropdown
