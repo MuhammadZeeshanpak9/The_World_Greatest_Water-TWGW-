@@ -4,6 +4,7 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import WaveTransition from "@/components/ui/WaveTransition";
 import Hero from "@/components/sections/Hero";
+import WaveCollection from "@/components/sections/WaveCollection";
 import Wellness from "@/components/sections/Wellness";
 import ProductBanner from "@/components/sections/ProductBanner";
 import OurStory from "@/components/sections/OurStory";
@@ -49,6 +50,8 @@ export default function Home() {
       <Navbar />
 
       <Hero />
+
+      <WaveCollection />
 
       <Wellness />
       <WaveTransition fromColor={WHITE} toColor={TINT} variant={1} />
