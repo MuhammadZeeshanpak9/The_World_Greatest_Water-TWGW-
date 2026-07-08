@@ -46,28 +46,42 @@ export function GradientDivider({
   return <span className={`block h-px ${width} bg-gradient-brand ${className}`} />;
 }
 
-/** Animated water-drop SVG (gentle bob loop). */
-export function WaterDrop({ className = "" }: { className?: string }) {
+/**
+ * ELEV8 logo mark, clipped into the brand's water-drop silhouette
+ * (gentle bob loop, same animation as the original hand-drawn drop).
+ */
+export function WaterDrop({
+  className = "",
+  size = 32,
+}: {
+  className?: string;
+  size?: number;
+}) {
+  const height = Math.round(size * 1.25); // preserves the 16:20 drop proportions
   return (
     <m.svg
-      width="16"
-      height="20"
+      width={size}
+      height={height}
       viewBox="0 0 16 20"
       fill="none"
       className={className}
       animate={{ y: [0, -3, 0] }}
       transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
     >
-      <path
-        d="M8 1C8 1 1 9.5 1 13.5C1 17.09 4.13 20 8 20C11.87 20 15 17.09 15 13.5C15 9.5 8 1 8 1Z"
-        fill="url(#dropGrad)"
-      />
       <defs>
-        <linearGradient id="dropGrad" x1="1" y1="1" x2="15" y2="20">
-          <stop stopColor="#6B2FA0" />
-          <stop offset="1" stopColor="#4ECDC4" />
-        </linearGradient>
+        <clipPath id="dropClip">
+          <path d="M8 1C8 1 1 9.5 1 13.5C1 17.09 4.13 20 8 20C11.87 20 15 17.09 15 13.5C15 9.5 8 1 8 1Z" />
+        </clipPath>
       </defs>
+      <image
+        href="/logo/elev8-emblem.jpg"
+        x="-4"
+        y="-2"
+        width="24"
+        height="24"
+        preserveAspectRatio="xMidYMid slice"
+        clipPath="url(#dropClip)"
+      />
     </m.svg>
   );
 }

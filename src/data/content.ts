@@ -319,7 +319,7 @@ export const WELLNESS_CARDS: WellnessCard[] = [
   {
     name: "Thank You Mind",
     cta: "Book Session",
-    blurb: "Mental clarity & preservation",
+    blurb: "Mental clarity & awareness",
     price: "$2,500+",
     description:
       "Mental clarity, consciousness elevation. Unlock the power of your mind.",
@@ -336,7 +336,7 @@ export const WELLNESS_CARDS: WellnessCard[] = [
   {
     name: "Unlock The Lock",
     cta: "Enquire",
-    blurb: "The ultimate transformation",
+    blurb: "THE GRAND DESIGNER.",
     price: "$1,000,000+",
     description: "The ultimate transformation experience.",
     href: "/wellness/unlock-the-lock",

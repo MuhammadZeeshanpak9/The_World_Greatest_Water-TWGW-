@@ -1,13 +1,14 @@
 "use client";
 
 import { m } from "framer-motion";
+import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { WELLNESS_CARDS } from "@/data/content";
-
-const INHALE = "INHALE".split("");
-const EXHALE = "EXHALE".split("");
+import { usePrefersReducedMotion } from "@/lib/hooks";
 
 export default function Wellness() {
+  const reduced = usePrefersReducedMotion();
+
   return (
     <section className="relative overflow-hidden bg-white py-24 md:py-32">
       {/* faint moving water paths */}
@@ -37,36 +38,52 @@ export default function Wellness() {
 
       <div className="relative mx-auto max-w-7xl px-6">
         {/* INHALE / EXHALE */}
-        <div className="flex items-center justify-center gap-4 md:gap-10">
-          <h2 className="flex font-cormorant font-light leading-none text-ink text-[20vw] md:text-[15vw]">
-            {INHALE.map((c, i) => (
-              <m.span
-                key={i}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.05 }}
-              >
-                {c}
-              </m.span>
-            ))}
-          </h2>
-          <span className="h-[60px] w-px bg-violet" />
-          <h2 className="flex font-cormorant font-light leading-none text-[20vw] md:text-[15vw]">
-            {EXHALE.map((c, i) => (
-              <m.span
-                key={i}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.05 }}
-                className="text-gradient-brand"
-              >
-                {c}
-              </m.span>
-            ))}
-          </h2>
-        </div>
+        {reduced ? (
+          <div className="flex items-center justify-center gap-4 md:gap-10">
+            <m.h2
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="font-cormorant font-light leading-none text-ink text-[9vw] md:text-[6vw]"
+            >
+              INHALE
+            </m.h2>
+            <span className="h-[60px] w-px shrink-0 bg-violet" />
+            <m.h2
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.15 }}
+              className="font-cormorant font-light leading-none text-[9vw] md:text-[6vw] text-gradient-brand"
+            >
+              EXHALE
+            </m.h2>
+          </div>
+        ) : (
+          <div className="overflow-hidden">
+            <m.div
+              className="flex w-max items-center gap-10 md:gap-16"
+              animate={{ x: ["-50%", "0%"] }}
+              transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
+            >
+              {[0, 1].map((rep) => (
+                <div
+                  key={rep}
+                  aria-hidden={rep === 1}
+                  className="flex shrink-0 items-center gap-10 md:gap-16"
+                >
+                  <h2 className="font-cormorant font-light leading-none text-ink text-[14vw] md:text-[8vw]">
+                    INHALE
+                  </h2>
+                  <span className="h-[60px] w-px shrink-0 bg-violet" />
+                  <h2 className="font-cormorant font-light leading-none text-[14vw] md:text-[8vw] text-gradient-brand">
+                    EXHALE
+                  </h2>
+                </div>
+              ))}
+            </m.div>
+          </div>
+        )}
 
         <m.p
           initial={{ opacity: 0 }}
@@ -75,7 +92,7 @@ export default function Wellness() {
           transition={{ delay: 0.4 }}
           className="mt-4 text-center font-cormorant text-2xl italic text-violet/70"
         >
-          Reinvent · Renew · Rise
+          SOUL. MIND. BODY
         </m.p>
 
         {/* Cards */}
@@ -111,8 +128,11 @@ export default function Wellness() {
               <h3 className="mt-3 font-inter text-[11px] font-semibold uppercase tracking-[0.3em] text-ink">
                 {card.name}
               </h3>
-              <a
-                href="#"
+              {card.price && (
+                <p className="mt-3 font-cormorant text-[26px] text-violet">{card.price}</p>
+              )}
+              <Link
+                href={card.href ?? "/contact"}
                 className="mt-6 flex items-center gap-1 font-inter text-[11px] font-semibold uppercase tracking-[0.15em] text-violet"
               >
                 {card.cta}
@@ -120,7 +140,7 @@ export default function Wellness() {
                   size={13}
                   className="transition-transform group-hover:translate-x-1"
                 />
-              </a>
+              </Link>
             </m.div>
           ))}
         </div>

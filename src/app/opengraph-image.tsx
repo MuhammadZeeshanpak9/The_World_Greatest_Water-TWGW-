@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "ELEV8 WATER — The World's Greatest Water";
+export const alt = "THE WORLD'S GREATEST WATER — ELEV8 WATER";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -20,14 +20,15 @@ export default async function Image() {
       >
         <div
           style={{
-            fontSize: 100,
+            fontSize: 64,
             fontWeight: 600,
             color: "#ffffff",
-            letterSpacing: 6,
+            letterSpacing: 4,
             display: "flex",
+            textAlign: "center",
           }}
         >
-          ELEV8 WATER
+          THE WORLD&apos;S GREATEST WATER
         </div>
         <div
           style={{
@@ -39,7 +40,7 @@ export default async function Image() {
             display: "flex",
           }}
         >
-          The World&apos;s Greatest Water
+          ELEV8 WATER
         </div>
       </div>
     ),

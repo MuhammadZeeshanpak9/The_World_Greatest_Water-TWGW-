@@ -7,8 +7,8 @@ import { VideoWithFallback } from "@/components/ui/MediaWithFallback";
 
 const TRUST = [
   { title: "528HZ Infused", sub: "Binaural frequency of love" },
-  { title: "Ultra-Purified", sub: "Nothing but pure hydration" },
-  { title: "Free From Additives", sub: "No sugars · no synthetics" },
+  { title: "Ultra-Purified", sub: "My Personal Water" },
+  { title: "Free From Additives", sub: "I ONLY DRINK THE GREATEST" },
 ];
 
 export default function Hero() {
@@ -41,31 +41,31 @@ export default function Hero() {
       <div className="relative z-10 mx-auto grid w-full max-w-7xl grid-cols-1 items-center gap-12 px-6 lg:grid-cols-2">
         {/* LEFT — headline */}
         <div className="text-center lg:text-left">
-          <m.p
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="font-inter text-[10px] font-semibold uppercase tracking-[0.5em] text-violet"
-          >
-            The World&apos;s Greatest
-          </m.p>
-
           <m.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.35 }}
-            className="mt-3 font-cormorant font-bold leading-[0.9] text-gradient-brand text-[52px] md:text-[80px] lg:text-[96px]"
+            className="font-cormorant font-bold leading-[0.95] text-gradient-brand text-[38px] md:text-[60px] lg:text-[72px]"
           >
-            ELEV8
+            THE WORLD&apos;S
           </m.h1>
           <m.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5 }}
-            className="font-cormorant font-bold leading-[0.9] text-gradient-brand text-[52px] md:text-[80px] lg:text-[96px]"
+            className="font-cormorant font-bold leading-[0.95] text-gradient-brand text-[38px] md:text-[60px] lg:text-[72px]"
           >
-            WATER.
+            GREATEST WATER.
           </m.h1>
+
+          <m.p
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.65 }}
+            className="mt-3 font-inter text-[15px] font-semibold uppercase tracking-[0.5em] text-white"
+          >
+            ELEV8 WATER
+          </m.p>
 
           <m.span
             initial={{ scaleX: 0 }}
@@ -77,7 +77,7 @@ export default function Hero() {
           <m.p
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.65 }}
+            transition={{ delay: 0.75 }}
             className="mx-auto mt-6 max-w-md font-inter text-[15px] leading-relaxed text-violet/80 lg:mx-0"
           >
             Ultra-Purified · 528hz Frequency Infused. 1 Water. 12 Understanding.
@@ -120,10 +120,10 @@ export default function Hero() {
             >
               <span className="h-2 w-2 shrink-0 animate-glow-pulse rounded-full bg-violet" />
               <div>
-                <p className="font-inter text-[12px] font-semibold uppercase tracking-[0.2em] text-violet">
+                <p className="font-inter text-[12px] font-semibold uppercase tracking-[0.2em] text-white">
                   {t.title}
                 </p>
-                <p className="font-inter text-[11px] text-violet/60">{t.sub}</p>
+                <p className="font-inter text-[11px] text-white/80">{t.sub}</p>
               </div>
             </m.div>
           ))}

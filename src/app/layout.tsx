@@ -25,7 +25,7 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://theworldsgreatestw
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "ELEV8 WATER — The World's Greatest Water",
+    default: "THE WORLD'S GREATEST WATER — ELEV8 WATER",
     template: "%s — ELEV8 WATER",
   },
   description:
