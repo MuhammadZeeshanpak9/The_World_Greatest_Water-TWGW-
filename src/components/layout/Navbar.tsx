@@ -41,7 +41,7 @@ export default function Navbar() {
           <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-2 px-4 xl:gap-4 xl:px-6">
             {/* Logo */}
             <Link href="/" className="group flex shrink-0 items-center gap-2">
-              <WaterDrop size={48} />
+              <WaterDrop size={56} />
               <span className="hidden font-cormorant text-[14px] font-medium tracking-[0.03em] shimmer-text whitespace-nowrap xl:inline">
                 THE WORLD&apos;S GREATEST WATER
               </span>

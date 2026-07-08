@@ -53,7 +53,7 @@ export function GradientDivider({
  */
 export function WaterDrop({
   className = "",
-  size = 32,
+  size = 40,
 }: {
   className?: string;
   size?: number;
@@ -73,13 +73,14 @@ export function WaterDrop({
           <circle cx="12" cy="12" r="12" />
         </clipPath>
       </defs>
+      <circle cx="12" cy="12" r="12" fill="#ffffff" />
       <image
         href="/logo/elev8-emblem.jpg"
-        x="0"
-        y="0"
-        width="24"
-        height="24"
-        preserveAspectRatio="xMidYMid slice"
+        x="4.5"
+        y="4.5"
+        width="15"
+        height="15"
+        preserveAspectRatio="xMidYMid meet"
         clipPath="url(#dropClip)"
       />
     </m.svg>
