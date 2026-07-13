@@ -58,6 +58,16 @@ export default function Wellness() {
             >
               EXHALE
             </m.h2>
+            <span className="h-[60px] w-px shrink-0 bg-violet" />
+            <m.h2
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3 }}
+              className="font-cormorant font-light leading-none text-violet text-[9vw] md:text-[6vw]"
+            >
+              RELAX
+            </m.h2>
           </div>
         ) : (
           <div className="overflow-hidden">
@@ -78,6 +88,10 @@ export default function Wellness() {
                   <span className="h-[60px] w-px shrink-0 bg-violet" />
                   <h2 className="font-cormorant font-light leading-none text-[14vw] md:text-[8vw] text-gradient-brand">
                     EXHALE
+                  </h2>
+                  <span className="h-[60px] w-px shrink-0 bg-violet" />
+                  <h2 className="font-cormorant font-light leading-none text-violet text-[14vw] md:text-[8vw]">
+                    RELAX
                   </h2>
                 </div>
               ))}
