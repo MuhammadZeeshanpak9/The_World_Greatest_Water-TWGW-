@@ -86,15 +86,29 @@ export default function Footer() {
               <ul className="mt-5 flex flex-col gap-3">
                 {col.links.map((link) => (
                   <li key={link.label}>
-                    <Link
-                      href={link.href}
-                      className="group inline-flex items-center font-inter text-[13px] text-white/45 transition-colors hover:text-violet-mid"
-                    >
-                      <span className="w-0 overflow-hidden opacity-0 transition-all duration-300 group-hover:mr-1 group-hover:w-3 group-hover:opacity-100">
-                        →
-                      </span>
-                      {link.label}
-                    </Link>
+                    {link.external ? (
+                      <a
+                        href={link.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group inline-flex items-center font-inter text-[13px] text-white/45 transition-colors hover:text-violet-mid"
+                      >
+                        <span className="w-0 overflow-hidden opacity-0 transition-all duration-300 group-hover:mr-1 group-hover:w-3 group-hover:opacity-100">
+                          →
+                        </span>
+                        {link.label}
+                      </a>
+                    ) : (
+                      <Link
+                        href={link.href}
+                        className="group inline-flex items-center font-inter text-[13px] text-white/45 transition-colors hover:text-violet-mid"
+                      >
+                        <span className="w-0 overflow-hidden opacity-0 transition-all duration-300 group-hover:mr-1 group-hover:w-3 group-hover:opacity-100">
+                          →
+                        </span>
+                        {link.label}
+                      </Link>
+                    )}
                   </li>
                 ))}
               </ul>

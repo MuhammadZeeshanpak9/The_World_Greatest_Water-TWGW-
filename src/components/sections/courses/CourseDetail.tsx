@@ -5,10 +5,10 @@ import ProductStatusBadge from "@/components/sections/shop/ProductStatusBadge";
 
 function learningOutcomes(topic: string) {
   return [
-    `The real meaning behind ${topic} and why it matters`,
-    `Daily practices to bring ${topic} into your life`,
-    "Guided reflection prompts to deepen your understanding",
-    `How ${topic} connects to the other 11 ELEV8 understandings`,
+    `The real meaning behind ${topic} and why it matters to me`,
+    `Daily practices to bring ${topic} into my life`,
+    "Guided reflection prompts to deepen my understanding",
+    `How ${topic} connects to the other 11 ELEV8 understandings I am learning`,
   ];
 }
 
@@ -38,7 +38,7 @@ export default function CourseDetail({ post }: { post: BlogPost }) {
         <p className="mt-6 font-inter text-base leading-[1.9] text-body">{post.teaser}</p>
 
         <h2 className="mt-12 font-inter text-[13px] font-semibold uppercase tracking-[0.25em] text-ink">
-          What You&apos;ll Learn
+          What I Will Learn
         </h2>
         <ul className="mt-5 flex flex-col gap-3">
           {outcomes.map((o) => (
@@ -57,7 +57,7 @@ export default function CourseDetail({ post }: { post: BlogPost }) {
           <ArrowRight size={16} />
         </button>
         <p className="mt-4 font-inter text-[13px] italic text-muted">
-          Full course content coming soon
+          My full course content is coming soon. I AM ready.
         </p>
       </div>
     </section>

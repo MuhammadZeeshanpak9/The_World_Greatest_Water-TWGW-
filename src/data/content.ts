@@ -77,7 +77,7 @@ export const BLOG_POSTS: BlogPost[] = [
     slug: "how-to-elev8-you",
     topic: "YOU",
     title: "How to ELEV8 YOU",
-    teaser: "The power within YOU. Discover your highest self.",
+    teaser: "The power within YOU. Discover my highest self.",
     openingStatement:
       "YOU are the most important project you will ever work on. Not your career. Not your relationships. Not your goals. YOU.",
     bodyParagraphs: [
@@ -154,7 +154,7 @@ export const BLOG_POSTS: BlogPost[] = [
     slug: "how-to-elev8-vibration",
     topic: "VIBRATION",
     title: "How to ELEV8 VIBRATION",
-    teaser: "Raise your vibration. Raise your reality.",
+    teaser: "Raise my vibration. Raise my reality.",
     openingStatement:
       "Everything in the universe is vibrating. The question is never whether you are vibrating — it is always at what frequency.",
     bodyParagraphs: [
@@ -170,7 +170,7 @@ export const BLOG_POSTS: BlogPost[] = [
     slug: "how-to-elev8-mindset",
     topic: "MINDSET",
     title: "How to ELEV8 MINDSET",
-    teaser: "Your mindset creates your world.",
+    teaser: "My mindset creates my world.",
     openingStatement:
       "Your mindset is not your personality. It is a lens. And lenses can be changed, cleaned, and upgraded.",
     bodyParagraphs: [
@@ -185,7 +185,7 @@ export const BLOG_POSTS: BlogPost[] = [
     slug: "how-to-elev8-gratitude",
     topic: "GRATITUDE",
     title: "How to ELEV8 GRATITUDE",
-    teaser: "Gratitude transforms what you have into enough.",
+    teaser: "Gratitude transforms what I have into enough.",
     openingStatement:
       "Gratitude is not a feeling you wait for. It is a practice you choose — and it changes everything it touches.",
     bodyParagraphs: [
@@ -216,7 +216,7 @@ export const BLOG_POSTS: BlogPost[] = [
     slug: "how-to-elev8-thoughts",
     topic: "THOUGHTS",
     title: "How to ELEV8 THOUGHTS",
-    teaser: "Your thoughts are the driving force of your reality.",
+    teaser: "My thoughts are the driving force of my reality.",
     openingStatement:
       "You have approximately 60,000 thoughts today. Most of them are the same ones you had yesterday. This is either the greatest problem or the greatest opportunity of your life.",
     bodyParagraphs: [
@@ -232,7 +232,7 @@ export const BLOG_POSTS: BlogPost[] = [
     slug: "how-to-elev8-consciousness",
     topic: "CONSCIOUSNESS",
     title: "How to ELEV8 CONSCIOUSNESS",
-    teaser: "Expand your awareness. Expand your life.",
+    teaser: "Expand my awareness. Expand my life.",
     openingStatement:
       "Consciousness is not something you have. It is what you are. Everything else — your body, your thoughts, your story — is arising within it.",
     bodyParagraphs: [
@@ -366,6 +366,9 @@ export const WELLNESS_SUBPAGES: WellnessSubPage[] = [
     ctaLabel: "ENQUIRE NOW",
     tone: "standard",
     showCalendar: true,
+    pricingLabel: "Membership:",
+    price1yr: "1 Year Membership — $5,000",
+    price2yr: "2 Year Membership — $10,000",
   },
   {
     slug: "mind",
@@ -386,6 +389,9 @@ export const WELLNESS_SUBPAGES: WellnessSubPage[] = [
     ctaLabel: "ENQUIRE NOW",
     tone: "standard",
     showCalendar: true,
+    pricingLabel: "Membership:",
+    price1yr: "1 Year Membership — $2,500",
+    price2yr: "2 Year Membership — $5,000",
   },
   {
     slug: "soul",
@@ -406,6 +412,9 @@ export const WELLNESS_SUBPAGES: WellnessSubPage[] = [
     ctaLabel: "ENQUIRE NOW",
     tone: "standard",
     showCalendar: true,
+    pricingLabel: "Membership:",
+    price1yr: "1 Year Membership — $5,000",
+    price2yr: "2 Year Membership — $10,000",
   },
   {
     slug: "unlock-the-lock",
@@ -427,6 +436,9 @@ export const WELLNESS_SUBPAGES: WellnessSubPage[] = [
     ctaLabel: "APPLY NOW",
     tone: "premium",
     showCalendar: false,
+    pricingLabel: "Investment:",
+    price1yr: "By Arrangement — $1,000,000+",
+    pricingNote: "Private application required",
   },
 ];
 
@@ -446,18 +458,90 @@ export const NOT_IN_WATER: Feature[] = [
    (real names; chakra colours; blurbs marked placeholder)
 ------------------------------------------------------------------ */
 export const BOTTLES: Bottle[] = [
-  { name: "ALL", chakra: "Crown", color: "#6b2fa0", blurb: "The whole of you, elevated.", placeholder: true },
-  { name: "YOU", chakra: "Third Eye", color: "#4b3fa0", blurb: "See yourself clearly.", placeholder: true },
-  { name: "LOVE", chakra: "Heart", color: "#3fa06b", blurb: "Lead with the heart.", placeholder: true },
-  { name: "DESIRE", chakra: "Sacral", color: "#e08a3c", blurb: "Fuel your wanting.", placeholder: true },
-  { name: "ENERGY", chakra: "Solar Plexus", color: "#e0c23c", blurb: "Rise with intention.", placeholder: true },
-  { name: "BELIEVE", chakra: "Throat", color: "#3c8ae0", blurb: "Speak it into being.", placeholder: true },
-  { name: "VIBRATION", chakra: "Sacral", color: "#d13c8a", blurb: "Tune to a higher note.", placeholder: true },
-  { name: "MINDSET", chakra: "Third Eye", color: "#3c5fe0", blurb: "Reframe everything.", placeholder: true },
-  { name: "GRATITUDE", chakra: "Heart", color: "#e03c9f", blurb: "Give thanks, always.", placeholder: true },
-  { name: "FREQUENCY", chakra: "Crown", color: "#3cd6e0", blurb: "528hz in every drop.", placeholder: true },
-  { name: "THOUGHTS", chakra: "Crown", color: "#c9a84c", blurb: "You are what you think.", placeholder: true },
-  { name: "CONSCIOUSNESS", chakra: "Crown", color: "#3d1a5e", blurb: "Wake up to yourself.", placeholder: true },
+  {
+    name: "ALL",
+    chakra: "Crown",
+    color: "#6B2FA0",
+    placeholder: false,
+    blurb: "Everyone without Exception. The GRAND DESIGN. I will ELEV8 my awareness to see ALL as ONE. In times like this, self development and mental awareness will enhance the quality of life for ALL and promote the spread of love and happiness with all consciousness, bringing joy to homes and families worldwide.",
+  },
+  {
+    name: "YOU",
+    chakra: "Third Eye",
+    color: "#4B0082",
+    placeholder: false,
+    blurb: "I will ELEV8 myself by only speaking and thinking of the experience I want to have by being aware of what I say and tell myself about MYSELF. I AM the only person responsible for the outcome of my life experiences either good or bad. I AM always deserving of everything and anything my mind can create. I will be the greatest version of MYSELF.",
+  },
+  {
+    name: "LOVE",
+    chakra: "Heart",
+    color: "#00A550",
+    placeholder: false,
+    blurb: "I will ELEV8 LOVE by understanding that love begins within MYSELF. When I love myself unconditionally I naturally radiate love to everything and everyone around me. LOVE is the highest frequency. 528Hz is the frequency of LOVE and it is infused in every drop of MY personal water.",
+  },
+  {
+    name: "DESIRE",
+    chakra: "Sacral",
+    color: "#FF6B00",
+    placeholder: false,
+    blurb: "I will ELEV8 my DESIRE by understanding that every desire I have was placed in me for a reason. My desires are the universe speaking to me about my purpose. I will honor my desires and take inspired action toward them every single day.",
+  },
+  {
+    name: "ENERGY",
+    chakra: "Solar Plexus",
+    color: "#FFD700",
+    placeholder: false,
+    blurb: "I will ELEV8 my ENERGY by understanding that everything is energy including MYSELF. I will protect and direct my energy intentionally. I will choose thoughts, environments and people that raise my vibration and give energy to my highest self.",
+  },
+  {
+    name: "BELIEVE",
+    chakra: "Throat",
+    color: "#00BFFF",
+    placeholder: false,
+    blurb: "I will ELEV8 my BELIEVE by understanding that my beliefs create my reality. I will choose to believe in my unlimited potential. I will replace every limiting belief with a belief that serves my greatest self. I BELIEVE in MYSELF without a doubt.",
+  },
+  {
+    name: "VIBRATION",
+    chakra: "Sacral",
+    color: "#FF69B4",
+    placeholder: false,
+    blurb: "To ELEV8 my VIBRATION I will have to be aware of what emotions I allow to run in my body. I will focus on gratitude and appreciation to creation for allowing me to experience this beautiful grand design called life. I will commit to giving myself the mindset to always put out good vibes ONLY to myself and the world around me.",
+  },
+  {
+    name: "MINDSET",
+    chakra: "Third Eye",
+    color: "#4169E1",
+    placeholder: false,
+    blurb: "I will ELEV8 my MINDSET by understanding that my mind is the most powerful tool I possess. I will feed my mind with positive empowering thoughts and information. What I consistently think about I bring about. My MINDSET creates my reality.",
+  },
+  {
+    name: "GRATITUDE",
+    chakra: "Heart",
+    color: "#FF1493",
+    placeholder: false,
+    blurb: "I will ELEV8 my GRATITUDE by developing the practice of being thankful for everything in my life. Gratitude is the gateway to abundance. When I am grateful for what I have I attract more to be grateful for. I am grateful for this water, for this moment, for this life.",
+  },
+  {
+    name: "FREQUENCY",
+    chakra: "Crown",
+    color: "#8B008B",
+    placeholder: false,
+    blurb: "I will ELEV8 my FREQUENCY by understanding that I am a vibrational being. The 528Hz frequency infused in every bottle of MY personal water ELEV8 WATER is the frequency of transformation and love. I will tune myself to the highest frequency possible and watch my life transform.",
+  },
+  {
+    name: "THOUGHTS",
+    chakra: "Crown",
+    color: "#DAA520",
+    placeholder: false,
+    blurb: "I will ELEV8 my THOUGHTS by understanding that my thoughts are the seeds of my reality. Every thought I think is either moving me closer to or further from the life I desire. I will be the guardian of my mind and only allow thoughts that serve my highest good.",
+  },
+  {
+    name: "CONSCIOUSNESS",
+    chakra: "Crown",
+    color: "#2E1065",
+    placeholder: false,
+    blurb: "I will ELEV8 my CONSCIOUSNESS by expanding my awareness beyond my physical reality. I am more than my body, more than my thoughts, more than my circumstances. I AM CONSCIOUSNESS experiencing itself. I will wake up to the infinite power within me.",
+  },
 ];
 
 /* ------------------------------------------------------------------
@@ -534,16 +618,48 @@ export const SHOP_PRODUCTS: Product[] = [
 ];
 
 /* ------------------------------------------------------------------
-   SCIENTIFIC PROCESS — real ELEV8 chakra system (7 steps)
+   SCIENTIFIC PROCESS — ELEV8 filtration sequence (7 steps)
 ------------------------------------------------------------------ */
 export const PROCESS_STEPS: ProcessStep[] = [
-  { chakra: "Crown", label: "To Know", color: "#6b2fa0" },
-  { chakra: "Third Eye", label: "To See", color: "#4b3fa0" },
-  { chakra: "Throat", label: "To Speak", color: "#3c8ae0" },
-  { chakra: "Heart", label: "To Love", color: "#3fa06b" },
-  { chakra: "Solar Plexus", label: "To Act", color: "#e0c23c" },
-  { chakra: "Sacral", label: "To Feel", color: "#e08a3c" },
-  { chakra: "Root", label: "To Be Here", color: "#d13c3c" },
+  {
+    label: "LOVE",
+    color: "#6B2FA0",
+    description:
+      "Our Water is Inspired By Love. Infused With 528 Hz Love Frequency. To ELEV8 Your Life.",
+  },
+  {
+    label: "MICRON FILTRATION",
+    color: "#4B0082",
+    description:
+      "Pharmaceutical Grade to Remove Volatile Organic Compounds and Other Contaminants.",
+  },
+  {
+    label: "REVERSE OSMOSIS",
+    color: "#0000FF",
+    description:
+      "High-Pressure Filtration to Remove Salt, Minerals, and Additional Impurities.",
+  },
+  {
+    label: "DEIONIZATION",
+    color: "#008000",
+    description: "Ion Exchange to Filter Out Remaining Minerals.",
+  },
+  {
+    label: "ULTRAVIOLET LIGHT",
+    color: "#FFFF00",
+    description: "To Remove 99.99% of Microorganisms.",
+  },
+  {
+    label: "OZONATION",
+    color: "#FFA500",
+    description:
+      "Infused With Ozone, a Tasteless Molecule Made From Atmospheric Oxygen, to Naturally Sterilize.",
+  },
+  {
+    label: "GRATITUDE",
+    color: "#FF0000",
+    description: "Thankful Thoughts for YOU Choosing To ELEV8 Your Life.",
+  },
 ];
 
 /* ------------------------------------------------------------------
@@ -609,7 +725,7 @@ export const FOOTER_COLUMNS: FooterColumn[] = [
     links: [
       { label: "Know More", href: "/faq" },
       { label: "Our Story", href: "/our-story" },
-      { label: "Trending", href: "/trending" },
+      { label: "Trending", href: "https://www.youtube.com", external: true },
       { label: "Creators", href: "/creators" },
     ],
   },
@@ -619,7 +735,7 @@ export const FOOTER_COLUMNS: FooterColumn[] = [
       { label: "Shipping & Friendly Assist?", href: "/shipping" },
       { label: "Say Hello", href: "/contact" },
       { label: "Join To ELEV8", href: "/join" },
-      { label: "Collaborators", href: "/collaborators" },
+      { label: "Collaborators", href: "/contact" },
     ],
   },
   {

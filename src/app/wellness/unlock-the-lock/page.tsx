@@ -42,6 +42,10 @@ export default function WellnessUnlockTheLockPage() {
         ctaHref="/contact"
         tone="premium"
         showCalendar={data.showCalendar}
+        pricingLabel={data.pricingLabel}
+        price1yr={data.price1yr}
+        price2yr={data.price2yr}
+        pricingNote={data.pricingNote}
       />
 
       <Footer />

@@ -54,6 +54,10 @@ export type WellnessSubPage = {
   ctaLabel: string;
   tone: "standard" | "premium";
   showCalendar: boolean;
+  pricingLabel?: string;
+  price1yr?: string;
+  price2yr?: string;
+  pricingNote?: string;
 };
 
 export type Feature = string;
@@ -99,9 +103,9 @@ export type BlogPost = {
 };
 
 export type ProcessStep = {
-  chakra: string;
-  label: string; // TO KNOW, TO SEE ...
+  label: string;
   color: string;
+  description: string;
 };
 
 export type ComingSoonProduct = {
@@ -116,7 +120,7 @@ export type Testimonial = {
 
 export type FooterColumn = {
   heading: string;
-  links: { label: string; href: string }[];
+  links: { label: string; href: string; external?: boolean }[];
 };
 
 export type Social = {

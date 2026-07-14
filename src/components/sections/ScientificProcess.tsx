@@ -63,9 +63,9 @@ export default function ScientificProcess() {
               <span className="mt-4 font-inter text-[11px] font-semibold uppercase tracking-[0.15em] text-ink">
                 {step.label}
               </span>
-              <span className="mt-1 font-inter text-[9px] uppercase tracking-[0.2em] text-muted">
-                {step.chakra}
-              </span>
+              <p className="mx-auto mt-2 max-w-[130px] font-inter text-[10px] leading-relaxed text-muted sm:text-[11px]">
+                {step.description}
+              </p>
             </m.div>
           ))}
         </div>

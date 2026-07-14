@@ -11,6 +11,10 @@ type BookingSectionProps = {
   ctaHref: string;
   tone: "standard" | "premium";
   showCalendar: boolean;
+  pricingLabel?: string;
+  price1yr?: string;
+  price2yr?: string;
+  pricingNote?: string;
 };
 
 export default function BookingSection({
@@ -20,6 +24,10 @@ export default function BookingSection({
   ctaHref,
   tone,
   showCalendar,
+  pricingLabel,
+  price1yr,
+  price2yr,
+  pricingNote,
 }: BookingSectionProps) {
   const premium = tone === "premium";
 
@@ -45,6 +53,30 @@ export default function BookingSection({
               Booking Calendar — Coming Soon
             </p>
           </div>
+        )}
+
+        {pricingLabel && price1yr && (
+          <m.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="mx-auto mt-10 max-w-md"
+          >
+            <span className="block h-px w-full bg-violet" />
+            <div className="py-6">
+              <p className="font-inter text-[11px] uppercase tracking-[0.3em] text-violet">
+                {pricingLabel}
+              </p>
+              <p className="mt-3 font-cormorant text-[28px] text-white">{price1yr}</p>
+              {price2yr && (
+                <p className="mt-2 font-cormorant text-[28px] text-white">{price2yr}</p>
+              )}
+              {pricingNote && (
+                <p className="mt-3 font-inter text-[12px] text-white/50">{pricingNote}</p>
+              )}
+            </div>
+            <span className="block h-px w-full bg-violet" />
+          </m.div>
         )}
 
         <Link

@@ -44,6 +44,10 @@ export default function WellnessSoulPage() {
         ctaHref="/contact"
         tone="standard"
         showCalendar={data.showCalendar}
+        pricingLabel={data.pricingLabel}
+        price1yr={data.price1yr}
+        price2yr={data.price2yr}
+        pricingNote={data.pricingNote}
       />
 
       <Footer />
