@@ -1,8 +1,6 @@
 "use client";
 
 import { m } from "framer-motion";
-import { Check } from "lucide-react";
-import { NOT_IN_WATER } from "@/data/content";
 import { ImageWithFallback } from "@/components/ui/MediaWithFallback";
 import { SectionLabel } from "@/components/ui/primitives";
 
@@ -23,10 +21,11 @@ export default function ProductBanner() {
             style={{ borderRadius: "48% 52% 44% 56% / 55% 48% 52% 45%" }}
           >
             <ImageWithFallback
-              src={undefined}
+              src="/images/welness.png"
               alt="With you in mind"
               watermark="banner-woman.jpg"
               rounded=""
+              className="object-center"
             />
           </div>
           <div
@@ -45,9 +44,13 @@ export default function ProductBanner() {
             transition={{ delay: 0.1 }}
             className="mt-6 max-w-lg font-inter text-base leading-[1.9] text-body"
           >
-            ELEV8 WATER is ultra-purified and infused with binaural frequency
-            528hz — crafted with nothing but you in mind. Pure hydration for a
-            higher level of being.
+            Inside every bottle of{" "}
+            <strong className="font-semibold text-ink">
+              THE WORLD&apos;S GREATEST WATER. ELEV8 WATER
+            </strong>{" "}
+            is a refreshing ultra-pure water, soothing and enjoyable to the
+            body, mind and soul allowing a more natural connection to life&apos;s
+            beautiful experiences.
           </m.p>
 
           <m.h3
@@ -60,23 +63,17 @@ export default function ProductBanner() {
             What&apos;s not in your personal water:
           </m.h3>
 
-          <ul className="mt-5 flex flex-col gap-3">
-            {NOT_IN_WATER.map((item, i) => (
-              <m.li
-                key={item}
-                initial={{ opacity: 0, x: 40 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.25 + i * 0.08 }}
-                className="flex items-center gap-3 font-inter text-[15px] text-body"
-              >
-                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-violet/10 text-violet">
-                  <Check size={14} strokeWidth={3} />
-                </span>
-                {item}
-              </m.li>
-            ))}
-          </ul>
+          <m.p
+            initial={{ opacity: 0, x: 40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.25 }}
+            className="mt-5 max-w-lg font-inter text-[15px] leading-[1.9] text-body"
+          >
+            FREE FROM Chemical Additives such as Chlorine, Fluoride, Sodium
+            Bicarbonate and many more to deliver a refreshing and pure
+            hydrating experience.
+          </m.p>
         </div>
       </div>
     </section>

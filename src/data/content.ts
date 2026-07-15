@@ -3,7 +3,6 @@ import type {
   AnnouncementMessage,
   WellnessCard,
   WellnessSubPage,
-  Feature,
   Bottle,
   Product,
   BlogPost,
@@ -443,17 +442,6 @@ export const WELLNESS_SUBPAGES: WellnessSubPage[] = [
 ];
 
 /* ------------------------------------------------------------------
-   PRODUCT BANNER — what's NOT in your water
------------------------------------------------------------------- */
-export const NOT_IN_WATER: Feature[] = [
-  "No artificial additives",
-  "No added sugars or sweeteners",
-  "No synthetic minerals",
-  "No microplastics",
-  "Nothing between you and your highest self",
-];
-
-/* ------------------------------------------------------------------
    12 INSPIRATIONAL BOTTLES — the 12 Understanding
    (real names; chakra colours; blurbs marked placeholder)
 ------------------------------------------------------------------ */
@@ -463,6 +451,7 @@ export const BOTTLES: Bottle[] = [
     chakra: "Crown",
     color: "#6B2FA0",
     placeholder: false,
+    image: "/images/bottles/bottle_all.png",
     blurb: "Everyone without Exception. The GRAND DESIGN. I will ELEV8 my awareness to see ALL as ONE. In times like this, self development and mental awareness will enhance the quality of life for ALL and promote the spread of love and happiness with all consciousness, bringing joy to homes and families worldwide.",
   },
   {
@@ -470,6 +459,7 @@ export const BOTTLES: Bottle[] = [
     chakra: "Third Eye",
     color: "#4B0082",
     placeholder: false,
+    image: "/images/bottles/bottle_you.png",
     blurb: "I will ELEV8 myself by only speaking and thinking of the experience I want to have by being aware of what I say and tell myself about MYSELF. I AM the only person responsible for the outcome of my life experiences either good or bad. I AM always deserving of everything and anything my mind can create. I will be the greatest version of MYSELF.",
   },
   {
@@ -477,6 +467,7 @@ export const BOTTLES: Bottle[] = [
     chakra: "Heart",
     color: "#00A550",
     placeholder: false,
+    image: "/images/bottles/bottle_love.png",
     blurb: "I will ELEV8 LOVE by understanding that love begins within MYSELF. When I love myself unconditionally I naturally radiate love to everything and everyone around me. LOVE is the highest frequency. 528Hz is the frequency of LOVE and it is infused in every drop of MY personal water.",
   },
   {
@@ -484,6 +475,7 @@ export const BOTTLES: Bottle[] = [
     chakra: "Sacral",
     color: "#FF6B00",
     placeholder: false,
+    image: "/images/bottles/bottle_desire.png",
     blurb: "I will ELEV8 my DESIRE by understanding that every desire I have was placed in me for a reason. My desires are the universe speaking to me about my purpose. I will honor my desires and take inspired action toward them every single day.",
   },
   {
@@ -491,6 +483,7 @@ export const BOTTLES: Bottle[] = [
     chakra: "Solar Plexus",
     color: "#FFD700",
     placeholder: false,
+    image: "/images/bottles/bottle_energy.png",
     blurb: "I will ELEV8 my ENERGY by understanding that everything is energy including MYSELF. I will protect and direct my energy intentionally. I will choose thoughts, environments and people that raise my vibration and give energy to my highest self.",
   },
   {
@@ -498,6 +491,7 @@ export const BOTTLES: Bottle[] = [
     chakra: "Throat",
     color: "#00BFFF",
     placeholder: false,
+    image: "/images/bottles/bottle_believe.png",
     blurb: "I will ELEV8 my BELIEVE by understanding that my beliefs create my reality. I will choose to believe in my unlimited potential. I will replace every limiting belief with a belief that serves my greatest self. I BELIEVE in MYSELF without a doubt.",
   },
   {
@@ -505,6 +499,7 @@ export const BOTTLES: Bottle[] = [
     chakra: "Sacral",
     color: "#FF69B4",
     placeholder: false,
+    image: "/images/bottles/bottle_vibration.png",
     blurb: "To ELEV8 my VIBRATION I will have to be aware of what emotions I allow to run in my body. I will focus on gratitude and appreciation to creation for allowing me to experience this beautiful grand design called life. I will commit to giving myself the mindset to always put out good vibes ONLY to myself and the world around me.",
   },
   {
@@ -512,6 +507,7 @@ export const BOTTLES: Bottle[] = [
     chakra: "Third Eye",
     color: "#4169E1",
     placeholder: false,
+    image: "/images/bottles/bottle_mindset.png",
     blurb: "I will ELEV8 my MINDSET by understanding that my mind is the most powerful tool I possess. I will feed my mind with positive empowering thoughts and information. What I consistently think about I bring about. My MINDSET creates my reality.",
   },
   {
@@ -519,6 +515,7 @@ export const BOTTLES: Bottle[] = [
     chakra: "Heart",
     color: "#FF1493",
     placeholder: false,
+    image: "/images/bottles/bottle_gratitude.png",
     blurb: "I will ELEV8 my GRATITUDE by developing the practice of being thankful for everything in my life. Gratitude is the gateway to abundance. When I am grateful for what I have I attract more to be grateful for. I am grateful for this water, for this moment, for this life.",
   },
   {
@@ -526,6 +523,7 @@ export const BOTTLES: Bottle[] = [
     chakra: "Crown",
     color: "#8B008B",
     placeholder: false,
+    image: "/images/bottles/bottle_frequency.png",
     blurb: "I will ELEV8 my FREQUENCY by understanding that I am a vibrational being. The 528Hz frequency infused in every bottle of MY personal water ELEV8 WATER is the frequency of transformation and love. I will tune myself to the highest frequency possible and watch my life transform.",
   },
   {
@@ -533,6 +531,7 @@ export const BOTTLES: Bottle[] = [
     chakra: "Crown",
     color: "#DAA520",
     placeholder: false,
+    image: "/images/bottles/bottle_thoughts.png",
     blurb: "I will ELEV8 my THOUGHTS by understanding that my thoughts are the seeds of my reality. Every thought I think is either moving me closer to or further from the life I desire. I will be the guardian of my mind and only allow thoughts that serve my highest good.",
   },
   {
@@ -540,6 +539,7 @@ export const BOTTLES: Bottle[] = [
     chakra: "Crown",
     color: "#2E1065",
     placeholder: false,
+    image: "/images/bottles/bottle_consciousness.png",
     blurb: "I will ELEV8 my CONSCIOUSNESS by expanding my awareness beyond my physical reality. I am more than my body, more than my thoughts, more than my circumstances. I AM CONSCIOUSNESS experiencing itself. I will wake up to the infinite power within me.",
   },
 ];

@@ -80,7 +80,7 @@ export default function Hero() {
             transition={{ delay: 0.75 }}
             className="mx-auto mt-6 max-w-md font-inter text-[15px] leading-relaxed text-violet/80 lg:mx-0"
           >
-            Ultra-Purified · 528hz Frequency Infused. 1 Water. 12 Understanding.
+            The Number 1 Self-development And Wellness Brand In The World.
           </m.p>
 
           <m.div

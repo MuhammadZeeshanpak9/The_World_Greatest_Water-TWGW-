@@ -97,8 +97,23 @@ export default function TwelveBottles() {
                       e.currentTarget.style.boxShadow = "none";
                     }}
                   >
-                    <div className="relative h-[220px] overflow-hidden rounded-2xl">
-                      <GradientPlaceholder watermark={bottle.name} className="rounded-2xl" />
+                    <div className="relative h-[220px] overflow-hidden rounded-2xl group/img">
+                      {bottle.image ? (
+                        <>
+                          <img
+                            src={bottle.image}
+                            alt={bottle.name}
+                            className="h-full w-full rounded-2xl object-cover transition-transform duration-700 group-hover/img:scale-105"
+                          />
+                          <div className="absolute inset-0 flex items-center justify-center bg-black/10 rounded-2xl">
+                            <span className="font-inter text-sm uppercase tracking-[0.3em] text-white/90 drop-shadow-lg">
+                              {bottle.name}
+                            </span>
+                          </div>
+                        </>
+                      ) : (
+                        <GradientPlaceholder watermark={bottle.name} className="rounded-2xl" />
+                      )}
                     </div>
                     <div className="mt-5 flex items-center gap-2">
                       <span

@@ -60,14 +60,13 @@ export type WellnessSubPage = {
   pricingNote?: string;
 };
 
-export type Feature = string;
-
 export type Bottle = {
   name: string;
   chakra: string;
   color: string; // hex accent (chakra matched)
   blurb: string;
   placeholder?: boolean;
+  image?: string;
 };
 
 export type ProductStatus = "sold-out" | "available" | "coming-soon";

@@ -4,10 +4,15 @@ import { m } from "framer-motion";
 import { ImageWithFallback } from "@/components/ui/MediaWithFallback";
 
 const PARAGRAPHS = [
-  "ELEV8 derived from the word ELEVATE, meaning to raise or lift up to a higher level.",
-  "THE WORLD'S GREATEST WATER. ELEV8 WATER is the number 1 self-development, wellness, and lifestyle brand in the world packaged in bottles specifically created with YOU in mind.",
-  "We are a community inspired by the vision to ELEV8, the consciousness of humanity with the greatest ultra-pure water striped from all chemical additives, infused with binaural frequency 528 Hz ❤️ perfect for hydration and soothing to your taste buds.",
-  "THE WORLD'S GREATEST WATER. ELEV8 WATER is your personal water created for your everyday life to bring awareness to the power within YOU.",
+  "ELEV8 derived from the word ELEVATE meaning to raise or lift up to a higher level.",
+  "THE WORLD'S GREATEST WATER. ELEV8 WATER is the number 1 self-development and wellness brand in the world like NO other brand globally.",
+  "Our ultra-purified water and brand ideas are specifically created to provide important self awareness information through thoughtfully created contents and enlightened techniques guaranteed to positively enhance the personal life experiences of the consumers who choose to ELEV8 their lives with a product ELEV8 WATER.",
+  "Information is Power.",
+  "Information is \"Mental\" MIND.",
+  "Power is \"Physical\" REALITY.",
+  "We are a community inspired by the vision to ELEV8 the consciousness of humanity with the greatest ultra-pure water striped from all chemical additive, infused with binaural frequency 528 hz ❤️ perfect for hydration and soothing to your taste buds.",
+  "In times like this, self development and mental awareness will enhance the quality of life for ALL and promote the spread of love and happiness with all consciousness, bringing joy to homes and families worldwide.",
+  "LOVE & GRATITUDE ♡",
 ];
 
 export default function BrandStory() {
