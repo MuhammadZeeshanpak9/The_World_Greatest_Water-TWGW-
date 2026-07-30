@@ -94,7 +94,7 @@ export default function WhyElev8() {
 
             <p className="font-inter text-[13px] text-gray-300 leading-loose min-h-[120px] tracking-wide">
               Created to ELEV8 YOU<br />
-              to an higher level<br />
+              to a higher level<br />
               of understanding<br />
               and awareness<br />
               to LIFE.
@@ -215,7 +215,7 @@ export default function WhyElev8() {
               Explore the power of YOU<br />
               with our thoughtfully<br />
               created self-development<br />
-              informations created<br />
+              information created<br />
               for YOU.
             </p>
 
@@ -266,7 +266,7 @@ export default function WhyElev8() {
               INFINITY SYMBOL
             </h3>
             <p className="font-inter text-[10px] text-white/50 uppercase tracking-widest leading-loose mb-8">
-              THE UNLIMITED NATURE<br />OF CONCIOUSNESS.
+              THE UNLIMITED NATURE<br />OF CONSCIOUSNESS.
             </p>
 
             <div className="flex-1 flex items-center justify-center mt-auto w-full pb-4">
@@ -333,10 +333,10 @@ export default function WhyElev8() {
             <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-teal-400 to-emerald-400 transform origin-left scale-x-0 transition-transform duration-500 group-hover:scale-x-100" />
 
             <p className="font-inter text-[13px] text-gray-300 leading-loose min-h-[120px] tracking-wide">
-              Mainly because its free<br />
+              Mainly because it's free<br />
               from all chemical additives<br />
               to allow a more natural<br />
-              connection to life&apos;s beautiful<br />
+              connection to life's beautiful<br />
               experiences.
             </p>
 

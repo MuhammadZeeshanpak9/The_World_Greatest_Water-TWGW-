@@ -4,7 +4,7 @@ import { m } from "framer-motion";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { WELLNESS_CARDS } from "@/data/content";
-import { usePrefersReducedMotion } from "@/lib/hooks";
+import { usePrefersReducedMotion, useIsMobile } from "@/lib/hooks";
 
 // Helper component to render the beautiful custom backgrounds
 // Helper component to render the beautiful custom backgrounds in vibrant purple tones
@@ -96,6 +96,8 @@ const CardBackground = ({ index }: { index: number }) => {
 
 export default function Wellness() {
   const reduced = usePrefersReducedMotion();
+  const isMobile = useIsMobile(1024);
+  const autoReveal = isMobile && !reduced;
 
   return (
     <section className="relative overflow-hidden bg-white py-24 md:py-32">
@@ -125,16 +127,16 @@ export default function Wellness() {
       </div>
 
       <div className="relative mx-auto max-w-7xl px-6">
-        {/* INHALE / EXHALE */}
+        {/* MENTAL / PHYSICAL / WELLNESS */}
         {reduced ? (
           <div className="flex items-center justify-center gap-4 md:gap-10">
             <m.h2
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="font-cormorant font-light leading-none text-ink text-[9vw] md:text-[6vw]"
+              className="font-cormorant font-light leading-none text-ink text-[8vw] md:text-[5vw]"
             >
-              INHALE
+              MENTAL
             </m.h2>
             <span className="h-[60px] w-px shrink-0 bg-violet" />
             <m.h2
@@ -142,9 +144,9 @@ export default function Wellness() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.15 }}
-              className="font-cormorant font-light leading-none text-[9vw] md:text-[6vw] text-gradient-brand"
+              className="font-cormorant font-light leading-none text-[8vw] md:text-[5vw] text-gradient-brand"
             >
-              EXHALE
+              PHYSICAL
             </m.h2>
             <span className="h-[60px] w-px shrink-0 bg-violet" />
             <m.h2
@@ -152,9 +154,9 @@ export default function Wellness() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.3 }}
-              className="font-cormorant font-light leading-none text-violet text-[9vw] md:text-[6vw]"
+              className="font-cormorant font-light leading-none text-violet text-[8vw] md:text-[5vw]"
             >
-              RELAX
+              WELLNESS
             </m.h2>
           </div>
         ) : (
@@ -170,16 +172,16 @@ export default function Wellness() {
                   aria-hidden={rep === 1}
                   className="flex shrink-0 items-center gap-10 md:gap-16"
                 >
-                  <h2 className="font-cormorant font-light leading-none text-ink text-[14vw] md:text-[8vw]">
-                    INHALE
+                  <h2 className="font-cormorant font-light leading-none text-ink text-[12vw] md:text-[7vw]">
+                    MENTAL
                   </h2>
                   <span className="h-[60px] w-px shrink-0 bg-violet" />
-                  <h2 className="font-cormorant font-light leading-none text-[14vw] md:text-[8vw] text-gradient-brand">
-                    EXHALE
+                  <h2 className="font-cormorant font-light leading-none text-[12vw] md:text-[7vw] text-gradient-brand">
+                    PHYSICAL
                   </h2>
                   <span className="h-[60px] w-px shrink-0 bg-violet" />
-                  <h2 className="font-cormorant font-light leading-none text-violet text-[14vw] md:text-[8vw]">
-                    RELAX
+                  <h2 className="font-cormorant font-light leading-none text-violet text-[12vw] md:text-[7vw]">
+                    WELLNESS
                   </h2>
                 </div>
               ))}
@@ -188,11 +190,11 @@ export default function Wellness() {
         )}
 
         <m.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.4 }}
-          className="mt-4 text-center font-cormorant text-2xl italic text-violet/70"
+          className="mt-6 text-center font-inter text-[15px] font-bold uppercase tracking-[0.3em] text-violet drop-shadow-sm md:text-[18px]"
         >
           SOUL. MIND. BODY
         </m.p>
@@ -212,16 +214,33 @@ export default function Wellness() {
               {/* The aesthetic background */}
               <CardBackground index={i} />
 
-              {/* Default Name label at bottom (visible when NOT hovering) */}
-              <div className="absolute inset-x-0 bottom-0 p-4 flex justify-center bg-gradient-to-t from-white/90 to-transparent transition-opacity duration-300 group-hover:opacity-0">
+              {/* Default Name label at bottom (visible when NOT hovering, desktop only) */}
+              <div className="absolute inset-x-0 bottom-0 p-4 hidden justify-center bg-gradient-to-t from-white/90 to-transparent transition-opacity duration-300 lg:flex lg:group-hover:opacity-0">
                 <span className="font-inter text-[12px] font-bold uppercase tracking-[0.1em] text-ink drop-shadow-sm">
                   {card.name}
                 </span>
               </div>
 
-              {/* Hover Overlay - darkens background and shows text */}
-              <div className="absolute inset-0 bg-[#290a47]/85 opacity-0 transition-opacity duration-300 group-hover:opacity-100 flex flex-col justify-between p-8 z-20 backdrop-blur-sm">
-                
+              {/* Info overlay — auto-crossfades with the art on mobile (nothing to discover, it just plays), hover-reveal on desktop */}
+              <m.div
+                className={`absolute inset-0 bg-[#290a47]/85 transition-opacity duration-300 ${
+                  reduced ? "opacity-100 lg:opacity-0" : "opacity-0"
+                } lg:group-hover:opacity-100 flex flex-col justify-between p-6 md:p-8 z-20 backdrop-blur-sm`}
+                initial={autoReveal ? { opacity: 0 } : undefined}
+                animate={autoReveal ? { opacity: [0, 0, 1, 1, 0] } : undefined}
+                transition={
+                  autoReveal
+                    ? {
+                        duration: 8,
+                        times: [0, 0.375, 0.5, 0.875, 1],
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                        delay: i * 1.2,
+                      }
+                    : { duration: 0.3 }
+                }
+              >
+
                 {/* Top blurb */}
                 <div>
                   <p className="font-inter text-[10px] font-semibold uppercase tracking-[0.3em] text-white/70 border-b border-white/20 pb-3">
@@ -245,7 +264,7 @@ export default function Wellness() {
                     <ArrowRight size={13} />
                   </Link>
                 </div>
-              </div>
+              </m.div>
             </m.div>
           ))}
         </div>

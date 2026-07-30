@@ -163,14 +163,14 @@ export default function ScientificProcess() {
                    C 1120,10 1180,10 1200,60 
                    C 1220,110 1300,110 1300,60"
                 fill="none"
-                stroke="url(#gradient-wave)"
+                stroke="url(#gradient-wave-desktop)"
                 strokeWidth="12"
                 strokeLinecap="round"
                 style={{ pathLength }}
                 className="opacity-40 drop-shadow-xl"
               />
               <defs>
-                <linearGradient id="gradient-wave" x1="0%" y1="0%" x2="100%" y2="0%">
+                <linearGradient id="gradient-wave-desktop" x1="0%" y1="0%" x2="100%" y2="0%">
                   {PROCESS_STEPS.map((step, i) => (
                     <stop 
                       key={i} 
@@ -183,11 +183,50 @@ export default function ScientificProcess() {
             </svg>
           </div>
 
-          <div className="relative z-10 grid grid-cols-1 gap-y-16 sm:grid-cols-2 lg:grid-cols-7 lg:gap-y-0">
+          {/* Continuous Interlocking Wave Background (Mobile & Tablet) */}
+          <div className="absolute inset-y-12 left-1/2 -translate-x-1/2 w-[120px] sm:w-[160px] block lg:hidden" aria-hidden>
+            <svg 
+              className="h-full w-full" 
+              viewBox="0 0 100 100" 
+              preserveAspectRatio="none"
+            >
+              {/* Vertical winding path */}
+              <m.path
+                d="M 50, 4 
+                   C -20, 10 -20, 14 50, 19.3 
+                   C 120, 24 120, 29 50, 34.6 
+                   C -20, 40 -20, 44 50, 50 
+                   C 120, 55 120, 60 50, 65.3 
+                   C -20, 71 -20, 75 50, 80.6 
+                   C 120, 86 120, 91 50, 96"
+                fill="none"
+                stroke="url(#gradient-wave-mobile)"
+                strokeWidth="4"
+                strokeLinecap="round"
+                style={{ pathLength }}
+                className="opacity-40 drop-shadow-xl"
+              />
+              <defs>
+                <linearGradient id="gradient-wave-mobile" x1="0%" y1="0%" x2="0%" y2="100%">
+                  {PROCESS_STEPS.map((step, i) => (
+                    <stop 
+                      key={i} 
+                      offset={`${(i / (PROCESS_STEPS.length - 1)) * 100}%`} 
+                      stopColor={step.color} 
+                    />
+                  ))}
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+
+          <div className="relative z-10 grid grid-cols-1 gap-y-16 lg:grid-cols-7 lg:gap-y-0">
             {PROCESS_STEPS.map((step, i) => {
               const IconComponent = getIcon(step.label);
-              // Shift odd elements slightly up and even elements slightly down to match the wave curve
-              const yOffset = i % 2 === 0 ? -12 : 12;
+              // Shift odd elements slightly up and even elements slightly down to match the desktop wave curve
+              // On mobile, we translate X instead slightly to emphasize the weave effect
+              const desktopYOffset = i % 2 === 0 ? -12 : 12;
+              const mobileXOffset = i % 2 === 0 ? -8 : 8;
 
               return (
                 <m.div
@@ -200,25 +239,58 @@ export default function ScientificProcess() {
                 >
                   <m.div
                     whileHover={{ scale: 1.1, rotate: 5 }}
-                    className="relative flex h-24 w-24 items-center justify-center rounded-full bg-white transition-shadow duration-500 lg:h-28 lg:w-28"
+                    className="relative flex h-24 w-24 items-center justify-center rounded-full bg-white transition-shadow duration-500 lg:h-28 lg:w-28 lg:translate-x-0"
                     style={{ 
                       color: step.color, 
                       boxShadow: `0 10px 30px ${step.color}44`,
                       border: `4px solid ${step.color}22`,
-                      transform: `translateY(${yOffset}px)`
+                      // Apply desktop yOffset via CSS var logic or custom styling, handled via inline style but conditionally in CSS ideally
+                      // For simplicity, we just use a class structure and let framer handle hover, but inline transform is tricky with breakpoints.
+                      // Let's use a wrapper div for the transform:
                     }}
                   >
-                    {/* Ring glow behind icon */}
                     <div 
-                      className="absolute inset-0 rounded-full opacity-20 blur-md"
-                      style={{ backgroundColor: step.color }}
-                    />
-                    <IconComponent size={36} strokeWidth={1.5} className="relative z-10" />
+                      className="absolute inset-0 flex items-center justify-center translate-x-[-8px] lg:translate-x-0"
+                      style={{ 
+                        transform: `translate(var(--tx, 0), var(--ty, 0))`
+                      }}
+                      ref={(el) => {
+                        if (el) {
+                           // Set CSS variables for responsive transforms
+                           el.style.setProperty('--tx', `${window.innerWidth < 1024 ? mobileXOffset : 0}px`);
+                           el.style.setProperty('--ty', `${window.innerWidth >= 1024 ? desktopYOffset : 0}px`);
+                           
+                           const handleResize = () => {
+                             el.style.setProperty('--tx', `${window.innerWidth < 1024 ? mobileXOffset : 0}px`);
+                             el.style.setProperty('--ty', `${window.innerWidth >= 1024 ? desktopYOffset : 0}px`);
+                           };
+                           window.addEventListener('resize', handleResize);
+                           return () => window.removeEventListener('resize', handleResize);
+                        }
+                      }}
+                    >
+                      {/* Ring glow behind icon */}
+                      <div 
+                        className="absolute inset-0 rounded-full opacity-20 blur-md h-full w-full"
+                        style={{ backgroundColor: step.color }}
+                      />
+                      <IconComponent size={36} strokeWidth={1.5} className="relative z-10" />
+                    </div>
                   </m.div>
 
                   <div 
                     className="mt-8 flex flex-col items-center lg:mt-12"
-                    style={{ transform: `translateY(${yOffset}px)` }}
+                    ref={(el) => {
+                        if (el) {
+                           el.style.setProperty('--ty', `${window.innerWidth >= 1024 ? desktopYOffset : 0}px`);
+                           const handleResize = () => {
+                             el.style.setProperty('--ty', `${window.innerWidth >= 1024 ? desktopYOffset : 0}px`);
+                           };
+                           window.addEventListener('resize', handleResize);
+                           return () => window.removeEventListener('resize', handleResize);
+                        }
+                    }}
+                    style={{ transform: `translateY(var(--ty, 0))` }}
                   >
                     <span 
                       className="text-center font-inter text-[12px] font-bold uppercase tracking-[0.15em]"

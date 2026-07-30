@@ -122,10 +122,10 @@ export default function WaveCollection() {
         {/* Heading */}
         <div className="text-center">
           <p className="font-inter text-[10px] font-semibold uppercase tracking-[0.5em] text-teal">
-            Explore Our World
+            EXPLORE OUR YOUNIVERSE
           </p>
           <h2 className="mt-3 font-cormorant text-[40px] font-bold text-ink md:text-[64px]">
-            The Wave Collection
+            THE PERSONAL COLLECTION
           </h2>
           <p className="mt-3 font-inter text-base text-body">
             Every offering crafted with YOU in mind
@@ -157,11 +157,18 @@ export default function WaveCollection() {
                   style={isActive ? { background: "rgba(107,47,160,0.06)" } : undefined}
                 >
                   {isActive && (
-                    <m.span
-                      layoutId="waveTabIndicator"
-                      className="absolute inset-y-0 left-0 hidden w-1 rounded-full bg-violet lg:block"
-                      transition={reduced ? { duration: 0 } : { type: "spring", stiffness: 380, damping: 30 }}
-                    />
+                    <>
+                      <m.span
+                        layoutId="waveTabIndicatorDesktop"
+                        className="absolute inset-y-0 left-0 hidden w-1 rounded-full bg-violet lg:block"
+                        transition={reduced ? { duration: 0 } : { type: "spring", stiffness: 380, damping: 30 }}
+                      />
+                      <m.span
+                        layoutId="waveTabIndicatorMobile"
+                        className="absolute inset-x-2 bottom-0 block h-[3px] rounded-t-md bg-violet lg:hidden"
+                        transition={reduced ? { duration: 0 } : { type: "spring", stiffness: 380, damping: 30 }}
+                      />
+                    </>
                   )}
                   <span>{cat.tab}</span>
                   {isActive && <span className="hidden shrink-0 text-violet lg:inline">→</span>}

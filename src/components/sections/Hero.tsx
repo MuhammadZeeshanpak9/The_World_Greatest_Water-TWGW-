@@ -86,6 +86,20 @@ export default function Hero() {
           <m.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.78 }}
+            className="mx-auto mt-6 flex max-w-md flex-col items-center gap-1 lg:items-start"
+          >
+            <span className="font-inter text-[13px] font-bold uppercase tracking-[0.2em] text-gradient-brand drop-shadow-md">
+              WATER FOR MY MIND
+            </span>
+            <span className="font-inter text-[13px] text-white/90 drop-shadow-md">
+              Packaged in bottles to ELEV8 my life
+            </span>
+          </m.div>
+
+          <m.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.8 }}
             className="mt-8 flex justify-center lg:justify-start"
           >
@@ -98,7 +112,7 @@ export default function Hero() {
               className="group relative overflow-hidden flex h-[52px] items-center gap-2 rounded-full bg-gradient-brand px-8 font-inter text-[12px] font-semibold uppercase tracking-[0.15em] text-white shadow-lg btn-glow transition-transform duration-300 active:scale-95"
             >
               <span className="relative z-10 flex items-center gap-2">
-                Shop Now
+                SHOP TO ELEV8
                 <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
               </span>
               {rippling && (
@@ -109,12 +123,12 @@ export default function Hero() {
         </div>
 
         {/* RIGHT — trust points */}
-        <div className="flex flex-col items-center gap-5 text-center lg:items-end lg:text-right">
+        <div className="flex flex-col items-center gap-5 text-center lg:items-end lg:text-right lg:mt-0 mt-12">
           {TRUST.map((t, i) => (
             <m.div
               key={t.title}
-              initial={{ opacity: 0, x: 30 }}
-              animate={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.9 + i * 0.12 }}
               className="flex items-center gap-3 lg:flex-row-reverse"
             >
@@ -129,8 +143,8 @@ export default function Hero() {
           ))}
 
           <m.a
-            initial={{ opacity: 0, x: 30 }}
-            animate={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.3 }}
             href="#story"
             className="group mt-2 flex items-center gap-2 font-inter text-[12px] font-semibold uppercase tracking-[0.15em] text-violet/80 transition-colors hover:text-violet"
