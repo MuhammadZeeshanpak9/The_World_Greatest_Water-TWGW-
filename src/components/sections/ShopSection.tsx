@@ -12,13 +12,13 @@ export default function ShopSection() {
   return (
     <section id="shop" className="relative bg-white py-24 md:py-32">
       <div className="mx-auto max-w-7xl px-6">
-        <div className="flex items-end justify-between">
-          <h2 className="font-cormorant text-[36px] font-semibold text-ink md:text-[48px]">
+        <div className="flex flex-col items-center justify-between gap-4 md:flex-row md:items-end md:gap-0">
+          <h2 className="text-center font-cormorant text-[32px] font-semibold text-ink md:text-left md:text-[48px]">
             SHOP TO ELEV8
           </h2>
           <Link
             href="/shop"
-            className="group flex items-center gap-1 font-inter text-[12px] font-medium uppercase tracking-[0.15em] text-violet"
+            className="group flex items-center justify-center gap-1 font-inter text-[12px] font-medium uppercase tracking-[0.15em] text-violet"
           >
             View all
             <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />

@@ -16,10 +16,10 @@ export default function Testimonials() {
           {TESTIMONIALS.map((t, i) => (
             <m.div
               key={t.name}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.15 }}
+              initial={{ opacity: 0, x: i % 2 === 0 ? -40 : 40, y: 20 }}
+              whileInView={{ opacity: 1, x: 0, y: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.6, ease: "easeOut", delay: i * 0.1 }}
               whileHover={{ y: -4 }}
               className="relative overflow-hidden rounded-[20px] transition-shadow hover:shadow-[0_16px_50px_rgba(107,47,160,0.14)] p-8 glass-card-light"
             >

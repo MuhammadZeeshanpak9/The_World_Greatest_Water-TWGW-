@@ -60,17 +60,21 @@ export default function TwelveBottles() {
       </span>
 
       <div className="relative mx-auto max-w-7xl px-6">
-        <h2 className="mx-auto max-w-4xl text-center font-cormorant text-[36px] font-semibold leading-tight text-white md:text-[56px]">
-          {HEADING.map((c, i) => (
-            <m.span
-              key={i}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.02 }}
-            >
-              {c === " " ? " " : c}
-            </m.span>
+        <h2 className="mx-auto max-w-4xl text-center font-cormorant text-[36px] font-semibold leading-tight text-white md:text-[56px] flex flex-wrap justify-center gap-x-3 md:gap-x-4">
+          {"EXPLORE OUR 12 INSPIRATIONAL BOTTLES".split(" ").map((word, wIdx) => (
+            <span key={wIdx} className="inline-flex whitespace-nowrap">
+              {word.split("").map((c, i) => (
+                <m.span
+                  key={i}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: (wIdx * 5 + i) * 0.02 }}
+                >
+                  {c}
+                </m.span>
+              ))}
+            </span>
           ))}
         </h2>
         <p className="mt-4 text-center font-inter text-[13px] uppercase tracking-[0.4em] text-teal">
@@ -116,11 +120,30 @@ export default function TwelveBottles() {
                       )}
                     </div>
                     <div className="mt-5 flex items-center gap-2">
-                      <span
-                        className="h-2.5 w-2.5 rounded-full"
-                        style={{ background: bottle.color }}
-                      />
-                      <span className="font-inter text-[10px] uppercase tracking-[0.25em] text-white/40">
+                      {/* Solid color dot with outer glow ring */}
+                      <span className="relative inline-flex h-3 w-3 shrink-0">
+                        {/* Outer ping ring */}
+                        <span
+                          className="absolute inline-flex h-full w-full animate-ping rounded-full opacity-50"
+                          style={{ backgroundColor: bottle.color }}
+                        />
+                        {/* Solid inner dot — always visible */}
+                        <span
+                          className="relative inline-flex h-3 w-3 rounded-full"
+                          style={{ 
+                            backgroundColor: bottle.color,
+                            boxShadow: `0 0 6px 2px ${bottle.color}99`
+                          }}
+                        />
+                      </span>
+                      {/* Chakra text in matching color */}
+                      <span 
+                        className="font-inter text-[11px] font-bold uppercase tracking-[0.25em]"
+                        style={{ 
+                          color: bottle.color,
+                          textShadow: `0 0 10px ${bottle.color}55`,
+                        }}
+                      >
                         {bottle.chakra}
                       </span>
                     </div>
