@@ -348,7 +348,7 @@ export const WELLNESS_CARDS: WellnessCard[] = [
 export const WELLNESS_SUBPAGES: WellnessSubPage[] = [
   {
     slug: "body",
-    title: "THANK YOU BODY",
+    title: "BODY",
     subtitle: "PHYSICAL WELLNESS EXPERIENCE",
     price: "$5,000+",
     description:
@@ -368,11 +368,56 @@ export const WELLNESS_SUBPAGES: WellnessSubPage[] = [
     pricingLabel: "Membership:",
     price1yr: "1 Year Membership — $5,000",
     price2yr: "2 Year Membership — $10,000",
+    offerings: [
+      {
+        heading: "PHYSICAL WELLNESS",
+        tagline: 'Wellness is a "Physical" state of well-being.',
+        pricingLabel: "Membership:",
+        price1yr: "1 year membership : $5,000",
+        price2yr: "2 year membership : $10,000",
+        membershipOptions: [
+          "1 Year Membership — $5,000",
+          "2 Year Membership — $10,000",
+        ],
+        winWinText:
+          "It is always a Win-Win for the family of Greatness! It only gets GREATER.",
+        contactEmail: "winwin@thegranddesigner.com",
+        collaboratorPitch: "Sign-Up Today To Be A Global Physical Wellness Collaborator.",
+        collaboratorItems: [
+          "Modern Spa/Yoga centers",
+          "Modern/ new age fitness centers",
+          "Modern dance studio",
+          "Technology companies created to enhance the human body",
+          "Wellness seminars/workshops/ programs",
+        ],
+      },
+      {
+        heading: "PHYSICAL SUCCESS AND RICHES",
+        tagline: 'SUCCESS AND RICHES is a "Physical" state of well-being.',
+        pricingLabel: "Membership:",
+        price1yr: "1 year membership : $5,000",
+        price2yr: "2 year membership : $10,000",
+        membershipOptions: [
+          "1 Year Membership — $5,000",
+          "2 Year Membership — $10,000",
+        ],
+        winWinText:
+          "It is always a Win-Win for the family of Greatness! It only gets GREATER.",
+        contactEmail: "winwin@thegranddesigner.com",
+        collaboratorPitch:
+          "Sign-Up Today To Be A Global Physical Success and Riches Collaborator.",
+        collaboratorItems: [
+          "Billionaire Mentors",
+          "Successful and Rich investors",
+          "Prosperity seminars/workshops/ programs",
+        ],
+      },
+    ],
   },
   {
     slug: "mind",
-    title: "THANK YOU MIND",
-    subtitle: "MENTAL CLARITY EXPERIENCE",
+    title: "MIND",
+    subtitle: "",
     price: "$2,500+",
     description:
       "Mental clarity, consciousness elevation, and unlocking the true power of your mind. THE WORLD'S GREATEST WATER believes that the mind creates reality — this session gives you the tools to direct that creation intentionally.",
@@ -391,11 +436,63 @@ export const WELLNESS_SUBPAGES: WellnessSubPage[] = [
     pricingLabel: "Membership:",
     price1yr: "1 Year Membership — $2,500",
     price2yr: "2 Year Membership — $5,000",
+    offerings: [
+      {
+        heading: "MENTAL HEALTH",
+        tagline: 'Health is a "Mental" state of well-being.',
+        bodyParagraphs: [
+          'To understand my health, it\'s important to understand "HOW" my mind operates the function of my body in the physical reality in regards to sickness and diseases.',
+          "The universe is mental. I AM a mental spiritual being having physical life experiences.",
+          "HEALING starts from WITHIN, expressed to the physical reality as wellness for my ultimate well-being.",
+          'YES. YOU can heal from anything and everything when YOU know the mental "HOW".',
+        ],
+        session: {
+          heading: "U.M.E",
+          subheading: "(UNDERSTANDING MY EMOTIONS)",
+          description:
+            "This session is a custom mental and emotional analysis integrated with spiritual understanding of SELF that has proven to 100% provide accurate and precise positive outcomes for individuals who practice their truth.",
+        },
+        bookingTiers: [
+          { label: "30 minutes phone consultation", price: "$2,500" },
+          { label: "1 hour phone consultation", price: "$5,000" },
+          { label: "30 minutes video consultation", price: "$25,000" },
+          { label: "1 hour video consultation", price: "$50,000" },
+          { label: "30 minutes one-on-one consultation", price: "$250,000" },
+          { label: "1 hour one-on-one consultation", price: "$500,000" },
+        ],
+      },
+      {
+        heading: "MENTAL WEALTH",
+        hasSecondaryImage: true,
+        tagline: 'Wealth is a "Mental" state of well-being.',
+        bodyParagraphs: [
+          'To be wealthy then rich and successful, it\'s important to understand "HOW" my mind operates the function of my physical manifestation in my reality in regards to money and success.',
+          "The universe is mental. I AM a mental spiritual being having physical life experiences.",
+          "WEALTH starts from WITHIN, expressed to the physical reality as riches and success for my ultimate well-being.",
+          'YES. YOU can be rich and successful when you know the mental "HOW".',
+        ],
+        session: {
+          heading: "THE WORLD'S GREATEST MOVIE ABOUT YOU",
+          description:
+            "This session is a custom mental and emotional analysis integrated with spiritual understanding of SELF that has proven to 100% provide accurate and precise positive outcomes for individuals who practice their truth.",
+          extraParagraph:
+            "THE WORLD'S GREATEST MOVIE ABOUT YOU production is an actual movie production created for the individual. (FINANCE OPTIONS AVAILABLE)",
+        },
+        bookingTiers: [
+          { label: "1 hour phone consultation", price: "$5,000" },
+          { label: "1 hour video consultation", price: "$50,000" },
+          { label: "30 minutes one-on-one consultation", price: "$250,000" },
+          { label: "1 hour one-on-one consultation", price: "$500,000" },
+          { label: "30 minutes THE WORLD'S GREATEST MOVIE ABOUT YOU production", price: "$500,000" },
+          { label: "1 hour THE WORLD'S GREATEST MOVIE ABOUT YOU production", price: "$1,000,000" },
+        ],
+      },
+    ],
   },
   {
     slug: "soul",
-    title: "THANK YOU SOUL",
-    subtitle: "SPIRITUAL WELLNESS EXPERIENCE",
+    title: "SOUL",
+    subtitle: "",
     price: "$5,000+",
     description:
       "Deep spiritual wellness. Reconnect with your highest self and experience the profound connection between your soul and the universe. This is the most sacred offering in the ELEV8 WATER wellness ecosystem.",
@@ -414,11 +511,32 @@ export const WELLNESS_SUBPAGES: WellnessSubPage[] = [
     pricingLabel: "Membership:",
     price1yr: "1 Year Membership — $5,000",
     price2yr: "2 Year Membership — $10,000",
+    offerings: [
+      {
+        heading: "MENTAL HEALING AND SPA",
+        pricingLabel: "Membership:",
+        price1yr: "1 year membership : $5,000",
+        price2yr: "2 year membership : $10,000",
+        membershipOptions: [
+          "1 Year Membership — $5,000",
+          "2 Year Membership — $10,000",
+        ],
+        winWinText:
+          "It is always a Win-Win for the family of Greatness! It only gets GREATER.",
+        contactEmail: "winwin@thegranddesigner.com",
+        collaboratorPitch:
+          "Sign-Up Today To Be A Global Mental Healing and Spa Collaborator.",
+        collaboratorItems: [
+          "Ayahuasca Centers",
+          "Technology companies created to advance the human mind",
+        ],
+      },
+    ],
   },
   {
     slug: "unlock-the-lock",
     title: "UNLOCK THE LOCK",
-    subtitle: "THE ULTIMATE TRANSFORMATION",
+    subtitle: "",
     price: "$1,000,000+",
     description:
       "The ultimate transformation experience. This is not a service — this is a complete life reinvention. Reserved for those who are truly ready to unlock every limitation and step into their greatest version. The most premium wellness experience in the YOUNIVERSE.",
@@ -438,6 +556,25 @@ export const WELLNESS_SUBPAGES: WellnessSubPage[] = [
     pricingLabel: "Investment:",
     price1yr: "By Arrangement — $1,000,000+",
     pricingNote: "Private application required",
+    offerings: [
+      {
+        heading: "UNLOCK THE LOCK.",
+        bodyParagraphs: [
+          "This session is a custom mental and emotional analysis integrated with spiritual understanding of SELF that has been proven to be 100% accurate and precise as the UNIVERSAL SECRET.",
+          "All 1 on 1 Consultation Experience Includes A Luxury Private Jet To A Highly Confidential Location.",
+        ],
+        bookingLabel: "BODY.MIND.SOUL",
+        bookingTiers: [
+          { label: "1 hour consultation online", price: "$1,000,000" },
+          { label: "30 minutes one-on-one consultation", price: "$2,000,000" },
+          { label: "1 hour one-on-one consultation", price: "$4,000,000" },
+          { label: "30 minutes media appearance", price: "$5,000,000" },
+          { label: "1 hour media appearance", price: "$10,000,000" },
+          { label: "30 minutes public speaking", price: "$10,000,000" },
+          { label: "1 hour public speaking", price: "$25,000,000" },
+        ],
+      },
+    ],
   },
 ];
 

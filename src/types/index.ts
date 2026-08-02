@@ -41,6 +41,35 @@ export type GiftTier = { name: string; price: string; description: string };
 export type PolicySection = { heading: string; body: string };
 export type ShippingInfoCard = { title: string; value: string };
 
+export type BookingTier = { label: string; price: string };
+
+export type WellnessSession = {
+  heading: string;
+  subheading?: string;
+  description: string;
+  extraParagraph?: string;
+};
+
+export type WellnessOffering = {
+  heading: string;
+  image?: string;
+  secondaryImage?: string;
+  hasSecondaryImage?: boolean;
+  tagline?: string;
+  bodyParagraphs?: string[];
+  session?: WellnessSession;
+  bookingTiers?: BookingTier[];
+  bookingLabel?: string;
+  pricingLabel?: string;
+  price1yr?: string;
+  price2yr?: string;
+  membershipOptions?: string[];
+  winWinText?: string;
+  contactEmail?: string;
+  collaboratorPitch?: string;
+  collaboratorItems?: string[];
+};
+
 export type WellnessSubPage = {
   slug: string;
   title: string;
@@ -58,6 +87,7 @@ export type WellnessSubPage = {
   price1yr?: string;
   price2yr?: string;
   pricingNote?: string;
+  offerings?: WellnessOffering[];
 };
 
 export type Bottle = {

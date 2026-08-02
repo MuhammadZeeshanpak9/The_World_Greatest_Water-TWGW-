@@ -97,11 +97,10 @@ export default function WhyElev8() {
             <h3 className="font-inter text-[20px] font-bold text-white mb-6">ELEV8</h3>
 
             <p className="font-inter text-[13px] text-gray-300 leading-loose min-h-[120px] tracking-wide">
-              Created to ELEV8 YOU<br />
-              to a higher level<br />
-              of understanding<br />
-              and awareness<br />
-              to LIFE.
+              Created to ELEV8 the<br />
+              profound mentalphysical<br />
+              understanding &amp;<br />
+              innerstanding of MYSELF.
             </p>
 
             <h3 className="font-inter font-bold text-[16px] text-white uppercase mt-12 mb-4 tracking-widest">
@@ -176,9 +175,10 @@ export default function WhyElev8() {
             </h3>
 
             <p className="font-inter text-[13px] text-gray-300 leading-loose tracking-wide">
-              The only drinking water<br />
-              brand in the world that<br />
-              truly CARES about YOU.
+              THE ONLY BRAND<br />
+              YOUNIVERSALLY THAT TRULY<br />
+              CARES ABOUT MY<br />
+              MENTALPHYSICAL ELEVATION.
             </p>
 
             <p className="font-inter text-[12px] text-white/70 leading-relaxed mt-6 mb-8">
@@ -262,11 +262,14 @@ export default function WhyElev8() {
             </h3>
 
             <p className="font-inter text-[13px] text-gray-300 leading-loose tracking-wide">
-              Explore the power of YOU<br />
-              with our thoughtfully<br />
-              created self-development<br />
-              information created<br />
-              for YOU.
+              I EXPLORE thoughtfully<br />
+              created contents &amp;<br />
+              information to allow a<br />
+              more enjoyable life<br />
+              experiences.<br /><br />
+              I DESERVE ONLY THE<br />
+              GREATEST LIFE EXPERIENCES.<br />
+              I AM WORTH THE INVESTMENT.
             </p>
 
             <h3 className="font-inter font-bold text-[16px] text-white uppercase mt-auto mb-4 tracking-widest">
@@ -275,12 +278,10 @@ export default function WhyElev8() {
             </h3>
 
             <p className="font-inter text-[12px] text-gray-400 leading-loose tracking-wide max-w-[200px]">
-              Represent the 12 most<br />
-              important understanding<br />
-              that would allow a more<br />
-              enjoyable experience<br />
-              in this grand design<br />
-              called LIFE.
+              12 COMMONLY USED WORDS<br />
+              with a profound<br />
+              interpretation for<br />
+              MENTALPHYSICAL GREATNESS.
             </p>
           </m.div>
 

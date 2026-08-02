@@ -78,7 +78,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.75 }}
-            className="mx-auto mt-6 max-w-md font-inter text-[15px] leading-relaxed text-violet/80 lg:mx-0"
+            className="mx-auto mt-6 max-w-md font-inter text-[16px] font-semibold leading-relaxed text-gradient-multi-animated drop-shadow-sm lg:mx-0"
           >
             The Number 1 Self-development And Wellness Brand In The World.
           </m.p>
