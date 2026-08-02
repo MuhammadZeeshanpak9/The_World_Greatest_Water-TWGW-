@@ -5,6 +5,8 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { WELLNESS_CARDS } from "@/data/content";
 import { usePrefersReducedMotion, useIsMobile } from "@/lib/hooks";
+import { ImageWithFallback } from "@/components/ui/MediaWithFallback";
+import GoWithinArt from "@/components/sections/wellness/GoWithinArt";
 
 // Helper component to render the beautiful custom backgrounds
 // Helper component to render the beautiful custom backgrounds in vibrant purple tones
@@ -33,21 +35,13 @@ const CardBackground = ({ index }: { index: number }) => {
       );
     case 1:
       return (
-        <div className="absolute inset-0 bg-[#e8dbf7] overflow-hidden">
-          {/* Concrete/Paper texture overlay */}
-          <div className="absolute inset-0 opacity-15 mix-blend-multiply" style={{ backgroundImage: "url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noise%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.8%22 numOctaves=%224%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noise)%22/%3E%3C/svg%3E')" }} />
-          <svg className="absolute inset-0 w-full h-full text-[#6b2fa0]/20" preserveAspectRatio="none" viewBox="0 0 100 100">
-            <polygon points="-10,-10 60,-10 15,45" fill="currentColor"/>
-            <polygon points="110,-10 110,30 35,90" fill="currentColor"/>
-            <polygon points="-10,40 40,110 -10,110" fill="currentColor"/>
-            <polygon points="35,110 110,110 85,35" fill="currentColor"/>
-            <polygon points="50,40 70,20 80,60" fill="currentColor"/>
-          </svg>
-          <div className="absolute inset-0 flex items-center justify-center px-4">
-            <p className="text-[#431866] text-[15px] font-inter font-bold text-center tracking-[0.2em] leading-[1.8] drop-shadow-sm">
-              EVERYTHING<br/>STARTS IN<br/>THE MIND
-            </p>
-          </div>
+        <div className="absolute inset-0 overflow-hidden">
+          <ImageWithFallback
+            src="/images/forgive-yourself.png"
+            alt="Forgive Yourself"
+            watermark="Thank You Mind"
+            rounded=""
+          />
         </div>
       );
     case 2:
@@ -69,26 +63,7 @@ const CardBackground = ({ index }: { index: number }) => {
         </div>
       );
     case 3:
-      return (
-        <div className="absolute inset-0 flex flex-col bg-[#faf6ff] overflow-hidden">
-          <div className="flex-1 flex flex-col items-center justify-center pb-6 z-10 relative bg-transparent">
-            <p className="font-cormorant text-[#6b2fa0] text-[28px] tracking-widest leading-none">GO</p>
-            <p className="font-cormorant text-[#6b2fa0] text-[20px] tracking-[0.15em] mt-3 leading-none">WITHIN</p>
-          </div>
-          <div className="flex-1 bg-[#8745c4] relative">
-            <div className="absolute -top-4 left-0 right-0 h-8 bg-[#faf6ff] opacity-95" style={{ filter: "url(#roughEdge)" }} />
-            {/* Glitter noise */}
-            <div className="absolute inset-0 mix-blend-color-dodge opacity-50" style={{ backgroundImage: "url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noise%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%224%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noise)%22/%3E%3C/svg%3E')" }} />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#360b5e] via-transparent to-transparent opacity-90" />
-            <svg width="0" height="0" className="absolute">
-              <filter id="roughEdge">
-                <feTurbulence type="fractalNoise" baseFrequency="0.2" numOctaves="3" result="noise" />
-                <feDisplacementMap in="SourceGraphic" in2="noise" scale="20" xChannelSelector="R" yChannelSelector="G" />
-              </filter>
-            </svg>
-          </div>
-        </div>
-      );
+      return <GoWithinArt />;
     default:
       return <div className="absolute inset-0 bg-[#f7effc]" />;
   }

@@ -7,7 +7,50 @@ import { ArrowRight } from "lucide-react";
 import FormField from "@/components/ui/FormField";
 import { GradientDivider } from "@/components/ui/primitives";
 import { ImageWithFallback } from "@/components/ui/MediaWithFallback";
+import { usePrefersReducedMotion } from "@/lib/hooks";
+import GoWithinArt from "@/components/sections/wellness/GoWithinArt";
 import type { WellnessOffering } from "@/types";
+
+/** Organic drop/blob shape — same asymmetric border-radius trick used in ProductBanner. */
+const BLOB_SHAPE = "48% 52% 44% 56% / 55% 48% 52% 45%";
+
+function ImageBubble({
+  src,
+  alt,
+  reduced,
+  delay = 0,
+  heroArt,
+}: {
+  src?: string;
+  alt: string;
+  reduced: boolean;
+  delay?: number;
+  heroArt?: "go-within";
+}) {
+  return (
+    <div className="relative mx-auto aspect-[4/3] w-full max-w-md">
+      <div
+        className="absolute -inset-6 -z-10 blur-3xl"
+        style={{ background: "rgba(107,47,160,0.18)", borderRadius: "50%" }}
+        aria-hidden
+      />
+      <m.div
+        className="relative h-full w-full overflow-hidden"
+        style={{ borderRadius: BLOB_SHAPE }}
+        animate={reduced ? undefined : { y: [0, -14, 0], scale: [1, 1.03, 1] }}
+        transition={
+          reduced ? undefined : { duration: 5.5, repeat: Infinity, ease: "easeInOut", delay }
+        }
+      >
+        {heroArt === "go-within" ? (
+          <GoWithinArt />
+        ) : (
+          <ImageWithFallback src={src} alt={alt} watermark={alt} rounded="" />
+        )}
+      </m.div>
+    </div>
+  );
+}
 
 type Values = {
   firstName: string;
@@ -30,6 +73,7 @@ export default function OfferingBlock({
   image,
   secondaryImage,
   hasSecondaryImage,
+  heroArt,
   tagline,
   bodyParagraphs,
   session,
@@ -46,6 +90,7 @@ export default function OfferingBlock({
 }: WellnessOffering) {
   const [values, setValues] = useState<Values>(EMPTY_VALUES);
   const [submitted, setSubmitted] = useState(false);
+  const reduced = usePrefersReducedMotion();
 
   const update = (field: keyof Values) => (value: string) =>
     setValues((v) => ({ ...v, [field]: value }));
@@ -238,14 +283,10 @@ export default function OfferingBlock({
             )}
           </div>
 
-          <div className="flex flex-col gap-6">
-            <div className="relative mx-auto aspect-[4/3] w-full max-w-md overflow-hidden rounded-2xl">
-              <ImageWithFallback src={image} alt={heading} watermark={heading} />
-            </div>
+          <div className="flex flex-col gap-10">
+            <ImageBubble src={image} alt={heading} reduced={reduced} heroArt={heroArt} />
             {hasSecondaryImage && (
-              <div className="relative mx-auto aspect-[4/3] w-full max-w-md overflow-hidden rounded-2xl">
-                <ImageWithFallback src={secondaryImage} alt={heading} watermark={heading} />
-              </div>
+              <ImageBubble src={secondaryImage} alt={heading} reduced={reduced} delay={0.4} />
             )}
           </div>
         </m.div>
