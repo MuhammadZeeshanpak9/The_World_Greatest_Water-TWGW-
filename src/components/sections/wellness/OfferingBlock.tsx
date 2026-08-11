@@ -20,13 +20,23 @@ function ImageBubble({
   reduced,
   delay = 0,
   heroArt,
+  plain = false,
 }: {
   src?: string;
   alt: string;
   reduced: boolean;
   delay?: number;
   heroArt?: "go-within";
+  plain?: boolean;
 }) {
+  if (plain) {
+    return (
+      <div className="relative mx-auto aspect-[4/3] w-full max-w-md overflow-hidden rounded-2xl">
+        <ImageWithFallback src={src} alt={alt} watermark={alt} rounded="" />
+      </div>
+    );
+  }
+
   return (
     <div className="relative mx-auto aspect-[4/3] w-full max-w-md">
       <div
@@ -73,7 +83,9 @@ export default function OfferingBlock({
   image,
   secondaryImage,
   hasSecondaryImage,
+  hasPrimaryImage,
   heroArt,
+  imagePlain,
   tagline,
   bodyParagraphs,
   session,
@@ -284,7 +296,15 @@ export default function OfferingBlock({
           </div>
 
           <div className="flex flex-col gap-10">
-            <ImageBubble src={image} alt={heading} reduced={reduced} heroArt={heroArt} />
+            {hasPrimaryImage !== false && (
+              <ImageBubble
+                src={image}
+                alt={heading}
+                reduced={reduced}
+                heroArt={heroArt}
+                plain={imagePlain}
+              />
+            )}
             {hasSecondaryImage && (
               <ImageBubble src={secondaryImage} alt={heading} reduced={reduced} delay={0.4} />
             )}

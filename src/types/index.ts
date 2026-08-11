@@ -55,7 +55,9 @@ export type WellnessOffering = {
   image?: string;
   secondaryImage?: string;
   hasSecondaryImage?: boolean;
+  hasPrimaryImage?: boolean;
   heroArt?: "go-within";
+  imagePlain?: boolean;
   tagline?: string;
   bodyParagraphs?: string[];
   session?: WellnessSession;

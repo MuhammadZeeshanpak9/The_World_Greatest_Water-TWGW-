@@ -371,7 +371,7 @@ export const WELLNESS_SUBPAGES: WellnessSubPage[] = [
     offerings: [
       {
         heading: "PHYSICAL WELLNESS",
-        image: "/images/elev8-gym-lifestyle.png",
+        hasPrimaryImage: false,
         hasSecondaryImage: true,
         secondaryImage: "/images/elev8-gym-purple.png",
         tagline: 'Wellness is a "Physical" state of well-being.',
