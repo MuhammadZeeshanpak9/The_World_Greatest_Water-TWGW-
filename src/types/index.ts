@@ -79,7 +79,7 @@ export type WellnessSubPage = {
   subtitle: string;
   price: string;
   description: string;
-  video: string;
+  video?: string;
   features: WellnessFeature[];
   bookingHeading: string;
   bookingBody: string;

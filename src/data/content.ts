@@ -353,7 +353,6 @@ export const WELLNESS_SUBPAGES: WellnessSubPage[] = [
     price: "$5,000+",
     description:
       "A complete physical and mental wellness experience. Your body is your temple — we help you treat it as one. A premium, consciousness-driven transformation designed to elevate your physical experience from the inside out.",
-    video: "/videos/wellness-body.mp4",
     features: [
       { title: "BODY TRANSFORMATION", description: "Complete physical wellness overhaul" },
       { title: "MENTAL ALIGNMENT", description: "Mind-body connection techniques" },
@@ -425,7 +424,6 @@ export const WELLNESS_SUBPAGES: WellnessSubPage[] = [
     price: "$2,500+",
     description:
       "Mental clarity, consciousness elevation, and unlocking the true power of your mind. THE WORLD'S GREATEST WATER believes that the mind creates reality — this session gives you the tools to direct that creation intentionally.",
-    video: "/videos/wellness-mind.mp4",
     features: [
       { title: "CONSCIOUSNESS EXPANSION", description: "Elevate your awareness to new levels" },
       { title: "THOUGHT MASTERY", description: "Control and direct your thoughts intentionally" },
@@ -502,7 +500,6 @@ export const WELLNESS_SUBPAGES: WellnessSubPage[] = [
     price: "$5,000+",
     description:
       "Deep spiritual wellness. Reconnect with your highest self and experience the profound connection between your soul and the universe. This is the most sacred offering in the ELEV8 WATER wellness ecosystem.",
-    video: "/videos/wellness-soul.mp4",
     features: [
       { title: "SOUL RECONNECTION", description: "Rediscover your true spiritual essence" },
       { title: "ENERGY ALIGNMENT", description: "Align your chakras and energy centers" },
@@ -547,7 +544,6 @@ export const WELLNESS_SUBPAGES: WellnessSubPage[] = [
     price: "$1,000,000+",
     description:
       "The ultimate transformation experience. This is not a service — this is a complete life reinvention. Reserved for those who are truly ready to unlock every limitation and step into their greatest version. The most premium wellness experience in the YOUNIVERSE.",
-    video: "/videos/wellness-unlock.mp4",
     features: [
       { title: "COMPLETE LIFE REINVENTION", description: "Every area of life elevated simultaneously" },
       { title: "PRIVATE MENTORSHIP", description: "Exclusive 1-on-1 access to the creators" },

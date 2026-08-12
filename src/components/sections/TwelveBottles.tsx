@@ -1,14 +1,13 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import Image from "next/image";
 import useEmblaCarousel from "embla-carousel-react";
 import { m } from "framer-motion";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { BOTTLES } from "@/data/content";
 import { GradientPlaceholder } from "@/components/ui/MediaWithFallback";
 import SectionParticles from "./SectionParticles";
-
-const HEADING = "EXPLORE OUR 12 INSPIRATIONAL BOTTLES".split("");
 
 export default function TwelveBottles() {
   const [emblaRef, emblaApi] = useEmblaCarousel({
@@ -104,10 +103,12 @@ export default function TwelveBottles() {
                     <div className="relative h-[220px] overflow-hidden rounded-2xl group/img">
                       {bottle.image ? (
                         <>
-                          <img
+                          <Image
                             src={bottle.image}
                             alt={bottle.name}
-                            className="h-full w-full rounded-2xl object-cover transition-transform duration-700 group-hover/img:scale-105"
+                            fill
+                            sizes="(max-width: 768px) 80vw, (max-width: 1024px) 45vw, 28vw"
+                            className="rounded-2xl object-cover transition-transform duration-700 group-hover/img:scale-105"
                           />
                           <div className="absolute inset-0 flex items-center justify-center bg-black/10 rounded-2xl">
                             <span className="font-inter text-sm uppercase tracking-[0.3em] text-white/90 drop-shadow-lg">
