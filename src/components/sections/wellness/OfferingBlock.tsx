@@ -8,6 +8,7 @@ import FormField from "@/components/ui/FormField";
 import { GradientDivider } from "@/components/ui/primitives";
 import { ImageWithFallback } from "@/components/ui/MediaWithFallback";
 import { usePrefersReducedMotion } from "@/lib/hooks";
+import { useFormSubmit, submitFormSubmission } from "@/lib/forms";
 import GoWithinArt from "@/components/sections/wellness/GoWithinArt";
 import type { WellnessOffering } from "@/types";
 
@@ -101,7 +102,7 @@ export default function OfferingBlock({
   collaboratorItems,
 }: WellnessOffering) {
   const [values, setValues] = useState<Values>(EMPTY_VALUES);
-  const [submitted, setSubmitted] = useState(false);
+  const { status, errorMessage, submit } = useFormSubmit();
   const reduced = usePrefersReducedMotion();
 
   const update = (field: keyof Values) => (value: string) =>
@@ -109,7 +110,13 @@ export default function OfferingBlock({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    submit(() =>
+      submitFormSubmission("wellness", {
+        ...values,
+        name: `${values.firstName} ${values.lastName}`.trim(),
+        offering: heading,
+      }),
+    );
   };
 
   const hasMembershipForm = Boolean(pricingLabel && price1yr);
@@ -124,7 +131,6 @@ export default function OfferingBlock({
         {price2yr && <p className="mt-1 font-cormorant text-[28px] text-ink">{price2yr}</p>}
       </div>
 
-      {/* Signup form — styled placeholder, no backend submission yet */}
       <form
         onSubmit={handleSubmit}
         className="mx-auto mt-10 flex max-w-md flex-col gap-4 text-left"
@@ -170,12 +176,17 @@ export default function OfferingBlock({
           options={(membershipOptions ?? []).map((o) => ({ label: o, value: o }))}
         />
 
+        {status === "error" && errorMessage && (
+          <p className="text-center font-inter text-[13px] text-red-600">{errorMessage}</p>
+        )}
+
         <button
           type="submit"
-          className="group mt-2 flex h-[52px] items-center justify-center gap-2 rounded-full bg-gradient-brand px-8 font-inter text-[12px] font-semibold uppercase tracking-[0.15em] text-white btn-glow transition-transform duration-300 active:scale-95"
+          disabled={status === "submitting"}
+          className="group mt-2 flex h-[52px] items-center justify-center gap-2 rounded-full bg-gradient-brand px-8 font-inter text-[12px] font-semibold uppercase tracking-[0.15em] text-white btn-glow transition-transform duration-300 active:scale-95 disabled:opacity-60"
         >
-          {submitted ? "Thank You" : "Submit"}
-          {!submitted && (
+          {status === "submitting" ? "Sending…" : status === "success" ? "Thank You" : "Submit"}
+          {status !== "success" && status !== "submitting" && (
             <ArrowRight size={15} className="transition-transform group-hover:translate-x-1" />
           )}
         </button>

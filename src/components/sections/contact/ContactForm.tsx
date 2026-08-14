@@ -4,14 +4,14 @@ import { useState } from "react";
 import { m } from "framer-motion";
 import { ArrowRight, Check } from "lucide-react";
 import FormField from "@/components/ui/FormField";
-import { useFormSubmit, isValidEmail } from "@/lib/forms";
+import { useFormSubmit, isValidEmail, submitFormSubmission } from "@/lib/forms";
 
 type Errors = Partial<Record<"name" | "email" | "subject" | "message", string>>;
 
 export default function ContactForm() {
   const [values, setValues] = useState({ name: "", email: "", subject: "", message: "" });
   const [errors, setErrors] = useState<Errors>({});
-  const { status, submit } = useFormSubmit();
+  const { status, errorMessage, submit } = useFormSubmit();
 
   const update = (field: keyof typeof values) => (value: string) =>
     setValues((v) => ({ ...v, [field]: value }));
@@ -26,7 +26,7 @@ export default function ContactForm() {
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length > 0) return;
 
-    submit(() => new Promise((resolve) => setTimeout(resolve, 900)));
+    submit(() => submitFormSubmission("contact", values));
   };
 
   return (
@@ -82,6 +82,9 @@ export default function ContactForm() {
               required
               error={errors.message}
             />
+            {status === "error" && errorMessage && (
+              <p className="text-center font-inter text-[13px] text-red-600">{errorMessage}</p>
+            )}
             <button
               type="submit"
               disabled={status === "submitting"}

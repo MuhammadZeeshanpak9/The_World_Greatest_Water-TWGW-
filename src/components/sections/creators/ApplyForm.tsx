@@ -4,7 +4,7 @@ import { useState } from "react";
 import { m } from "framer-motion";
 import { ArrowRight, Check } from "lucide-react";
 import FormField from "@/components/ui/FormField";
-import { useFormSubmit, isValidEmail } from "@/lib/forms";
+import { useFormSubmit, isValidEmail, submitFormSubmission } from "@/lib/forms";
 
 type Values = {
   name: string;
@@ -20,7 +20,7 @@ const INITIAL: Values = { name: "", email: "", handle: "", followers: "", messag
 export default function ApplyForm() {
   const [values, setValues] = useState<Values>(INITIAL);
   const [errors, setErrors] = useState<Errors>({});
-  const { status, submit } = useFormSubmit();
+  const { status, errorMessage, submit } = useFormSubmit();
 
   const update = (field: keyof Values) => (value: string) =>
     setValues((v) => ({ ...v, [field]: value }));
@@ -34,7 +34,7 @@ export default function ApplyForm() {
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length > 0) return;
 
-    submit(() => new Promise((resolve) => setTimeout(resolve, 900)));
+    submit(() => submitFormSubmission("creators", values));
   };
 
   return (
@@ -96,6 +96,9 @@ export default function ApplyForm() {
               onChange={update("message")}
               placeholder="Tell us about yourself..."
             />
+            {status === "error" && errorMessage && (
+              <p className="text-center font-inter text-[13px] text-red-600">{errorMessage}</p>
+            )}
             <button
               type="submit"
               disabled={status === "submitting"}

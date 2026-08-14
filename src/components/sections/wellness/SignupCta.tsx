@@ -4,12 +4,12 @@ import { useState } from "react";
 import { m } from "framer-motion";
 import { ArrowRight, Check } from "lucide-react";
 import FormField from "@/components/ui/FormField";
-import { useFormSubmit, isValidEmail } from "@/lib/forms";
+import { useFormSubmit, isValidEmail, submitWaitlist } from "@/lib/forms";
 
 export default function SignupCta() {
   const [email, setEmail] = useState("");
   const [error, setError] = useState<string | undefined>();
-  const { status, submit } = useFormSubmit({ resetDelayMs: 5000 });
+  const { status, errorMessage, submit } = useFormSubmit({ resetDelayMs: 5000 });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -18,7 +18,7 @@ export default function SignupCta() {
       return;
     }
     setError(undefined);
-    submit(() => new Promise((resolve) => setTimeout(resolve, 900)));
+    submit(() => submitWaitlist(email, "wellness-signup"));
   };
 
   return (
@@ -79,6 +79,9 @@ export default function SignupCta() {
               <ArrowRight size={15} className="transition-transform group-hover:translate-x-1" />
             </button>
           </form>
+        )}
+        {status === "error" && errorMessage && (
+          <p className="mt-3 font-inter text-[13px] text-red-400">{errorMessage}</p>
         )}
       </div>
     </section>

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { m } from "framer-motion";
 import { ArrowRight, Check } from "lucide-react";
 import FormField from "@/components/ui/FormField";
-import { useFormSubmit, isValidEmail } from "@/lib/forms";
+import { useFormSubmit, isValidEmail, submitFormSubmission } from "@/lib/forms";
 
 type Values = {
   business: string;
@@ -20,7 +20,7 @@ const INITIAL: Values = { business: "", contact: "", email: "", phone: "", messa
 export default function InquiryForm() {
   const [values, setValues] = useState<Values>(INITIAL);
   const [errors, setErrors] = useState<Errors>({});
-  const { status, submit } = useFormSubmit();
+  const { status, errorMessage, submit } = useFormSubmit();
 
   const update = (field: keyof Values) => (value: string) =>
     setValues((v) => ({ ...v, [field]: value }));
@@ -34,7 +34,7 @@ export default function InquiryForm() {
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length > 0) return;
 
-    submit(() => new Promise((resolve) => setTimeout(resolve, 900)));
+    submit(() => submitFormSubmission("join", { ...values, name: values.contact }));
   };
 
   return (
@@ -96,6 +96,9 @@ export default function InquiryForm() {
               onChange={update("message")}
               placeholder="Tell us about your business..."
             />
+            {status === "error" && errorMessage && (
+              <p className="text-center font-inter text-[13px] text-red-600">{errorMessage}</p>
+            )}
             <button
               type="submit"
               disabled={status === "submitting"}

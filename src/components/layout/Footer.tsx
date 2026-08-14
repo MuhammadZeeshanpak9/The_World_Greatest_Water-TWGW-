@@ -1,11 +1,63 @@
 "use client";
 
+import { useState, type FormEvent } from "react";
 import { m } from "framer-motion";
 import Link from "next/link";
 import dynamic from "next/dynamic";
+import { Check } from "lucide-react";
 import { FOOTER_COLUMNS, SOCIALS, PAYMENTS, BRAND } from "@/data/content";
 import { WaterDrop } from "@/components/ui/primitives";
 import { SOCIAL_ICONS, InstagramIcon } from "@/components/ui/SocialIcons";
+import { useFormSubmit, isValidEmail, submitWaitlist } from "@/lib/forms";
+
+function FooterSignupForm() {
+  const [email, setEmail] = useState("");
+  const [error, setError] = useState<string | undefined>();
+  const { status, errorMessage, submit } = useFormSubmit({ resetDelayMs: 6000 });
+
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    if (!isValidEmail(email)) {
+      setError("Enter a valid email address.");
+      return;
+    }
+    setError(undefined);
+    submit(() => submitWaitlist(email, "footer"));
+  };
+
+  if (status === "success") {
+    return (
+      <p className="flex items-center gap-2 font-inter text-[12px] font-semibold tracking-[0.15em] text-teal uppercase">
+        <Check size={16} /> You&apos;re on the list
+      </p>
+    );
+  }
+
+  return (
+    <div className="w-full max-w-sm">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-2 sm:flex-row">
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="you@example.com"
+          required
+          className="h-11 flex-1 rounded border border-white/15 bg-white/5 px-4 font-inter text-[13px] text-white placeholder:text-white/30 focus:border-violet-mid focus:outline-none"
+        />
+        <button
+          type="submit"
+          disabled={status === "submitting"}
+          className="h-11 shrink-0 rounded bg-violet px-5 font-inter text-[11px] font-semibold tracking-[0.15em] text-white uppercase transition-transform hover:scale-[1.02] disabled:opacity-60"
+        >
+          {status === "submitting" ? "…" : "Sign Up"}
+        </button>
+      </form>
+      {(error || (status === "error" && errorMessage)) && (
+        <p className="mt-2 font-inter text-[11px] text-red-400">{error ?? errorMessage}</p>
+      )}
+    </div>
+  );
+}
 
 const FooterParticles = dynamic(() => import("@/components/background/FooterParticles"), {
   ssr: false,
@@ -25,6 +77,21 @@ export default function Footer() {
       />
 
       <div className="mx-auto max-w-7xl px-6">
+        <m.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mb-14 flex flex-col items-start justify-between gap-5 border-b border-white/10 pb-14 md:flex-row md:items-center"
+        >
+          <div>
+            <h4 className="font-cormorant text-[22px] text-white">Stay In The Loop</h4>
+            <p className="mt-1 font-inter text-[13px] text-white/45">
+              New drops, wellness offerings, and updates — straight to your inbox.
+            </p>
+          </div>
+          <FooterSignupForm />
+        </m.div>
+
         <div className="grid grid-cols-2 gap-10 md:grid-cols-4">
           {/* Brand column */}
           <m.div

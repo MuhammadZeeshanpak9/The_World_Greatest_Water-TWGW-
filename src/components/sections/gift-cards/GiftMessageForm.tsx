@@ -4,7 +4,7 @@ import { useState } from "react";
 import { m } from "framer-motion";
 import { ArrowRight, Check } from "lucide-react";
 import FormField from "@/components/ui/FormField";
-import { useFormSubmit, isValidEmail } from "@/lib/forms";
+import { useFormSubmit, isValidEmail, submitFormSubmission } from "@/lib/forms";
 
 type Errors = Partial<Record<"recipientName" | "recipientEmail" | "senderName" | "message", string>>;
 
@@ -16,7 +16,7 @@ export default function GiftMessageForm() {
     message: "",
   });
   const [errors, setErrors] = useState<Errors>({});
-  const { status, submit } = useFormSubmit();
+  const { status, errorMessage, submit } = useFormSubmit();
 
   const update = (field: keyof typeof values) => (value: string) =>
     setValues((v) => ({ ...v, [field]: value }));
@@ -31,7 +31,13 @@ export default function GiftMessageForm() {
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length > 0) return;
 
-    submit(() => new Promise((resolve) => setTimeout(resolve, 900)));
+    submit(() =>
+      submitFormSubmission("gift-cards", {
+        ...values,
+        name: values.senderName,
+        email: values.recipientEmail,
+      }),
+    );
   };
 
   return (
@@ -93,6 +99,9 @@ export default function GiftMessageForm() {
               required
               error={errors.message}
             />
+            {status === "error" && errorMessage && (
+              <p className="text-center font-inter text-[13px] text-red-600">{errorMessage}</p>
+            )}
             <button
               type="submit"
               disabled={status === "submitting"}

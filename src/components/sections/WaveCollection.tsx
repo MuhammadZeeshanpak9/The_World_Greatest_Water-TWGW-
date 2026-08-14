@@ -5,6 +5,7 @@ import { AnimatePresence, m } from "framer-motion";
 import Link from "next/link";
 import { usePrefersReducedMotion } from "@/lib/hooks";
 import { ImageWithFallback } from "@/components/ui/MediaWithFallback";
+import NotifyMeForm from "@/components/ui/NotifyMeForm";
 import ProductStatusBadge from "@/components/sections/shop/ProductStatusBadge";
 import type { ProductStatus } from "@/types";
 
@@ -237,12 +238,12 @@ export default function WaveCollection() {
                     {active.cta}
                   </Link>
                 ) : (
-                  <button
-                    disabled
-                    className="mt-8 flex h-[52px] items-center gap-2 rounded bg-violet px-8 font-inter text-[12px] font-semibold uppercase tracking-[0.15em] text-white disabled:cursor-not-allowed disabled:bg-muted/40"
-                  >
-                    {active.cta}
-                  </button>
+                  <NotifyMeForm
+                    key={active.id}
+                    label={active.cta}
+                    source="wave-collection"
+                    className="mt-8"
+                  />
                 )}
               </m.div>
             </AnimatePresence>

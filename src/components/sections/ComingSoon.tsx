@@ -3,6 +3,7 @@
 import { m } from "framer-motion";
 import { COMING_SOON } from "@/data/content";
 import { GradientPlaceholder } from "@/components/ui/MediaWithFallback";
+import NotifyMeForm from "@/components/ui/NotifyMeForm";
 
 export default function ComingSoon() {
   return (
@@ -35,9 +36,12 @@ export default function ComingSoon() {
               <p className="mt-2 font-inter text-[13px] leading-relaxed text-body">
                 {item.description}
               </p>
-              <button className="mt-5 rounded border border-violet px-6 py-2.5 font-inter text-[11px] font-semibold uppercase tracking-[0.15em] text-violet transition-colors hover:bg-violet hover:text-white">
-                Notify Me
-              </button>
+              <NotifyMeForm
+                label="Notify Me"
+                source="coming-soon"
+                variant="outline"
+                className="mt-5"
+              />
             </m.div>
           ))}
         </div>
