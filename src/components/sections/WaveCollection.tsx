@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, m } from "framer-motion";
 import Link from "next/link";
 import { usePrefersReducedMotion } from "@/lib/hooks";
@@ -8,6 +8,13 @@ import { ImageWithFallback } from "@/components/ui/MediaWithFallback";
 import NotifyMeForm from "@/components/ui/NotifyMeForm";
 import ProductStatusBadge from "@/components/sections/shop/ProductStatusBadge";
 import type { ProductStatus } from "@/types";
+
+// Maps a Wave Collection category to the real `products.category` value it corresponds to.
+// Categories with no entry here have no live product yet — they keep their static status.
+const CATEGORY_MATCH: Record<string, string> = {
+  "pet-bottles": "Water Bottles",
+  "essence-pods": "Essence Pods",
+};
 
 type WaveCategory = {
   id: string;
@@ -106,8 +113,39 @@ const WAVE_COLLECTION: WaveCategory[] = [
 
 export default function WaveCollection() {
   const [activeId, setActiveId] = useState(WAVE_COLLECTION[0].id);
+  const [liveStatus, setLiveStatus] = useState<Record<string, ProductStatus>>({});
   const reduced = usePrefersReducedMotion();
   const active = WAVE_COLLECTION.find((c) => c.id === activeId) ?? WAVE_COLLECTION[0];
+  const activeStatus = liveStatus[active.id] ?? active.status;
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function loadLiveStatus() {
+      try {
+        const res = await fetch("/api/products");
+        if (!res.ok) throw new Error("Failed to load products");
+        const { products } = (await res.json()) as {
+          products: { category: string; status: ProductStatus }[];
+        };
+        if (cancelled) return;
+
+        const next: Record<string, ProductStatus> = {};
+        for (const [waveId, dbCategory] of Object.entries(CATEGORY_MATCH)) {
+          const match = products.find((p) => p.category === dbCategory);
+          if (match) next[waveId] = match.status;
+        }
+        setLiveStatus(next);
+      } catch {
+        // Fall back silently to each category's static status.
+      }
+    }
+
+    loadLiveStatus();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   return (
     <section className="relative overflow-hidden py-24 md:py-32">
@@ -227,10 +265,10 @@ export default function WaveCollection() {
 
                 <div className="mt-6 flex flex-wrap items-center gap-4">
                   <p className="font-cormorant text-[28px] text-violet">{active.price}</p>
-                  <ProductStatusBadge status={active.status} />
+                  <ProductStatusBadge status={activeStatus} />
                 </div>
 
-                {active.status === "available" ? (
+                {activeStatus === "available" ? (
                   <Link
                     href="/shop"
                     className="group mt-8 flex h-[52px] w-fit items-center gap-2 rounded bg-violet px-8 font-inter text-[12px] font-semibold uppercase tracking-[0.15em] text-white transition-transform duration-300 hover:scale-[1.02]"

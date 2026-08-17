@@ -1,17 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
 import { ArrowRight } from "lucide-react";
 import FormField from "@/components/ui/FormField";
-
-type Values = {
-  address1: string;
-  address2: string;
-  city: string;
-  state: string;
-  zip: string;
-  country: string;
-};
+import type { ShippingValues as Values } from "./types";
 
 type Errors = Partial<Record<keyof Values, string>>;
 
@@ -28,7 +20,11 @@ const SHIPPING_METHODS = [
   { id: "express", label: "Express (2-3 days)", price: "$15.00" },
 ];
 
-export default function ShippingStep({ onContinue }: { onContinue: () => void }) {
+export default function ShippingStep({
+  onContinue,
+}: {
+  onContinue: (values: Values) => void;
+}) {
   const [values, setValues] = useState<Values>({
     address1: "",
     address2: "",
@@ -43,7 +39,7 @@ export default function ShippingStep({ onContinue }: { onContinue: () => void })
   const update = (field: keyof Values) => (value: string) =>
     setValues((v) => ({ ...v, [field]: value }));
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     const nextErrors: Errors = {};
     if (!values.address1.trim()) nextErrors.address1 = "Address is required.";
@@ -53,7 +49,7 @@ export default function ShippingStep({ onContinue }: { onContinue: () => void })
     if (!values.country) nextErrors.country = "Select a country.";
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length > 0) return;
-    onContinue();
+    onContinue(values);
   };
 
   return (

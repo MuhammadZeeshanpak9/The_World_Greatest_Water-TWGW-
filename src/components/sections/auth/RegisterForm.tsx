@@ -1,11 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { m } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import FormField from "@/components/ui/FormField";
 import { useFormSubmit, isValidEmail } from "@/lib/forms";
+import { isStrongPassword } from "@/lib/validation";
 
 type Values = {
   firstName: string;
@@ -26,24 +28,48 @@ export default function RegisterForm() {
     confirmPassword: "",
   });
   const [errors, setErrors] = useState<Errors>({});
-  const { status, submit } = useFormSubmit();
+  const [confirmMessage, setConfirmMessage] = useState<string | null>(null);
+  const { status, errorMessage, submit } = useFormSubmit();
+  const router = useRouter();
 
   const update = (field: keyof Values) => (value: string) =>
     setValues((v) => ({ ...v, [field]: value }));
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     const nextErrors: Errors = {};
     if (!values.firstName.trim()) nextErrors.firstName = "First name is required.";
     if (!values.lastName.trim()) nextErrors.lastName = "Last name is required.";
     if (!isValidEmail(values.email)) nextErrors.email = "Enter a valid email address.";
-    if (!values.password) nextErrors.password = "Password is required.";
+    if (!isStrongPassword(values.password)) {
+      nextErrors.password =
+        "At least 8 characters, with an uppercase letter, a number, and a special character.";
+    }
     if (values.confirmPassword !== values.password)
       nextErrors.confirmPassword = "Passwords do not match.";
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length > 0) return;
 
-    submit(() => new Promise((resolve) => setTimeout(resolve, 900)));
+    submit(async () => {
+      const res = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: values.email,
+          password: values.password,
+          fullName: `${values.firstName} ${values.lastName}`.trim(),
+        }),
+      });
+      const json = await res.json();
+      if (!res.ok) throw new Error(json.error ?? "Unable to create account");
+
+      if (json.confirmed) {
+        router.push("/account");
+        router.refresh();
+      } else {
+        setConfirmMessage(json.message ?? "Check your email to confirm your account.");
+      }
+    });
   };
 
   return (
@@ -54,7 +80,11 @@ export default function RegisterForm() {
         viewport={{ once: true }}
         className="mx-auto max-w-[480px] rounded-[20px] glass-card-light p-8  md:p-12"
       >
-        {status === "success" ? (
+        {confirmMessage ? (
+          <p className="py-8 text-center font-inter text-[14px] font-semibold uppercase tracking-[0.15em] text-violet">
+            ✓ {confirmMessage}
+          </p>
+        ) : status === "success" ? (
           <p className="flex items-center justify-center gap-2 py-8 font-inter text-[14px] font-semibold uppercase tracking-[0.15em] text-violet">
             ✓ Account Created Successfully
           </p>
@@ -108,6 +138,10 @@ export default function RegisterForm() {
               required
               error={errors.confirmPassword}
             />
+
+            {status === "error" && errorMessage && (
+              <p className="text-center font-inter text-[13px] text-red-600">{errorMessage}</p>
+            )}
 
             <button
               type="submit"

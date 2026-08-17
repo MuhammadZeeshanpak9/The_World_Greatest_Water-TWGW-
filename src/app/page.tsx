@@ -14,6 +14,7 @@ import WhyElev8 from "@/components/sections/WhyElev8";
 import ComingSoon from "@/components/sections/ComingSoon";
 import Testimonials from "@/components/sections/Testimonials";
 import Trending from "@/components/sections/Trending";
+import { getProducts } from "@/lib/products";
 
 // palette shortcuts for wave colors
 const WHITE = "#ffffff";
@@ -44,7 +45,11 @@ export const metadata: Metadata = {
   },
 };
 
-export default function Home() {
+export const revalidate = 60;
+
+export default async function Home() {
+  const products = await getProducts();
+
   return (
     <main>
       <Navbar />
@@ -65,7 +70,7 @@ export default function Home() {
       <TwelveBottles />
       <WaveTransition fromColor={DARK} toColor={WHITE} variant={1} animated />
 
-      <ShopSection />
+      <ShopSection products={products} />
       <WaveTransition fromColor={WHITE} toColor={TINT} variant={3} />
 
       <ScientificProcess />

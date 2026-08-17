@@ -1,4 +1,5 @@
 import { NextResponse, type NextRequest } from "next/server";
+import { revalidatePath } from "next/cache";
 import { getAdminUser, unauthorized } from "@/lib/supabase/authz";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { logAudit } from "@/lib/supabase/audit";
@@ -85,6 +86,9 @@ export async function POST(request: NextRequest) {
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
 
   await logAudit({ action: "create", table: "products", recordId: data.id, newData: data });
+
+  revalidatePath("/shop");
+  revalidatePath("/");
 
   return NextResponse.json({ product: data }, { status: 201 });
 }

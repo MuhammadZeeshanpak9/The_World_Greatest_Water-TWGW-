@@ -1,17 +1,26 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowRight } from "lucide-react";
 import FormField from "@/components/ui/FormField";
 import { PAYMENTS } from "@/data/content";
+import { useCart } from "@/context/CartContext";
 import OrderSummary from "./OrderSummary";
+import type { ContactValues, ShippingValues } from "./types";
 
 type Values = { cardNumber: string; expiry: string; cvv: string; nameOnCard: string };
 type Errors = Partial<Record<keyof Values, string>>;
 
-export default function PaymentStep() {
+export default function PaymentStep({
+  contact,
+  shipping,
+}: {
+  contact: ContactValues;
+  shipping: ShippingValues;
+}) {
   const router = useRouter();
+  const { items, total, refreshCart } = useCart();
   const [values, setValues] = useState<Values>({
     cardNumber: "",
     expiry: "",
@@ -19,11 +28,13 @@ export default function PaymentStep() {
     nameOnCard: "",
   });
   const [errors, setErrors] = useState<Errors>({});
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const update = (field: keyof Values) => (value: string) =>
     setValues((v) => ({ ...v, [field]: value }));
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const nextErrors: Errors = {};
     if (!values.cardNumber.trim()) nextErrors.cardNumber = "Card number is required.";
@@ -32,7 +43,35 @@ export default function PaymentStep() {
     if (!values.nameOnCard.trim()) nextErrors.nameOnCard = "Name on card is required.";
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length > 0) return;
-    router.push("/checkout/confirmation");
+
+    setSubmitError(null);
+    setSubmitting(true);
+    try {
+      const res = await fetch("/api/orders", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          customerName: `${contact.firstName} ${contact.lastName}`.trim(),
+          shippingAddress: {
+            address1: shipping.address1,
+            address2: shipping.address2 || undefined,
+            city: shipping.city,
+            state: shipping.state,
+            zip: shipping.zip,
+            country: shipping.country,
+          },
+        }),
+      });
+      const json = await res.json();
+      if (!res.ok) throw new Error(json.error ?? "Unable to place order");
+
+      sessionStorage.setItem("elev8_order_number", json.order_number);
+      await refreshCart();
+      router.push("/checkout/confirmation");
+    } catch (err) {
+      setSubmitError(err instanceof Error ? err.message : "Unable to place order");
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -87,16 +126,21 @@ export default function PaymentStep() {
           ))}
         </div>
 
+        {submitError && (
+          <p className="text-center font-inter text-[13px] text-red-600">{submitError}</p>
+        )}
+
         <button
           type="submit"
-          className="group mt-2 flex h-[52px] items-center justify-center gap-2 rounded-full bg-gradient-brand btn-glow font-inter text-[12px] font-semibold uppercase tracking-[0.15em] text-white transition-transform duration-300 hover:scale-[1.01]"
+          disabled={submitting}
+          className="group mt-2 flex h-[52px] items-center justify-center gap-2 rounded-full bg-gradient-brand btn-glow font-inter text-[12px] font-semibold uppercase tracking-[0.15em] text-white transition-transform duration-300 hover:scale-[1.01] disabled:opacity-60"
         >
-          Place Order
+          {submitting ? "Placing Order…" : "Place Order"}
           <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
         </button>
       </form>
 
-      <OrderSummary />
+      <OrderSummary items={items} total={total} />
     </div>
   );
 }

@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import PageHero from "@/components/layout/PageHero";
@@ -20,7 +21,9 @@ export default function LoginPage() {
       <PageHero variant="light" title="WELCOME BACK" subtitle="SIGN IN TO YOUR ACCOUNT" />
       <WaveTransition fromColor={TINT} toColor={WHITE} variant={3} />
 
-      <LoginForm />
+      <Suspense fallback={<div className="bg-white py-24 md:py-32" />}>
+        <LoginForm />
+      </Suspense>
 
       <Footer />
     </main>

@@ -1,5 +1,6 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
+import { isAdminEmail, isSafeRedirectPath } from "@/lib/validation";
 
 export async function middleware(request: NextRequest) {
   let supabaseResponse = NextResponse.next({ request });
@@ -25,19 +26,45 @@ export async function middleware(request: NextRequest) {
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  const isAdminRoute = request.nextUrl.pathname.startsWith("/admin");
-  const isLoginPage = request.nextUrl.pathname === "/admin/login";
 
-  if (isAdminRoute && !isLoginPage && !user) {
+  const { pathname } = request.nextUrl;
+  const isAdminRoute = pathname.startsWith("/admin");
+  const isAdminLoginPage = pathname === "/admin/login";
+  const isProtectedPublicRoute = pathname.startsWith("/account") || pathname === "/checkout";
+  const isPublicLoginPage = pathname === "/login" || pathname === "/register";
+  const isAdmin = !!user && isAdminEmail(user.email);
+
+  // /admin/:path* — being authenticated is not enough; the session must belong to an
+  // ADMIN_EMAILS-listed account, since public customer registration exists now too.
+  if (isAdminRoute && !isAdminLoginPage && !isAdmin) {
     const url = request.nextUrl.clone();
     url.pathname = "/admin/login";
     url.searchParams.set("redirected", "true");
     return NextResponse.redirect(url);
   }
 
-  if (isLoginPage && user) {
+  if (isAdminLoginPage && isAdmin) {
     const url = request.nextUrl.clone();
     url.pathname = "/admin";
+    return NextResponse.redirect(url);
+  }
+
+  // Public site: /account/:path* and /checkout require a logged-in customer.
+  if (isProtectedPublicRoute && !user) {
+    const url = request.nextUrl.clone();
+    url.pathname = "/login";
+    url.search = "";
+    if (isSafeRedirectPath(pathname)) {
+      url.searchParams.set("redirect", pathname);
+    }
+    return NextResponse.redirect(url);
+  }
+
+  // /login and /register redirect an already-logged-in customer straight to /account.
+  if (isPublicLoginPage && user) {
+    const url = request.nextUrl.clone();
+    url.pathname = "/account";
+    url.search = "";
     return NextResponse.redirect(url);
   }
 
@@ -59,5 +86,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/admin/:path*"],
+  matcher: ["/admin/:path*", "/account/:path*", "/checkout", "/login", "/register"],
 };

@@ -1,23 +1,28 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
 import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 import { m } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Check } from "lucide-react";
 import FormField from "@/components/ui/FormField";
 import { useFormSubmit, isValidEmail } from "@/lib/forms";
+import { isSafeRedirectPath } from "@/lib/validation";
 
 type Errors = Partial<Record<"email" | "password", string>>;
 
 export default function LoginForm() {
   const [values, setValues] = useState({ email: "", password: "" });
   const [errors, setErrors] = useState<Errors>({});
-  const { status, submit } = useFormSubmit();
+  const { status, errorMessage, submit } = useFormSubmit();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const justReset = searchParams.get("reset") === "success";
 
   const update = (field: keyof typeof values) => (value: string) =>
     setValues((v) => ({ ...v, [field]: value }));
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     const nextErrors: Errors = {};
     if (!isValidEmail(values.email)) nextErrors.email = "Enter a valid email address.";
@@ -25,7 +30,19 @@ export default function LoginForm() {
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length > 0) return;
 
-    submit(() => new Promise((resolve) => setTimeout(resolve, 900)));
+    submit(async () => {
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(values),
+      });
+      const json = await res.json();
+      if (!res.ok) throw new Error(json.error ?? "Unable to sign in");
+
+      const redirect = searchParams.get("redirect");
+      router.push(isSafeRedirectPath(redirect) ? redirect! : "/account");
+      router.refresh();
+    });
   };
 
   return (
@@ -42,6 +59,12 @@ export default function LoginForm() {
           </p>
         ) : (
           <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+            {justReset && (
+              <p className="flex items-center justify-center gap-2 rounded-lg bg-teal/10 px-4 py-3 font-inter text-[13px] font-semibold text-teal">
+                <Check size={16} /> Password updated — please sign in
+              </p>
+            )}
+
             <FormField
               label="Email"
               name="email"
@@ -63,6 +86,10 @@ export default function LoginForm() {
               error={errors.password}
             />
 
+            {status === "error" && errorMessage && (
+              <p className="text-center font-inter text-[13px] text-red-600">{errorMessage}</p>
+            )}
+
             <button
               type="submit"
               disabled={status === "submitting"}
@@ -73,7 +100,7 @@ export default function LoginForm() {
             </button>
 
             <Link
-              href="/contact"
+              href="/forgot-password"
               className="text-center font-inter text-[13px] text-violet hover:text-violet-mid"
             >
               Forgot password?

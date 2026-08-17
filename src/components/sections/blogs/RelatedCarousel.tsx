@@ -4,10 +4,10 @@ import { useCallback, useEffect, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import type { BlogPost } from "@/types";
+import type { DbBlogPost } from "@/types";
 import { GradientPlaceholder } from "@/components/ui/MediaWithFallback";
 
-export default function RelatedCarousel({ posts }: { posts: BlogPost[] }) {
+export default function RelatedCarousel({ posts }: { posts: DbBlogPost[] }) {
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: "start",
     containScroll: "trimSnaps",
@@ -55,7 +55,9 @@ export default function RelatedCarousel({ posts }: { posts: BlogPost[] }) {
                     <GradientPlaceholder watermark={post.topic ?? "ELEV8"} className="rounded-xl" />
                   </div>
                   <h4 className="mt-4 font-cormorant text-[20px] text-ink">{post.title}</h4>
-                  <p className="mt-1 font-inter text-[13px] text-body">{post.teaser}</p>
+                  {post.teaser && (
+                    <p className="mt-1 font-inter text-[13px] text-body">{post.teaser}</p>
+                  )}
                 </div>
               </Link>
             ))}

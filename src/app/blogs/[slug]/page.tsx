@@ -6,7 +6,7 @@ import PageHero from "@/components/layout/PageHero";
 import WaveTransition from "@/components/ui/WaveTransition";
 import BlogDetailContent from "@/components/sections/blogs/BlogDetailContent";
 import BlogSidebar from "@/components/sections/blogs/BlogSidebar";
-import { BLOG_POSTS } from "@/data/content";
+import { getPublishedBlogPosts, getPublishedBlogPostBySlug } from "@/lib/blogs";
 
 const TINT = "#f0e8f8";
 const WHITE = "#ffffff";
@@ -15,30 +15,38 @@ const RelatedCarousel = dynamic(() => import("@/components/sections/blogs/Relate
   loading: () => <div className="h-[280px] w-full rounded-2xl bg-violet-tint" aria-hidden />,
 });
 
-export async function generateStaticParams() {
-  return BLOG_POSTS.map((p) => ({ slug: p.slug }));
-}
+export const revalidate = 300;
 
-export const dynamicParams = false;
+export async function generateStaticParams() {
+  try {
+    const posts = await getPublishedBlogPosts();
+    return posts.map((p) => ({ slug: p.slug }));
+  } catch {
+    return [];
+  }
+}
 
 type Props = { params: Promise<{ slug: string }> };
 
 export async function generateMetadata({ params }: Props) {
   const { slug } = await params;
-  const post = BLOG_POSTS.find((p) => p.slug === slug);
+  const post = await getPublishedBlogPostBySlug(slug);
   return {
     title: post ? post.title : "Blog",
-    description: post?.teaser,
-    openGraph: post ? { title: post.title, description: post.teaser, type: "article" } : undefined,
+    description: post?.teaser ?? undefined,
+    openGraph: post
+      ? { title: post.title, description: post.teaser ?? undefined, type: "article" }
+      : undefined,
   };
 }
 
 export default async function BlogPostPage({ params }: Props) {
   const { slug } = await params;
-  const post = BLOG_POSTS.find((p) => p.slug === slug);
+  const post = await getPublishedBlogPostBySlug(slug);
   if (!post) notFound();
 
-  const related = BLOG_POSTS.filter((p) => p.slug !== post.slug).slice(0, 3);
+  const allPosts = await getPublishedBlogPosts();
+  const related = allPosts.filter((p) => p.slug !== post.slug).slice(0, 3);
 
   return (
     <main>
@@ -47,7 +55,7 @@ export default async function BlogPostPage({ params }: Props) {
       <PageHero
         variant="light"
         title={post.title}
-        description={post.teaser}
+        description={post.teaser ?? undefined}
         titleClassName="text-[40px] md:text-[64px]"
       />
       <WaveTransition fromColor={TINT} toColor={WHITE} variant={3} />
@@ -55,7 +63,7 @@ export default async function BlogPostPage({ params }: Props) {
       <section className="bg-white py-24 md:py-32">
         <div className="mx-auto flex max-w-6xl flex-col gap-12 px-6 lg:flex-row">
           <BlogDetailContent post={post} />
-          <BlogSidebar current={post} />
+          <BlogSidebar current={post} posts={allPosts} />
         </div>
 
         <div className="mx-auto mt-20 max-w-6xl px-6">

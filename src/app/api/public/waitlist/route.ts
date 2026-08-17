@@ -1,6 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { checkRateLimit, getClientIp } from "@/lib/rateLimit";
+import { sendWaitlistConfirmation } from "@/lib/email/send";
 
 function isValidEmail(value: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
@@ -36,6 +37,8 @@ export async function POST(request: NextRequest) {
   if (error && error.code !== "23505") {
     return NextResponse.json({ error: "Failed to join waitlist. Please try again." }, { status: 500 });
   }
+
+  await sendWaitlistConfirmation(email);
 
   return NextResponse.json({ success: true }, { status: 201 });
 }

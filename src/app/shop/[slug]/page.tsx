@@ -2,31 +2,36 @@ import { notFound } from "next/navigation";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import ProductDetail from "@/components/sections/shop/ProductDetail";
-import { SHOP_PRODUCTS } from "@/data/content";
+import { getProducts, getProductBySlug } from "@/lib/products";
+
+export const revalidate = 60;
 
 export async function generateStaticParams() {
-  return SHOP_PRODUCTS.map((p) => ({ slug: p.slug }));
+  try {
+    const products = await getProducts();
+    return products.map((p) => ({ slug: p.slug }));
+  } catch {
+    return [];
+  }
 }
-
-export const dynamicParams = false;
 
 type Props = { params: Promise<{ slug: string }> };
 
 export async function generateMetadata({ params }: Props) {
   const { slug } = await params;
-  const product = SHOP_PRODUCTS.find((p) => p.slug === slug);
+  const product = await getProductBySlug(slug);
   return {
     title: product ? product.name : "Product",
-    description: product?.description,
+    description: product?.description ?? undefined,
     openGraph: product
-      ? { title: product.name, description: product.description, type: "website" }
+      ? { title: product.name, description: product.description ?? undefined, type: "website" }
       : undefined,
   };
 }
 
 export default async function ProductPage({ params }: Props) {
   const { slug } = await params;
-  const product = SHOP_PRODUCTS.find((p) => p.slug === slug);
+  const product = await getProductBySlug(slug);
   if (!product) notFound();
 
   return (

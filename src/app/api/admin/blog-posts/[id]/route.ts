@@ -1,4 +1,5 @@
 import { NextResponse, type NextRequest } from "next/server";
+import { revalidatePath } from "next/cache";
 import { getAdminUser, unauthorized } from "@/lib/supabase/authz";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { logAudit } from "@/lib/supabase/audit";
@@ -46,6 +47,9 @@ export async function PUT(request: NextRequest, { params }: Params) {
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
 
   await logAudit({ action: "update", table: "blog_posts", recordId: id, oldData, newData: data });
+
+  revalidatePath("/blogs");
+  if (data.slug) revalidatePath(`/blogs/${data.slug}`);
 
   return NextResponse.json({ post: data });
 }

@@ -2,13 +2,20 @@
 
 import { m } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight } from "lucide-react";
-import { SHOP_PRODUCTS } from "@/data/content";
+import type { DbProduct } from "@/types";
 import { GradientPlaceholder } from "@/components/ui/MediaWithFallback";
+import { useCart } from "@/context/CartContext";
+import NotifyMeForm from "@/components/ui/NotifyMeForm";
+import { getProductCta } from "@/components/sections/shop/ProductStatusBadge";
 
-const FEATURED = SHOP_PRODUCTS.slice(0, 3);
+export default function ShopSection({ products }: { products: DbProduct[] }) {
+  const featured = products.slice(0, 3);
+  const { addToCart } = useCart();
 
-export default function ShopSection() {
+  if (featured.length === 0) return null;
+
   return (
     <section id="shop" className="relative bg-white py-24 md:py-32">
       <div className="mx-auto max-w-7xl px-6">
@@ -26,41 +33,77 @@ export default function ShopSection() {
         </div>
 
         <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {FEATURED.map((product, i) => (
-            <m.div
-              key={product.name}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.12 }}
-              whileHover={{ y: -6 }}
-              className="group flex flex-col overflow-hidden rounded-[16px] transition-shadow hover:shadow-[0_20px_50px_rgba(107,47,160,0.14)] glass-card-light p-5"
-            >
-              <div className="relative h-[280px] overflow-hidden rounded-xl">
-                <GradientPlaceholder watermark="ELEV8 WATER" className="rounded-xl" />
-                {product.status === "sold-out" && (
-                  <span className="absolute left-4 top-4 rounded-full border border-violet px-3 py-1 font-inter text-[10px] font-semibold uppercase tracking-[0.15em] text-violet">
-                    Sold Out
-                  </span>
-                )}
-              </div>
-
-              <h3 className="mt-5 font-cormorant text-[24px] leading-tight text-ink">
-                {product.name}
-              </h3>
-              <p className="mt-2 font-inter text-[22px] font-bold text-violet">
-                {product.price}
-              </p>
-
-              <Link
-                href={`/shop/${product.slug}`}
-                className="group/btn mt-5 inline-flex items-center justify-center gap-2 rounded-full bg-gradient-brand px-6 py-3 font-inter text-[11px] font-semibold uppercase tracking-[0.15em] text-white btn-glow"
+          {featured.map((product, i) => {
+            const cta = getProductCta(product.status);
+            return (
+              <m.div
+                key={product.id}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.12 }}
+                whileHover={{ y: -6 }}
+                className="group flex flex-col overflow-hidden rounded-[16px] glass-card-light p-5 transition-shadow hover:shadow-[0_20px_50px_rgba(107,47,160,0.14)]"
               >
-                {product.cta}
-                <ArrowRight size={14} className="transition-transform group-hover/btn:translate-x-1" />
-              </Link>
-            </m.div>
-          ))}
+                <Link
+                  href={`/shop/${product.slug}`}
+                  className="relative h-[280px] overflow-hidden rounded-xl"
+                >
+                  {product.image_url ? (
+                    <Image
+                      src={product.image_url}
+                      alt={product.name}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                      className="object-cover"
+                    />
+                  ) : (
+                    <GradientPlaceholder watermark="ELEV8 WATER" className="rounded-xl" />
+                  )}
+                  {product.status === "sold-out" && (
+                    <span className="absolute left-4 top-4 rounded-full border border-violet px-3 py-1 font-inter text-[10px] font-semibold uppercase tracking-[0.15em] text-violet">
+                      Sold Out
+                    </span>
+                  )}
+                </Link>
+
+                <Link href={`/shop/${product.slug}`}>
+                  <h3 className="mt-5 font-cormorant text-[24px] leading-tight text-ink">
+                    {product.name}
+                  </h3>
+                </Link>
+                <p className="mt-2 font-inter text-[22px] font-bold text-violet">
+                  ${product.price.toFixed(2)}
+                </p>
+
+                {product.status === "available" ? (
+                  <button
+                    onClick={() => addToCart(product.id)}
+                    className="group/btn mt-5 inline-flex items-center justify-center gap-2 rounded-full bg-gradient-brand px-6 py-3 font-inter text-[11px] font-semibold uppercase tracking-[0.15em] text-white btn-glow"
+                  >
+                    {cta.label}
+                    <ArrowRight
+                      size={14}
+                      className="transition-transform group-hover/btn:translate-x-1"
+                    />
+                  </button>
+                ) : product.status === "sold-out" ? (
+                  <NotifyMeForm label={cta.label} source="homepage-shop" className="mt-5" />
+                ) : (
+                  <Link
+                    href={`/shop/${product.slug}`}
+                    className="group/btn mt-5 inline-flex items-center justify-center gap-2 rounded-full bg-gradient-brand px-6 py-3 font-inter text-[11px] font-semibold uppercase tracking-[0.15em] text-white btn-glow"
+                  >
+                    {cta.label}
+                    <ArrowRight
+                      size={14}
+                      className="transition-transform group-hover/btn:translate-x-1"
+                    />
+                  </Link>
+                )}
+              </m.div>
+            );
+          })}
         </div>
       </div>
     </section>

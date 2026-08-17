@@ -1,9 +1,14 @@
 import Link from "next/link";
-import { BLOG_POSTS } from "@/data/content";
-import type { BlogPost } from "@/types";
+import type { DbBlogPost } from "@/types";
 
-export default function BlogSidebar({ current }: { current: BlogPost }) {
-  const others = BLOG_POSTS.filter((p) => p.slug !== current.slug);
+export default function BlogSidebar({
+  current,
+  posts,
+}: {
+  current: DbBlogPost;
+  posts: DbBlogPost[];
+}) {
+  const others = posts.filter((p) => p.slug !== current.slug);
 
   return (
     <aside className="hidden w-64 shrink-0 lg:block">

@@ -123,6 +123,34 @@ export type Product = {
   image?: string;
 };
 
+/** Supabase-backed product row (src/app/api/admin/products, products table). */
+export type DbProduct = {
+  id: string;
+  name: string;
+  subtitle: string | null;
+  description: string | null;
+  price: number;
+  per_unit: string | null;
+  category: string;
+  status: ProductStatus;
+  slug: string;
+  image_url: string | null;
+  created_at: string;
+};
+
+/** Supabase-backed blog post row (src/app/api/admin/blog-posts, blog_posts table). */
+export type DbBlogPost = {
+  id: string;
+  slug: string;
+  title: string;
+  teaser: string | null;
+  content: string | null;
+  topic: string | null;
+  published: boolean;
+  created_at: string;
+  updated_at: string;
+};
+
 export type BlogPost = {
   slug: string;
   title: string;

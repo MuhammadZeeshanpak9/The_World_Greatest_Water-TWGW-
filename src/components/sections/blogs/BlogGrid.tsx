@@ -3,15 +3,23 @@
 import { m } from "framer-motion";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { BLOG_POSTS } from "@/data/content";
+import type { DbBlogPost } from "@/types";
 import { GradientPlaceholder } from "@/components/ui/MediaWithFallback";
 
-export default function BlogGrid() {
+export default function BlogGrid({ posts }: { posts: DbBlogPost[] }) {
+  if (posts.length === 0) {
+    return (
+      <section className="bg-white py-24 text-center md:py-32">
+        <p className="font-inter text-body">New stories are on the way — check back soon.</p>
+      </section>
+    );
+  }
+
   return (
     <section className="bg-white py-24 md:py-32">
       <div className="mx-auto max-w-7xl px-6">
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {BLOG_POSTS.map((post, i) => (
+          {posts.map((post, i) => (
             <m.div
               key={post.slug}
               initial={{ opacity: 0, y: 30 }}
@@ -21,7 +29,10 @@ export default function BlogGrid() {
               whileHover={{ y: -6 }}
               className="flex flex-col overflow-hidden rounded-[16px] border border-violet/10 p-5 transition-shadow hover:shadow-[0_20px_50px_rgba(107,47,160,0.14)]"
             >
-              <Link href={`/blogs/${post.slug}`} className="relative h-[180px] overflow-hidden rounded-xl">
+              <Link
+                href={`/blogs/${post.slug}`}
+                className="relative h-[180px] overflow-hidden rounded-xl"
+              >
                 <GradientPlaceholder watermark={post.topic ?? "ELEV8"} className="rounded-xl" />
               </Link>
               <Link href={`/blogs/${post.slug}`}>
@@ -29,7 +40,9 @@ export default function BlogGrid() {
                   {post.title}
                 </h3>
               </Link>
-              <p className="mt-2 font-inter text-[14px] text-body">{post.teaser}</p>
+              {post.teaser && (
+                <p className="mt-2 font-inter text-[14px] text-body">{post.teaser}</p>
+              )}
               <Link
                 href={`/blogs/${post.slug}`}
                 className="group mt-4 inline-flex items-center gap-1 font-inter text-[12px] font-semibold uppercase tracking-[0.15em] text-violet"

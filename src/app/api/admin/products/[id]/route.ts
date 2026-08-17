@@ -1,4 +1,5 @@
 import { NextResponse, type NextRequest } from "next/server";
+import { revalidatePath } from "next/cache";
 import { getAdminUser, unauthorized } from "@/lib/supabase/authz";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { logAudit } from "@/lib/supabase/audit";
@@ -52,6 +53,10 @@ export async function PUT(request: NextRequest, { params }: Params) {
 
   await logAudit({ action: "update", table: "products", recordId: id, oldData, newData: data });
 
+  revalidatePath("/shop");
+  revalidatePath("/");
+  if (data.slug) revalidatePath(`/shop/${data.slug}`);
+
   return NextResponse.json({ product: data });
 }
 
@@ -68,6 +73,10 @@ export async function DELETE(_request: NextRequest, { params }: Params) {
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
 
   await logAudit({ action: "delete", table: "products", recordId: id, oldData });
+
+  revalidatePath("/shop");
+  revalidatePath("/");
+  if (oldData?.slug) revalidatePath(`/shop/${oldData.slug}`);
 
   return NextResponse.json({ success: true });
 }

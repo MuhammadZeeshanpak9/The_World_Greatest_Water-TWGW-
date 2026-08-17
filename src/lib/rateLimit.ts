@@ -10,10 +10,13 @@
 
 const attempts = new Map<string, { count: number; lastAttempt: number }>();
 
-export function checkRateLimit(ip: string): { allowed: boolean; remainingAttempts: number } {
+export function checkRateLimit(
+  ip: string,
+  options?: { maxAttempts?: number; windowMs?: number },
+): { allowed: boolean; remainingAttempts: number } {
   const now = Date.now();
-  const windowMs = 15 * 60 * 1000;
-  const maxAttempts = 5;
+  const windowMs = options?.windowMs ?? 15 * 60 * 1000;
+  const maxAttempts = options?.maxAttempts ?? 5;
   const record = attempts.get(ip);
 
   if (!record || now - record.lastAttempt > windowMs) {

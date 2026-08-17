@@ -3,6 +3,8 @@ import { Cormorant_Garamond, Inter } from "next/font/google";
 import { LazyMotion, domAnimation } from "framer-motion";
 import "./globals.css";
 import PageBackground from "@/components/background/DynamicPageBackground";
+import { SessionProvider } from "@/context/SessionContext";
+import { CartProvider } from "@/context/CartContext";
 
 const cormorant = Cormorant_Garamond({
   variable: "--font-cormorant-garamond",
@@ -56,7 +58,11 @@ export default function RootLayout({
       >
         <LazyMotion features={domAnimation}>
           <PageBackground />
-          <div className="relative z-[1]">{children}</div>
+          <div className="relative z-[1]">
+            <SessionProvider>
+              <CartProvider>{children}</CartProvider>
+            </SessionProvider>
+          </div>
         </LazyMotion>
       </body>
     </html>

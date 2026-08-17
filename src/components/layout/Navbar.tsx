@@ -2,20 +2,51 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { AnimatePresence, m } from "framer-motion";
 import { Menu, Search, ShoppingBag, User } from "lucide-react";
 import { NAV_LINKS } from "@/data/content";
 import { useScrollPosition } from "@/lib/hooks";
 import { CurvedUnderline, WaterDrop } from "@/components/ui/primitives";
+import { useSession } from "@/context/SessionContext";
+import { useCart } from "@/context/CartContext";
 import AnnouncementBar from "./AnnouncementBar";
 import MobileMenu from "./MobileMenu";
 import type { NavLink } from "@/types";
+
+function getInitials(fullName: string | undefined, email: string | null | undefined): string {
+  if (fullName?.trim()) {
+    return fullName
+      .trim()
+      .split(/\s+/)
+      .slice(0, 2)
+      .map((p) => p[0]?.toUpperCase())
+      .join("");
+  }
+  return email?.[0]?.toUpperCase() ?? "?";
+}
 
 export default function Navbar() {
   const scrollY = useScrollPosition();
   const scrolled = scrollY > 80;
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [accountMenuOpen, setAccountMenuOpen] = useState(false);
+  const { user, signOut } = useSession();
+  const { count } = useCart();
+  const router = useRouter();
+
+  const initials = getInitials(
+    typeof user?.user_metadata?.full_name === "string" ? user.user_metadata.full_name : undefined,
+    user?.email,
+  );
+
+  async function handleSignOut() {
+    setAccountMenuOpen(false);
+    await signOut();
+    router.push("/");
+    router.refresh();
+  }
 
   // Hero is a white section (not dark), so nav text stays dark at all scroll depths.
   const textColor = "text-ink";
@@ -89,17 +120,67 @@ export default function Navbar() {
 
             {/* Actions */}
             <div className="flex shrink-0 items-center gap-2 xl:gap-4">
-              <Link href="/account" aria-label="Account" className={`hidden sm:block ${iconColor}`}>
-                <User size={18} />
-              </Link>
+              {user ? (
+                <div
+                  className="relative hidden sm:block"
+                  onMouseEnter={() => setAccountMenuOpen(true)}
+                  onMouseLeave={() => setAccountMenuOpen(false)}
+                >
+                  <Link
+                    href="/account"
+                    aria-label="Account"
+                    className="flex h-7 w-7 items-center justify-center rounded-full bg-violet font-inter text-[11px] font-semibold text-white"
+                  >
+                    {initials}
+                  </Link>
+                  <AnimatePresence>
+                    {accountMenuOpen && (
+                      <m.div
+                        initial={{ opacity: 0, y: -10, scale: 0.97 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: -10, scale: 0.97 }}
+                        transition={{ duration: 0.2, type: "spring", bounce: 0, stiffness: 200, damping: 20 }}
+                        className="absolute right-0 top-full mt-4 w-44 rounded-2xl glass-card-light p-2"
+                      >
+                        <Link
+                          href="/account"
+                          className="block rounded-lg px-3 py-2 font-inter text-[13px] text-body transition-colors hover:bg-violet/5 hover:text-violet"
+                        >
+                          My Account
+                        </Link>
+                        <button
+                          onClick={handleSignOut}
+                          className="block w-full rounded-lg px-3 py-2 text-left font-inter text-[13px] text-body transition-colors hover:bg-violet/5 hover:text-violet"
+                        >
+                          Sign Out
+                        </button>
+                      </m.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              ) : (
+                <Link href="/login" aria-label="Account" className={`hidden sm:block ${iconColor}`}>
+                  <User size={18} />
+                </Link>
+              )}
               <button aria-label="Search" className={`hidden sm:block ${iconColor}`}>
                 <Search size={18} />
               </button>
               <Link href="/cart" aria-label="Cart" className={`relative ${iconColor}`}>
                 <ShoppingBag size={18} />
-                <span className="absolute -right-2 -top-2 flex h-4 w-4 items-center justify-center rounded-full bg-gradient-violet text-[9px] font-semibold text-white">
-                  0
-                </span>
+                <AnimatePresence>
+                  {count > 0 && (
+                    <m.span
+                      key={count}
+                      initial={{ scale: 0.5 }}
+                      animate={{ scale: 1 }}
+                      transition={{ type: "spring", stiffness: 500, damping: 15 }}
+                      className="absolute -right-2 -top-2 flex h-4 w-4 items-center justify-center rounded-full bg-gradient-violet text-[9px] font-semibold text-white"
+                    >
+                      {count}
+                    </m.span>
+                  )}
+                </AnimatePresence>
               </Link>
               <button
                 aria-label="Open menu"

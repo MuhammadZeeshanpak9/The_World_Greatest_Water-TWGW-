@@ -1,6 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { checkRateLimit, resetRateLimit, getClientIp } from "@/lib/rateLimit";
+import { isAdminEmail } from "@/lib/validation";
 import { logAudit } from "@/lib/supabase/audit";
 
 export async function POST(request: NextRequest) {
@@ -32,9 +33,11 @@ export async function POST(request: NextRequest) {
   const supabase = await createClient();
   const { data, error } = await supabase.auth.signInWithPassword({ email, password });
 
-  if (error || !data.user) {
-    // TEMPORARY — diagnosing a login failure. Remove once resolved.
-    console.error("[login] Supabase error:", error?.message);
+  if (error || !data.user || !isAdminEmail(data.user.email)) {
+    if (data.user && !isAdminEmail(data.user.email)) {
+      // Valid account, but not an admin — don't leave a session behind for this flow.
+      await supabase.auth.signOut();
+    }
     return NextResponse.json(
       { error: "Invalid credentials", remainingAttempts },
       { status: 401 },

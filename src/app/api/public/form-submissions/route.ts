@@ -1,6 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { checkRateLimit, getClientIp } from "@/lib/rateLimit";
+import { sendAdminFormNotification } from "@/lib/email/send";
 
 const VALID_FORM_TYPES = ["contact", "wellness", "creators", "join", "gift-cards"];
 const MAX_FIELD_LENGTH = 5000;
@@ -72,6 +73,12 @@ export async function POST(request: NextRequest) {
       { status: 500 },
     );
   }
+
+  await sendAdminFormNotification(b.form_type, {
+    name: data.name,
+    email,
+    message: data.message,
+  });
 
   return NextResponse.json({ success: true }, { status: 201 });
 }

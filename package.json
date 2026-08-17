@@ -2,6 +2,9 @@
   "name": "ntwgc-app",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=22.0.0"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -18,6 +21,7 @@
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "react-hot-toast": "^2.6.0",
+    "resend": "^6.20.0",
     "server-only": "^0.0.1"
   },
   "devDependencies": {

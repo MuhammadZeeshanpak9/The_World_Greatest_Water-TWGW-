@@ -1,21 +1,44 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
 import { ArrowRight } from "lucide-react";
 import FormField from "@/components/ui/FormField";
 import { isValidEmail } from "@/lib/forms";
+import type { ContactValues } from "./types";
 
-type Values = { email: string; firstName: string; lastName: string };
-type Errors = Partial<Record<keyof Values, string>>;
+type Errors = Partial<Record<keyof ContactValues, string>>;
 
-export default function ContactStep({ onContinue }: { onContinue: () => void }) {
-  const [values, setValues] = useState<Values>({ email: "", firstName: "", lastName: "" });
+export default function ContactStep({
+  initialValues,
+  onContinue,
+}: {
+  initialValues?: Partial<ContactValues>;
+  onContinue: (values: ContactValues) => void;
+}) {
+  const [values, setValues] = useState<ContactValues>({
+    email: initialValues?.email ?? "",
+    firstName: initialValues?.firstName ?? "",
+    lastName: initialValues?.lastName ?? "",
+  });
   const [errors, setErrors] = useState<Errors>({});
+  const [syncedEmail, setSyncedEmail] = useState(initialValues?.email);
 
-  const update = (field: keyof Values) => (value: string) =>
+  // Session data (email/name) can arrive after this component has already mounted with an
+  // empty prefill. Adjust state during render (React's documented pattern for this) rather
+  // than in an effect, and only once — never clobbering anything the user already typed.
+  if (initialValues?.email && initialValues.email !== syncedEmail && !values.email) {
+    setSyncedEmail(initialValues.email);
+    setValues({
+      email: initialValues.email,
+      firstName: initialValues.firstName ?? "",
+      lastName: initialValues.lastName ?? "",
+    });
+  }
+
+  const update = (field: keyof ContactValues) => (value: string) =>
     setValues((v) => ({ ...v, [field]: value }));
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     const nextErrors: Errors = {};
     if (!isValidEmail(values.email)) nextErrors.email = "Enter a valid email address.";
@@ -23,7 +46,7 @@ export default function ContactStep({ onContinue }: { onContinue: () => void }) 
     if (!values.lastName.trim()) nextErrors.lastName = "Last name is required.";
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length > 0) return;
-    onContinue();
+    onContinue(values);
   };
 
   return (
