@@ -1,51 +1,65 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowRight } from "lucide-react";
-import FormField from "@/components/ui/FormField";
-import { PAYMENTS } from "@/data/content";
+import { ArrowRight, CreditCard, Wallet, Coins } from "lucide-react";
+import toast from "react-hot-toast";
 import { useCart } from "@/context/CartContext";
 import OrderSummary from "./OrderSummary";
-import type { ContactValues, ShippingValues } from "./types";
+import { clearCheckoutState } from "./checkoutStorage";
+import type { ContactValues, ShippingValues, SelectedRate } from "./types";
 
-type Values = { cardNumber: string; expiry: string; cvv: string; nameOnCard: string };
-type Errors = Partial<Record<keyof Values, string>>;
+type Tab = "card" | "paypal" | "crypto";
+type ProviderStatus = { stripe: boolean; paypal: boolean; coinbase: boolean };
+
+const CRYPTO_ICONS = ["BTC", "ETH", "USDC", "MATIC"];
 
 export default function PaymentStep({
   contact,
   shipping,
+  selectedRate,
+  freeShipping,
 }: {
   contact: ContactValues;
   shipping: ShippingValues;
+  selectedRate: SelectedRate | null;
+  freeShipping: boolean;
 }) {
   const router = useRouter();
   const { items, total, refreshCart } = useCart();
-  const [values, setValues] = useState<Values>({
-    cardNumber: "",
-    expiry: "",
-    cvv: "",
-    nameOnCard: "",
-  });
-  const [errors, setErrors] = useState<Errors>({});
-  const [submitting, setSubmitting] = useState(false);
-  const [submitError, setSubmitError] = useState<string | null>(null);
 
-  const update = (field: keyof Values) => (value: string) =>
-    setValues((v) => ({ ...v, [field]: value }));
+  const [activeTab, setActiveTab] = useState<Tab>("card");
+  const [providerStatus, setProviderStatus] = useState<ProviderStatus | null>(null);
+  const [supportsPaymentRequest] = useState(
+    () => typeof window !== "undefined" && "PaymentRequest" in window,
+  );
 
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-    const nextErrors: Errors = {};
-    if (!values.cardNumber.trim()) nextErrors.cardNumber = "Card number is required.";
-    if (!values.expiry.trim()) nextErrors.expiry = "Expiry is required.";
-    if (!values.cvv.trim()) nextErrors.cvv = "CVV is required.";
-    if (!values.nameOnCard.trim()) nextErrors.nameOnCard = "Name on card is required.";
-    setErrors(nextErrors);
-    if (Object.keys(nextErrors).length > 0) return;
+  const [orderId, setOrderId] = useState<string | null>(null);
+  const [orderNumber, setOrderNumber] = useState<string | null>(null);
+  const [orderTotal, setOrderTotal] = useState<number | null>(null);
+  const [creatingOrder, setCreatingOrder] = useState(false);
+  const [processingPayment, setProcessingPayment] = useState(false);
+  const [paymentError, setPaymentError] = useState<string | null>(null);
 
-    setSubmitError(null);
-    setSubmitting(true);
+  useEffect(() => {
+    // Provider status needs a real network round-trip — isStripeEnabled()/isCoinbaseEnabled()
+    // read server-only secrets, unreachable from a client component directly.
+    fetch("/api/payments/status")
+      .then((res) => res.json())
+      .then((json) =>
+        setProviderStatus({ stripe: !!json.stripe, paypal: !!json.paypal, coinbase: !!json.coinbase }),
+      )
+      .catch(() => setProviderStatus({ stripe: false, paypal: false, coinbase: false }));
+  }, []);
+
+  /** Creates the order once and reuses it across tab switches and retries — never duplicates,
+   * per the payment-retry requirement. */
+  async function ensureOrder(): Promise<{ orderId: string; orderNumber: string; total: number }> {
+    if (orderId && orderNumber && orderTotal !== null) {
+      return { orderId, orderNumber, total: orderTotal };
+    }
+
+    setCreatingOrder(true);
     try {
       const res = await fetch("/api/orders", {
         method: "POST",
@@ -60,87 +74,204 @@ export default function PaymentStep({
             zip: shipping.zip,
             country: shipping.country,
           },
+          shippingCarrier: freeShipping ? null : selectedRate?.carrier,
+          shippingService: freeShipping ? null : selectedRate?.service,
+          shippingRate: freeShipping ? 0 : (selectedRate?.rate ?? 0),
         }),
       });
       const json = await res.json();
       if (!res.ok) throw new Error(json.error ?? "Unable to place order");
 
-      sessionStorage.setItem("elev8_order_number", json.order_number);
-      await refreshCart();
-      router.push("/checkout/confirmation");
-    } catch (err) {
-      setSubmitError(err instanceof Error ? err.message : "Unable to place order");
-      setSubmitting(false);
+      setOrderId(json.order_id);
+      setOrderNumber(json.order_number);
+      setOrderTotal(json.total ?? total);
+      return { orderId: json.order_id, orderNumber: json.order_number, total: json.total ?? total };
+    } finally {
+      setCreatingOrder(false);
     }
-  };
+  }
+
+  async function finalizeSuccess(finalOrderNumber: string, finalTotal: number) {
+    sessionStorage.setItem(
+      "elev8_order_data",
+      JSON.stringify({
+        order_number: finalOrderNumber,
+        total: finalTotal,
+        items: items.map((i) => ({
+          product_id: i.product_id,
+          name: i.product?.name ?? "Product",
+          quantity: i.quantity,
+          price: i.price_snapshot,
+        })),
+      }),
+    );
+    clearCheckoutState();
+    await refreshCart();
+    router.push("/checkout/confirmation");
+  }
+
+  /** The universal fallback — the only path that does anything today, while every provider is
+   * still on a placeholder key. Creates the order (payment_status stays at its 'pending'
+   * default) so the full flow is testable end-to-end without real payments. */
+  async function handlePlaceOrderFallback() {
+    setPaymentError(null);
+    setProcessingPayment(true);
+    try {
+      const { orderNumber: finalOrderNumber, total: finalTotal } = await ensureOrder();
+      toast.success("Order placed — payment options launching soon");
+      await finalizeSuccess(finalOrderNumber, finalTotal);
+    } catch (err) {
+      setPaymentError(err instanceof Error ? err.message : "Unable to place order");
+    } finally {
+      setProcessingPayment(false);
+    }
+  }
+
+  async function handlePayWithCrypto() {
+    setPaymentError(null);
+    setProcessingPayment(true);
+    try {
+      const { orderId: id } = await ensureOrder();
+      const res = await fetch("/api/crypto/create", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ orderId: id }),
+      });
+      const json = await res.json();
+      if (!res.ok) throw new Error(json.error ?? "Unable to start crypto payment");
+      clearCheckoutState();
+      window.location.href = json.charge_url;
+    } catch (err) {
+      setPaymentError(err instanceof Error ? err.message : "Unable to start crypto payment");
+      setProcessingPayment(false);
+    }
+  }
+
+  const busy = creatingOrder || processingPayment;
+  const activeTabEnabled =
+    (activeTab === "card" && providerStatus?.stripe) ||
+    (activeTab === "paypal" && providerStatus?.paypal) ||
+    (activeTab === "crypto" && providerStatus?.coinbase);
 
   return (
     <div className="grid grid-cols-1 gap-10 lg:grid-cols-[1fr_320px]">
-      <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-        <FormField
-          label="Card Number"
-          name="cardNumber"
-          value={values.cardNumber}
-          onChange={update("cardNumber")}
-          placeholder="1234 5678 9012 3456"
-          required
-          error={errors.cardNumber}
-        />
-        <div className="grid grid-cols-2 gap-4">
-          <FormField
-            label="Expiry"
-            name="expiry"
-            value={values.expiry}
-            onChange={update("expiry")}
-            placeholder="MM/YY"
-            required
-            error={errors.expiry}
-          />
-          <FormField
-            label="CVV"
-            name="cvv"
-            value={values.cvv}
-            onChange={update("cvv")}
-            placeholder="123"
-            required
-            error={errors.cvv}
-          />
-        </div>
-        <FormField
-          label="Name On Card"
-          name="nameOnCard"
-          value={values.nameOnCard}
-          onChange={update("nameOnCard")}
-          required
-          error={errors.nameOnCard}
-        />
+      <div className="flex flex-col gap-5">
+        {providerStatus?.stripe && supportsPaymentRequest && (
+          <div className="rounded-xl border border-violet/15 bg-white/70 p-4">
+            {/* TODO: mount Stripe's PaymentRequestButtonElement here once real Stripe keys are
+                live — needs a real `stripe.paymentRequest({...})` instance from
+                @stripe/react-stripe-js's useStripe(), which only resolves against a real
+                publishable key. Renders Apple Pay / Google Pay automatically when supported. */}
+            <p className="font-inter text-[12px] text-muted">Apple Pay / Google Pay</p>
+          </div>
+        )}
 
-        <div className="mt-2 flex flex-wrap items-center gap-2">
-          {PAYMENTS.filter((p) => p !== "Google Pay" && p !== "Shop Pay").map((p) => (
-            <span
-              key={p}
-              className="rounded-full border border-violet/15 px-3 py-1 font-inter text-[10px] uppercase tracking-[0.1em] text-muted"
+        <div className="flex gap-2 border-b border-violet/10">
+          {(["card", "paypal", "crypto"] as Tab[]).map((tab) => (
+            <button
+              key={tab}
+              type="button"
+              onClick={() => {
+                setActiveTab(tab);
+                setPaymentError(null);
+              }}
+              className={`flex items-center gap-2 border-b-2 px-4 py-3 font-inter text-[12px] font-semibold tracking-[0.1em] uppercase transition-colors ${
+                activeTab === tab
+                  ? "border-violet text-violet"
+                  : "border-transparent text-muted hover:text-ink"
+              }`}
             >
-              {p}
-            </span>
+              {tab === "card" && <CreditCard size={15} />}
+              {tab === "paypal" && <Wallet size={15} />}
+              {tab === "crypto" && <Coins size={15} />}
+              {tab === "card" ? "Card" : tab === "paypal" ? "PayPal" : "Crypto"}
+            </button>
           ))}
         </div>
 
-        {submitError && (
-          <p className="text-center font-inter text-[13px] text-red-600">{submitError}</p>
+        {activeTab === "card" &&
+          (providerStatus?.stripe ? (
+            <div className="rounded-xl border border-violet/15 bg-white/70 p-6">
+              {/* TODO: mount @stripe/react-stripe-js's <Elements> + <PaymentElement> here once
+                  real Stripe keys are live. loadStripe(NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY) →
+                  ensureOrder() → POST /api/payments/create-intent for a clientSecret →
+                  <Elements options={{clientSecret}}> → stripe.confirmPayment() on submit →
+                  POST /api/payments/confirm to re-verify server-side before marking paid. */}
+              <p className="font-inter text-[13px] text-muted">Card payment form will appear here.</p>
+            </div>
+          ) : (
+            <p className="font-inter text-[13px] text-muted italic">
+              Card payments coming soon — choose another option below.
+            </p>
+          ))}
+
+        {activeTab === "paypal" &&
+          (providerStatus?.paypal ? (
+            <div className="rounded-xl border border-violet/15 bg-white/70 p-6">
+              {/* TODO: mount the PayPal Buttons SDK here once real PayPal keys are live — load
+                  https://www.paypal.com/sdk/js?client-id=NEXT_PUBLIC_PAYPAL_CLIENT_ID, then
+                  paypal.Buttons({ createOrder: () => ensureOrder() then POST
+                  /api/paypal/create-order, onApprove: () => POST /api/paypal/capture }).render(). */}
+              <p className="font-inter text-[13px] text-muted">PayPal button will appear here.</p>
+            </div>
+          ) : (
+            <p className="font-inter text-[13px] text-muted italic">PayPal coming soon.</p>
+          ))}
+
+        {activeTab === "crypto" &&
+          (providerStatus?.coinbase ? (
+            <div className="flex flex-col gap-4">
+              <div className="flex flex-wrap gap-2">
+                {CRYPTO_ICONS.map((c) => (
+                  <span
+                    key={c}
+                    className="rounded-full border border-violet/15 px-3 py-1 font-inter text-[11px] font-semibold text-muted"
+                  >
+                    {c}
+                  </span>
+                ))}
+              </div>
+              <button
+                type="button"
+                onClick={handlePayWithCrypto}
+                disabled={busy}
+                className="group flex h-[52px] items-center justify-center gap-2 rounded-full bg-gradient-brand btn-glow font-inter text-[12px] font-semibold uppercase tracking-[0.15em] text-white transition-transform duration-300 hover:scale-[1.01] disabled:opacity-60"
+              >
+                {processingPayment ? "Redirecting…" : "Pay With Crypto"}
+                <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+              </button>
+            </div>
+          ) : (
+            <p className="font-inter text-[13px] text-muted italic">Crypto payments coming soon.</p>
+          ))}
+
+        {paymentError && (
+          <div className="flex flex-col items-start gap-2 rounded-xl border border-red-200 bg-red-50 p-4">
+            <p className="font-inter text-[13px] text-red-600">{paymentError}</p>
+            <button
+              type="button"
+              onClick={() => setPaymentError(null)}
+              className="font-inter text-[12px] font-semibold text-violet underline"
+            >
+              Try Again
+            </button>
+          </div>
         )}
 
-        <button
-          type="submit"
-          disabled={submitting}
-          className="group mt-2 flex h-[52px] items-center justify-center gap-2 rounded-full bg-gradient-brand btn-glow font-inter text-[12px] font-semibold uppercase tracking-[0.15em] text-white transition-transform duration-300 hover:scale-[1.01] disabled:opacity-60"
-        >
-          {submitting ? "Placing Order…" : "Place Order"}
-          <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
-        </button>
-      </form>
+        {!activeTabEnabled && (
+          <button
+            type="button"
+            onClick={handlePlaceOrderFallback}
+            disabled={busy}
+            className="group mt-2 flex h-[52px] items-center justify-center gap-2 rounded-full bg-gradient-brand btn-glow font-inter text-[12px] font-semibold uppercase tracking-[0.15em] text-white transition-transform duration-300 hover:scale-[1.01] disabled:opacity-60"
+          >
+            {busy ? "Placing Order…" : "Place Order"}
+            <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+          </button>
+        )}
+      </div>
 
-      <OrderSummary items={items} total={total} />
+      <OrderSummary items={items} total={total} selectedRate={selectedRate} freeShipping={freeShipping} />
     </div>
   );
 }

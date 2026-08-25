@@ -24,8 +24,12 @@ export default function OurStory() {
         </div>
 
         <h2 className="mt-8 text-center font-cormorant text-[36px] font-semibold leading-tight md:text-[56px]">
-          <span className="text-ink">1 WATER. </span>
-          <span className="text-gradient-brand">12 UNDERSTANDING</span>
+          <span className="text-ink">
+            <span className="font-inter [font-variant-numeric:lining-nums]">1</span> WATER.{" "}
+          </span>
+          <span className="text-gradient-brand">
+            <span className="font-inter [font-variant-numeric:lining-nums]">12</span> UNDERSTANDING
+          </span>
         </h2>
 
         <div className="mt-6 flex justify-center">
@@ -116,8 +120,8 @@ export default function OurStory() {
             <div className="relative overflow-hidden rounded-[32px] border-2 border-violet/20 bg-white/40 p-3 shadow-[0_25px_60px_rgba(94,45,145,0.18)] backdrop-blur-xl transition-all duration-500 hover:border-violet/40 hover:shadow-[0_30px_70px_rgba(94,45,145,0.28)]">
               <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[24px]">
                 <Image
-                  src="/images/founders-toast.png"
-                  alt="ELEV8 Water Founders Toasting"
+                  src="/images/Bottle%20updated%20image.jpeg"
+                  alt="ELEV8 Water Bottle"
                   fill
                   className="object-cover transition-transform duration-700 hover:scale-105"
                   priority
@@ -131,7 +135,7 @@ export default function OurStory() {
                   <div>
                     <span className="flex items-center gap-1.5 font-inter text-[10px] font-bold uppercase tracking-[0.2em] text-teal-light">
                       <Sparkles size={12} className="text-teal" />
-                      THE FOUNDERS
+                      ELEV8 WATER
                     </span>
                     <p className="mt-0.5 font-cormorant text-[18px] text-white">
                       ELEV8 LOVE & ALL

@@ -1,23 +1,29 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { AnimatePresence, m } from "framer-motion";
 import { useCart } from "@/context/CartContext";
 import { useSession } from "@/context/SessionContext";
+import { trackBeginCheckout } from "@/lib/analytics";
 import StepIndicator from "./StepIndicator";
 import ContactStep from "./ContactStep";
 import ShippingStep from "./ShippingStep";
 import PaymentStep from "./PaymentStep";
-import type { ContactValues, ShippingValues } from "./types";
+import { readCheckoutState, writeCheckoutState } from "./checkoutStorage";
+import type { ContactValues, ShippingValues, SelectedRate } from "./types";
 
 export default function CheckoutFlow() {
-  const [step, setStep] = useState<1 | 2 | 3>(1);
-  const [contact, setContact] = useState<ContactValues | null>(null);
-  const [shipping, setShipping] = useState<ShippingValues | null>(null);
-  const { items, loading: cartLoading } = useCart();
+  const [restored] = useState(() => readCheckoutState());
+  const [step, setStep] = useState<1 | 2 | 3>(restored?.step ?? 1);
+  const [contact, setContact] = useState<ContactValues | null>(restored?.contact ?? null);
+  const [shipping, setShipping] = useState<ShippingValues | null>(restored?.shipping ?? null);
+  const [selectedRate, setSelectedRate] = useState<SelectedRate | null>(restored?.selectedRate ?? null);
+  const [freeShipping, setFreeShipping] = useState(restored?.freeShipping ?? false);
+  const { items, total, loading: cartLoading } = useCart();
   const { user } = useSession();
   const router = useRouter();
+  const hasTrackedBeginCheckout = useRef(false);
 
   useEffect(() => {
     if (!cartLoading && items.length === 0) {
@@ -25,12 +31,31 @@ export default function CheckoutFlow() {
     }
   }, [cartLoading, items.length, router]);
 
+  useEffect(() => {
+    if (cartLoading || items.length === 0 || hasTrackedBeginCheckout.current) return;
+    hasTrackedBeginCheckout.current = true;
+    trackBeginCheckout({
+      items: items.map((i) => ({
+        product_id: i.product_id,
+        quantity: i.quantity,
+        price_snapshot: i.price_snapshot,
+      })),
+      total,
+    });
+  }, [cartLoading, items, total]);
+
+  // Persist progress on every step transition, so an accidental refresh mid-checkout doesn't
+  // lose it. Cleared on order success from within PaymentStep.
+  useEffect(() => {
+    writeCheckoutState({ step, contact, shipping, selectedRate, freeShipping });
+  }, [step, contact, shipping, selectedRate, freeShipping]);
+
   const fullName =
     typeof user?.user_metadata?.full_name === "string" ? user.user_metadata.full_name : "";
   const prefillContact: Partial<ContactValues> = {
-    email: user?.email ?? "",
-    firstName: fullName.split(" ")[0] ?? "",
-    lastName: fullName.split(" ").slice(1).join(" "),
+    email: contact?.email ?? user?.email ?? "",
+    firstName: contact?.firstName ?? fullName.split(" ")[0] ?? "",
+    lastName: contact?.lastName ?? fullName.split(" ").slice(1).join(" "),
   };
 
   return (
@@ -57,14 +82,22 @@ export default function CheckoutFlow() {
             )}
             {step === 2 && (
               <ShippingStep
-                onContinue={(values) => {
+                initialValues={shipping ?? undefined}
+                onContinue={(values, rate, isFree) => {
                   setShipping(values);
+                  setSelectedRate(rate);
+                  setFreeShipping(isFree);
                   setStep(3);
                 }}
               />
             )}
             {step === 3 && contact && shipping && (
-              <PaymentStep contact={contact} shipping={shipping} />
+              <PaymentStep
+                contact={contact}
+                shipping={shipping}
+                selectedRate={selectedRate}
+                freeShipping={freeShipping}
+              />
             )}
           </m.div>
         </AnimatePresence>

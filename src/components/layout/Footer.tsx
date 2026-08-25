@@ -9,6 +9,7 @@ import { FOOTER_COLUMNS, SOCIALS, PAYMENTS, BRAND } from "@/data/content";
 import { WaterDrop } from "@/components/ui/primitives";
 import { SOCIAL_ICONS, InstagramIcon } from "@/components/ui/SocialIcons";
 import { useFormSubmit, isValidEmail, submitWaitlist } from "@/lib/forms";
+import { trackLead } from "@/lib/analytics";
 
 function FooterSignupForm() {
   const [email, setEmail] = useState("");
@@ -22,7 +23,10 @@ function FooterSignupForm() {
       return;
     }
     setError(undefined);
-    submit(() => submitWaitlist(email, "footer"));
+    submit(async () => {
+      await submitWaitlist(email, "footer");
+      trackLead("waitlist");
+    });
   };
 
   if (status === "success") {

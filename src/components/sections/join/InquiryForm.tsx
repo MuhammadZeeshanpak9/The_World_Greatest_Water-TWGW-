@@ -5,6 +5,7 @@ import { m } from "framer-motion";
 import { ArrowRight, Check } from "lucide-react";
 import FormField from "@/components/ui/FormField";
 import { useFormSubmit, isValidEmail, submitFormSubmission } from "@/lib/forms";
+import { trackLead } from "@/lib/analytics";
 
 type Values = {
   business: string;
@@ -34,7 +35,10 @@ export default function InquiryForm() {
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length > 0) return;
 
-    submit(() => submitFormSubmission("join", { ...values, name: values.contact }));
+    submit(async () => {
+      await submitFormSubmission("join", { ...values, name: values.contact });
+      trackLead("join");
+    });
   };
 
   return (

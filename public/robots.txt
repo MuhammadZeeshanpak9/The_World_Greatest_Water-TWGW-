@@ -5,5 +5,8 @@ Disallow: /api/
 Disallow: /account/
 Disallow: /checkout/
 Disallow: /cart/
+Disallow: /unsubscribe/
+Disallow: /reset-password/
+Disallow: /forgot-password/
 
 Sitemap: https://theworldsgreatestwater.com/sitemap.xml

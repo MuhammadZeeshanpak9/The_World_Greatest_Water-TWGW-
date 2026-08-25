@@ -295,6 +295,62 @@
     box-shadow: 0 0 0 3px rgba(94, 45, 145, 0.15);
     border-color: #5e2d91;
   }
+
+  /* ---- Luxury / gold ---- */
+  .text-gradient-gold {
+    background: linear-gradient(100deg, #8a6d2f 0%, #f3dfa0 20%, #c9a84c 40%, #fff6da 52%, #c9a84c 65%, #8a6d2f 85%, #c9a84c 100%);
+    background-size: 250% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    animation: shimmer 5s linear infinite;
+  }
+
+  .glass-card-gold {
+    background: linear-gradient(160deg, rgba(201, 168, 76, 0.09), rgba(255, 255, 255, 0.02));
+    backdrop-filter: blur(24px);
+    border: 1px solid rgba(201, 168, 76, 0.3);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(201, 168, 76, 0.15);
+  }
+
+  .btn-gold-sheen {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(120deg, #8a6d2f 0%, #e6c878 40%, #fff6da 50%, #e6c878 60%, #8a6d2f 100%);
+    background-size: 220% auto;
+    background-position: 0% center;
+    color: #060608;
+    transition: background-position 0.6s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: 0 0 0 rgba(201, 168, 76, 0);
+  }
+  .btn-gold-sheen:hover {
+    background-position: 100% center;
+    box-shadow: 0 8px 30px rgba(201, 168, 76, 0.35);
+  }
+  .btn-gold-sheen:active {
+    transform: scale(0.98);
+  }
+
+  .gold-ring-spin {
+    background: conic-gradient(
+      from 0deg,
+      rgba(201, 168, 76, 0) 0%,
+      rgba(201, 168, 76, 0.9) 12%,
+      rgba(255, 246, 218, 0.9) 18%,
+      rgba(201, 168, 76, 0.9) 24%,
+      rgba(201, 168, 76, 0) 40%,
+      rgba(201, 168, 76, 0) 60%,
+      rgba(201, 168, 76, 0.5) 72%,
+      rgba(201, 168, 76, 0) 88%
+    );
+    animation: spin 10s linear infinite;
+  }
+
+  .grain-overlay {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    animation: noiseShift 8s steps(10) infinite;
+  }
 }
 
 /* Reduced motion: calm everything down */

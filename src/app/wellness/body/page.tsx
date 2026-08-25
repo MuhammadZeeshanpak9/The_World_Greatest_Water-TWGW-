@@ -1,12 +1,10 @@
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import PageHero from "@/components/layout/PageHero";
-import WaveTransition from "@/components/ui/WaveTransition";
 import OfferingBlock from "@/components/sections/wellness/OfferingBlock";
+import DynamicCalBookingEmbed from "@/components/wellness/DynamicCalBookingEmbed";
+import WellnessViewTracker from "@/components/analytics/WellnessViewTracker";
 import { WELLNESS_SUBPAGES } from "@/data/content";
-
-const WHITE = "#ffffff";
-const DARK = "#0a0a0a";
 
 const data = WELLNESS_SUBPAGES.find((w) => w.slug === "body")!;
 
@@ -18,21 +16,30 @@ export const metadata = {
 export default function WellnessBodyPage() {
   return (
     <main>
+      <WellnessViewTracker wellnessType="body" />
       <Navbar />
 
       <PageHero variant="dark" title={data.title} subtitle={data.subtitle} />
-      <WaveTransition fromColor={DARK} toColor={WHITE} variant={2} animated />
 
       {data.offerings?.map((offering) => (
         <OfferingBlock key={offering.heading} {...offering} />
       ))}
 
-      <div className="bg-white pb-20 md:pb-28">
-        <p className="mx-auto max-w-xl px-6 text-center font-cormorant text-[22px] italic text-violet">
+      <div className="bg-dark-base pb-20 md:pb-28">
+        <span className="mx-auto block h-px w-14 bg-gold" />
+        <p className="mx-auto mt-8 max-w-xl px-6 text-center font-cormorant text-[22px] font-light italic text-gold">
           Thank you for choosing to ELEV8 YOU and the world inside YOU.
         </p>
       </div>
-      <WaveTransition fromColor={WHITE} toColor={DARK} variant={2} />
+
+      <section className="bg-[#0a0a0a] py-16 md:py-24">
+        <div className="mx-auto max-w-3xl px-6">
+          <DynamicCalBookingEmbed
+            calLink={process.env.NEXT_PUBLIC_CALCOM_BODY_LINK ?? ""}
+            title="Book Your Body Session"
+          />
+        </div>
+      </section>
 
       <Footer />
     </main>

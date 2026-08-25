@@ -1,21 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { Box, ChevronDown } from "lucide-react";
+import toast from "react-hot-toast";
 import EmptyState from "@/components/ui/EmptyState";
-
-type OrderItem = { name: string; quantity: number; price: number };
-type ShippingAddress = { address1: string; city: string; state: string; zip: string };
-
-type Order = {
-  id: string;
-  order_number: string;
-  status: string;
-  total: number;
-  items: OrderItem[];
-  shipping_address: ShippingAddress;
-  created_at: string;
-};
+import ConfirmDialog from "@/components/ui/ConfirmDialog";
+import type { DbOrder } from "@/types";
 
 const STATUS_STYLES: Record<string, string> = {
   pending: "bg-amber-100 text-amber-700",
@@ -38,10 +29,12 @@ function formatDate(value: string) {
 }
 
 export default function AccountOrdersList() {
-  const [orders, setOrders] = useState<Order[]>([]);
+  const [orders, setOrders] = useState<DbOrder[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [expandedId, setExpandedId] = useState<string | null>(null);
+  const [cancelTarget, setCancelTarget] = useState<DbOrder | null>(null);
+  const [cancelling, setCancelling] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -64,6 +57,25 @@ export default function AccountOrdersList() {
       cancelled = true;
     };
   }, []);
+
+  async function handleCancelConfirmed() {
+    if (!cancelTarget) return;
+    setCancelling(true);
+    try {
+      const res = await fetch(`/api/orders/${cancelTarget.id}/cancel`, { method: "POST" });
+      const json = await res.json();
+      if (!res.ok) throw new Error(json.error ?? "Unable to cancel order");
+      setOrders((prev) =>
+        prev.map((o) => (o.id === cancelTarget.id ? { ...o, status: "cancelled" } : o)),
+      );
+      toast.success("Order cancelled");
+      setCancelTarget(null);
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Unable to cancel order");
+    } finally {
+      setCancelling(false);
+    }
+  }
 
   if (loading) {
     return (
@@ -154,12 +166,49 @@ export default function AccountOrdersList() {
                       , {order.shipping_address.state} {order.shipping_address.zip}
                     </p>
                   )}
+
+                  {order.tracking_number && (
+                    <div className="mt-4 flex flex-wrap items-center gap-3">
+                      <Link
+                        href={`/track/${order.tracking_number}`}
+                        className="font-inter text-[12px] font-semibold tracking-[0.1em] text-violet uppercase hover:underline"
+                      >
+                        Track Order →
+                      </Link>
+                      {order.shipping_carrier && (
+                        <span className="font-inter text-[12px] text-muted">
+                          via {order.shipping_carrier}
+                          {order.shipping_service ? ` — ${order.shipping_service}` : ""}
+                        </span>
+                      )}
+                    </div>
+                  )}
+
+                  {order.status === "pending" && (
+                    <button
+                      onClick={() => setCancelTarget(order)}
+                      className="mt-4 font-inter text-[12px] font-semibold tracking-[0.1em] text-red-600 uppercase hover:underline"
+                    >
+                      Cancel Order
+                    </button>
+                  )}
                 </div>
               )}
             </div>
           );
         })}
       </div>
+
+      <ConfirmDialog
+        open={!!cancelTarget}
+        title="Cancel This Order?"
+        message={`This will cancel order ${cancelTarget?.order_number}. This cannot be undone.`}
+        confirmLabel="Cancel Order"
+        loadingLabel="Cancelling…"
+        loading={cancelling}
+        onConfirm={handleCancelConfirmed}
+        onCancel={() => setCancelTarget(null)}
+      />
     </section>
   );
 }

@@ -5,6 +5,7 @@ import { m } from "framer-motion";
 import { ArrowRight, Check } from "lucide-react";
 import FormField from "@/components/ui/FormField";
 import { useFormSubmit, isValidEmail, submitWaitlist } from "@/lib/forms";
+import { trackLead } from "@/lib/analytics";
 
 export default function SignupCta() {
   const [email, setEmail] = useState("");
@@ -18,7 +19,10 @@ export default function SignupCta() {
       return;
     }
     setError(undefined);
-    submit(() => submitWaitlist(email, "wellness-signup"));
+    submit(async () => {
+      await submitWaitlist(email, "wellness-signup");
+      trackLead("waitlist");
+    });
   };
 
   return (

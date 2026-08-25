@@ -8,6 +8,7 @@ import { ArrowRight, Check } from "lucide-react";
 import FormField from "@/components/ui/FormField";
 import { useFormSubmit, isValidEmail } from "@/lib/forms";
 import { isSafeRedirectPath } from "@/lib/validation";
+import { trackLogin } from "@/lib/analytics";
 
 type Errors = Partial<Record<"email" | "password", string>>;
 
@@ -38,6 +39,8 @@ export default function LoginForm() {
       });
       const json = await res.json();
       if (!res.ok) throw new Error(json.error ?? "Unable to sign in");
+
+      trackLogin();
 
       const redirect = searchParams.get("redirect");
       router.push(isSafeRedirectPath(redirect) ? redirect! : "/account");

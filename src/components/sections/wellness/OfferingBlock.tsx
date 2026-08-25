@@ -3,16 +3,17 @@
 import { useState, type ReactNode } from "react";
 import { m } from "framer-motion";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Sparkles } from "lucide-react";
 import FormField from "@/components/ui/FormField";
-import { GradientDivider } from "@/components/ui/primitives";
 import { ImageWithFallback } from "@/components/ui/MediaWithFallback";
 import { usePrefersReducedMotion } from "@/lib/hooks";
 import { useFormSubmit, submitFormSubmission } from "@/lib/forms";
+import { trackLead } from "@/lib/analytics";
 import GoWithinArt from "@/components/sections/wellness/GoWithinArt";
+import SectionParticles from "@/components/sections/SectionParticles";
 import type { WellnessOffering } from "@/types";
 
-/** Organic drop/blob shape — same asymmetric border-radius trick used in ProductBanner. */
+/** Organic blob shape — same asymmetric border-radius used pre-luxury-pass, kept for the frame mask. */
 const BLOB_SHAPE = "48% 52% 44% 56% / 55% 48% 52% 45%";
 
 function ImageBubble({
@@ -30,27 +31,30 @@ function ImageBubble({
   heroArt?: "go-within";
   plain?: boolean;
 }) {
-  if (plain) {
-    return (
-      <div className="relative mx-auto aspect-[4/3] w-full max-w-md overflow-hidden rounded-2xl">
-        <ImageWithFallback src={src} alt={alt} watermark={alt} rounded="" />
-      </div>
-    );
-  }
+  const borderRadius = plain ? "24px" : BLOB_SHAPE;
 
   return (
     <div className="relative mx-auto aspect-[4/3] w-full max-w-md">
+      {/* Rotating gilded ring frame */}
+      {!reduced && (
+        <div
+          className="gold-ring-spin absolute -inset-3 -z-10"
+          style={{ borderRadius }}
+          aria-hidden
+        />
+      )}
       <div
-        className="absolute -inset-6 -z-10 blur-3xl"
-        style={{ background: "rgba(107,47,160,0.18)", borderRadius: "50%" }}
+        className="absolute -inset-3 -z-10 opacity-70"
+        style={{ borderRadius, boxShadow: "0 0 60px rgba(201,168,76,0.25)" }}
         aria-hidden
       />
+
       <m.div
-        className="relative h-full w-full overflow-hidden"
-        style={{ borderRadius: BLOB_SHAPE }}
-        animate={reduced ? undefined : { y: [0, -14, 0], scale: [1, 1.03, 1] }}
+        className="relative h-full w-full overflow-hidden shadow-[0_25px_70px_rgba(0,0,0,0.55)]"
+        style={{ borderRadius }}
+        animate={reduced ? undefined : { y: [0, -14, 0], scale: [1, 1.02, 1] }}
         transition={
-          reduced ? undefined : { duration: 5.5, repeat: Infinity, ease: "easeInOut", delay }
+          reduced ? undefined : { duration: 6.5, repeat: Infinity, ease: "easeInOut", delay }
         }
       >
         {heroArt === "go-within" ? (
@@ -58,6 +62,14 @@ function ImageBubble({
         ) : (
           <ImageWithFallback src={src} alt={alt} watermark={alt} rounded="" />
         )}
+        {/* inner gold hairline */}
+        <div
+          className="pointer-events-none absolute inset-2 border border-gold/30"
+          style={{ borderRadius }}
+          aria-hidden
+        />
+        {/* subtle vignette for depth */}
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent" />
       </m.div>
     </div>
   );
@@ -110,26 +122,33 @@ export default function OfferingBlock({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    submit(() =>
-      submitFormSubmission("wellness", {
+    submit(async () => {
+      await submitFormSubmission("wellness", {
         ...values,
         name: `${values.firstName} ${values.lastName}`.trim(),
         offering: heading,
-      }),
-    );
+      });
+      trackLead("wellness");
+    });
   };
 
   const hasMembershipForm = Boolean(pricingLabel && price1yr);
 
   const pricingBlock: ReactNode = hasMembershipForm ? (
-    <>
-      <div>
-        <p className="font-inter text-[11px] font-semibold uppercase tracking-[0.3em] text-violet">
-          {pricingLabel}
-        </p>
-        <p className="mt-3 font-cormorant text-[28px] text-ink">{price1yr}</p>
-        {price2yr && <p className="mt-1 font-cormorant text-[28px] text-ink">{price2yr}</p>}
-      </div>
+    <div className="glass-card-gold relative overflow-hidden rounded-[28px] p-10">
+      {/* corner ticks — membership-card detail */}
+      <span className="absolute left-5 top-5 h-4 w-4 border-l border-t border-gold/50" aria-hidden />
+      <span className="absolute right-5 top-5 h-4 w-4 border-r border-t border-gold/50" aria-hidden />
+      <span className="absolute bottom-5 left-5 h-4 w-4 border-b border-l border-gold/50" aria-hidden />
+      <span className="absolute bottom-5 right-5 h-4 w-4 border-b border-r border-gold/50" aria-hidden />
+
+      <p className="font-inter text-[10px] font-semibold uppercase tracking-[0.5em] text-gold">
+        {pricingLabel}
+      </p>
+      <p className="text-gradient-gold mt-5 font-cormorant text-[38px] font-light">{price1yr}</p>
+      {price2yr && (
+        <p className="text-gradient-gold mt-1 font-cormorant text-[38px] font-light">{price2yr}</p>
+      )}
 
       <form
         onSubmit={handleSubmit}
@@ -137,12 +156,14 @@ export default function OfferingBlock({
       >
         <div className="grid grid-cols-2 gap-4">
           <FormField
+            tone="dark"
             label="First Name"
             name="firstName"
             value={values.firstName}
             onChange={update("firstName")}
           />
           <FormField
+            tone="dark"
             label="Last Name"
             name="lastName"
             value={values.lastName}
@@ -150,6 +171,7 @@ export default function OfferingBlock({
           />
         </div>
         <FormField
+          tone="dark"
           label="Email"
           name="email"
           type="email"
@@ -158,6 +180,7 @@ export default function OfferingBlock({
           onChange={update("email")}
         />
         <FormField
+          tone="dark"
           label="Message"
           name="message"
           type="textarea"
@@ -167,6 +190,7 @@ export default function OfferingBlock({
           onChange={update("message")}
         />
         <FormField
+          tone="dark"
           label="Membership"
           name="membership"
           type="select"
@@ -177,40 +201,52 @@ export default function OfferingBlock({
         />
 
         {status === "error" && errorMessage && (
-          <p className="text-center font-inter text-[13px] text-red-600">{errorMessage}</p>
+          <p className="text-center font-inter text-[13px] text-red-400">{errorMessage}</p>
         )}
 
         <button
           type="submit"
           disabled={status === "submitting"}
-          className="group mt-2 flex h-[52px] items-center justify-center gap-2 rounded-full bg-gradient-brand px-8 font-inter text-[12px] font-semibold uppercase tracking-[0.15em] text-white btn-glow transition-transform duration-300 active:scale-95 disabled:opacity-60"
+          className="btn-gold-sheen group mt-2 flex h-[54px] items-center justify-center gap-2 rounded-full px-8 font-inter text-[11px] font-bold uppercase tracking-[0.3em] disabled:opacity-50"
         >
-          {status === "submitting" ? "Sending…" : status === "success" ? "Thank You" : "Submit"}
+          {status === "submitting"
+            ? "Sending…"
+            : status === "success"
+              ? "Thank You"
+              : "Request Access"}
           {status !== "success" && status !== "submitting" && (
-            <ArrowRight size={15} className="transition-transform group-hover:translate-x-1" />
+            <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
           )}
         </button>
       </form>
-    </>
+    </div>
   ) : bookingTiers && bookingTiers.length > 0 ? (
-    <div className="text-left">
-      <p className="text-center font-inter text-[11px] font-semibold uppercase tracking-[0.3em] text-violet">
+    <div className="glass-card-gold relative overflow-hidden rounded-[28px] p-10 text-left">
+      <span className="absolute left-5 top-5 h-4 w-4 border-l border-t border-gold/50" aria-hidden />
+      <span className="absolute right-5 top-5 h-4 w-4 border-r border-t border-gold/50" aria-hidden />
+      <span className="absolute bottom-5 left-5 h-4 w-4 border-b border-l border-gold/50" aria-hidden />
+      <span className="absolute bottom-5 right-5 h-4 w-4 border-b border-r border-gold/50" aria-hidden />
+
+      <p className="text-center font-inter text-[10px] font-semibold uppercase tracking-[0.5em] text-gold">
         {bookingLabel ?? "Booking"}
       </p>
-      <ul className="mt-5 flex flex-col gap-3">
+      <ul className="mt-6 flex flex-col gap-3">
         {bookingTiers.map((tier) => (
           <li
             key={tier.label}
-            className="flex flex-wrap items-center justify-between gap-3 border-b border-violet/10 pb-3"
+            className="flex flex-wrap items-center justify-between gap-3 border-b border-gold/20 pb-3"
           >
-            <span className="font-inter text-[14px] text-body">
-              {tier.label} : <span className="font-semibold text-ink">{tier.price}</span>
+            <span className="font-inter text-[14px] text-white/70">
+              {tier.label} :{" "}
+              <span className="text-gradient-gold font-cormorant text-[20px] font-light">
+                {tier.price}
+              </span>
             </span>
             <Link
               href="/contact"
-              className="shrink-0 rounded-full bg-violet px-5 py-2 font-inter text-[11px] font-semibold uppercase tracking-[0.1em] text-white transition-colors hover:bg-violet-deep"
+              className="btn-gold-sheen shrink-0 rounded-full px-5 py-2 font-inter text-[10px] font-bold uppercase tracking-[0.2em]"
             >
-              Book Now
+              Reserve
             </Link>
           </li>
         ))}
@@ -219,23 +255,23 @@ export default function OfferingBlock({
   ) : null;
 
   const collaboratorBlock: ReactNode = winWinText ? (
-    <>
+    <div className="glass-card-gold relative overflow-hidden rounded-[28px] p-10">
       <div className="flex flex-col gap-3 text-center">
-        <p className="font-inter text-[14px] leading-relaxed text-body">{winWinText}</p>
+        <p className="font-inter text-[14px] leading-relaxed text-white/70">{winWinText}</p>
         {contactEmail && (
-          <p className="font-inter text-[14px] text-body">
+          <p className="font-inter text-[14px] text-white/70">
             For more information email:{" "}
-            <a href={`mailto:${contactEmail}`} className="text-violet hover:underline">
+            <a href={`mailto:${contactEmail}`} className="text-gold hover:underline">
               {contactEmail}
             </a>
           </p>
         )}
         {collaboratorPitch && (
           <>
-            <p className="font-inter text-[13px] font-semibold uppercase tracking-[0.15em] text-muted">
+            <p className="font-inter text-[12px] font-semibold uppercase tracking-[0.3em] text-gold/70">
               AND
             </p>
-            <p className="font-inter text-[14px] font-semibold text-ink">{collaboratorPitch}</p>
+            <p className="font-inter text-[14px] font-semibold text-white">{collaboratorPitch}</p>
           </>
         )}
       </div>
@@ -244,61 +280,82 @@ export default function OfferingBlock({
           {collaboratorItems.map((item) => (
             <li
               key={item}
-              className="flex items-start gap-2 font-inter text-[13px] leading-relaxed text-body"
+              className="flex items-start gap-2 font-inter text-[13px] leading-relaxed text-white/70"
             >
-              <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-violet" />
+              <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-gold" />
               {item}
             </li>
           ))}
         </ul>
       )}
-    </>
+    </div>
   ) : null;
 
   return (
-    <section className="bg-white py-20 md:py-28">
-      <div className="mx-auto max-w-5xl px-6">
+    <section className="relative overflow-hidden bg-dark-base py-24 md:py-36">
+      {/* Ambient luxury background: drifting light + gold particles + grain */}
+      <m.div
+        className="pointer-events-none absolute -top-20 left-1/4 h-[520px] w-[520px] rounded-full bg-gold/10 blur-[150px]"
+        animate={reduced ? undefined : { x: [0, 60, -20, 0], y: [0, 40, 80, 0] }}
+        transition={reduced ? undefined : { duration: 26, repeat: Infinity, ease: "easeInOut" }}
+        aria-hidden
+      />
+      <m.div
+        className="pointer-events-none absolute bottom-0 right-1/5 h-[420px] w-[420px] rounded-full bg-violet/15 blur-[150px]"
+        animate={reduced ? undefined : { x: [0, -50, 30, 0], y: [0, -30, 20, 0] }}
+        transition={reduced ? undefined : { duration: 22, repeat: Infinity, ease: "easeInOut" }}
+        aria-hidden
+      />
+      {!reduced && <SectionParticles count={26} />}
+      <div className="grain-overlay pointer-events-none absolute inset-0 opacity-[0.05] mix-blend-overlay" aria-hidden />
+
+      <div className="relative mx-auto max-w-5xl px-6">
         {/* Section 1 — text left, image right */}
         <m.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          className="grid gap-10 md:grid-cols-2 md:items-center md:gap-14"
+          transition={{ duration: 0.7, ease: "easeOut" }}
+          className="grid gap-10 md:grid-cols-2 md:items-center md:gap-16"
         >
-          <div className="flex flex-col gap-5 text-left">
-            <GradientDivider width="w-12" />
-            <h2 className="font-cormorant text-[34px] font-bold leading-tight text-ink md:text-[46px]">
+          <div className="flex flex-col gap-6 text-left">
+            <span className="flex items-center gap-3">
+              <span className="block h-px w-14 bg-gradient-to-r from-gold to-transparent" />
+              <Sparkles size={14} className="text-gold" />
+            </span>
+            <h2 className="text-gradient-gold font-cormorant text-[34px] font-light uppercase leading-[1.15] tracking-[0.02em] md:text-[48px]">
               {heading}
             </h2>
             {tagline && (
-              <p className="font-inter text-[16px] font-semibold italic text-body">{tagline}</p>
+              <p className="font-inter text-[13px] font-semibold uppercase tracking-[0.25em] text-gold">
+                {tagline}
+              </p>
             )}
             {bodyParagraphs && bodyParagraphs.length > 0 && (
               <div className="flex flex-col gap-4">
                 {bodyParagraphs.map((p, i) => (
-                  <p key={i} className="font-inter text-[14px] leading-relaxed text-body">
+                  <p key={i} className="font-inter text-[15px] font-light leading-[1.9] text-white/65">
                     {p}
                   </p>
                 ))}
               </div>
             )}
             {session && (
-              <div className="mt-2">
-                <h3 className="font-inter text-[13px] font-bold uppercase tracking-[0.15em] text-ink">
+              <div className="mt-3 border-t border-gold/15 pt-6">
+                <h3 className="font-inter text-[12px] font-bold uppercase tracking-[0.3em] text-white">
                   {session.heading}
                   {session.subheading && (
-                    <span className="font-semibold normal-case tracking-normal text-body">
+                    <span className="font-semibold normal-case tracking-normal text-white/60">
                       {" "}
                       {session.subheading}
                     </span>
                   )}
                 </h3>
-                <p className="mt-3 font-inter text-[14px] leading-relaxed text-body">
+                <p className="mt-3 font-inter text-[14px] font-light leading-[1.9] text-white/65">
                   {session.description}
                 </p>
                 {session.extraParagraph && (
-                  <p className="mt-3 font-inter text-[14px] leading-relaxed text-body">
+                  <p className="mt-3 font-inter text-[14px] font-light leading-[1.9] text-white/65">
                     {session.extraParagraph}
                   </p>
                 )}
@@ -328,10 +385,14 @@ export default function OfferingBlock({
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }}
-            className="mx-auto mt-16 max-w-md text-center md:mt-20"
+            transition={{ duration: 0.6, ease: "easeOut", delay: 0.1 }}
+            className="mx-auto mt-20 max-w-md text-center md:mt-24"
           >
-            <GradientDivider className="mx-auto" width="w-16" />
+            <span className="mx-auto flex w-24 items-center justify-center gap-2" aria-hidden>
+              <span className="h-px flex-1 bg-gradient-to-r from-transparent to-gold" />
+              <Sparkles size={12} className="text-gold" />
+              <span className="h-px flex-1 bg-gradient-to-l from-transparent to-gold" />
+            </span>
             {pricingBlock && <div className="mt-8">{pricingBlock}</div>}
             {collaboratorBlock && <div className="mt-10">{collaboratorBlock}</div>}
           </m.div>

@@ -39,7 +39,8 @@ export default function BrandStory() {
             viewport={{ once: true }}
             className="font-cormorant text-[36px] font-bold text-gradient-brand"
           >
-            1 WATER. 12 UNDERSTANDING
+            <span className="font-inter [font-variant-numeric:lining-nums]">1</span> WATER.{" "}
+            <span className="font-inter [font-variant-numeric:lining-nums]">12</span> UNDERSTANDING
           </m.h2>
 
           <div className="mt-6 flex flex-col gap-5">

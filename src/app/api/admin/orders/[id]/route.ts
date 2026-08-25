@@ -41,9 +41,16 @@ export async function PUT(request: NextRequest, { params }: Params) {
   const admin = createAdminClient();
   const { data: oldData } = await admin.from("orders").select("*").eq("id", id).single();
 
+  const updates: Record<string, unknown> = { status: b.status, updated_at: new Date().toISOString() };
+  // Manual "Mark Delivered" override — only stamp delivered_at if it isn't already set (e.g. by
+  // the Shippo webhook), so a later admin re-save can't clobber the real delivery timestamp.
+  if (b.status === "delivered" && oldData && !oldData.delivered_at) {
+    updates.delivered_at = new Date().toISOString();
+  }
+
   const { data, error } = await admin
     .from("orders")
-    .update({ status: b.status, updated_at: new Date().toISOString() })
+    .update(updates)
     .eq("id", id)
     .select()
     .single();

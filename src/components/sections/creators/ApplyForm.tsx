@@ -5,6 +5,7 @@ import { m } from "framer-motion";
 import { ArrowRight, Check } from "lucide-react";
 import FormField from "@/components/ui/FormField";
 import { useFormSubmit, isValidEmail, submitFormSubmission } from "@/lib/forms";
+import { trackLead } from "@/lib/analytics";
 
 type Values = {
   name: string;
@@ -34,7 +35,10 @@ export default function ApplyForm() {
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length > 0) return;
 
-    submit(() => submitFormSubmission("creators", values));
+    submit(async () => {
+      await submitFormSubmission("creators", values);
+      trackLead("creators");
+    });
   };
 
   return (

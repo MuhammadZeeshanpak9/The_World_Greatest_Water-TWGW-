@@ -197,3 +197,42 @@ export type TrendingCircle = {
 export type VideoCard = {
   title: string;
 };
+
+export type OrderItem = { product_id: string; name: string; quantity: number; price: number };
+
+export type OrderShippingAddress = {
+  address1: string;
+  address2?: string;
+  city: string;
+  state: string;
+  zip: string;
+  country: string;
+};
+
+/** Supabase-backed order row (src/app/api/orders, src/app/api/admin/orders, orders table).
+ * The M10 payment/shipping columns are nullable — they're only populated once an order
+ * actually goes through a payment provider / gets a shipping label. */
+export type DbOrder = {
+  id: string;
+  order_number: string;
+  customer_email: string;
+  customer_name: string | null;
+  status: string;
+  total: number;
+  items: OrderItem[];
+  shipping_address: OrderShippingAddress;
+  stripe_payment_intent_id: string | null;
+  paypal_order_id: string | null;
+  coinbase_charge_id: string | null;
+  payment_method: string | null;
+  payment_status: string;
+  shipping_carrier: string | null;
+  shipping_service: string | null;
+  shipping_rate: number | null;
+  tracking_number: string | null;
+  label_url: string | null;
+  shipped_at: string | null;
+  delivered_at: string | null;
+  created_at: string;
+  updated_at: string;
+};

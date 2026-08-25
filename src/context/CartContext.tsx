@@ -11,6 +11,7 @@ import {
 } from "react";
 import toast from "react-hot-toast";
 import { useSession } from "./SessionContext";
+import { trackAddToCart } from "@/lib/analytics";
 
 export type CartItem = {
   id: string;
@@ -84,6 +85,18 @@ export function CartProvider({ children }: { children: ReactNode }) {
         if (!res.ok) throw new Error(cart.error ?? "Unable to add to cart");
         applyCart(cart);
         toast.success("Added to cart");
+
+        const addedItem = (cart.items as CartItem[]).find((i) => i.product_id === productId);
+        if (addedItem?.product) {
+          trackAddToCart(
+            {
+              id: addedItem.product.id,
+              name: addedItem.product.name,
+              price: addedItem.price_snapshot,
+            },
+            1,
+          );
+        }
       } catch (err) {
         applyCart(previous);
         toast.error(err instanceof Error ? err.message : "Unable to add to cart");

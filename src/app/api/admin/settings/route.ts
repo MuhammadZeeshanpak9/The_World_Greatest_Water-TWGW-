@@ -9,6 +9,12 @@ const ALLOWED_KEYS = [
   "instagram_url",
   "youtube_url",
   "tiktok_url",
+  "shippo_sender_name",
+  "shippo_sender_street",
+  "shippo_sender_city",
+  "shippo_sender_state",
+  "shippo_sender_zip",
+  "shippo_sender_country",
 ];
 
 export async function GET() {

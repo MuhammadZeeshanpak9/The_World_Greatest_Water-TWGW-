@@ -4,22 +4,39 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Check, ArrowRight } from "lucide-react";
+import { trackPurchase } from "@/lib/analytics";
+
+type StoredOrder = {
+  order_number: string;
+  total: number;
+  items: { product_id: string; name: string; quantity: number; price: number }[];
+};
+
+function readStoredOrder(): StoredOrder | null {
+  if (typeof window === "undefined") return null;
+  const raw = sessionStorage.getItem("elev8_order_data");
+  if (!raw) return null;
+  try {
+    return JSON.parse(raw) as StoredOrder;
+  } catch {
+    return null;
+  }
+}
 
 export default function OrderConfirmation() {
   const router = useRouter();
-  const [orderNumber] = useState<string | null>(() =>
-    typeof window === "undefined" ? null : sessionStorage.getItem("elev8_order_number"),
-  );
+  const [order] = useState<StoredOrder | null>(readStoredOrder);
 
   useEffect(() => {
-    if (!orderNumber) {
+    if (!order) {
       router.replace("/");
       return;
     }
-    sessionStorage.removeItem("elev8_order_number");
-  }, [orderNumber, router]);
+    trackPurchase(order);
+    sessionStorage.removeItem("elev8_order_data");
+  }, [order, router]);
 
-  if (!orderNumber) return null;
+  if (!order) return null;
 
   return (
     <section className="bg-white py-24 md:py-32">
@@ -33,7 +50,7 @@ export default function OrderConfirmation() {
         </h1>
 
         <p className="mt-4 font-inter text-[15px] font-semibold uppercase tracking-[0.15em] text-violet">
-          Order {orderNumber}
+          Order {order.order_number}
         </p>
 
         <p className="mt-6 font-inter text-base text-body">Check your email for confirmation</p>

@@ -16,7 +16,7 @@ export function adminNotificationEmail(params: {
       <tr><td style="padding:6px 0;font-weight:bold;">Name</td><td style="padding:6px 0;">${name ? escapeHtml(name) : "—"}</td></tr>
       <tr><td style="padding:6px 0;font-weight:bold;">Email</td><td style="padding:6px 0;">${escapeHtml(email)}</td></tr>
       <tr><td style="padding:6px 0;font-weight:bold;">Date</td><td style="padding:6px 0;">${escapeHtml(date)}</td></tr>
-      ${message ? `<tr><td style="padding:6px 0;font-weight:bold;vertical-align:top;">Message</td><td style="padding:6px 0;">${escapeHtml(message)}</td></tr>` : ""}
+      ${message ? `<tr><td style="padding:6px 0;font-weight:bold;vertical-align:top;">Message</td><td style="padding:6px 0;white-space:pre-line;">${escapeHtml(message)}</td></tr>` : ""}
     </table>
   `;
 

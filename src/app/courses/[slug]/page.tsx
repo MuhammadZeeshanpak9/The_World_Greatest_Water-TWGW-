@@ -4,44 +4,79 @@ import Footer from "@/components/layout/Footer";
 import PageHero from "@/components/layout/PageHero";
 import WaveTransition from "@/components/ui/WaveTransition";
 import CourseDetail from "@/components/sections/courses/CourseDetail";
-import { BLOG_POSTS } from "@/data/content";
+import { createClient } from "@/lib/supabase/server";
+import {
+  getCourseBySlug,
+  getCourseLessons,
+  getCourseProgressForUser,
+  getCourses,
+} from "@/lib/courses";
 
 const TINT = "#f0e8f8";
 const WHITE = "#ffffff";
 
-const COURSES = BLOG_POSTS.filter((p) => p.topic);
+export const revalidate = 60;
 
 export async function generateStaticParams() {
-  return COURSES.map((p) => ({ slug: p.slug }));
+  try {
+    const courses = await getCourses(null);
+    return courses.map((c) => ({ slug: c.slug }));
+  } catch {
+    return [];
+  }
 }
-
-export const dynamicParams = false;
 
 type Props = { params: Promise<{ slug: string }> };
 
 export async function generateMetadata({ params }: Props) {
   const { slug } = await params;
-  const post = COURSES.find((p) => p.slug === slug);
+  const course = await getCourseBySlug(slug);
   return {
-    title: post ? post.title : "Course",
-    description: post?.teaser,
-    openGraph: post ? { title: post.title, description: post.teaser, type: "website" } : undefined,
+    title: course ? course.title : "Course",
+    description: course?.teaser ?? undefined,
+    openGraph: course
+      ? { title: course.title, description: course.teaser ?? undefined, type: "website" }
+      : undefined,
   };
 }
 
 export default async function CoursePage({ params }: Props) {
   const { slug } = await params;
-  const post = COURSES.find((p) => p.slug === slug);
-  if (!post) notFound();
+  const course = await getCourseBySlug(slug);
+  if (!course) notFound();
+
+  const lessons = await getCourseLessons(slug);
+
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  const progress = user
+    ? await getCourseProgressForUser(user.id, slug)
+    : { enrolled: false, completedAt: null, completedLessonIds: [] };
+
+  const allCourses = await getCourses(null);
+  const relatedCourses = allCourses
+    .filter((c) => c.slug !== slug)
+    .slice(0, 3)
+    .map((c) => ({ slug: c.slug, title: c.title }));
 
   return (
     <main>
       <Navbar />
 
-      <PageHero variant="light" title={post.title} />
+      <PageHero variant="light" title={course.title} description={course.teaser ?? undefined} />
       <WaveTransition fromColor={TINT} toColor={WHITE} variant={3} />
 
-      <CourseDetail post={post} />
+      <CourseDetail
+        course={course}
+        lessons={lessons}
+        initialEnrolled={progress.enrolled}
+        initialCompletedLessonIds={progress.completedLessonIds}
+        initialCompletedAt={progress.completedAt}
+        relatedCourses={relatedCourses}
+      />
 
       <Footer />
     </main>

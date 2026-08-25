@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowLeft, ArrowRight } from "lucide-react";
@@ -8,6 +9,7 @@ import { GradientPlaceholder } from "@/components/ui/MediaWithFallback";
 import { useCart } from "@/context/CartContext";
 import NotifyMeForm from "@/components/ui/NotifyMeForm";
 import ProductStatusBadge, { getProductCta } from "./ProductStatusBadge";
+import { trackProductView } from "@/lib/analytics";
 
 function formatPrice(price: number) {
   return `$${price.toFixed(2)}`;
@@ -16,6 +18,15 @@ function formatPrice(price: number) {
 export default function ProductDetail({ product }: { product: DbProduct }) {
   const cta = getProductCta(product.status);
   const { addToCart } = useCart();
+
+  useEffect(() => {
+    trackProductView({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      category: product.category,
+    });
+  }, [product.id, product.name, product.price, product.category]);
 
   return (
     <section className="bg-white py-24 md:py-32">

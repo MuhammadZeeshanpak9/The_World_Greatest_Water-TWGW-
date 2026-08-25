@@ -9,6 +9,13 @@ const STATUS_STYLES: Record<string, { bg: string; text: string }> = {
   cancelled: { bg: "rgba(239,68,68,0.15)", text: "#EF4444" },
   active: { bg: "rgba(16,185,129,0.15)", text: "#10B981" },
   paused: { bg: "rgba(245,158,11,0.15)", text: "#F59E0B" },
+  confirmed: { bg: "rgba(16,185,129,0.15)", text: "#10B981" },
+  draft: { bg: "rgba(245,158,11,0.15)", text: "#F59E0B" },
+  sent: { bg: "rgba(16,185,129,0.15)", text: "#10B981" },
+  paid: { bg: "rgba(16,185,129,0.15)", text: "#10B981" },
+  refunded: { bg: "rgba(107,47,160,0.2)", text: "#B48CE0" },
+  failed: { bg: "rgba(239,68,68,0.15)", text: "#EF4444" },
+  unselected: { bg: "rgba(255,255,255,0.1)", text: "rgba(255,255,255,0.6)" },
 };
 
 export default function StatusBadge({ status }: { status: string }) {

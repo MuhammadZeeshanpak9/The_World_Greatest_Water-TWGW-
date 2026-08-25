@@ -2,18 +2,24 @@
 
 import { useState, type FormEvent } from "react";
 import { ArrowRight, Check } from "lucide-react";
+import toast from "react-hot-toast";
 import { useFormSubmit, isValidEmail, submitWaitlist } from "@/lib/forms";
+import { trackLead } from "@/lib/analytics";
 
 export default function NotifyMeForm({
   label = "NOTIFY ME →",
   source,
   variant = "solid",
   className = "",
+  toastMessage,
 }: {
   label?: string;
   source: string;
   variant?: "solid" | "outline";
   className?: string;
+  /** When provided, shows a success toast with this message on submit instead of relying only
+   * on the inline "You're on the list" text. */
+  toastMessage?: string;
 }) {
   const [open, setOpen] = useState(false);
   const [email, setEmail] = useState("");
@@ -53,7 +59,11 @@ export default function NotifyMeForm({
       return;
     }
     setError(undefined);
-    submit(() => submitWaitlist(email, source));
+    submit(async () => {
+      await submitWaitlist(email, source);
+      trackLead("waitlist");
+      if (toastMessage) toast.success(toastMessage);
+    });
   };
 
   return (

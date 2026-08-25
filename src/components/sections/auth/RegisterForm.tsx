@@ -8,6 +8,7 @@ import { ArrowRight } from "lucide-react";
 import FormField from "@/components/ui/FormField";
 import { useFormSubmit, isValidEmail } from "@/lib/forms";
 import { isStrongPassword } from "@/lib/validation";
+import { trackSignUp } from "@/lib/analytics";
 
 type Values = {
   firstName: string;
@@ -62,6 +63,8 @@ export default function RegisterForm() {
       });
       const json = await res.json();
       if (!res.ok) throw new Error(json.error ?? "Unable to create account");
+
+      trackSignUp();
 
       if (json.confirmed) {
         router.push("/account");

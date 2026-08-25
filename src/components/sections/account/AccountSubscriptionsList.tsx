@@ -14,6 +14,8 @@ type Subscription = {
   next_billing_date: string | null;
 };
 
+type Action = "pause" | "reactivate" | "cancel";
+
 function formatCurrency(value: number) {
   return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(value);
 }
@@ -27,11 +29,35 @@ function formatDate(value: string | null) {
   });
 }
 
+const ACTION_STATUS: Record<Action, string> = {
+  pause: "paused",
+  reactivate: "active",
+  cancel: "cancelled",
+};
+
+const ACTION_LABEL: Record<Action, string> = {
+  pause: "Pause",
+  reactivate: "Reactivate",
+  cancel: "Cancel",
+};
+
+const ACTION_LOADING_LABEL: Record<Action, string> = {
+  pause: "Pausing…",
+  reactivate: "Reactivating…",
+  cancel: "Cancelling…",
+};
+
+const ACTION_SUCCESS_MESSAGE: Record<Action, string> = {
+  pause: "Subscription paused",
+  reactivate: "Subscription reactivated",
+  cancel: "Subscription cancelled",
+};
+
 export default function AccountSubscriptionsList() {
   const [subscriptions, setSubscriptions] = useState<Subscription[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
-  const [cancelingId, setCancelingId] = useState<string | null>(null);
+  const [actioning, setActioning] = useState<{ id: string; action: Action } | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -55,24 +81,23 @@ export default function AccountSubscriptionsList() {
     };
   }, []);
 
-  async function handleCancel(id: string) {
-    setCancelingId(id);
+  async function handleAction(id: string, action: Action) {
+    setActioning({ id, action });
     try {
+      const nextStatus = ACTION_STATUS[action];
       const res = await fetch(`/api/subscriptions/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ status: "cancelled" }),
+        body: JSON.stringify({ status: nextStatus }),
       });
       const json = await res.json();
-      if (!res.ok) throw new Error(json.error ?? "Unable to cancel subscription");
-      setSubscriptions((prev) =>
-        prev.map((s) => (s.id === id ? { ...s, status: "cancelled" } : s)),
-      );
-      toast.success("Subscription cancelled");
+      if (!res.ok) throw new Error(json.error ?? `Unable to ${action} subscription`);
+      setSubscriptions((prev) => prev.map((s) => (s.id === id ? { ...s, status: nextStatus } : s)));
+      toast.success(ACTION_SUCCESS_MESSAGE[action]);
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Unable to cancel subscription");
+      toast.error(err instanceof Error ? err.message : `Unable to ${action} subscription`);
     } finally {
-      setCancelingId(null);
+      setActioning(null);
     }
   }
 
@@ -98,15 +123,15 @@ export default function AccountSubscriptionsList() {
     );
   }
 
-  const active = subscriptions.filter((s) => s.status === "active");
+  const visible = subscriptions.filter((s) => s.status === "active" || s.status === "paused");
 
-  if (active.length === 0) {
+  if (visible.length === 0) {
     return (
       <EmptyState
         icon={RefreshCw}
-        heading="No active subscriptions"
-        description="Subscribe to ELEV8 WATER for regular deliveries"
-        ctaLabel="SUBSCRIBE NOW"
+        heading="No active subscriptions yet — launching soon"
+        description="Join the waitlist and we'll notify you when subscriptions go live"
+        ctaLabel="VIEW PLANS"
         ctaHref="/subscription"
       />
     );
@@ -115,31 +140,57 @@ export default function AccountSubscriptionsList() {
   return (
     <section className="bg-white py-24 md:py-32">
       <div className="mx-auto max-w-4xl space-y-4 px-6">
-        {active.map((sub) => (
-          <div
-            key={sub.id}
-            className="flex flex-wrap items-center justify-between gap-4 rounded-2xl glass-card-light p-6"
-          >
-            <div>
-              <p className="font-cormorant text-[22px] text-ink">{sub.product}</p>
-              <p className="mt-1 font-inter text-[13px] text-muted">
-                {sub.plan} · Next billing {formatDate(sub.next_billing_date)}
-              </p>
+        {visible.map((sub) => {
+          const isPaused = sub.status === "paused";
+          const isBusy = actioning?.id === sub.id;
+          const busyAction = isBusy ? actioning.action : null;
+
+          return (
+            <div
+              key={sub.id}
+              className="flex flex-wrap items-center justify-between gap-4 rounded-2xl glass-card-light p-6"
+            >
+              <div>
+                <div className="flex items-center gap-3">
+                  <p className="font-cormorant text-[22px] text-ink">{sub.product}</p>
+                  {isPaused && (
+                    <span className="rounded-full bg-amber-100 px-3 py-1 font-inter text-[10px] font-semibold tracking-[0.15em] text-amber-700 uppercase">
+                      Paused
+                    </span>
+                  )}
+                </div>
+                <p className="mt-1 font-inter text-[13px] text-muted">
+                  {sub.plan} · Next billing {formatDate(sub.next_billing_date)}
+                </p>
+              </div>
+              <div className="flex items-center gap-3">
+                <p className="font-inter text-[16px] font-semibold text-violet">
+                  {formatCurrency(sub.amount)}
+                </p>
+                <button
+                  onClick={() => handleAction(sub.id, isPaused ? "reactivate" : "pause")}
+                  disabled={isBusy}
+                  className="rounded-full border border-violet/30 px-4 py-2 font-inter text-[11px] font-semibold uppercase tracking-[0.15em] text-violet transition-colors hover:bg-violet/5 disabled:opacity-50"
+                >
+                  {busyAction === "pause"
+                    ? ACTION_LOADING_LABEL.pause
+                    : busyAction === "reactivate"
+                      ? ACTION_LOADING_LABEL.reactivate
+                      : isPaused
+                        ? ACTION_LABEL.reactivate
+                        : ACTION_LABEL.pause}
+                </button>
+                <button
+                  onClick={() => handleAction(sub.id, "cancel")}
+                  disabled={isBusy}
+                  className="rounded-full border border-red-300 px-4 py-2 font-inter text-[11px] font-semibold uppercase tracking-[0.15em] text-red-600 transition-colors hover:bg-red-50 disabled:opacity-50"
+                >
+                  {busyAction === "cancel" ? ACTION_LOADING_LABEL.cancel : ACTION_LABEL.cancel}
+                </button>
+              </div>
             </div>
-            <div className="flex items-center gap-4">
-              <p className="font-inter text-[16px] font-semibold text-violet">
-                {formatCurrency(sub.amount)}
-              </p>
-              <button
-                onClick={() => handleCancel(sub.id)}
-                disabled={cancelingId === sub.id}
-                className="rounded-full border border-red-300 px-4 py-2 font-inter text-[11px] font-semibold uppercase tracking-[0.15em] text-red-600 transition-colors hover:bg-red-50 disabled:opacity-50"
-              >
-                {cancelingId === sub.id ? "Cancelling…" : "Cancel"}
-              </button>
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </section>
   );

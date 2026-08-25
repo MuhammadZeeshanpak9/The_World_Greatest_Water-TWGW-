@@ -1,50 +1,11 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
-import Image from "next/image";
-import useEmblaCarousel from "embla-carousel-react";
 import { m } from "framer-motion";
-import { ArrowLeft, ArrowRight } from "lucide-react";
 import { BOTTLES } from "@/data/content";
-import { GradientPlaceholder } from "@/components/ui/MediaWithFallback";
+import BottleCoverflow from "./BottleCoverflow";
 import SectionParticles from "./SectionParticles";
 
 export default function TwelveBottles() {
-  const [emblaRef, emblaApi] = useEmblaCarousel({
-    align: "start",
-    containScroll: "trimSnaps",
-    slidesToScroll: 1,
-    loop: false,
-  });
-  const [selected, setSelected] = useState(0);
-  const [snaps, setSnaps] = useState<number[]>([]);
-
-  const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
-  const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
-  const scrollTo = useCallback(
-    (i: number) => emblaApi?.scrollTo(i),
-    [emblaApi],
-  );
-
-  useEffect(() => {
-    if (!emblaApi) return;
-    const onSelect = () => setSelected(emblaApi.selectedScrollSnap());
-    const onReInit = () => {
-      setSnaps(emblaApi.scrollSnapList());
-      setSelected(emblaApi.selectedScrollSnap());
-    };
-    emblaApi.on("select", onSelect);
-    emblaApi.on("reInit", onReInit);
-    // Defer initial read out of the effect body to avoid synchronous
-    // setState-in-effect (cascading renders).
-    const raf = requestAnimationFrame(onReInit);
-    return () => {
-      cancelAnimationFrame(raf);
-      emblaApi.off("select", onSelect);
-      emblaApi.off("reInit", onReInit);
-    };
-  }, [emblaApi]);
-
   return (
     <section className="relative overflow-hidden bg-gradient-hero py-24 md:py-32">
       <SectionParticles count={40} />
@@ -80,129 +41,8 @@ export default function TwelveBottles() {
           Created To Add Value To Your Life
         </p>
 
-        {/* Carousel */}
-        <div className="relative mt-14">
-          <div className="overflow-hidden" ref={emblaRef}>
-            <div className="flex gap-6">
-              {BOTTLES.map((bottle) => (
-                <div
-                  key={bottle.name}
-                  className="min-w-0 flex-[0_0_80%] sm:flex-[0_0_45%] lg:flex-[0_0_28%]"
-                >
-                  <div
-                    className="group h-full rounded-[20px] p-7 transition-all duration-300 hover:-translate-y-1.5 glass-card-dark"
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.borderColor = bottle.color;
-                      e.currentTarget.style.boxShadow = `0 0 30px ${bottle.color}55`;
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)";
-                      e.currentTarget.style.boxShadow = "none";
-                    }}
-                  >
-                    <div className="relative h-[220px] overflow-hidden rounded-2xl group/img">
-                      {bottle.image ? (
-                        <>
-                          <Image
-                            src={bottle.image}
-                            alt={bottle.name}
-                            fill
-                            sizes="(max-width: 768px) 80vw, (max-width: 1024px) 45vw, 28vw"
-                            className="rounded-2xl object-cover transition-transform duration-700 group-hover/img:scale-105"
-                          />
-                          <div className="absolute inset-0 flex items-center justify-center bg-black/10 rounded-2xl">
-                            <span className="font-inter text-sm uppercase tracking-[0.3em] text-white/90 drop-shadow-lg">
-                              {bottle.name}
-                            </span>
-                          </div>
-                        </>
-                      ) : (
-                        <GradientPlaceholder watermark={bottle.name} className="rounded-2xl" />
-                      )}
-                    </div>
-                    <div className="mt-5 flex items-center gap-2">
-                      {/* Solid color dot with outer glow ring */}
-                      <span className="relative inline-flex h-3 w-3 shrink-0">
-                        {/* Outer ping ring */}
-                        <span
-                          className="absolute inline-flex h-full w-full animate-ping rounded-full opacity-50"
-                          style={{ backgroundColor: bottle.color }}
-                        />
-                        {/* Solid inner dot — always visible */}
-                        <span
-                          className="relative inline-flex h-3 w-3 rounded-full"
-                          style={{ 
-                            backgroundColor: bottle.color,
-                            boxShadow: `0 0 6px 2px ${bottle.color}99`
-                          }}
-                        />
-                      </span>
-                      {/* Chakra text in matching color */}
-                      <span 
-                        className="font-inter text-[11px] font-bold uppercase tracking-[0.25em]"
-                        style={{ 
-                          color: bottle.color,
-                          textShadow: `0 0 10px ${bottle.color}55`,
-                        }}
-                      >
-                        {bottle.chakra}
-                      </span>
-                    </div>
-                    <h3 className="mt-2 font-cormorant text-[26px] text-white">
-                      {bottle.name}
-                    </h3>
-                    <p className="mt-1 font-inter text-[13px] text-white/50">
-                      {bottle.blurb}
-                    </p>
-                    <a
-                      href="#"
-                      className="mt-5 inline-flex items-center gap-1 font-inter text-[11px] uppercase tracking-[0.15em] text-white/50 transition-colors"
-                      style={{ color: undefined }}
-                      onMouseEnter={(e) => (e.currentTarget.style.color = bottle.color)}
-                      onMouseLeave={(e) => (e.currentTarget.style.color = "")}
-                    >
-                      Know More
-                      <ArrowRight size={13} />
-                    </a>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Arrows */}
-          <div className="mt-8 flex items-center justify-center gap-4">
-            <button
-              aria-label="Previous"
-              onClick={scrollPrev}
-              className="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 text-white transition-colors hover:border-violet hover:bg-violet/20"
-              style={{ background: "rgba(255,255,255,0.05)", backdropFilter: "blur(10px)" }}
-            >
-              <ArrowLeft size={18} />
-            </button>
-            <button
-              aria-label="Next"
-              onClick={scrollNext}
-              className="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 text-white transition-colors hover:border-violet hover:bg-violet/20"
-              style={{ background: "rgba(255,255,255,0.05)", backdropFilter: "blur(10px)" }}
-            >
-              <ArrowRight size={18} />
-            </button>
-          </div>
-
-          {/* Dots */}
-          <div className="mt-5 flex items-center justify-center gap-2">
-            {snaps.map((_, i) => (
-              <button
-                key={i}
-                aria-label={`Go to slide ${i + 1}`}
-                onClick={() => scrollTo(i)}
-                className={`h-1.5 rounded-full transition-all ${
-                  i === selected ? "w-6 bg-violet" : "w-1.5 bg-white/30"
-                }`}
-              />
-            ))}
-          </div>
+        <div className="mt-14">
+          <BottleCoverflow items={BOTTLES} />
         </div>
       </div>
     </section>

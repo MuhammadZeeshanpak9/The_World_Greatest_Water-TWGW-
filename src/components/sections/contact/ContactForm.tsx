@@ -5,6 +5,7 @@ import { m } from "framer-motion";
 import { ArrowRight, Check } from "lucide-react";
 import FormField from "@/components/ui/FormField";
 import { useFormSubmit, isValidEmail, submitFormSubmission } from "@/lib/forms";
+import { trackLead } from "@/lib/analytics";
 
 type Errors = Partial<Record<"name" | "email" | "subject" | "message", string>>;
 
@@ -26,7 +27,10 @@ export default function ContactForm() {
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length > 0) return;
 
-    submit(() => submitFormSubmission("contact", values));
+    submit(async () => {
+      await submitFormSubmission("contact", values);
+      trackLead("contact");
+    });
   };
 
   return (

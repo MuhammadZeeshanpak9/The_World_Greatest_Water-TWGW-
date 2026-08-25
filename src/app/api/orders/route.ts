@@ -4,6 +4,7 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { findCartId, loadCart } from "@/lib/cart/getCart";
 import { sendOrderConfirmation, sendAdminFormNotification } from "@/lib/email/send";
 import { logAudit } from "@/lib/supabase/audit";
+import { checkRateLimit, getClientIp } from "@/lib/rateLimit";
 
 type ShippingAddress = {
   address1: string;
@@ -37,6 +38,9 @@ function generateOrderNumber(): string {
   return `ELEV8-${part1}-${part2}`;
 }
 
+const FREE_SHIPPING_THRESHOLD = 75;
+const MAX_SHIPPING_RATE = 100;
+
 export async function GET() {
   const supabase = await createClient();
   const {
@@ -62,6 +66,12 @@ export async function GET() {
 }
 
 export async function POST(request: NextRequest) {
+  const ip = getClientIp(request);
+  const { allowed } = checkRateLimit(`orders-create:${ip}`, { maxAttempts: 10, windowMs: 60 * 60 * 1000 });
+  if (!allowed) {
+    return NextResponse.json({ error: "Too many requests. Please try again later." }, { status: 429 });
+  }
+
   const supabase = await createClient();
   const {
     data: { user },
@@ -97,6 +107,23 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Your cart is empty" }, { status: 400 });
   }
 
+  // Cart re-validation: loadCart() already prunes items whose product was fully deleted, but a
+  // product can also have gone sold-out (or otherwise non-'available') after it was added to the
+  // cart without being deleted — catch that here rather than silently charging for it.
+  const unavailableItems = cart.items
+    .filter((item) => item.product?.status !== "available")
+    .map((item) => item.product?.name ?? "Unknown product");
+
+  if (unavailableItems.length > 0) {
+    return NextResponse.json(
+      {
+        error: `Some items in your cart are no longer available: ${unavailableItems.join(", ")}. Please review your cart.`,
+        unavailableItems,
+      },
+      { status: 409 },
+    );
+  }
+
   // Snapshot from the cart's own price_snapshot values — never trust client-supplied prices.
   const items = cart.items.map((item) => ({
     product_id: item.product_id,
@@ -104,9 +131,49 @@ export async function POST(request: NextRequest) {
     quantity: item.quantity,
     price: item.price_snapshot,
   }));
-  const total = cart.total;
+
+  // Shipping cost: the client echoes back the rate it was already quoted by /api/shipping/rates
+  // (that quote was computed server-side there), clamped to a sane range here as a backstop —
+  // never trusted blindly, and the $75+ free-shipping rule is re-enforced here regardless of
+  // what the client claims, so a forged shippingRate can't be used to manipulate the charged
+  // total. Full protection (re-verifying the exact quoted rate against Shippo) is a further
+  // hardening step, not required to close the actual amount-manipulation risk this addresses.
+  const rawShippingRate = typeof b.shippingRate === "number" ? b.shippingRate : 0;
+  const shippingRate =
+    cart.total >= FREE_SHIPPING_THRESHOLD
+      ? 0
+      : Math.max(0, Math.min(rawShippingRate, MAX_SHIPPING_RATE));
+  const shippingCarrier =
+    shippingRate > 0 && typeof b.shippingCarrier === "string" ? b.shippingCarrier.slice(0, 100) : null;
+  const shippingService =
+    shippingRate > 0 && typeof b.shippingService === "string" ? b.shippingService.slice(0, 100) : null;
+
+  const total = cart.total + shippingRate;
 
   const admin = createAdminClient();
+
+  // Double-submit protection: a double-click, a slow network retry, or multiple tabs can all
+  // fire this route twice for the same checkout attempt. If a pending order for this user with
+  // this exact total was created in the last 60 seconds, return it instead of creating another.
+  const sixtySecondsAgo = new Date(Date.now() - 60_000).toISOString();
+  const { data: recentDuplicate } = await admin
+    .from("orders")
+    .select("id, order_number, total")
+    .eq("customer_email", user.email)
+    .eq("status", "pending")
+    .eq("total", total)
+    .gte("created_at", sixtySecondsAgo)
+    .order("created_at", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+
+  if (recentDuplicate) {
+    return NextResponse.json({
+      order_number: recentDuplicate.order_number,
+      order_id: recentDuplicate.id,
+      total: recentDuplicate.total,
+    });
+  }
 
   let orderNumber = "";
   let orderId: string | null = null;
@@ -122,6 +189,9 @@ export async function POST(request: NextRequest) {
         total,
         items,
         shipping_address: shippingAddress,
+        shipping_carrier: shippingCarrier,
+        shipping_service: shippingService,
+        shipping_rate: shippingRate,
       })
       .select("id, order_number")
       .single();
@@ -173,6 +243,16 @@ export async function POST(request: NextRequest) {
     await admin.from("cart_items").delete().eq("cart_id", cartId);
   }
 
+  // No payment method has been chosen yet at order-creation time — the payment routes
+  // (create-intent / paypal/create-order / crypto/create) log their own payment_attempts rows
+  // with the real method once the customer picks one.
+  await admin.from("payment_attempts").insert({
+    order_id: orderId,
+    payment_method: "unselected",
+    amount: total,
+    status: "pending",
+  });
+
   await logAudit({
     action: "create",
     table: "orders",
@@ -180,12 +260,28 @@ export async function POST(request: NextRequest) {
     newData: { order_number: orderNumber, total },
   });
 
-  await sendOrderConfirmation(user.email, { orderNumber, items, shippingAddress, total });
-  await sendAdminFormNotification("Order", {
-    name: customerName || user.email,
-    email: user.email,
-    message: `Order ${orderNumber} — $${total.toFixed(2)}`,
+  await sendOrderConfirmation(user.email, {
+    orderNumber,
+    items,
+    shippingAddress,
+    total,
+    shippingCarrier,
+    shippingService,
+    shippingCost: shippingRate,
   });
+
+  // Admin visibility into every new order — never allowed to affect the customer-facing result.
+  try {
+    const itemsList = items.map((i) => `${i.name} × ${i.quantity} ($${i.price.toFixed(2)})`).join("; ");
+    const addressLine = `${shippingAddress.address1}${shippingAddress.address2 ? `, ${shippingAddress.address2}` : ""}, ${shippingAddress.city}, ${shippingAddress.state} ${shippingAddress.zip}, ${shippingAddress.country}`;
+    await sendAdminFormNotification("New Order", {
+      name: customerName || user.email,
+      email: user.email,
+      message: `Order ${orderNumber} — $${total.toFixed(2)}\nItems: ${itemsList}\nShipping to: ${addressLine}`,
+    });
+  } catch (err) {
+    console.error("[orders] admin notification failed:", err instanceof Error ? err.message : err);
+  }
 
   return NextResponse.json({ order_number: orderNumber, order_id: orderId, total });
 }

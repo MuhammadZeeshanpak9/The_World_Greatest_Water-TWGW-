@@ -5,6 +5,9 @@ import "./globals.css";
 import PageBackground from "@/components/background/DynamicPageBackground";
 import { SessionProvider } from "@/context/SessionContext";
 import { CartProvider } from "@/context/CartContext";
+import PageViewTracker from "@/components/analytics/PageViewTracker";
+import CookieConsent from "@/components/ui/DynamicCookieConsent";
+import AnalyticsScripts from "@/components/analytics/DynamicAnalyticsScripts";
 
 const cormorant = Cormorant_Garamond({
   variable: "--font-cormorant-garamond",
@@ -63,6 +66,9 @@ export default function RootLayout({
               <CartProvider>{children}</CartProvider>
             </SessionProvider>
           </div>
+          <PageViewTracker />
+          <AnalyticsScripts />
+          <CookieConsent />
         </LazyMotion>
       </body>
     </html>

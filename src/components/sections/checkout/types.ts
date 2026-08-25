@@ -8,3 +8,11 @@ export type ShippingValues = {
   zip: string;
   country: string;
 };
+
+export type SelectedRate = {
+  id: string;
+  carrier: string;
+  service: string;
+  rate: number;
+  days: string;
+};

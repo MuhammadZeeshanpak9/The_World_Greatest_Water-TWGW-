@@ -4,7 +4,10 @@ import { m } from "framer-motion";
 import { Play } from "lucide-react";
 import { TRENDING_CIRCLES, VIDEO_CARDS } from "@/data/content";
 import { GradientPlaceholder } from "@/components/ui/MediaWithFallback";
+import { InstagramIcon } from "@/components/ui/SocialIcons";
 import SectionParticles from "./SectionParticles";
+
+const INSTAGRAM_URL = "https://www.instagram.com/theworldsgreatestwater";
 
 export default function Trending() {
   return (
@@ -23,10 +26,25 @@ export default function Trending() {
             transition={{ duration: 0.6 }}
             className="mt-3 block h-[2px] w-24 origin-left bg-gradient-brand"
           />
+          <a
+            href={INSTAGRAM_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-5 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-5 py-2 font-inter text-[11px] font-semibold uppercase tracking-[0.15em] text-white/85 transition-colors hover:bg-white/10"
+          >
+            <InstagramIcon size={14} />
+            Follow @theworldsgreatestwater
+          </a>
         </div>
 
         {/* Instagram circles */}
-        <div className="mt-14 flex flex-wrap items-center justify-center gap-6">
+        <a
+          href={INSTAGRAM_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="View more on Instagram"
+          className="mt-14 flex flex-wrap items-center justify-center gap-6"
+        >
           {TRENDING_CIRCLES.map((c, i) => (
             <m.div
               key={i}
@@ -52,7 +70,7 @@ export default function Trending() {
               )}
             </m.div>
           ))}
-        </div>
+        </a>
 
         {/* YouTube video cards */}
         <div className="mt-16 grid grid-cols-1 gap-6 sm:grid-cols-2">

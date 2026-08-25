@@ -109,67 +109,37 @@ export default function Wellness() {
       </div>
 
       <div className="relative mx-auto max-w-7xl px-6">
-        {/* MENTAL / PHYSICAL / WELLNESS */}
-        {reduced ? (
-          <div className="flex items-center justify-center gap-4 md:gap-10">
-            <m.h2
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="font-cormorant font-light leading-none text-ink text-[8vw] md:text-[5vw]"
-            >
-              MENTAL
-            </m.h2>
-            <span className="h-[60px] w-px shrink-0 bg-violet" />
-            <m.h2
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.15 }}
-              className="font-cormorant font-light leading-none text-[8vw] md:text-[5vw] text-gradient-brand"
-            >
-              PHYSICAL
-            </m.h2>
-            <span className="h-[60px] w-px shrink-0 bg-violet" />
-            <m.h2
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.3 }}
-              className="font-cormorant font-light leading-none text-violet text-[8vw] md:text-[5vw]"
-            >
-              WELLNESS
-            </m.h2>
-          </div>
-        ) : (
-          <div className="overflow-hidden">
-            <m.div
-              className="flex w-max items-center gap-10 md:gap-16"
-              animate={{ x: ["-50%", "0%"] }}
-              transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
-            >
-              {[0, 1].map((rep) => (
-                <div
-                  key={rep}
-                  aria-hidden={rep === 1}
-                  className="flex shrink-0 items-center gap-10 md:gap-16"
-                >
-                  <h2 className="font-cormorant font-light leading-none text-ink text-[12vw] md:text-[7vw]">
-                    MENTAL
-                  </h2>
-                  <span className="h-[60px] w-px shrink-0 bg-violet" />
-                  <h2 className="font-cormorant font-light leading-none text-[12vw] md:text-[7vw] text-gradient-brand">
-                    PHYSICAL
-                  </h2>
-                  <span className="h-[60px] w-px shrink-0 bg-violet" />
-                  <h2 className="font-cormorant font-light leading-none text-violet text-[12vw] md:text-[7vw]">
-                    WELLNESS
-                  </h2>
-                </div>
-              ))}
-            </m.div>
-          </div>
-        )}
+        {/* MENTAL / PHYSICAL / WELLNESS — static, not scrolling */}
+        <div className="flex flex-wrap items-center justify-center gap-4 md:gap-10">
+          <m.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-glow-violet font-cormorant font-light leading-none text-ink text-[10vw] md:text-[5vw]"
+          >
+            MENTAL
+          </m.h2>
+          <span className="h-[60px] w-px shrink-0 bg-violet" />
+          <m.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.15 }}
+            className="text-glow-violet font-cormorant font-light leading-none text-[10vw] md:text-[5vw] text-gradient-brand"
+          >
+            PHYSICAL
+          </m.h2>
+          <span className="h-[60px] w-px shrink-0 bg-violet" />
+          <m.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.3 }}
+            className="text-glow-violet font-cormorant font-light leading-none text-violet text-[10vw] md:text-[5vw]"
+          >
+            WELLNESS
+          </m.h2>
+        </div>
 
         <m.p
           initial={{ opacity: 0, y: 10 }}

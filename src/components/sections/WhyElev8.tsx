@@ -122,9 +122,9 @@ export default function WhyElev8() {
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[320px] h-[440px] opacity-85 pointer-events-none">
                 <Image
                   src="/images/meditation-figure.png"
-                  alt="Meditating Body"
+                  alt="Meditating Soul"
                   fill
-                  className="object-contain object-center"
+                  className="object-contain object-center blur-[6px] grayscale contrast-75 brightness-125"
                 />
                 <div className="absolute inset-0 w-full h-full" style={{ left: "50%" }}>
                   {[

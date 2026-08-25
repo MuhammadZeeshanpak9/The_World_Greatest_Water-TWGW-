@@ -5,6 +5,7 @@ export default function ConfirmDialog({
   title,
   message,
   confirmLabel = "Delete",
+  loadingLabel = "Deleting…",
   loading = false,
   onConfirm,
   onCancel,
@@ -13,6 +14,7 @@ export default function ConfirmDialog({
   title: string;
   message: string;
   confirmLabel?: string;
+  loadingLabel?: string;
   loading?: boolean;
   onConfirm: () => void;
   onCancel: () => void;
@@ -37,7 +39,7 @@ export default function ConfirmDialog({
             disabled={loading}
             className="rounded-lg bg-[#EF4444] px-4 py-2 font-inter text-sm font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-50"
           >
-            {loading ? "Deleting…" : confirmLabel}
+            {loading ? loadingLabel : confirmLabel}
           </button>
         </div>
       </div>
