@@ -2,8 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
-import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { usePrefersReducedMotion } from "@/lib/hooks";
 import type { Bottle } from "@/types";
 
@@ -193,14 +192,6 @@ export default function BottleCoverflow({ items }: Props) {
                   <p className="max-w-[240px] font-inter text-[12px] italic leading-snug text-white/85 drop-shadow-md">
                     {bottle.blurb.split(".")[0]}.
                   </p>
-                  <Link
-                    href={`/blogs/how-to-elev8-${bottle.name.toLowerCase()}`}
-                    className="mt-3 inline-flex items-center gap-1.5 rounded-full px-4 py-2 font-inter text-[10px] font-bold uppercase tracking-[0.18em] text-white shadow-lg transition-transform hover:scale-105"
-                    style={{ backgroundColor: cardColor }}
-                  >
-                    Know More
-                    <ArrowRight size={12} />
-                  </Link>
                 </div>
               </div>
             </div>

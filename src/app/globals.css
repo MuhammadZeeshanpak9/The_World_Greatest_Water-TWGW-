@@ -22,7 +22,7 @@
   --color-muted: #8e8e9e;
 
   /* ---- Fonts ---- */
-  --font-cormorant: var(--font-cormorant-garamond), Georgia, serif;
+  --font-cormorant: var(--font-cormorant-garamond), "Helvetica Neue", Arial, sans-serif;
   --font-inter: var(--font-inter), system-ui, sans-serif;
 
   /* ---- Animation utilities (reference keyframes below) ---- */

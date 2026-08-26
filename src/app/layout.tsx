@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Cormorant_Garamond, Inter } from "next/font/google";
+import { Outfit, Inter } from "next/font/google";
 import { LazyMotion, domAnimation } from "framer-motion";
 import "./globals.css";
 import PageBackground from "@/components/background/DynamicPageBackground";
@@ -9,7 +9,7 @@ import PageViewTracker from "@/components/analytics/PageViewTracker";
 import CookieConsent from "@/components/ui/DynamicCookieConsent";
 import AnalyticsScripts from "@/components/analytics/DynamicAnalyticsScripts";
 
-const cormorant = Cormorant_Garamond({
+const cormorant = Outfit({
   variable: "--font-cormorant-garamond",
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
