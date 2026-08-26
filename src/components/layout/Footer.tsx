@@ -213,6 +213,9 @@ export default function Footer() {
               ))}
             </div>
           </div>
+          <p className="mt-6 text-center font-inter text-[10px] uppercase tracking-[0.3em] text-white/25">
+            Powered By ELEV8 Incorporation
+          </p>
         </div>
       </div>
     </footer>
