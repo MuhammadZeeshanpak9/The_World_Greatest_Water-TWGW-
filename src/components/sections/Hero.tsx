@@ -23,6 +23,9 @@ export default function Hero() {
         <div className="absolute inset-0 bg-white/15" />
         {/* soft bottom gradient so headline/CTA area stays readable */}
         <div className="absolute inset-0 bg-gradient-to-t from-white/70 via-white/10 to-transparent" />
+        {/* dark scrim behind the text column — keeps white text legible no matter the
+            video's hue/brightness at any given frame, independent of the wash above */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/35 via-black/10 to-transparent lg:to-black/0" />
       </div>
 
       {/* Editorial depth text */}
@@ -45,7 +48,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.35 }}
-            className="font-cormorant font-bold leading-[0.95] text-gradient-brand text-[38px] md:text-[60px] lg:text-[72px]"
+            className="font-cormorant font-bold leading-[0.95] text-white [text-shadow:0_4px_24px_rgba(0,0,0,0.45)] text-[38px] md:text-[60px] lg:text-[72px]"
           >
             THE WORLD&apos;S
           </m.h1>
@@ -53,7 +56,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5 }}
-            className="font-cormorant font-bold leading-[0.95] text-gradient-brand text-[38px] md:text-[60px] lg:text-[72px]"
+            className="font-cormorant font-bold leading-[0.95] text-white [text-shadow:0_4px_24px_rgba(0,0,0,0.45)] text-[38px] md:text-[60px] lg:text-[72px]"
           >
             GREATEST WATER.
           </m.h1>
@@ -62,7 +65,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.65 }}
-            className="mt-3 font-inter text-[15px] font-semibold uppercase tracking-[0.5em] text-white"
+            className="mt-3 font-inter text-[15px] font-semibold uppercase tracking-[0.5em] text-white drop-shadow-md"
           >
             ELEV8 WATER
           </m.p>
@@ -78,7 +81,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.75 }}
-            className="mx-auto mt-6 max-w-md font-inter text-[16px] font-semibold leading-relaxed text-gradient-multi-animated drop-shadow-sm lg:mx-0"
+            className="mx-auto mt-6 max-w-md font-inter text-[16px] font-semibold leading-relaxed text-white [text-shadow:0_2px_12px_rgba(0,0,0,0.4)] lg:mx-0"
           >
             The Number 1 Self-development And Wellness Brand In The World.
           </m.p>
@@ -89,7 +92,7 @@ export default function Hero() {
             transition={{ delay: 0.78 }}
             className="mx-auto mt-6 flex max-w-md flex-col items-center gap-1 lg:items-start"
           >
-            <span className="font-inter text-[13px] font-bold uppercase tracking-[0.2em] text-gradient-brand drop-shadow-md">
+            <span className="font-inter text-[13px] font-bold uppercase tracking-[0.2em] text-white drop-shadow-md">
               WATER FOR MY MIND
             </span>
             <span className="font-inter text-[13px] text-white/90 drop-shadow-md">
@@ -134,10 +137,10 @@ export default function Hero() {
             >
               <span className="h-2 w-2 shrink-0 animate-glow-pulse rounded-full bg-violet" />
               <div>
-                <p className="font-inter text-[12px] font-semibold uppercase tracking-[0.2em] text-white">
+                <p className="font-inter text-[12px] font-semibold uppercase tracking-[0.2em] text-white drop-shadow-md">
                   {t.title}
                 </p>
-                <p className="font-inter text-[11px] text-white/80">{t.sub}</p>
+                <p className="font-inter text-[11px] text-white/85 drop-shadow-sm">{t.sub}</p>
               </div>
             </m.div>
           ))}
@@ -147,7 +150,7 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.3 }}
             href="#story"
-            className="group mt-2 flex items-center gap-2 font-inter text-[12px] font-semibold uppercase tracking-[0.15em] text-violet/80 transition-colors hover:text-violet"
+            className="group mt-2 flex items-center gap-2 font-inter text-[12px] font-semibold uppercase tracking-[0.15em] text-white drop-shadow-md transition-colors hover:text-violet-pale"
           >
             Our Story
             <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
@@ -165,7 +168,7 @@ export default function Hero() {
         <m.div
           animate={{ y: [0, 10, 0] }}
           transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
-          className="flex h-10 w-10 items-center justify-center rounded-full border border-violet/40 text-violet"
+          className="flex h-10 w-10 items-center justify-center rounded-full border border-white/50 text-white shadow-[0_2px_10px_rgba(0,0,0,0.35)]"
         >
           <ChevronDown size={18} />
         </m.div>
