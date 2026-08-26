@@ -124,6 +124,7 @@ export default function WhyElev8() {
                   src="/images/meditation-figure.png"
                   alt="Meditating Soul"
                   fill
+                  sizes="320px"
                   className="object-contain object-center blur-[6px] grayscale contrast-75 brightness-125"
                 />
                 <div className="absolute inset-0 w-full h-full" style={{ left: "50%" }}>

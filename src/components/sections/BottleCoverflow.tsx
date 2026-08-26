@@ -89,7 +89,7 @@ export default function BottleCoverflow({ items }: Props) {
 
       {/* 3D stage */}
       <div
-        className="relative mx-auto flex h-[420px] items-center justify-center sm:h-[480px] md:h-[540px]"
+        className="relative mx-auto flex h-[440px] items-center justify-center sm:h-[500px] md:h-[560px]"
         style={{ perspective: "1400px" }}
       >
         {items.map((bottle, i) => {
@@ -134,7 +134,7 @@ export default function BottleCoverflow({ items }: Props) {
             <div
               key={bottle.name}
               onClick={() => !isCenter && goTo(i)}
-              className="absolute h-[380px] w-[240px] overflow-hidden rounded-[20px] border border-white/10 bg-[#111015] sm:h-[430px] sm:w-[270px] md:h-[500px] md:w-[320px]"
+              className="absolute h-[400px] w-[300px] overflow-hidden rounded-[20px] border border-white/10 bg-[#111015] sm:h-[450px] sm:w-[350px] md:h-[520px] md:w-[400px]"
               style={{
                 transform,
                 opacity,
@@ -153,8 +153,8 @@ export default function BottleCoverflow({ items }: Props) {
                   src={bottle.image}
                   alt={bottle.name}
                   fill
-                  sizes="320px"
-                  className="object-cover"
+                  sizes="400px"
+                  className="object-contain p-3"
                 />
               )}
               <div
