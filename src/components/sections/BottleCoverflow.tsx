@@ -134,10 +134,8 @@ export default function BottleCoverflow({ items }: Props) {
             <div
               key={bottle.name}
               onClick={() => !isCenter && goTo(i)}
-              className="absolute h-[380px] w-[240px] overflow-hidden rounded-[20px] border sm:h-[430px] sm:w-[270px] md:h-[500px] md:w-[320px]"
+              className="absolute h-[380px] w-[240px] overflow-hidden rounded-[20px] border border-white/10 bg-[#111015] sm:h-[430px] sm:w-[270px] md:h-[500px] md:w-[320px]"
               style={{
-                borderColor: isCenter ? withAlpha(cardColor, 0.55) : "rgba(255,255,255,0.1)",
-                background: `linear-gradient(160deg, ${withAlpha(cardColor, 0.55)} 0%, #0c0a0e 65%)`,
                 transform,
                 opacity,
                 zIndex,
@@ -145,7 +143,7 @@ export default function BottleCoverflow({ items }: Props) {
                 transformOrigin: "center center",
                 transition: reduced ? "opacity 300ms ease" : "all 800ms cubic-bezier(0.25,1,0.5,1)",
                 boxShadow: isCenter
-                  ? `0 25px 60px rgba(0,0,0,0.85), 0 0 45px ${withAlpha(cardColor, 0.45)}`
+                  ? "0 25px 60px rgba(0,0,0,0.85)"
                   : "0 15px 35px rgba(0,0,0,0.5)",
                 cursor: isCenter ? "default" : "pointer",
               }}
@@ -156,13 +154,14 @@ export default function BottleCoverflow({ items }: Props) {
                   alt={bottle.name}
                   fill
                   sizes="320px"
-                  className="object-cover mix-blend-luminosity opacity-90"
+                  className="object-cover"
                 />
               )}
               <div
                 className="pointer-events-none absolute inset-0"
                 style={{
-                  background: `linear-gradient(180deg, ${withAlpha(cardColor, 0.15)} 0%, rgba(0,0,0,0.1) 25%, rgba(0,0,0,0.72) 60%, rgba(0,0,0,0.96) 100%)`,
+                  background:
+                    "linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.05) 25%, rgba(0,0,0,0.68) 60%, rgba(0,0,0,0.95) 100%)",
                 }}
               />
 
