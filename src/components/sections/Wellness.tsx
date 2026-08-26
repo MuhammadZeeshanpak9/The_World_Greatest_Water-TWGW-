@@ -119,7 +119,6 @@ export default function Wellness() {
           >
             MENTAL
           </m.h2>
-          <span className="h-[60px] w-px shrink-0 bg-violet" />
           <m.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -129,7 +128,6 @@ export default function Wellness() {
           >
             PHYSICAL
           </m.h2>
-          <span className="h-[60px] w-px shrink-0 bg-violet" />
           <m.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}

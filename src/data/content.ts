@@ -297,7 +297,7 @@ export const NAV_LINKS: NavLink[] = [
 ------------------------------------------------------------------ */
 export const ANNOUNCEMENTS: AnnouncementMessage[] = [
   "I WILL ELEV8 MY LIFE TODAY",
-  "1 WATER. 12 UNDERSTANDING.",
+  "1 WATER. 12 UNDERSTANDING",
   "FREE FROM ADDITIVES · THE WORLD'S GREATEST WATER",
 ];
 
