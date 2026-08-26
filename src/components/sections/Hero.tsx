@@ -18,7 +18,7 @@ export default function Hero() {
     <section className="relative flex min-h-screen items-center overflow-hidden pt-28 pb-16">
       {/* Full-bleed video background */}
       <div className="absolute inset-0">
-        <VideoWithFallback src="/videos/hero.mp4" className="object-cover" speed={0.7} />
+        <VideoWithFallback src="/videos/main-section-bottle.mp4" className="object-cover" speed={0.7} />
         {/* faint wash only — keeps the video clear while lifting text contrast */}
         <div className="absolute inset-0 bg-white/15" />
         {/* soft bottom gradient so headline/CTA area stays readable */}
