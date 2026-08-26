@@ -88,7 +88,7 @@ export default function Footer() {
           className="mb-14 flex flex-col items-start justify-between gap-5 border-b border-white/10 pb-14 md:flex-row md:items-center"
         >
           <div>
-            <h4 className="font-cormorant text-[22px] text-white">Stay In The Loop</h4>
+            <h4 className="font-cormorant text-[22px] text-white">Stay Connected</h4>
             <p className="mt-1 font-inter text-[13px] text-white/45">
               New drops, wellness offerings, and updates — straight to your inbox.
             </p>

@@ -869,7 +869,7 @@ export const FOOTER_COLUMNS: FooterColumn[] = [
     ],
   },
   {
-    heading: "Stay Connected & Friendly Assist",
+    heading: "Friendly Assist",
     links: [
       { label: "Shipping & Friendly Assist?", href: "/shipping" },
       { label: "Say Hello", href: "/contact" },
