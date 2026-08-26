@@ -71,7 +71,7 @@ export default function OurStory() {
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
-                href="#"
+                href="/our-story"
                 className="group inline-flex items-center gap-2 rounded-full bg-gradient-brand px-8 py-3.5 font-inter text-[11px] font-semibold uppercase tracking-[0.2em] text-white btn-glow"
               >
                 Know More

@@ -190,8 +190,9 @@ export type Social = {
 };
 
 export type TrendingCircle = {
-  label?: string;
-  badge?: string;
+  platform: "Instagram" | "Tiktok" | "Youtube";
+  label: string;
+  href: string;
 };
 
 export type VideoCard = {

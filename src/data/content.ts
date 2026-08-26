@@ -842,14 +842,12 @@ export const TESTIMONIALS: Testimonial[] = [
 ];
 
 /* ------------------------------------------------------------------
-   TRENDING (placeholder, marked)
+   TRENDING — real social links
 ------------------------------------------------------------------ */
 export const TRENDING_CIRCLES: TrendingCircle[] = [
-  { badge: "Get 10% Off" },
-  { label: "ELEV8 YOU" },
-  { label: "528HZ" },
-  { label: "LOVE GIFT" },
-  { label: "BEHIND THE BRAND" },
+  { platform: "Instagram", label: "Instagram", href: "https://www.instagram.com/theworldsgreatestwater" },
+  { platform: "Tiktok", label: "TikTok", href: "https://www.tiktok.com/@theworldsgreatestwater" },
+  { platform: "Youtube", label: "YouTube", href: "https://youtube.com/@theworldsgreatestwater111" },
 ];
 
 export const VIDEO_CARDS: VideoCard[] = [
@@ -892,10 +890,10 @@ export const FOOTER_COLUMNS: FooterColumn[] = [
 export const SOCIALS: Social[] = [
   { name: "Twitter", href: "#", glow: "rgba(29,161,242,0.6)" },
   { name: "Facebook", href: "#", glow: "rgba(59,89,152,0.6)" },
-  { name: "Youtube", href: "#", glow: "rgba(255,0,0,0.6)" },
+  { name: "Youtube", href: "https://youtube.com/@theworldsgreatestwater111", glow: "rgba(255,0,0,0.6)" },
   { name: "Instagram", href: "https://www.instagram.com/theworldsgreatestwater", glow: "rgba(107,47,160,0.6)" },
   { name: "Pinterest", href: "#", glow: "rgba(230,0,35,0.6)" },
-  { name: "Tiktok", href: "#", glow: "rgba(255,255,255,0.6)" },
+  { name: "Tiktok", href: "https://www.tiktok.com/@theworldsgreatestwater", glow: "rgba(255,255,255,0.6)" },
 ];
 
 export const PAYMENTS = [

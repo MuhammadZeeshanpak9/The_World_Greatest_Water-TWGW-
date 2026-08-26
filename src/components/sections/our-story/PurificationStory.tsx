@@ -1,7 +1,7 @@
 "use client";
 
 import { m } from "framer-motion";
-import { ImageWithFallback } from "@/components/ui/MediaWithFallback";
+import Image from "next/image";
 import PullQuote from "@/components/ui/PullQuote";
 
 const PARAGRAPHS = [
@@ -62,12 +62,14 @@ export default function PurificationStory() {
           initial={{ opacity: 0, x: 40 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
-          className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl"
+          className="relative mx-auto aspect-square w-full max-w-[320px] overflow-hidden rounded-2xl bg-white p-8 shadow-[0_20px_60px_rgba(0,0,0,0.35)] md:max-w-[380px]"
         >
-          <ImageWithFallback
-            src={undefined}
-            alt="ELEV8 purification"
-            watermark="purification.jpg"
+          <Image
+            src="/logo/elev8-full.jpg"
+            alt="ELEV8 Water"
+            fill
+            sizes="380px"
+            className="object-contain"
           />
         </m.div>
       </div>

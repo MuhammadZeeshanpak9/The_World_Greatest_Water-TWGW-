@@ -318,14 +318,14 @@ export default function WhyElev8() {
             </p>
 
             <div className="w-full flex items-center justify-center pb-4">
-              <svg viewBox="0 0 200 100" className="w-[120px] drop-shadow-[0_0_20px_rgba(251,191,36,0.5)] overflow-visible">
+              <svg viewBox="0 0 200 100" className="w-[120px] drop-shadow-[0_0_20px_rgba(94,45,145,0.5)] overflow-visible">
                 <defs>
                   <linearGradient id="infinity-glow" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#fbbf24">
-                      <animate attributeName="stop-color" values="#fbbf24;#f59e0b;#fbbf24" dur="4s" repeatCount="indefinite" />
+                    <stop offset="0%" stopColor="#8b6aad">
+                      <animate attributeName="stop-color" values="#8b6aad;#5e2d91;#8b6aad" dur="4s" repeatCount="indefinite" />
                     </stop>
-                    <stop offset="100%" stopColor="#ea580c">
-                      <animate attributeName="stop-color" values="#ea580c;#dc2626;#ea580c" dur="4s" repeatCount="indefinite" />
+                    <stop offset="100%" stopColor="#2d1152">
+                      <animate attributeName="stop-color" values="#2d1152;#5e2d91;#2d1152" dur="4s" repeatCount="indefinite" />
                     </stop>
                   </linearGradient>
                 </defs>

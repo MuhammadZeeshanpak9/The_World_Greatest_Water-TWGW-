@@ -4,7 +4,7 @@ import { m } from "framer-motion";
 import { Play } from "lucide-react";
 import { TRENDING_CIRCLES, VIDEO_CARDS } from "@/data/content";
 import { GradientPlaceholder } from "@/components/ui/MediaWithFallback";
-import { InstagramIcon } from "@/components/ui/SocialIcons";
+import { SOCIAL_ICONS, InstagramIcon } from "@/components/ui/SocialIcons";
 import SectionParticles from "./SectionParticles";
 
 const INSTAGRAM_URL = "https://www.instagram.com/theworldsgreatestwater";
@@ -37,40 +37,39 @@ export default function Trending() {
           </a>
         </div>
 
-        {/* Instagram circles */}
-        <a
-          href={INSTAGRAM_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="View more on Instagram"
-          className="mt-14 flex flex-wrap items-center justify-center gap-6"
-        >
-          {TRENDING_CIRCLES.map((c, i) => (
-            <m.div
-              key={i}
-              initial={{ opacity: 0, scale: 0 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-              whileHover={{ scale: 1.06 }}
-              className="group relative"
-            >
-              <div
-                className="rounded-full p-[2px] will-change-transform group-hover:animate-spin-slow"
-                style={{ background: "linear-gradient(135deg,#6b2fa0,#4ecdc4)" }}
+        {/* Social platform circles */}
+        <div className="mt-14 flex flex-wrap items-center justify-center gap-8">
+          {TRENDING_CIRCLES.map((c, i) => {
+            const Icon = SOCIAL_ICONS[c.platform] ?? InstagramIcon;
+            return (
+              <m.a
+                key={c.platform}
+                href={c.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Visit our ${c.label} page`}
+                initial={{ opacity: 0, scale: 0 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                whileHover={{ scale: 1.06 }}
+                className="group flex flex-col items-center gap-3"
               >
-                <div className="relative h-[110px] w-[110px] overflow-hidden rounded-full border-2 border-dark-base">
-                  <GradientPlaceholder watermark={c.label ?? "ELEV8"} className="rounded-full" />
+                <div
+                  className="rounded-full p-[2px] will-change-transform group-hover:animate-spin-slow"
+                  style={{ background: "linear-gradient(135deg,#6b2fa0,#4ecdc4)" }}
+                >
+                  <div className="flex h-[110px] w-[110px] items-center justify-center overflow-hidden rounded-full border-2 border-dark-base bg-dark-violet text-white transition-colors group-hover:text-teal">
+                    <Icon size={38} />
+                  </div>
                 </div>
-              </div>
-              {c.badge && (
-                <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-gold px-3 py-1 font-inter text-[9px] font-bold uppercase tracking-[0.1em] text-dark-base">
-                  {c.badge}
+                <span className="font-inter text-[11px] font-semibold uppercase tracking-[0.15em] text-white/70 transition-colors group-hover:text-white">
+                  {c.label}
                 </span>
-              )}
-            </m.div>
-          ))}
-        </a>
+              </m.a>
+            );
+          })}
+        </div>
 
         {/* YouTube video cards */}
         <div className="mt-16 grid grid-cols-1 gap-6 sm:grid-cols-2">

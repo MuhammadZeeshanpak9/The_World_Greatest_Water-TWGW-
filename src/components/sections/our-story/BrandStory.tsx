@@ -26,8 +26,8 @@ export default function BrandStory() {
           className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl"
         >
           <ImageWithFallback
-            src={undefined}
-            alt="ELEV8 bottles"
+            src="/images/Bottle%20updated%20image.jpeg"
+            alt="ELEV8 Water Bottle"
             watermark="our-story-bottles.jpg"
           />
         </m.div>
