@@ -645,7 +645,7 @@ export const BOTTLES: Bottle[] = [
   },
   {
     name: "MINDSET",
-    chakra: "Third Eye",
+    chakra: "TO KNOW",
     color: "#C00020",
     placeholder: false,
     image: "/images/bottles2/MINDSET.png",
@@ -653,7 +653,7 @@ export const BOTTLES: Bottle[] = [
   },
   {
     name: "GRATITUDE",
-    chakra: "Heart",
+    chakra: "TO SEE",
     color: "#90A030",
     placeholder: false,
     image: "/images/bottles2/GRATITUDE.png",
@@ -661,7 +661,7 @@ export const BOTTLES: Bottle[] = [
   },
   {
     name: "FREQUENCY",
-    chakra: "Crown",
+    chakra: "TO SPEAK",
     color: "#10D0E0",
     placeholder: false,
     image: "/images/bottles2/FREQUENCY.png",
@@ -669,7 +669,7 @@ export const BOTTLES: Bottle[] = [
   },
   {
     name: "THOUGHTS",
-    chakra: "Crown",
+    chakra: "TO LOVE",
     color: "#F0C020",
     placeholder: false,
     image: "/images/bottles2/THOUGHTS.png",
@@ -677,7 +677,7 @@ export const BOTTLES: Bottle[] = [
   },
   {
     name: "CONSCIOUSNESS",
-    chakra: "Crown",
+    chakra: "TO ACT",
     color: "#101090",
     placeholder: false,
     image: "/images/bottles2/CONCIOUNESS.png",
