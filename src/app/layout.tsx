@@ -7,6 +7,7 @@ import { SessionProvider } from "@/context/SessionContext";
 import { CartProvider } from "@/context/CartContext";
 import PageViewTracker from "@/components/analytics/PageViewTracker";
 import CookieConsent from "@/components/ui/DynamicCookieConsent";
+import BackgroundMusic from "@/components/ui/DynamicBackgroundMusic";
 import AnalyticsScripts from "@/components/analytics/DynamicAnalyticsScripts";
 
 const cormorant = Outfit({
@@ -68,6 +69,7 @@ export default function RootLayout({
           </div>
           <PageViewTracker />
           <AnalyticsScripts />
+          <BackgroundMusic />
           <CookieConsent />
         </LazyMotion>
       </body>
