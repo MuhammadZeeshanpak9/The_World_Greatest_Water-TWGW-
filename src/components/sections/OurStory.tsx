@@ -142,7 +142,7 @@ export default function OurStory() {
                     </p>
                   </div>
                   <span className="rounded-full bg-gradient-brand px-3 py-1 font-inter text-[9px] font-bold uppercase tracking-widest text-white shadow-md">
-                    EST. 2026
+                    EST. 2019
                   </span>
                 </div>
               </div>

@@ -62,11 +62,19 @@ export default function FormField({
           required={required}
           className={`${base} ${toneClass}`}
         >
-          <option value="" disabled>
+          {/* Native <select> popups render on the OS's own (usually light)
+              background on mobile, regardless of the select's own dark
+              styling — force dark text on every <option> so it stays
+              readable there instead of white-on-white. */}
+          <option value="" disabled style={{ color: "#1c1a22", backgroundColor: "#ffffff" }}>
             {placeholder ?? "Select..."}
           </option>
           {options?.map((o) => (
-            <option key={o.value} value={o.value}>
+            <option
+              key={o.value}
+              value={o.value}
+              style={{ color: "#1c1a22", backgroundColor: "#ffffff" }}
+            >
               {o.label}
             </option>
           ))}

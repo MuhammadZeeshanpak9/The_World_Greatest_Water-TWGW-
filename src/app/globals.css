@@ -296,9 +296,19 @@
     border-color: #5e2d91;
   }
 
-  /* ---- Luxury / gold ---- */
+  /* ---- Luxury / tier accent (defaults to gold; override --tier-accent per
+     wellness tier so BODY/MIND/SOUL/UNLOCK each get their own metal) ---- */
   .text-gradient-gold {
-    background: linear-gradient(100deg, #8a6d2f 0%, #f3dfa0 20%, #c9a84c 40%, #fff6da 52%, #c9a84c 65%, #8a6d2f 85%, #c9a84c 100%);
+    background: linear-gradient(
+      100deg,
+      color-mix(in srgb, var(--tier-accent, #c9a84c) 70%, black) 0%,
+      color-mix(in srgb, var(--tier-accent, #c9a84c) 55%, white) 20%,
+      var(--tier-accent, #c9a84c) 40%,
+      color-mix(in srgb, var(--tier-accent, #c9a84c) 30%, white) 52%,
+      var(--tier-accent, #c9a84c) 65%,
+      color-mix(in srgb, var(--tier-accent, #c9a84c) 70%, black) 85%,
+      var(--tier-accent, #c9a84c) 100%
+    );
     background-size: 250% auto;
     -webkit-background-clip: text;
     background-clip: text;
@@ -308,25 +318,37 @@
   }
 
   .glass-card-gold {
-    background: linear-gradient(160deg, rgba(201, 168, 76, 0.09), rgba(255, 255, 255, 0.02));
+    background: linear-gradient(
+      160deg,
+      color-mix(in srgb, var(--tier-accent, #c9a84c) 9%, transparent),
+      rgba(255, 255, 255, 0.02)
+    );
     backdrop-filter: blur(24px);
-    border: 1px solid rgba(201, 168, 76, 0.3);
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(201, 168, 76, 0.15);
+    border: 1px solid color-mix(in srgb, var(--tier-accent, #c9a84c) 30%, transparent);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55),
+      inset 0 1px 0 color-mix(in srgb, var(--tier-accent, #c9a84c) 15%, transparent);
   }
 
   .btn-gold-sheen {
     position: relative;
     overflow: hidden;
-    background: linear-gradient(120deg, #8a6d2f 0%, #e6c878 40%, #fff6da 50%, #e6c878 60%, #8a6d2f 100%);
+    background: linear-gradient(
+      120deg,
+      color-mix(in srgb, var(--tier-accent, #c9a84c) 70%, black) 0%,
+      color-mix(in srgb, var(--tier-accent, #c9a84c) 60%, white) 40%,
+      color-mix(in srgb, var(--tier-accent, #c9a84c) 80%, white) 50%,
+      color-mix(in srgb, var(--tier-accent, #c9a84c) 60%, white) 60%,
+      color-mix(in srgb, var(--tier-accent, #c9a84c) 70%, black) 100%
+    );
     background-size: 220% auto;
     background-position: 0% center;
     color: #060608;
     transition: background-position 0.6s ease, transform 0.2s ease, box-shadow 0.3s ease;
-    box-shadow: 0 0 0 rgba(201, 168, 76, 0);
+    box-shadow: 0 0 0 color-mix(in srgb, var(--tier-accent, #c9a84c) 0%, transparent);
   }
   .btn-gold-sheen:hover {
     background-position: 100% center;
-    box-shadow: 0 8px 30px rgba(201, 168, 76, 0.35);
+    box-shadow: 0 8px 30px color-mix(in srgb, var(--tier-accent, #c9a84c) 35%, transparent);
   }
   .btn-gold-sheen:active {
     transform: scale(0.98);
@@ -335,14 +357,14 @@
   .gold-ring-spin {
     background: conic-gradient(
       from 0deg,
-      rgba(201, 168, 76, 0) 0%,
-      rgba(201, 168, 76, 0.9) 12%,
-      rgba(255, 246, 218, 0.9) 18%,
-      rgba(201, 168, 76, 0.9) 24%,
-      rgba(201, 168, 76, 0) 40%,
-      rgba(201, 168, 76, 0) 60%,
-      rgba(201, 168, 76, 0.5) 72%,
-      rgba(201, 168, 76, 0) 88%
+      color-mix(in srgb, var(--tier-accent, #c9a84c) 0%, transparent) 0%,
+      color-mix(in srgb, var(--tier-accent, #c9a84c) 90%, transparent) 12%,
+      color-mix(in srgb, var(--tier-accent, #c9a84c) 90%, white) 18%,
+      color-mix(in srgb, var(--tier-accent, #c9a84c) 90%, transparent) 24%,
+      color-mix(in srgb, var(--tier-accent, #c9a84c) 0%, transparent) 40%,
+      color-mix(in srgb, var(--tier-accent, #c9a84c) 0%, transparent) 60%,
+      color-mix(in srgb, var(--tier-accent, #c9a84c) 50%, transparent) 72%,
+      color-mix(in srgb, var(--tier-accent, #c9a84c) 0%, transparent) 88%
     );
     animation: spin 10s linear infinite;
   }

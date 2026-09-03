@@ -8,6 +8,9 @@ import { WELLNESS_SUBPAGES } from "@/data/content";
 
 const data = WELLNESS_SUBPAGES.find((w) => w.slug === "body")!;
 
+/** Entry-level tier — silver, distinct from MIND/SOUL/UNLOCK. */
+const TIER_COLOR = "#B8B9C0";
+
 export const metadata = {
   title: "Thank You Body",
   description: data.description,
@@ -15,7 +18,7 @@ export const metadata = {
 
 export default function WellnessBodyPage() {
   return (
-    <main>
+    <main style={{ "--color-gold": TIER_COLOR, "--tier-accent": TIER_COLOR } as React.CSSProperties}>
       <WellnessViewTracker wellnessType="body" />
       <Navbar />
 

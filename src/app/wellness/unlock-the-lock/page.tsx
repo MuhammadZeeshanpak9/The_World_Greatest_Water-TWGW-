@@ -8,6 +8,9 @@ import { WELLNESS_SUBPAGES } from "@/data/content";
 
 const data = WELLNESS_SUBPAGES.find((w) => w.slug === "unlock-the-lock")!;
 
+/** Top tier — gold, the most premium offering (GO WITHIN). */
+const TIER_COLOR = "#c9a84c";
+
 export const metadata = {
   title: "Unlock The Lock",
   description: data.description,
@@ -15,7 +18,7 @@ export const metadata = {
 
 export default function WellnessUnlockTheLockPage() {
   return (
-    <main>
+    <main style={{ "--color-gold": TIER_COLOR, "--tier-accent": TIER_COLOR } as React.CSSProperties}>
       <WellnessViewTracker wellnessType="unlock-the-lock" />
       <Navbar />
 

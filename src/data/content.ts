@@ -589,7 +589,7 @@ export const WELLNESS_SUBPAGES: WellnessSubPage[] = [
 export const BOTTLES: Bottle[] = [
   {
     name: "ALL",
-    chakra: "TO KNOW",
+    chakra: "TO SEE",
     color: "#7030A0",
     placeholder: false,
     image: "/images/bottles2/ALL.png",
@@ -597,7 +597,7 @@ export const BOTTLES: Bottle[] = [
   },
   {
     name: "YOU",
-    chakra: "TO SEE",
+    chakra: "TO SPEAK",
     color: "#101090",
     placeholder: false,
     image: "/images/bottles2/YOU.png",
@@ -605,7 +605,7 @@ export const BOTTLES: Bottle[] = [
   },
   {
     name: "LOVE",
-    chakra: "TO SPEAK",
+    chakra: "TO LOVE",
     color: "#90A030",
     placeholder: false,
     image: "/images/bottles2/LOVE.png",
@@ -613,7 +613,7 @@ export const BOTTLES: Bottle[] = [
   },
   {
     name: "DESIRE",
-    chakra: "TO LOVE",
+    chakra: "TO ACT",
     color: "#E07000",
     placeholder: false,
     image: "/images/bottles2/DESIRE.png",
@@ -621,7 +621,7 @@ export const BOTTLES: Bottle[] = [
   },
   {
     name: "ENERGY",
-    chakra: "TO ACT",
+    chakra: "TO FEEL",
     color: "#10D0E0",
     placeholder: false,
     image: "/images/bottles2/ENERGY.png",
@@ -629,7 +629,7 @@ export const BOTTLES: Bottle[] = [
   },
   {
     name: "BELIEVE",
-    chakra: "TO FEEL",
+    chakra: "TO KNOW",
     color: "#F0C020",
     placeholder: false,
     image: "/images/bottles2/BELIEVE.png",
@@ -653,7 +653,7 @@ export const BOTTLES: Bottle[] = [
   },
   {
     name: "GRATITUDE",
-    chakra: "TO SEE",
+    chakra: "TO BE HERE",
     color: "#90A030",
     placeholder: false,
     image: "/images/bottles2/GRATITUDE.png",
@@ -661,7 +661,7 @@ export const BOTTLES: Bottle[] = [
   },
   {
     name: "FREQUENCY",
-    chakra: "TO SPEAK",
+    chakra: "TO FEEL",
     color: "#10D0E0",
     placeholder: false,
     image: "/images/bottles2/FREQUENCY.png",
@@ -669,7 +669,7 @@ export const BOTTLES: Bottle[] = [
   },
   {
     name: "THOUGHTS",
-    chakra: "TO LOVE",
+    chakra: "TO SEE",
     color: "#F0C020",
     placeholder: false,
     image: "/images/bottles2/THOUGHTS.png",
@@ -677,7 +677,7 @@ export const BOTTLES: Bottle[] = [
   },
   {
     name: "CONSCIOUSNESS",
-    chakra: "TO ACT",
+    chakra: "TO KNOW",
     color: "#101090",
     placeholder: false,
     image: "/images/bottles2/CONCIOUNESS.png",

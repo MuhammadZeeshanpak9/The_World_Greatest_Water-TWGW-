@@ -8,6 +8,9 @@ import { WELLNESS_SUBPAGES } from "@/data/content";
 
 const data = WELLNESS_SUBPAGES.find((w) => w.slug === "mind")!;
 
+/** Mid tier — rose gold, distinct from BODY (silver) and SOUL/UNLOCK. */
+const TIER_COLOR = "#C08A6B";
+
 export const metadata = {
   title: "Thank You Mind",
   description: data.description,
@@ -15,7 +18,7 @@ export const metadata = {
 
 export default function WellnessMindPage() {
   return (
-    <main>
+    <main style={{ "--color-gold": TIER_COLOR, "--tier-accent": TIER_COLOR } as React.CSSProperties}>
       <WellnessViewTracker wellnessType="mind" />
       <Navbar />
 

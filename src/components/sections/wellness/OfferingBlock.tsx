@@ -112,7 +112,8 @@ export default function OfferingBlock({
   contactEmail,
   collaboratorPitch,
   collaboratorItems,
-}: WellnessOffering) {
+  accentColor,
+}: WellnessOffering & { accentColor?: string }) {
   const [values, setValues] = useState<Values>(EMPTY_VALUES);
   const { status, errorMessage, submit } = useFormSubmit();
   const reduced = usePrefersReducedMotion();
@@ -123,6 +124,9 @@ export default function OfferingBlock({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     submit(async () => {
+      if (membershipOptions && membershipOptions.length > 0 && !values.membership) {
+        throw new Error("Please select a membership option.");
+      }
       await submitFormSubmission("wellness", {
         ...values,
         name: `${values.firstName} ${values.lastName}`.trim(),
@@ -189,16 +193,33 @@ export default function OfferingBlock({
           value={values.message}
           onChange={update("message")}
         />
-        <FormField
-          tone="dark"
-          label="Membership"
-          name="membership"
-          type="select"
-          required
-          value={values.membership}
-          onChange={update("membership")}
-          options={(membershipOptions ?? []).map((o) => ({ label: o, value: o }))}
-        />
+        {membershipOptions && membershipOptions.length > 0 && (
+          <div className="flex flex-col gap-2">
+            <span className="font-inter text-[11px] font-semibold uppercase tracking-[0.2em] text-white/70">
+              Membership <span className="text-violet">*</span>
+            </span>
+            <div className="flex flex-col gap-3 sm:flex-row">
+              {membershipOptions.map((option) => {
+                const selected = values.membership === option;
+                return (
+                  <button
+                    key={option}
+                    type="button"
+                    onClick={() => update("membership")(option)}
+                    aria-pressed={selected}
+                    className={`flex-1 rounded-xl border px-4 py-3 text-left font-inter text-[13px] font-semibold transition-all ${
+                      selected
+                        ? "border-gold bg-gold text-dark-base"
+                        : "glass-card-dark border-white/15 text-white/80 hover:border-gold/50"
+                    }`}
+                  >
+                    {option}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        )}
 
         {status === "error" && errorMessage && (
           <p className="text-center font-inter text-[13px] text-red-400">{errorMessage}</p>
@@ -291,8 +312,12 @@ export default function OfferingBlock({
     </div>
   ) : null;
 
+  const accentStyle = accentColor
+    ? ({ "--color-gold": accentColor, "--tier-accent": accentColor } as React.CSSProperties)
+    : undefined;
+
   return (
-    <section className="relative overflow-hidden bg-dark-base py-24 md:py-36">
+    <section className="relative overflow-hidden bg-dark-base py-24 md:py-36" style={accentStyle}>
       {/* Ambient luxury background: drifting light + gold particles + grain */}
       <m.div
         className="pointer-events-none absolute -top-20 left-1/4 h-[520px] w-[520px] rounded-full bg-gold/10 blur-[150px]"

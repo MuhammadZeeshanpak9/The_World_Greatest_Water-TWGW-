@@ -8,6 +8,9 @@ import { WELLNESS_SUBPAGES } from "@/data/content";
 
 const data = WELLNESS_SUBPAGES.find((w) => w.slug === "soul")!;
 
+/** Upper tier — amethyst-violet, distinct from BODY/MIND and UNLOCK's gold. */
+const TIER_COLOR = "#9B7FC7";
+
 export const metadata = {
   title: "Thank You Soul",
   description: data.description,
@@ -15,7 +18,7 @@ export const metadata = {
 
 export default function WellnessSoulPage() {
   return (
-    <main>
+    <main style={{ "--color-gold": TIER_COLOR, "--tier-accent": TIER_COLOR } as React.CSSProperties}>
       <WellnessViewTracker wellnessType="soul" />
       <Navbar />
 
