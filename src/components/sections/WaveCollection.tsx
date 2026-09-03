@@ -179,7 +179,7 @@ export default function WaveCollection() {
             THE PERSONAL COLLECTION
           </h2>
           <p className="mt-3 font-inter text-base text-body">
-            Every offering crafted with YOU in mind
+            Every offering created with YOU in mind
           </p>
           <span className="mx-auto mt-5 block h-px w-20 bg-gradient-brand" />
         </div>
