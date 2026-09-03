@@ -298,7 +298,7 @@ export const NAV_LINKS: NavLink[] = [
 ------------------------------------------------------------------ */
 export const ANNOUNCEMENTS: AnnouncementMessage[] = [
   "I WILL ELEV8 MY LIFE TODAY",
-  "1 WATER. 12 UNDERSTANDING",
+  "1 WATER. 12 UNDERSTANDINGS",
   "FREE FROM ADDITIVES · THE WORLD'S GREATEST WATER",
 ];
 
@@ -590,7 +590,7 @@ export const WELLNESS_SUBPAGES: WellnessSubPage[] = [
 ];
 
 /* ------------------------------------------------------------------
-   12 INSPIRATIONAL BOTTLES — the 12 Understanding
+   12 INSPIRATIONAL BOTTLES — the 12 Understandings
    (real names; chakra colours; blurbs marked placeholder)
 ------------------------------------------------------------------ */
 export const BOTTLES: Bottle[] = [

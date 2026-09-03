@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     template: "%s — ELEV8 WATER",
   },
   description:
-    "Ultra-purified water infused with 528hz binaural frequency. 1 Water. 12 Understanding. ELEV8 your life.",
+    "Ultra-purified water infused with 528hz binaural frequency. 1 Water. 12 Understandings. ELEV8 your life.",
   manifest: "/manifest.json",
 };
 

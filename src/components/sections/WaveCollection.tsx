@@ -33,7 +33,7 @@ const WAVE_COLLECTION: WaveCategory[] = [
     id: "pet-bottles",
     tab: "PET WATER BOTTLES",
     name: "ELEV8 Water Bottles",
-    tagline: "1 Water. 12 Understanding.",
+    tagline: "1 Water. 12 Understandings.",
     description:
       "Ultra-purified water infused with 528hz binaural frequency. Each bottle represents one of 12 self-development understandings, created with YOU in mind.",
     price: "From $47.77",

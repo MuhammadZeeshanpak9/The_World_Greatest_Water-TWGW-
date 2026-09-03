@@ -40,7 +40,7 @@ export default function BrandStory() {
             className="font-cormorant text-[36px] font-bold text-gradient-brand"
           >
             <span className="font-inter [font-variant-numeric:lining-nums]">1</span> WATER.{" "}
-            <span className="font-inter [font-variant-numeric:lining-nums]">12</span> UNDERSTANDING
+            <span className="font-inter [font-variant-numeric:lining-nums]">12</span> UNDERSTANDINGS
           </m.h2>
 
           <div className="mt-6 flex flex-col gap-5">

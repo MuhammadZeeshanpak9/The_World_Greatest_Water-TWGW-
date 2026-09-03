@@ -28,7 +28,7 @@ export default function OurStory() {
             <span className="font-inter [font-variant-numeric:lining-nums]">1</span> WATER.{" "}
           </span>
           <span className="text-gradient-brand">
-            <span className="font-inter [font-variant-numeric:lining-nums]">12</span> UNDERSTANDING
+            <span className="font-inter [font-variant-numeric:lining-nums]">12</span> UNDERSTANDINGS
           </span>
         </h2>
 

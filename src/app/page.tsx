@@ -27,7 +27,7 @@ const TwelveBottles = dynamic(() => import("@/components/sections/TwelveBottles"
 });
 
 const DESCRIPTION =
-  "Ultra-purified water infused with 528hz binaural frequency. 1 Water. 12 Understanding. ELEV8 your life.";
+  "Ultra-purified water infused with 528hz binaural frequency. 1 Water. 12 Understandings. ELEV8 your life.";
 
 export const metadata: Metadata = {
   description: DESCRIPTION,
