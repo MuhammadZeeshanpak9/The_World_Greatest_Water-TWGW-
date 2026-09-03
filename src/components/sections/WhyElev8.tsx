@@ -71,6 +71,37 @@ const FlowerOfLife = () => (
   </m.svg>
 );
 
+const AnimatedArrow = ({ color, topOffset, delay = 0 }: { color: string, topOffset: string, delay?: number }) => (
+  <m.div 
+    className="absolute left-0 -translate-y-1/2 pointer-events-none z-20" 
+    style={{ top: topOffset }}
+    aria-hidden
+    initial={{ opacity: 0, x: -20 }}
+    whileInView={{ opacity: 1, x: 0 }}
+    viewport={{ once: true }}
+    transition={{ duration: 0.6, delay, ease: "easeOut" }}
+  >
+    <m.svg 
+      width="28" height="58" viewBox="0 0 28 58" fill="none"
+      animate={{ x: [0, 8, 0] }}
+      transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay }}
+    >
+      <m.path 
+        d="M5 5 L23 29 L5 53" 
+        stroke={color} 
+        strokeWidth="7" 
+        strokeLinecap="round" 
+        strokeLinejoin="round" 
+        animate={{ 
+          opacity: [0.6, 1, 0.6], 
+          filter: [`drop-shadow(0 0 4px ${color}80)`, `drop-shadow(0 0 12px ${color})`, `drop-shadow(0 0 4px ${color}80)`] 
+        }}
+        transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay }}
+      />
+    </m.svg>
+  </m.div>
+);
+
 export default function WhyElev8() {
   return (
     <section className="relative overflow-hidden bg-[#0a0a0a] py-24 md:py-32">
@@ -92,6 +123,11 @@ export default function WhyElev8() {
             className="flex flex-col items-center text-center p-8 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-md shadow-2xl relative overflow-hidden group"
           >
             <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-violet-500 to-fuchsia-500 transform origin-left scale-x-0 transition-transform duration-500 group-hover:scale-x-100" />
+
+            {/* Chakra Arrow — Upper (TO KNOW) */}
+            <AnimatedArrow color="#8b5cf6" topOffset="24%" delay={0.1} />
+            {/* Chakra Arrow — Lower (TO KNOW) */}
+            <AnimatedArrow color="#8b5cf6" topOffset="72%" delay={0.2} />
 
             <p className="font-inter text-[11px] text-gray-400 mb-1">The Name</p>
             <h3 className="font-inter text-[20px] font-bold text-white mb-6">ELEV8</h3>
@@ -170,6 +206,11 @@ export default function WhyElev8() {
             className="flex flex-col items-center text-center p-8 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-md shadow-2xl relative overflow-hidden group lg:-translate-y-4"
           >
             <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-pink-500 to-rose-500 transform origin-left scale-x-0 transition-transform duration-500 group-hover:scale-x-100" />
+
+            {/* Chakra Arrow — Upper (TO SEE) */}
+            <AnimatedArrow color="#4f46e5" topOffset="24%" delay={0.2} />
+            {/* Chakra Arrow — Lower (TO SEE) */}
+            <AnimatedArrow color="#4f46e5" topOffset="72%" delay={0.3} />
 
             <h3 className="font-inter text-[18px] font-bold text-white uppercase mb-6 leading-tight">
               THE WORLD&apos;S<br />GREATEST WATER
@@ -258,6 +299,11 @@ export default function WhyElev8() {
           >
             <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-blue-500 to-cyan-500 transform origin-left scale-x-0 transition-transform duration-500 group-hover:scale-x-100" />
 
+            {/* Chakra Arrow — Upper (TO LOVE) */}
+            <AnimatedArrow color="#10b981" topOffset="24%" delay={0.3} />
+            {/* Chakra Arrow — Lower (TO LOVE) */}
+            <AnimatedArrow color="#10b981" topOffset="72%" delay={0.4} />
+
             <h3 className="font-inter text-[18px] font-bold text-white uppercase mb-6 leading-tight">
               YOUR PERSONAL<br />WATER
             </h3>
@@ -295,6 +341,11 @@ export default function WhyElev8() {
             className="flex flex-col items-center text-center p-8 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-md shadow-2xl relative overflow-hidden group lg:-translate-y-4"
           >
             <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-amber-500 to-orange-500 transform origin-left scale-x-0 transition-transform duration-500 group-hover:scale-x-100" />
+
+            {/* Chakra Arrow — Upper (TO SPEAK) */}
+            <AnimatedArrow color="#0ea5e9" topOffset="24%" delay={0.4} />
+            {/* Chakra Arrow — Lower (TO SPEAK) */}
+            <AnimatedArrow color="#0ea5e9" topOffset="72%" delay={0.5} />
 
             <h3 className="font-inter text-[18px] font-bold text-white uppercase mb-6 leading-tight">
               WHY SET A<br />POSITIVE<br />INTENTION?
@@ -379,6 +430,11 @@ export default function WhyElev8() {
             className="flex flex-col items-center text-center p-8 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-md shadow-2xl relative overflow-hidden group"
           >
             <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-teal-400 to-emerald-400 transform origin-left scale-x-0 transition-transform duration-500 group-hover:scale-x-100" />
+
+            {/* Chakra Arrow — Upper (TO BE HERE) */}
+            <AnimatedArrow color="#ef4444" topOffset="24%" delay={0.5} />
+            {/* Chakra Arrow — Lower (TO BE HERE) */}
+            <AnimatedArrow color="#ef4444" topOffset="72%" delay={0.6} />
 
             <h3 className="font-inter text-[18px] font-bold text-white uppercase mb-6 leading-tight">
               WHY ULTRA-<br />PURIFIED?
