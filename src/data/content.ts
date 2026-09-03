@@ -608,7 +608,7 @@ export const BOTTLES: Bottle[] = [
     color: "#1D4ED8",
     placeholder: false,
     image: "/images/bottles2/YOU.png",
-    blurb: "I will ELEV8 myself by only speaking and thinking of the experience I want to have by being aware of what I say and tell myself about MYSELF. I AM the only person responsible for the outcome of my life experiences either good or bad. I AM always deserving of everything and anything my mind can create. I will be the greatest version of MYSELF.",
+    blurb: "I AM the experiencer of this experience called life in my beautiful mind. I AM YOU | THE GRAND DESIGNER of the grand design LIFE.",
   },
   {
     name: "LOVE",

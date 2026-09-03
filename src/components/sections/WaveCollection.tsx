@@ -28,22 +28,43 @@ type WaveCategory = {
   images: string[];
 };
 
+// Kept in alphabetical order by `tab` — add new categories in their alphabetical slot.
 const WAVE_COLLECTION: WaveCategory[] = [
   {
-    id: "pet-bottles",
-    tab: "PET WATER BOTTLES",
-    name: "ELEV8 Water Bottles",
-    tagline: "1 Water. 12 Understandings.",
+    id: "aluminum-bottles",
+    tab: "ALUMINUM BOTTLES",
+    name: "ELEV8 Aluminum Bottles",
+    tagline: "100% Recyclable. Premium Feel.",
     description:
-      "Ultra-purified water infused with 528hz binaural frequency. Each bottle represents one of 12 self-development understandings, created with YOU in mind.",
-    price: "From $47.77",
-    status: "sold-out",
+      "Premium aluminum bottles — sustainable, sleek and built for the elevated lifestyle. The same ultra-purified ELEV8 Water in a bold, eco-conscious format.",
+    price: "Coming Soon",
+    status: "coming-soon",
     cta: "NOTIFY ME →",
-    images: [
-      "/images/products/bottle-1.jpg",
-      "/images/products/bottle-2.jpg",
-      "/images/products/bottle-3.jpg",
-    ],
+    images: ["/images/products/aluminum-bottle-1.jpg", "/images/products/aluminum-bottle-2.jpg"],
+  },
+  {
+    id: "elev8ated-ice",
+    tab: "ELEV8ATED ICE",
+    name: "ELEV8ATED Ice",
+    tagline: "Frozen. Purified. Elevated.",
+    description:
+      "The same ultra-purified, 528hz frequency-infused ELEV8 Water, frozen into premium ice — for every drink, ritual, and moment that deserves the elevated experience.",
+    price: "Coming Soon",
+    status: "coming-soon",
+    cta: "NOTIFY ME →",
+    images: ["/images/products/elev8ated-ice-1.jpg", "/images/products/elev8ated-ice-2.jpg"],
+  },
+  {
+    id: "elev8ated-refresh",
+    tab: "ELEV8ATED REFRESH",
+    name: "ELEV8ATED Refresh",
+    tagline: "Instant. Purified. Elevated.",
+    description:
+      "A fast, on-the-go way to ELEV8 — the same ultra-purified, 528hz frequency-infused water in a refreshing new format built for your everyday reset.",
+    price: "Coming Soon",
+    status: "coming-soon",
+    cta: "NOTIFY ME →",
+    images: ["/images/products/elev8ated-refresh-1.jpg", "/images/products/elev8ated-refresh-2.jpg"],
   },
   {
     id: "essence-pods",
@@ -62,28 +83,16 @@ const WAVE_COLLECTION: WaveCategory[] = [
     ],
   },
   {
-    id: "paper-box",
-    tab: "PAPER BOX",
-    name: "ELEV8 Paper Box Bottles",
-    tagline: "Biodegradable. Sustainable. Pure.",
+    id: "flavor-caps",
+    tab: "FLAVOR CAPS",
+    name: "ELEV8 Flavor Caps",
+    tagline: "Twistable. Flavorful. Elevated.",
     description:
-      "Biodegradable paper box packaging with your ultra-purified water — a sustainable alternative to our PET BPA-free bottles.",
+      "12 fruit-inspired twistable flavor caps that transform your ELEV8 Water into a premium flavored hydration experience. Each flavor uniquely crafted for elevation.",
     price: "Coming Soon",
     status: "coming-soon",
     cta: "NOTIFY ME →",
-    images: ["/images/products/paper-box-1.jpg", "/images/products/paper-box-2.jpg"],
-  },
-  {
-    id: "aluminum-bottles",
-    tab: "ALUMINUM BOTTLES",
-    name: "ELEV8 Aluminum Bottles",
-    tagline: "100% Recyclable. Premium Feel.",
-    description:
-      "Premium aluminum bottles — sustainable, sleek and built for the elevated lifestyle. The same ultra-purified ELEV8 Water in a bold, eco-conscious format.",
-    price: "Coming Soon",
-    status: "coming-soon",
-    cta: "NOTIFY ME →",
-    images: ["/images/products/aluminum-bottle-1.jpg", "/images/products/aluminum-bottle-2.jpg"],
+    images: ["/images/products/water-caps-variety.jpg", "/images/products/water-caps-grid.jpg"],
   },
   {
     id: "glass-bottles",
@@ -98,6 +107,34 @@ const WAVE_COLLECTION: WaveCategory[] = [
     images: ["/images/products/glass-bottle-1.jpg", "/images/products/glass-bottle-2.jpg"],
   },
   {
+    id: "paper-box",
+    tab: "PAPER BOX",
+    name: "ELEV8 Paper Box Bottles",
+    tagline: "Biodegradable. Sustainable. Pure.",
+    description:
+      "Biodegradable paper box packaging with your ultra-purified water — a sustainable alternative to our PET BPA-free bottles.",
+    price: "Coming Soon",
+    status: "coming-soon",
+    cta: "NOTIFY ME →",
+    images: ["/images/products/paper-box-1.jpg", "/images/products/paper-box-2.jpg"],
+  },
+  {
+    id: "pet-bottles",
+    tab: "PET WATER BOTTLES",
+    name: "ELEV8 Water Bottles",
+    tagline: "1 Water. 12 Understandings.",
+    description:
+      "Ultra-purified water infused with 528hz binaural frequency. Each bottle represents one of 12 self-development understandings, created with YOU in mind.",
+    price: "From $47.77",
+    status: "sold-out",
+    cta: "NOTIFY ME →",
+    images: [
+      "/images/products/bottle-1.jpg",
+      "/images/products/bottle-2.jpg",
+      "/images/products/bottle-3.jpg",
+    ],
+  },
+  {
     id: "smart-bottle",
     tab: "SMART BOTTLE",
     name: "ELEV8 Smart Bottle",
@@ -108,30 +145,6 @@ const WAVE_COLLECTION: WaveCategory[] = [
     status: "coming-soon",
     cta: "NOTIFY ME →",
     images: ["/images/products/smart-bottle.jpg", "/images/products/smart-bottle-2.jpg"],
-  },
-  {
-    id: "flavor-caps",
-    tab: "FLAVOR CAPS",
-    name: "ELEV8 Flavor Caps",
-    tagline: "Twistable. Flavorful. Elevated.",
-    description:
-      "12 fruit-inspired twistable flavor caps that transform your ELEV8 Water into a premium flavored hydration experience. Each flavor uniquely crafted for elevation.",
-    price: "Coming Soon",
-    status: "coming-soon",
-    cta: "NOTIFY ME →",
-    images: ["/images/products/water-caps-variety.jpg", "/images/products/water-caps-grid.jpg"],
-  },
-  {
-    id: "elev8ated-ice",
-    tab: "ELEV8ATED ICE",
-    name: "ELEV8ATED Ice",
-    tagline: "Frozen. Purified. Elevated.",
-    description:
-      "The same ultra-purified, 528hz frequency-infused ELEV8 Water, frozen into premium ice — for every drink, ritual, and moment that deserves the elevated experience.",
-    price: "Coming Soon",
-    status: "coming-soon",
-    cta: "NOTIFY ME →",
-    images: ["/images/products/elev8ated-ice-1.jpg", "/images/products/elev8ated-ice-2.jpg"],
   },
 ];
 
