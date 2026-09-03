@@ -176,10 +176,10 @@ export default function WhyElev8() {
             </h3>
 
             <p className="font-inter text-[13px] text-gray-300 leading-loose tracking-wide">
-              THE ONLY BRAND<br />
-              YOUNIVERSALLY THAT TRULY<br />
-              CARES ABOUT MY<br />
-              MENTALPHYSICAL ELEVATION.
+              The only brand<br />
+              youniversally that truly<br />
+              cares about my<br />
+              mentalphysical elevation.
             </p>
 
             <p className="font-inter text-[12px] text-white/70 leading-relaxed mt-6 mb-8">
@@ -195,7 +195,7 @@ export default function WhyElev8() {
             </h3>
 
             <p className="font-inter text-[12px] text-pink-400 mb-10">
-              Your EXPERIENCE.
+              Your experience.
             </p>
 
             {/* 12 Bottles Grid */}
@@ -263,14 +263,14 @@ export default function WhyElev8() {
             </h3>
 
             <p className="font-inter text-[13px] text-gray-300 leading-loose tracking-wide">
-              I EXPLORE thoughtfully<br />
-              created contents &amp;<br />
+              I explore thoughtfully<br />
+              created content &amp;<br />
               information to allow a<br />
               more enjoyable life<br />
-              experiences.<br /><br />
-              I DESERVE ONLY THE<br />
-              GREATEST LIFE EXPERIENCES.<br />
-              I AM WORTH THE INVESTMENT.
+              experience.<br /><br />
+              I deserve only the<br />
+              greatest life experiences.<br />
+              I AM worth the investment.
             </p>
 
             <h3 className="font-inter font-bold text-[16px] text-white uppercase mt-auto mb-4 tracking-widest">
@@ -279,10 +279,10 @@ export default function WhyElev8() {
             </h3>
 
             <p className="font-inter text-[12px] text-gray-400 leading-loose tracking-wide max-w-[200px]">
-              12 COMMONLY USED WORDS<br />
+              12 commonly used words<br />
               with a profound<br />
               interpretation for<br />
-              MENTALPHYSICAL GREATNESS.
+              mentalphysical greatness.
             </p>
           </m.div>
 

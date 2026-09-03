@@ -278,7 +278,7 @@ export const NAV_LINKS: NavLink[] = [
       { label: "Clothing", href: "https://www.ielev8my.com", external: true },
     ],
   },
-  { label: "TRENDING", href: "https://www.youtube.com", external: true },
+  { label: "Trending", href: "https://www.youtube.com", external: true },
   {
     label: "Blogs",
     href: "/blogs",
@@ -349,7 +349,7 @@ export const WELLNESS_SUBPAGES: WellnessSubPage[] = [
   {
     slug: "body",
     title: "BODY",
-    subtitle: "PHYSICAL WELLNESS EXPERIENCE",
+    subtitle: "Physical Wellness Experience",
     price: "$5,000+",
     description:
       "A complete physical and mental wellness experience. Your body is your temple — we help you treat it as one. A premium, consciousness-driven transformation designed to elevate your physical experience from the inside out.",
@@ -369,15 +369,15 @@ export const WELLNESS_SUBPAGES: WellnessSubPage[] = [
     price2yr: "2 Year Membership — $10,000",
     offerings: [
       {
-        heading: "PHYSICAL WELLNESS",
+        heading: "Physical Wellness",
         hasPrimaryImage: false,
         hasSecondaryImage: true,
         secondaryImage: "/images/thank-you-body-1.png",
         secondaryImageAspect: "1078/1459",
         tagline: 'Wellness is a "Physical" state of well-being.',
         pricingLabel: "Membership:",
-        price1yr: "1 year membership : $5,000",
-        price2yr: "2 year membership : $10,000",
+        price1yr: "1 year membership: $5,000",
+        price2yr: "2 year membership: $10,000",
         membershipOptions: [
           "1 Year Membership — $5,000",
           "2 Year Membership — $10,000",
@@ -385,23 +385,23 @@ export const WELLNESS_SUBPAGES: WellnessSubPage[] = [
         winWinText:
           "It is always a Win-Win for the family of Greatness! It only gets GREATER.",
         contactEmail: "winwin@thegranddesigner.com",
-        collaboratorPitch: "Sign-Up Today To Be A Global Physical Wellness Collaborator.",
+        collaboratorPitch: "Sign up today to be a global Physical Wellness collaborator.",
         collaboratorItems: [
-          "Modern Spa/Yoga centers",
-          "Modern/ new age fitness centers",
+          "Modern spa/yoga centers",
+          "Modern/new age fitness centers",
           "Modern dance studio",
           "Technology companies created to enhance the human body",
-          "Wellness seminars/workshops/ programs",
+          "Wellness seminars/workshops/programs",
         ],
       },
       {
-        heading: "PHYSICAL SUCCESS AND RICHES",
+        heading: "Physical Success and Riches",
         image: "/images/thank-you-body-2.png",
         imageAspect: "1367/1151",
         tagline: 'SUCCESS AND RICHES is a "Physical" state of well-being.',
         pricingLabel: "Membership:",
-        price1yr: "1 year membership : $5,000",
-        price2yr: "2 year membership : $10,000",
+        price1yr: "1 year membership: $5,000",
+        price2yr: "2 year membership: $10,000",
         membershipOptions: [
           "1 Year Membership — $5,000",
           "2 Year Membership — $10,000",
@@ -410,11 +410,11 @@ export const WELLNESS_SUBPAGES: WellnessSubPage[] = [
           "It is always a Win-Win for the family of Greatness! It only gets GREATER.",
         contactEmail: "winwin@thegranddesigner.com",
         collaboratorPitch:
-          "Sign-Up Today To Be A Global Physical Success and Riches Collaborator.",
+          "Sign up today to be a global Physical Success and Riches collaborator.",
         collaboratorItems: [
-          "Billionaire Mentors",
-          "Successful and Rich investors",
-          "Prosperity seminars/workshops/ programs",
+          "Billionaire mentors",
+          "Successful and rich investors",
+          "Prosperity seminars/workshops/programs",
         ],
       },
     ],
@@ -442,7 +442,7 @@ export const WELLNESS_SUBPAGES: WellnessSubPage[] = [
     price2yr: "2 Year Membership — $5,000",
     offerings: [
       {
-        heading: "MENTAL HEALTH",
+        heading: "Mental Health",
         image: "/images/forgive-yourself.png",
         imageAspect: "1/1",
         tagline: 'Health is a "Mental" state of well-being.',
@@ -454,7 +454,7 @@ export const WELLNESS_SUBPAGES: WellnessSubPage[] = [
         ],
         session: {
           heading: "U.M.E",
-          subheading: "(UNDERSTANDING MY EMOTIONS)",
+          subheading: "(Understanding My Emotions)",
           description:
             "This session is a custom mental and emotional analysis integrated with spiritual understanding of SELF that has proven to 100% provide accurate and precise positive outcomes for individuals who practice their truth.",
         },
@@ -468,7 +468,7 @@ export const WELLNESS_SUBPAGES: WellnessSubPage[] = [
         ],
       },
       {
-        heading: "MENTAL WEALTH",
+        heading: "Mental Wealth",
         heroArt: "mind-card",
         hasSecondaryImage: true,
         secondaryImage: "/images/the-world-is-your-stage.png",
@@ -481,7 +481,7 @@ export const WELLNESS_SUBPAGES: WellnessSubPage[] = [
           'YES. YOU can be rich and successful when you know the mental "HOW".',
         ],
         session: {
-          heading: "THE WORLD'S GREATEST MOVIE ABOUT YOU",
+          heading: "The World's Greatest Movie About You",
           description:
             "This session is a custom mental and emotional analysis integrated with spiritual understanding of SELF that has proven to 100% provide accurate and precise positive outcomes for individuals who practice their truth.",
           extraParagraph:
@@ -521,12 +521,12 @@ export const WELLNESS_SUBPAGES: WellnessSubPage[] = [
     price2yr: "2 Year Membership — $10,000",
     offerings: [
       {
-        heading: "MENTAL ALIGNMENT AND SPA",
+        heading: "Mental Alignment and Spa",
         image: "/images/thank-you-soul.png",
         imageAspect: "1/1",
         pricingLabel: "Membership:",
-        price1yr: "1 year membership : $5,000",
-        price2yr: "2 year membership : $10,000",
+        price1yr: "1 year membership: $5,000",
+        price2yr: "2 year membership: $10,000",
         membershipOptions: [
           "1 Year Membership — $5,000",
           "2 Year Membership — $10,000",
@@ -535,9 +535,9 @@ export const WELLNESS_SUBPAGES: WellnessSubPage[] = [
           "It is always a Win-Win for the family of Greatness! It only gets GREATER.",
         contactEmail: "winwin@thegranddesigner.com",
         collaboratorPitch:
-          "Sign-Up Today To Be A Global Mental Alignment and Spa Collaborator.",
+          "Sign up today to be a global Mental Alignment and Spa collaborator.",
         collaboratorItems: [
-          "Ayahuasca Centers",
+          "Ayahuasca centers",
           "Technology companies created to advance the human mind",
         ],
       },
@@ -567,13 +567,13 @@ export const WELLNESS_SUBPAGES: WellnessSubPage[] = [
     pricingNote: "Private application required",
     offerings: [
       {
-        heading: "UNLOCK THE LOCK.",
+        heading: "Unlock The Lock.",
         heroArt: "go-within",
         bodyParagraphs: [
           "This session is a custom mental and emotional analysis integrated with spiritual understanding of SELF that has been proven to be 100% accurate and precise as the UNIVERSAL SECRET.",
           "All 1 on 1 Consultation Experience Includes A Luxury Private Jet To A Highly Confidential Location.",
         ],
-        bookingLabel: "BODY.MIND.SOUL",
+        bookingLabel: "Body. Mind. Soul.",
         bookingTiers: [
           { label: "1 hour consultation online", price: "$1,000,000" },
           { label: "30 minutes one-on-one consultation", price: "$2,000,000" },
@@ -772,40 +772,40 @@ export const PROCESS_STEPS: ProcessStep[] = [
     label: "LOVE",
     color: "#6B2FA0",
     description:
-      "Our Water is Inspired By Love. Infused With 528 Hz Love Frequency. To ELEV8 Your Life.",
+      "Our water is inspired by love. Infused with 528 Hz love frequency. To ELEV8 your life.",
   },
   {
     label: "MICRON FILTRATION",
     color: "#4B0082",
     description:
-      "Pharmaceutical Grade to Remove Volatile Organic Compounds and Other Contaminants.",
+      "Pharmaceutical grade to remove volatile organic compounds and other contaminants.",
   },
   {
     label: "REVERSE OSMOSIS",
     color: "#0000FF",
     description:
-      "High-Pressure Filtration to Remove Salt, Minerals, and Additional Impurities.",
+      "High-pressure filtration to remove salt, minerals, and additional impurities.",
   },
   {
     label: "DEIONIZATION",
     color: "#008000",
-    description: "Ion Exchange to Filter Out Remaining Minerals.",
+    description: "Ion exchange to filter out remaining minerals.",
   },
   {
     label: "ULTRAVIOLET LIGHT",
     color: "#FFFF00",
-    description: "To Remove 99.99% of Microorganisms.",
+    description: "To remove 99.99% of microorganisms.",
   },
   {
     label: "OZONATION",
     color: "#FFA500",
     description:
-      "Infused With Ozone, a Tasteless Molecule Made From Atmospheric Oxygen, to Naturally Sterilize.",
+      "Infused with ozone, a tasteless molecule made from atmospheric oxygen, to naturally sterilize.",
   },
   {
     label: "GRATITUDE",
     color: "#FF0000",
-    description: "Thankful Thoughts for YOU Choosing To ELEV8 Your Life.",
+    description: "Thankful thoughts for YOU choosing to ELEV8 your life.",
   },
 ];
 
@@ -834,7 +834,7 @@ export const TESTIMONIALS: Testimonial[] = [
   {
     name: "Anita Green",
     quote:
-      "It's Simply WOW! Mental Preservation is key! I always believed in self-healing, did not know 'HOW' until now with ELEV8 WATER.",
+      "It's simply wow! Mental preservation is key! I always believed in self-healing, did not know 'HOW' until now with ELEV8 WATER.",
   },
   {
     name: "Larry Ola",

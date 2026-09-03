@@ -70,8 +70,8 @@ export default function ProductBanner() {
             transition={{ delay: 0.25 }}
             className="mt-5 max-w-lg font-inter text-[15px] leading-[1.9] text-body"
           >
-            FREE FROM Chemical Additives such as Chlorine, Fluoride, Sodium
-            Bicarbonate and many more to deliver a refreshing and pure
+            Free from chemical additives such as chlorine, fluoride, sodium
+            bicarbonate and many more, to deliver a refreshing and pure
             hydrating experience.
           </m.p>
         </div>
