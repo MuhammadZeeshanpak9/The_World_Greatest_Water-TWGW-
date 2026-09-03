@@ -62,6 +62,18 @@ const WAVE_COLLECTION: WaveCategory[] = [
     ],
   },
   {
+    id: "paper-box",
+    tab: "PAPER BOX",
+    name: "ELEV8 Paper Box Bottles",
+    tagline: "Biodegradable. Sustainable. Pure.",
+    description:
+      "Biodegradable paper box packaging with your ultra-purified water — a sustainable alternative to our PET BPA-free bottles.",
+    price: "Coming Soon",
+    status: "coming-soon",
+    cta: "NOTIFY ME →",
+    images: ["/images/products/paper-box-1.jpg", "/images/products/paper-box-2.jpg"],
+  },
+  {
     id: "aluminum-bottles",
     tab: "ALUMINUM BOTTLES",
     name: "ELEV8 Aluminum Bottles",

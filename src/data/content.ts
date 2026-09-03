@@ -107,16 +107,17 @@ export const BLOG_POSTS: BlogPost[] = [
     slug: "how-to-elev8-desire",
     topic: "DESIRE",
     title: "How to ELEV8 DESIRE",
-    teaser: "Desire is the beginning of all creation.",
+    teaser: "Desire is your Illusional Emotional Intelligence — feel it, question it, transform it.",
     openingStatement:
-      "Desire is not weakness. Desire is the universe speaking through you, telling you who you are meant to become.",
+      "Desire is not always truth. Desire is your Illusional Emotional Intelligence — the felt sense of what you want, filtered through illusion, waiting for you to see clearly.",
     bodyParagraphs: [
-      "ELEV8 DESIRE is about understanding the sacred nature of your deepest wants. Every genuine desire you carry was placed in you for a reason. The desire to create, to connect, to contribute, to experience beauty, to know yourself deeply — these are not accidents of personality. They are the blueprint of your purpose.",
-      "The problem most people have with desire is that they have been taught to suppress it, to feel guilty about it, to see it as selfish. But a desire that comes from your highest self — not from ego, not from fear, but from genuine creative impulse — is one of the most powerful forces in the universe.",
-      "Set your desire as an intention before drinking your ELEV8 WATER. State it clearly, feel it fully, and release it completely. This is the ancient formula for manifestation that the greatest minds in human history have always known. Imagination plus emotion plus action equals reality. Your desire is the seed. Water is the catalyst.",
+      "ELEV8 DESIRE begins with a radical distinction: not every desire is a directive. Desire is Illusional Emotional Intelligence — an intelligent signal wrapped in illusion, a feeling that points toward something real even when the story your mind tells about it isn't. Learning to feel a desire without immediately believing everything it says is one of the most advanced forms of self-mastery.",
+      "Every desire carries two layers: the emotional charge and the illusion built around it. The emotional charge is real information — it is your body and spirit telling you that something matters. The illusion is the mind's interpretation of what that charge means, and it is often wrong. Illusional Emotional Intelligence is the practice of separating the two: feeling fully, believing selectively.",
+      "Before drinking your ELEV8 WATER, sit with a desire you are carrying. Ask: what am I actually feeling beneath this want? Is the story I am telling myself about it true, or is it illusion? Let the water be the clarity that separates emotion from illusion, so what remains is the desire worth acting on.",
     ],
-    pullQuote: "A desire aligned with your highest self is not a want. It is a calling.",
-    closingReflection: "Honor your desires — they are the universe's way of directing you home.",
+    pullQuote:
+      "Desire is not a command. Desire is Illusional Emotional Intelligence — feel it fully, believe it selectively.",
+    closingReflection: "Today, meet your desires with intelligence, not obedience.",
   },
   {
     slug: "how-to-elev8-energy",
@@ -623,7 +624,7 @@ export const BOTTLES: Bottle[] = [
     color: "#E07000",
     placeholder: false,
     image: "/images/bottles2/DESIRE.png",
-    blurb: "I will ELEV8 my DESIRE by understanding that every desire I have was placed in me for a reason. My desires are the universe speaking to me about my purpose. I will honor my desires and take inspired action toward them every single day.",
+    blurb: "I will ELEV8 my DESIRE by understanding it as my Illusional Emotional Intelligence — the wisdom to feel a desire fully while questioning the illusion my mind builds around it. I will honor what is real in every desire and release what is not, taking inspired action only on what serves my highest self.",
   },
   {
     name: "ENERGY",
