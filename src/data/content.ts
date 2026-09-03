@@ -516,8 +516,8 @@ export const WELLNESS_SUBPAGES: WellnessSubPage[] = [
     price2yr: "2 Year Membership — $10,000",
     offerings: [
       {
-        heading: "MENTAL HEALING AND SPA",
-        image: "/images/mental-healing-spa.png",
+        heading: "MENTAL ALIGNMENT AND SPA",
+        image: "/images/thank-you-soul.png",
         pricingLabel: "Membership:",
         price1yr: "1 year membership : $5,000",
         price2yr: "2 year membership : $10,000",
@@ -529,7 +529,7 @@ export const WELLNESS_SUBPAGES: WellnessSubPage[] = [
           "It is always a Win-Win for the family of Greatness! It only gets GREATER.",
         contactEmail: "winwin@thegranddesigner.com",
         collaboratorPitch:
-          "Sign-Up Today To Be A Global Mental Healing and Spa Collaborator.",
+          "Sign-Up Today To Be A Global Mental Alignment and Spa Collaborator.",
         collaboratorItems: [
           "Ayahuasca Centers",
           "Technology companies created to advance the human mind",
