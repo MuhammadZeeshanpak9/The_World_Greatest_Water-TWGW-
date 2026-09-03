@@ -121,6 +121,18 @@ const WAVE_COLLECTION: WaveCategory[] = [
     cta: "NOTIFY ME →",
     images: ["/images/products/water-caps-variety.jpg", "/images/products/water-caps-grid.jpg"],
   },
+  {
+    id: "elev8ated-ice",
+    tab: "ELEV8ATED ICE",
+    name: "ELEV8ATED Ice",
+    tagline: "Frozen. Purified. Elevated.",
+    description:
+      "The same ultra-purified, 528hz frequency-infused ELEV8 Water, frozen into premium ice — for every drink, ritual, and moment that deserves the elevated experience.",
+    price: "Coming Soon",
+    status: "coming-soon",
+    cta: "NOTIFY ME →",
+    images: ["/images/products/elev8ated-ice-1.jpg", "/images/products/elev8ated-ice-2.jpg"],
+  },
 ];
 
 export default function WaveCollection() {
