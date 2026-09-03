@@ -372,7 +372,8 @@ export const WELLNESS_SUBPAGES: WellnessSubPage[] = [
         heading: "PHYSICAL WELLNESS",
         hasPrimaryImage: false,
         hasSecondaryImage: true,
-        secondaryImage: "/images/elev8-gym-purple.png",
+        secondaryImage: "/images/thank-you-body-1.png",
+        secondaryImageAspect: "1078/1459",
         tagline: 'Wellness is a "Physical" state of well-being.',
         pricingLabel: "Membership:",
         price1yr: "1 year membership : $5,000",
@@ -395,7 +396,8 @@ export const WELLNESS_SUBPAGES: WellnessSubPage[] = [
       },
       {
         heading: "PHYSICAL SUCCESS AND RICHES",
-        image: "/images/elev8-ferrari-luxury.png",
+        image: "/images/thank-you-body-2.png",
+        imageAspect: "1367/1151",
         tagline: 'SUCCESS AND RICHES is a "Physical" state of well-being.',
         pricingLabel: "Membership:",
         price1yr: "1 year membership : $5,000",
@@ -442,6 +444,7 @@ export const WELLNESS_SUBPAGES: WellnessSubPage[] = [
       {
         heading: "MENTAL HEALTH",
         image: "/images/forgive-yourself.png",
+        imageAspect: "1/1",
         tagline: 'Health is a "Mental" state of well-being.',
         bodyParagraphs: [
           'To understand my health, it\'s important to understand "HOW" my mind operates the function of my body in the physical reality in regards to sickness and diseases.',
@@ -466,8 +469,10 @@ export const WELLNESS_SUBPAGES: WellnessSubPage[] = [
       },
       {
         heading: "MENTAL WEALTH",
+        heroArt: "mind-card",
         hasSecondaryImage: true,
         secondaryImage: "/images/the-world-is-your-stage.png",
+        secondaryImageAspect: "1/1",
         tagline: 'Wealth is a "Mental" state of well-being.',
         bodyParagraphs: [
           'To be wealthy then rich and successful, it\'s important to understand "HOW" my mind operates the function of my physical manifestation in my reality in regards to money and success.',
@@ -518,6 +523,7 @@ export const WELLNESS_SUBPAGES: WellnessSubPage[] = [
       {
         heading: "MENTAL ALIGNMENT AND SPA",
         image: "/images/thank-you-soul.png",
+        imageAspect: "1/1",
         pricingLabel: "Membership:",
         price1yr: "1 year membership : $5,000",
         price2yr: "2 year membership : $10,000",

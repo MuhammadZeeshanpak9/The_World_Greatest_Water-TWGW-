@@ -53,10 +53,14 @@ export type WellnessSession = {
 export type WellnessOffering = {
   heading: string;
   image?: string;
+  /** CSS aspect-ratio ("1/1", "3/4", "6/5"...) matched to the real photo's
+   * own proportions, so the bubble doesn't crop it into the wrong shape. */
+  imageAspect?: string;
   secondaryImage?: string;
+  secondaryImageAspect?: string;
   hasSecondaryImage?: boolean;
   hasPrimaryImage?: boolean;
-  heroArt?: "go-within";
+  heroArt?: "go-within" | "mind-card";
   imagePlain?: boolean;
   tagline?: string;
   bodyParagraphs?: string[];

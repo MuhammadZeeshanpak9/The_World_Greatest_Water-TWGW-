@@ -10,6 +10,7 @@ import { usePrefersReducedMotion } from "@/lib/hooks";
 import { useFormSubmit, submitFormSubmission } from "@/lib/forms";
 import { trackLead } from "@/lib/analytics";
 import GoWithinArt from "@/components/sections/wellness/GoWithinArt";
+import MindCardArt from "@/components/sections/wellness/MindCardArt";
 import SectionParticles from "@/components/sections/SectionParticles";
 import type { WellnessOffering } from "@/types";
 
@@ -23,18 +24,22 @@ function ImageBubble({
   delay = 0,
   heroArt,
   plain = false,
+  aspect = "4/3",
 }: {
   src?: string;
   alt: string;
   reduced: boolean;
   delay?: number;
-  heroArt?: "go-within";
+  heroArt?: "go-within" | "mind-card";
   plain?: boolean;
+  /** CSS aspect-ratio value ("1/1", "3/4", "6/5"...) matched to the real
+   * photo's own proportions so object-cover doesn't crop it oddly. */
+  aspect?: string;
 }) {
   const borderRadius = plain ? "24px" : BLOB_SHAPE;
 
   return (
-    <div className="relative mx-auto aspect-[4/3] w-full max-w-md">
+    <div className="relative mx-auto w-full max-w-xl" style={{ aspectRatio: aspect }}>
       {/* Rotating gilded ring frame */}
       {!reduced && (
         <div
@@ -59,6 +64,8 @@ function ImageBubble({
       >
         {heroArt === "go-within" ? (
           <GoWithinArt />
+        ) : heroArt === "mind-card" ? (
+          <MindCardArt />
         ) : (
           <ImageWithFallback src={src} alt={alt} watermark={alt} rounded="" />
         )}
@@ -94,7 +101,9 @@ const EMPTY_VALUES: Values = {
 export default function OfferingBlock({
   heading,
   image,
+  imageAspect,
   secondaryImage,
+  secondaryImageAspect,
   hasSecondaryImage,
   hasPrimaryImage,
   heroArt,
@@ -396,10 +405,17 @@ export default function OfferingBlock({
                 reduced={reduced}
                 heroArt={heroArt}
                 plain={imagePlain}
+                aspect={imageAspect}
               />
             )}
             {hasSecondaryImage && (
-              <ImageBubble src={secondaryImage} alt={heading} reduced={reduced} delay={0.4} />
+              <ImageBubble
+                src={secondaryImage}
+                alt={heading}
+                reduced={reduced}
+                delay={0.4}
+                aspect={secondaryImageAspect}
+              />
             )}
           </div>
         </m.div>

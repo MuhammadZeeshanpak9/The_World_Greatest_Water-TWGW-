@@ -6,6 +6,7 @@ import { ArrowRight } from "lucide-react";
 import { WELLNESS_CARDS } from "@/data/content";
 import { usePrefersReducedMotion, useIsMobile } from "@/lib/hooks";
 import GoWithinArt from "@/components/sections/wellness/GoWithinArt";
+import MindCardArt from "@/components/sections/wellness/MindCardArt";
 
 // Helper component to render the beautiful custom backgrounds
 // Helper component to render the beautiful custom backgrounds in vibrant purple tones
@@ -33,31 +34,14 @@ const CardBackground = ({ index }: { index: number }) => {
         </div>
       );
     case 1:
-      return (
-        <div className="absolute inset-0 bg-[#e8dbf7] overflow-hidden">
-          {/* Concrete/Paper texture overlay */}
-          <div className="absolute inset-0 opacity-15 mix-blend-multiply" style={{ backgroundImage: "url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noise%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.8%22 numOctaves=%224%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noise)%22/%3E%3C/svg%3E')" }} />
-          <svg className="absolute inset-0 w-full h-full text-[#6b2fa0]/20" preserveAspectRatio="none" viewBox="0 0 100 100">
-            <polygon points="-10,-10 60,-10 15,45" fill="currentColor"/>
-            <polygon points="110,-10 110,30 35,90" fill="currentColor"/>
-            <polygon points="-10,40 40,110 -10,110" fill="currentColor"/>
-            <polygon points="35,110 110,110 85,35" fill="currentColor"/>
-            <polygon points="50,40 70,20 80,60" fill="currentColor"/>
-          </svg>
-          <div className="absolute inset-0 flex items-center justify-center px-4">
-            <p className="text-[#431866] text-[15px] font-inter font-bold text-center tracking-[0.2em] leading-[1.8] drop-shadow-sm">
-              EVERYTHING<br/>STARTS IN<br/>THE MIND
-            </p>
-          </div>
-        </div>
-      );
+      return <MindCardArt />;
     case 2:
       return (
         <div className="absolute inset-0 bg-[#fdfcff] flex items-center justify-center p-4">
           <div className="relative flex items-center justify-center w-full max-w-[160px] h-32">
             {/* The thin frame box */}
             <div className="absolute left-0 top-0 bottom-0 w-[55px] border border-[#bd9de0] bg-[#f5ecfd] shadow-sm" />
-            
+
             <div className="relative z-10 flex items-center w-full px-2">
               <div className="text-[#8861b5] text-[9px] tracking-[0.2em] leading-[2] text-right w-[45px] mr-[10px]">
                 THINK<br/>OF<br/>LIFE<br/>AS<br/>AN
@@ -152,70 +136,68 @@ export default function Wellness() {
         {/* Cards */}
         <div className="mt-16 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {WELLNESS_CARDS.map((card, i) => (
-            <m.div
-              key={card.name}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.15 }}
-              whileHover={{ y: -8 }}
-              className="group relative overflow-hidden rounded-[2px] h-[400px] shadow-sm transition-shadow hover:shadow-[0_20px_60px_rgba(107,47,160,0.2)] bg-white"
-            >
-              {/* The aesthetic background */}
-              <CardBackground index={i} />
-
-              {/* Default Name label at bottom (visible when NOT hovering, desktop only) */}
-              <div className="absolute inset-x-0 bottom-0 p-4 hidden justify-center bg-gradient-to-t from-white/90 to-transparent transition-opacity duration-300 lg:flex lg:group-hover:opacity-0">
-                <span className="font-inter text-[12px] font-bold uppercase tracking-[0.1em] text-ink drop-shadow-sm">
-                  {card.name}
-                </span>
-              </div>
-
-              {/* Info overlay — auto-crossfades with the art on mobile (nothing to discover, it just plays), hover-reveal on desktop */}
+            <Link key={card.name} href={card.href ?? "/contact"} className="block">
               <m.div
-                className={`absolute inset-0 bg-[#290a47]/85 transition-opacity duration-300 ${
-                  reduced ? "opacity-100 lg:opacity-0" : "opacity-0"
-                } lg:group-hover:opacity-100 flex flex-col justify-between p-6 md:p-8 z-20 backdrop-blur-sm`}
-                initial={autoReveal ? { opacity: 0 } : undefined}
-                animate={autoReveal ? { opacity: [0, 0, 1, 1, 0] } : undefined}
-                transition={
-                  autoReveal
-                    ? {
-                        duration: 8,
-                        times: [0, 0.375, 0.5, 0.875, 1],
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                        delay: i * 1.2,
-                      }
-                    : { duration: 0.3 }
-                }
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.15 }}
+                whileHover={{ y: -8 }}
+                className="group relative overflow-hidden rounded-[2px] h-[400px] shadow-sm transition-shadow hover:shadow-[0_20px_60px_rgba(107,47,160,0.2)] bg-white"
               >
+                {/* The aesthetic background */}
+                <CardBackground index={i} />
 
-                {/* Top blurb */}
-                <div>
-                  <p className="font-inter text-[10px] font-semibold uppercase tracking-[0.3em] text-white/70 border-b border-white/20 pb-3">
-                    {card.blurb}
-                  </p>
-                  <h3 className="mt-4 font-inter text-[16px] font-bold uppercase tracking-[0.15em] text-white leading-snug">
+                {/* Default Name label at bottom (visible when NOT hovering, desktop only) */}
+                <div className="absolute inset-x-0 bottom-0 p-4 hidden justify-center bg-gradient-to-t from-white/90 to-transparent transition-opacity duration-300 lg:flex lg:group-hover:opacity-0">
+                  <span className="font-inter text-[12px] font-bold uppercase tracking-[0.1em] text-ink drop-shadow-sm">
                     {card.name}
-                  </h3>
+                  </span>
                 </div>
 
-                {/* Bottom CTA */}
-                <div>
-                  {card.price && (
-                    <p className="font-cormorant text-[28px] text-white mb-4">{card.price}</p>
-                  )}
-                  <Link
-                    href={card.href ?? "/contact"}
-                    className="flex w-fit items-center gap-2 font-inter text-[11px] font-semibold uppercase tracking-[0.15em] text-white bg-white/10 hover:bg-white/20 px-4 py-2 rounded-full transition-colors"
-                  >
-                    {card.cta}
-                    <ArrowRight size={13} />
-                  </Link>
-                </div>
+                {/* Info overlay — auto-crossfades with the art on mobile (nothing to discover, it just plays), hover-reveal on desktop. Purely decorative now: the whole card is the Link (wrapper above), so this overlay no longer needs to carry any interactive/navigable element for the page to work on a single tap. */}
+                <m.div
+                  className={`absolute inset-0 bg-[#290a47]/85 transition-opacity duration-300 ${
+                    reduced ? "opacity-100 lg:opacity-0" : "opacity-0"
+                  } lg:group-hover:opacity-100 flex flex-col justify-between p-6 md:p-8 z-20 backdrop-blur-sm`}
+                  initial={autoReveal ? { opacity: 0 } : undefined}
+                  animate={autoReveal ? { opacity: [0, 0, 1, 1, 0] } : undefined}
+                  transition={
+                    autoReveal
+                      ? {
+                          duration: 8,
+                          times: [0, 0.375, 0.5, 0.875, 1],
+                          repeat: Infinity,
+                          ease: "easeInOut",
+                          delay: i * 1.2,
+                        }
+                      : { duration: 0.3 }
+                  }
+                >
+                  {/* Top blurb */}
+                  <div>
+                    <p className="font-inter text-[10px] font-semibold uppercase tracking-[0.3em] text-white/70 border-b border-white/20 pb-3">
+                      {card.blurb}
+                    </p>
+                    <h3 className="mt-4 font-inter text-[16px] font-bold uppercase tracking-[0.15em] text-white leading-snug">
+                      {card.name}
+                    </h3>
+                  </div>
+
+                  {/* Bottom CTA — visual only; the whole card (Link wrapper above) is the
+                      actual navigation target, so this stays a <span>, never a nested <a>. */}
+                  <div>
+                    {card.price && (
+                      <p className="font-cormorant text-[28px] text-white mb-4">{card.price}</p>
+                    )}
+                    <span className="flex w-fit items-center gap-2 font-inter text-[11px] font-semibold uppercase tracking-[0.15em] text-white bg-white/10 group-hover:bg-white/20 px-4 py-2 rounded-full transition-colors">
+                      {card.cta}
+                      <ArrowRight size={13} />
+                    </span>
+                  </div>
+                </m.div>
               </m.div>
-            </m.div>
+            </Link>
           ))}
         </div>
       </div>

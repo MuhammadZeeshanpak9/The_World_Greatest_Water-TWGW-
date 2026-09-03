@@ -133,12 +133,12 @@ export default function OurStory() {
                 {/* Badge Overlay */}
                 <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between rounded-2xl border border-white/20 bg-white/20 p-4 backdrop-blur-md">
                   <div>
-                    <span className="flex items-center gap-1.5 font-inter text-[10px] font-bold uppercase tracking-[0.2em] text-teal-light">
-                      <Sparkles size={12} className="text-teal" />
+                    <span className="flex items-center gap-1.5 font-inter text-[10px] font-bold uppercase tracking-[0.2em] text-green-400">
+                      <Sparkles size={12} className="text-green-400" />
                       ELEV8 WATER
                     </span>
                     <p className="mt-0.5 font-cormorant text-[18px] text-white">
-                      ELEV8 LOVE & ALL
+                      ELEV8 LOVE + ALL
                     </p>
                   </div>
                   <span className="rounded-full bg-gradient-brand px-3 py-1 font-inter text-[9px] font-bold uppercase tracking-widest text-white shadow-md">
