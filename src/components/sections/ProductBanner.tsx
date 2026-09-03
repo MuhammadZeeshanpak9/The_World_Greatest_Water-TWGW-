@@ -42,7 +42,7 @@ export default function ProductBanner() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="mt-6 max-w-lg font-inter text-base leading-[1.9] text-body"
+            className="mt-6 max-w-lg font-inter text-lg leading-[1.9] text-body"
           >
             Inside every bottle of{" "}
             <strong className="font-semibold text-ink">
@@ -58,7 +58,7 @@ export default function ProductBanner() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="mt-8 font-inter text-sm font-bold uppercase tracking-[0.2em] text-violet"
+            className="mt-8 font-inter text-base font-bold uppercase tracking-[0.2em] text-violet"
           >
             What&apos;s not in your personal water:
           </m.h3>
@@ -68,7 +68,7 @@ export default function ProductBanner() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.25 }}
-            className="mt-5 max-w-lg font-inter text-[15px] leading-[1.9] text-body"
+            className="mt-5 max-w-lg font-inter text-lg leading-[1.9] text-body"
           >
             Free from chemical additives such as chlorine, fluoride, sodium
             bicarbonate and many more, to deliver a refreshing and pure
