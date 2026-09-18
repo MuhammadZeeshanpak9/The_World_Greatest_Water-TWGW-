@@ -10,6 +10,7 @@ import {
   Users,
   RefreshCw,
   Mail,
+  MessageSquare,
   Inbox,
   FileText,
   Calendar,
@@ -53,6 +54,7 @@ export default function Sidebar({ unreadCount }: { unreadCount: number }) {
     { label: "Payments", href: "/admin/payments", icon: CreditCard },
     { label: "Courses", href: "/admin/courses", icon: GraduationCap },
     { label: "Newsletter", href: "/admin/newsletter", icon: Send },
+    { label: "Conversations", href: "/admin/conversations", icon: MessageSquare },
     { label: "Audit Log", href: "/admin/audit-log", icon: History },
     { label: "Settings", href: "/admin/settings", icon: Settings },
   ];

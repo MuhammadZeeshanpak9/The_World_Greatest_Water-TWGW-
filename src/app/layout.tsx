@@ -9,6 +9,7 @@ import PageViewTracker from "@/components/analytics/PageViewTracker";
 import CookieConsent from "@/components/ui/DynamicCookieConsent";
 import BackgroundMusic from "@/components/ui/DynamicBackgroundMusic";
 import AnalyticsScripts from "@/components/analytics/DynamicAnalyticsScripts";
+import ChatWidget from "@/components/chat/DynamicChatWidget";
 
 const cormorant = Outfit({
   variable: "--font-cormorant-garamond",
@@ -71,6 +72,7 @@ export default function RootLayout({
           <AnalyticsScripts />
           <BackgroundMusic />
           <CookieConsent />
+          <ChatWidget />
         </LazyMotion>
       </body>
     </html>
