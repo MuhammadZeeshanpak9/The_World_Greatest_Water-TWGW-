@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { AnimatePresence, m } from "framer-motion";
-import { Menu, Search, ShoppingBag, User } from "lucide-react";
+import { Menu, Search, ShoppingBag, Sparkles, User } from "lucide-react";
 import { NAV_LINKS } from "@/data/content";
 import { useScrollPosition } from "@/lib/hooks";
 import { CurvedUnderline, WaterDrop } from "@/components/ui/primitives";
@@ -166,6 +166,13 @@ export default function Navbar() {
               <button aria-label="Search" className={`hidden sm:block ${iconColor}`}>
                 <Search size={18} />
               </button>
+              <Link
+                href="/chat"
+                className="hidden items-center gap-1.5 rounded-full border border-violet px-3 py-1.5 font-inter text-[10px] font-medium uppercase tracking-[0.2em] text-violet transition-colors hover:bg-violet hover:text-white sm:flex"
+              >
+                <Sparkles size={11} />
+                ELEV8 V.A.
+              </Link>
               <Link href="/cart" aria-label="Cart" className={`relative ${iconColor}`}>
                 <ShoppingBag size={18} />
                 <AnimatePresence>

@@ -2,7 +2,7 @@
 
 import { AnimatePresence, m } from "framer-motion";
 import Link from "next/link";
-import { X } from "lucide-react";
+import { Sparkles, X } from "lucide-react";
 import { NAV_LINKS } from "@/data/content";
 
 export default function MobileMenu({
@@ -64,6 +64,20 @@ export default function MobileMenu({
                 )}
               </m.div>
             ))}
+            <m.div
+              initial={{ opacity: 0, x: 24 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.1 + NAV_LINKS.length * 0.05 }}
+            >
+              <Link
+                href="/chat"
+                onClick={onClose}
+                className="inline-flex items-center gap-2 rounded-full border border-violet px-4 py-2 font-inter text-[11px] font-medium uppercase tracking-[0.2em] text-violet transition-colors hover:bg-violet hover:text-white"
+              >
+                <Sparkles size={13} />
+                ELEV8 V.A.
+              </Link>
+            </m.div>
           </nav>
         </m.div>
       )}
