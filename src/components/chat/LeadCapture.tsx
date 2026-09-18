@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { m } from "framer-motion";
-import { X } from "lucide-react";
+import { X, CheckCircle } from "lucide-react";
 
 export default function LeadCapture({
   sessionId,
@@ -18,10 +18,7 @@ export default function LeadCapture({
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!email.trim()) {
-      setError("Please enter your email");
-      return;
-    }
+    if (!email.trim()) { setError("Please enter your email"); return; }
     setStatus("submitting");
     setError(null);
     try {
@@ -37,62 +34,106 @@ export default function LeadCapture({
         return;
       }
       setStatus("done");
-      setTimeout(onDismiss, 1500);
+      setTimeout(onDismiss, 2000);
     } catch {
       setError("Something went wrong. Please try again.");
       setStatus("idle");
     }
   }
 
+  const inputStyle: React.CSSProperties = {
+    width: "100%",
+    background: "rgba(255,255,255,0.08)",
+    border: "1px solid rgba(255,255,255,0.2)",
+    borderRadius: "10px",
+    padding: "10px 12px",
+    fontFamily: "inherit",
+    fontSize: "12px",
+    color: "#fff",
+    outline: "none",
+  };
+
   return (
     <m.div
-      initial={{ opacity: 0, y: 12 }}
+      initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: 12 }}
-      transition={{ duration: 0.3 }}
-      className="glass-card-dark relative mt-2 rounded-2xl p-4"
+      exit={{ opacity: 0, y: 10 }}
+      transition={{ duration: 0.25 }}
+      className="relative rounded-2xl p-4"
+      style={{
+        background: "rgba(255,255,255,0.06)",
+        backdropFilter: "blur(12px)",
+        border: "1px solid rgba(255,255,255,0.15)",
+      }}
     >
       <button
         type="button"
         onClick={onDismiss}
         aria-label="Dismiss"
-        className="absolute right-3 top-3 text-white/40 transition-colors hover:text-white"
+        className="absolute right-3 top-3"
+        style={{ color: "rgba(255,255,255,0.5)" }}
+        onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = "#fff"; }}
+        onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.5)"; }}
       >
         <X size={14} />
       </button>
 
       {status === "done" ? (
-        <p className="pr-4 font-inter text-[12px] text-[#4ECDC4]">
-          Thank you — we&apos;ll be in touch.
-        </p>
-      ) : (
-        <form onSubmit={handleSubmit} className="flex flex-col gap-2 pr-4">
-          <p className="font-cormorant text-[15px] text-white">
-            Stay connected with ELEV8
+        <m.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="flex items-center gap-2 pr-4"
+        >
+          <CheckCircle size={16} style={{ color: "#3dd6cb" }} />
+          <p className="font-inter text-[12px] text-white">
+            Thank you — we&apos;ll be in touch.
           </p>
+        </m.div>
+      ) : (
+        <form onSubmit={handleSubmit} className="flex flex-col gap-2.5 pr-4">
+          <div>
+            <p className="font-cormorant text-[16px] font-semibold text-white">
+              Stay connected with ELEV8
+            </p>
+            <p className="font-inter text-[11px]" style={{ color: "rgba(255,255,255,0.6)" }}>
+              Get exclusive updates and offers.
+            </p>
+          </div>
           <input
             type="text"
             placeholder="Your name"
             value={name}
             onChange={(e) => setName(e.target.value)}
             maxLength={200}
-            className="rounded-lg border border-white/15 bg-white/5 px-3 py-2 font-inter text-[12px] text-white placeholder:text-white/40 focus:border-[#6B2FA0] focus:outline-none"
+            style={inputStyle}
+            onFocus={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.4)"; (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.12)"; }}
+            onBlur={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.2)"; (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.08)"; }}
           />
           <input
             type="email"
-            placeholder="Your email"
+            placeholder="Your email *"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            className="rounded-lg border border-white/15 bg-white/5 px-3 py-2 font-inter text-[12px] text-white placeholder:text-white/40 focus:border-[#6B2FA0] focus:outline-none"
+            style={inputStyle}
+            onFocus={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.4)"; (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.12)"; }}
+            onBlur={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.2)"; (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.08)"; }}
           />
-          {error && <p className="font-inter text-[11px] text-red-400">{error}</p>}
+          {error && (
+            <p className="font-inter text-[11px]" style={{ color: "#fca5a5" }}>{error}</p>
+          )}
           <button
             type="submit"
             disabled={status === "submitting"}
-            className="mt-1 rounded-full bg-gradient-to-r from-[#6B2FA0] to-[#4ECDC4] px-4 py-2 font-inter text-[11px] font-semibold uppercase tracking-[0.15em] text-white transition-opacity hover:opacity-90 disabled:opacity-50"
+            className="rounded-xl px-4 py-2.5 font-inter text-[11px] font-semibold uppercase tracking-[0.12em] text-white transition-all disabled:opacity-50"
+            style={{ background: "#5e2d91" }}
+            onMouseEnter={(e) => {
+              if (!(e.currentTarget as HTMLButtonElement).disabled)
+                (e.currentTarget as HTMLElement).style.background = "#4a2270";
+            }}
+            onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "#5e2d91"; }}
           >
-            {status === "submitting" ? "Sending..." : "Submit"}
+            {status === "submitting" ? "Sending…" : "Stay in Touch"}
           </button>
         </form>
       )}

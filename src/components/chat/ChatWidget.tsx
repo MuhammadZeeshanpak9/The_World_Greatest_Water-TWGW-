@@ -3,36 +3,11 @@
 import { useState } from "react";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, m } from "framer-motion";
+import { Sparkles } from "lucide-react";
 import ChatWindow from "./ChatWindow";
 import ProactiveTrigger from "./ProactiveTrigger";
 
-const SPARKLE_WAVE_ICON = (
-  <svg viewBox="0 0 24 24" fill="none" className="h-7 w-7" aria-hidden="true">
-    <path
-      d="M12 3.5l1.4 4.1 4.1 1.4-4.1 1.4L12 14.5l-1.4-4.1-4.1-1.4 4.1-1.4L12 3.5z"
-      fill="currentColor"
-    />
-    <path
-      d="M4 16.5c1.5 1.2 3 1.2 4.5 0s3-1.2 4.5 0 3 1.2 4.5 0 3-1.2 4.5 0"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      fill="none"
-    />
-    <path
-      d="M4 20c1.5 1.2 3 1.2 4.5 0s3-1.2 4.5 0 3 1.2 4.5 0 3-1.2 4.5 0"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      fill="none"
-      opacity="0.6"
-    />
-  </svg>
-);
-
-/** Owns the floating ChatBubble + its open ChatWindow, and the proactive-trigger timer that can
- * also open it — the two need to coordinate through one shared piece of state. Hidden entirely on
- * /admin/* and /chat (dedicated full-page chat already exists there). */
+/** Owns the floating ChatBubble + its open ChatWindow. Hidden on /admin/* and /chat. */
 export default function ChatWidget() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
@@ -46,22 +21,18 @@ export default function ChatWidget() {
     setHasUnread(false);
   }
 
-  function handleProactiveOpen() {
-    setHasUnread(true);
-  }
-
   return (
     <>
-      <ProactiveTrigger onTrigger={handleProactiveOpen} chatOpen={open} />
+      <ProactiveTrigger onTrigger={() => setHasUnread(true)} chatOpen={open} />
 
       <div className="fixed bottom-6 right-6 z-[9999] flex flex-col items-end gap-4">
         <AnimatePresence>
           {open && (
             <m.div
-              initial={{ opacity: 0, y: 20, scale: 0.95 }}
+              initial={{ opacity: 0, y: 16, scale: 0.96 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 20, scale: 0.95 }}
-              transition={{ duration: 0.25, ease: "easeOut" }}
+              exit={{ opacity: 0, y: 16, scale: 0.96 }}
+              transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
               className="fixed inset-0 sm:static sm:inset-auto"
             >
               <div className="h-full w-full sm:h-auto sm:w-auto">
@@ -72,20 +43,48 @@ export default function ChatWidget() {
         </AnimatePresence>
 
         {!open && (
-          <button
+          <m.button
             type="button"
             onClick={handleOpen}
             aria-label="Open ELEV8 V.A. chat"
-            className="btn-glow relative flex h-[60px] w-[60px] items-center justify-center rounded-full bg-gradient-to-br from-[#6B2FA0] to-[#4ECDC4] text-white shadow-[0_10px_40px_rgba(107,47,160,0.5)] transition-transform hover:scale-105"
+            whileHover={{ scale: 1.06 }}
+            whileTap={{ scale: 0.94 }}
+            animate={{
+              y: [0, -8, 0],
+              boxShadow: [
+                "0 8px 30px rgba(94,45,145,0.4)",
+                "0 15px 45px rgba(94,45,145,0.85)",
+                "0 8px 30px rgba(94,45,145,0.4)",
+              ],
+            }}
+            transition={{
+              duration: 3.5,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+            className="relative flex h-[56px] w-[56px] items-center justify-center rounded-full text-white"
+            style={{
+              background: "#5e2d91",
+            }}
           >
-            <span className="absolute inset-0 animate-ping rounded-full bg-[#6B2FA0]/40" />
-            <span className="relative">{SPARKLE_WAVE_ICON}</span>
+            <m.div
+              animate={{ rotate: [0, 8, -8, 0] }}
+              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <Sparkles size={20} />
+            </m.div>
+
             {hasUnread && (
-              <span className="absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[9px] font-bold text-white">
+              <m.span
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                className="absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full font-inter text-[9px] font-bold text-white"
+                style={{ background: "#ef4444" }}
+              >
                 1
-              </span>
+              </m.span>
             )}
-          </button>
+          </m.button>
         )}
       </div>
     </>

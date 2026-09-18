@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { AnimatePresence } from "framer-motion";
-import { Send, X } from "lucide-react";
+import { AnimatePresence, m } from "framer-motion";
+import { Send, X, Sparkles } from "lucide-react";
 import LanguageSelector, { detectBrowserLanguage } from "./LanguageSelector";
 import LeadCapture from "./LeadCapture";
 import EscalationPanel from "./EscalationPanel";
@@ -18,14 +18,38 @@ function makeMessage(role: ChatMessage["role"], content: string): ChatMessage {
   return { id: crypto.randomUUID(), role, content, createdAt: Date.now() };
 }
 
-const SUGGESTED_QUESTIONS = [
+const SUGGESTIONS = [
   "What makes ELEV8 WATER different?",
   "Tell me about the 12 bottles",
   "How does the Wellness membership work?",
   "I'd like to speak with a human",
 ];
 
-const MAX_MESSAGE_LENGTH = 500;
+const MAX_LEN = 500;
+
+/* ── Typing indicator ── */
+function TypingDots() {
+  return (
+    <div className="flex justify-start">
+      <div
+        className="inline-flex items-center gap-1.5 rounded-2xl px-4 py-3"
+        style={{
+          background: "rgba(255,255,255,0.1)",
+          backdropFilter: "blur(12px)",
+          border: "1px solid rgba(255,255,255,0.15)",
+        }}
+      >
+        {[0, 1, 2].map((i) => (
+          <span
+            key={i}
+            className="h-1.5 w-1.5 animate-bounce rounded-full"
+            style={{ background: "#fff", opacity: 0.6, animationDelay: `${i * 0.15}s` }}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
 
 export default function ChatWindow({
   mode = "floating",
@@ -51,6 +75,10 @@ export default function ChatWindow({
   const [leadDismissed, setLeadDismissed] = useState(false);
   const [errorText, setErrorText] = useState<string | null>(null);
   const scrollRef = useRef<HTMLDivElement | null>(null);
+  const inputRef = useRef<HTMLTextAreaElement | null>(null);
+
+  const hasMessages = messages.length > 0;
+  const isFull = mode === "full";
 
   useEffect(() => {
     fetch("/api/chat/session", {
@@ -58,9 +86,9 @@ export default function ChatWindow({
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ language, page_url: window.location.pathname }),
     })
-      .then((res) => res.json())
-      .then((data) => setSessionId(data.session_id))
-      .catch(() => setErrorText("Unable to start chat session right now."));
+      .then((r) => r.json())
+      .then((d) => setSessionId(d.session_id))
+      .catch(() => setErrorText("Unable to start session."));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -74,13 +102,10 @@ export default function ChatWindow({
   async function sendMessage(text: string) {
     const trimmed = text.trim();
     if (!trimmed || !sessionId || sending) return;
-
     setErrorText(null);
-    const userMsg = makeMessage("user", trimmed);
-    setMessages((prev) => [...prev, userMsg]);
+    setMessages((p) => [...p, makeMessage("user", trimmed)]);
     setInput("");
     setSending(true);
-
     try {
       const res = await fetch("/api/chat/message", {
         method: "POST",
@@ -88,150 +113,376 @@ export default function ChatWindow({
         body: JSON.stringify({ message: trimmed, session_id: sessionId, language }),
       });
       const data = await res.json();
-      if (!res.ok) {
-        setErrorText(data.error ?? "Something went wrong. Please try again.");
-        setSending(false);
-        return;
-      }
-      const assistantMsg = makeMessage("assistant", data.response);
-      setMessages((prev) => {
-        const next = [...prev, assistantMsg];
-        const assistantCount = next.filter((m) => m.role === "assistant").length;
-        if (assistantCount === 1 && !leadDismissed) setShowLead(true);
+      if (!res.ok) { setErrorText(data.error ?? "Something went wrong."); setSending(false); return; }
+      const reply = makeMessage("assistant", data.response);
+      setMessages((p) => {
+        const next = [...p, reply];
+        const count = next.filter((m) => m.role === "assistant").length;
+        if (count === 1 && !leadDismissed) setShowLead(true);
         return next;
       });
-    } catch {
-      setErrorText("Something went wrong. Please try again.");
-    } finally {
-      setSending(false);
-    }
+    } catch { setErrorText("Something went wrong. Please try again."); }
+    finally { setSending(false); }
   }
 
-  function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    sendMessage(input);
+  function handleKey(e: React.KeyboardEvent<HTMLTextAreaElement>) {
+    if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendMessage(input); }
   }
 
-  const isFull = mode === "full";
-
-  return (
-    <div
-      className={`glass-card-dark flex flex-col overflow-hidden rounded-2xl ${
-        isFull ? "h-full w-full" : "h-[560px] w-[380px] max-w-[calc(100vw-2rem)]"
-      }`}
-      style={{ background: "#0A0A0A" }}
-    >
-      {/* Header */}
-      <div className="flex items-center justify-between gap-2 bg-gradient-to-r from-[#6B2FA0] to-[#4ECDC4] px-4 py-3">
-        <div className="flex items-center gap-2">
-          <span className="relative flex h-2 w-2">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-white/60" />
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-white" />
-          </span>
-          <h2 className="font-cormorant text-[19px] font-semibold text-white">ELEV8 V.A.</h2>
-        </div>
-        <div className="flex items-center gap-2">
-          {showLanguageSelector && (
-            <LanguageSelector value={language} onChange={setLanguage} compact />
-          )}
-          {onClose && (
-            <button
-              type="button"
-              onClick={onClose}
-              aria-label="Close chat"
-              className="text-white/90 transition-colors hover:text-white"
-            >
-              <X size={18} />
-            </button>
-          )}
-        </div>
-      </div>
-
-      {/* Messages */}
-      <div ref={scrollRef} className="flex-1 space-y-3 overflow-y-auto px-4 py-4">
-        {messages.length === 0 && (
-          <div className="flex flex-col gap-2">
-            <p className="font-inter text-[12px] text-white/50">Try asking:</p>
-            {SUGGESTED_QUESTIONS.map((q) => (
-              <button
-                key={q}
-                type="button"
-                onClick={() => sendMessage(q)}
-                className="rounded-full border border-white/15 bg-white/5 px-3 py-2 text-left font-inter text-[12px] text-white/80 transition-colors hover:bg-white/10"
-              >
-                {q}
-              </button>
-            ))}
-          </div>
-        )}
-
-        {messages.map((msg) => (
-          <div key={msg.id} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
+  /* ══════════════════════════════════════
+     FLOATING MODE — crystal glass window
+  ══════════════════════════════════════ */
+  if (!isFull) {
+    return (
+      <div
+        className="flex h-[560px] w-[380px] max-w-[calc(100vw-2rem)] flex-col overflow-hidden rounded-2xl"
+        style={{
+          background: "rgba(255,255,255,0.1)",
+          backdropFilter: "blur(24px)",
+          border: "1px solid rgba(255,255,255,0.15)",
+          boxShadow: "0 24px 60px rgba(0,0,0,0.4)",
+        }}
+      >
+        {/* Header */}
+        <div
+          className="flex shrink-0 items-center justify-between px-4 py-3"
+          style={{ borderBottom: "1px solid rgba(255,255,255,0.1)" }}
+        >
+          <div className="flex items-center gap-2.5">
             <div
-              className={`max-w-[80%] rounded-2xl px-3.5 py-2.5 font-inter text-[13px] leading-relaxed ${
-                msg.role === "user"
-                  ? "bg-[#6B2FA0] text-white"
-                  : "glass-card-dark text-white/90"
-              }`}
+              className="flex h-8 w-8 items-center justify-center rounded-xl text-[11px] font-bold text-white"
+              style={{ background: "linear-gradient(135deg,#5e2d91,#3dd6cb)" }}
             >
-              <p>{msg.content}</p>
-              <span className="mt-1 block text-[10px] opacity-50">
-                {new Date(msg.createdAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
-              </span>
+              <Sparkles size={14} />
+            </div>
+            <div>
+              <p className="font-cormorant text-[15px] font-semibold leading-none text-white">ELEV8 V.A.</p>
+              <p className="font-inter text-[10px] uppercase tracking-[0.12em]" style={{ color: "#3dd6cb" }}>● Online</p>
             </div>
           </div>
-        ))}
+          <div className="flex items-center gap-1.5">
+            {showLanguageSelector && <LanguageSelector value={language} onChange={setLanguage} compact />}
+            {onClose && (
+              <button type="button" onClick={onClose} aria-label="Close" style={{ color: "rgba(255,255,255,0.6)" }}
+                onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = "#fff"; }}
+                onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.6)"; }}>
+                <X size={16} />
+              </button>
+            )}
+          </div>
+        </div>
 
-        {sending && (
-          <div className="flex justify-start">
-            <div className="glass-card-dark flex gap-1 rounded-2xl px-3.5 py-3">
-              {[0, 1, 2].map((i) => (
-                <span
-                  key={i}
-                  className="h-1.5 w-1.5 animate-bounce rounded-full bg-white/50"
-                  style={{ animationDelay: `${i * 0.15}s` }}
-                />
+        {/* Messages */}
+        <div ref={scrollRef} className="flex flex-1 flex-col gap-3 overflow-y-auto px-4 py-4">
+          {!hasMessages && (
+            <div className="flex flex-col gap-2">
+              <p className="font-inter text-[11px]" style={{ color: "rgba(255,255,255,0.5)" }}>Try asking:</p>
+              {SUGGESTIONS.map((q) => (
+                <button key={q} type="button" onClick={() => sendMessage(q)}
+                  className="rounded-xl px-3 py-2.5 text-left font-inter text-[12px] transition-all"
+                  style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)", color: "rgba(255,255,255,0.8)" }}
+                  onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = "#fff"; (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.3)"; (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.12)"; }}
+                  onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.8)"; (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.1)"; (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.06)"; }}>
+                  {q}
+                </button>
               ))}
             </div>
-          </div>
-        )}
-
-        {errorText && <p className="font-inter text-[11px] text-red-400">{errorText}</p>}
-
-        <AnimatePresence>
-          {showEscalation && <EscalationPanel key="escalation" />}
-          {showLead && !leadDismissed && sessionId && (
-            <LeadCapture
-              key="lead"
-              sessionId={sessionId}
-              onDismiss={() => {
-                setShowLead(false);
-                setLeadDismissed(true);
-              }}
-            />
           )}
-        </AnimatePresence>
-      </div>
+          <AnimatePresence initial={false}>
+            {messages.map((msg) => (
+              <m.div key={msg.id} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.2 }}
+                className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
+                <div className="max-w-[80%] rounded-2xl px-3.5 py-2.5 font-inter text-[12px] leading-relaxed"
+                  style={msg.role === "user"
+                    ? { background: "rgba(255,255,255,0.2)", backdropFilter: "blur(12px)", color: "#fff", borderBottomRightRadius: 6, border: "1px solid rgba(255,255,255,0.3)" }
+                    : { background: "rgba(94,45,145,0.25)", backdropFilter: "blur(12px)", border: "1px solid rgba(94,45,145,0.4)", color: "#fff", borderBottomLeftRadius: 6 }}>
+                  <p>{msg.content}</p>
+                  <span className="mt-1 block text-right text-[10px]" style={{ color: msg.role === "user" ? "rgba(255,255,255,0.7)" : "rgba(255,255,255,0.5)" }}>
+                    {new Date(msg.createdAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+                  </span>
+                </div>
+              </m.div>
+            ))}
+          </AnimatePresence>
+          {sending && <TypingDots />}
+          {errorText && <p className="font-inter text-[11px]" style={{ color: "#fca5a5" }}>{errorText}</p>}
+          <AnimatePresence>
+            {showEscalation && <EscalationPanel key="esc" />}
+            {showLead && !leadDismissed && sessionId && (
+              <LeadCapture key="lead" sessionId={sessionId} onDismiss={() => { setShowLead(false); setLeadDismissed(true); }} />
+            )}
+          </AnimatePresence>
+        </div>
 
-      {/* Input */}
-      <form onSubmit={handleSubmit} className="flex items-center gap-2 border-t border-white/10 px-3 py-3">
-        <input
-          type="text"
-          value={input}
-          onChange={(e) => setInput(e.target.value.slice(0, MAX_MESSAGE_LENGTH))}
-          placeholder="Type your message..."
-          disabled={!sessionId || sending}
-          className="flex-1 rounded-full border border-white/15 bg-white/5 px-4 py-2.5 font-inter text-[13px] text-white placeholder:text-white/40 focus:border-[#6B2FA0] focus:outline-none disabled:opacity-50"
-        />
-        <button
-          type="submit"
-          disabled={!sessionId || sending || !input.trim()}
-          aria-label="Send message"
-          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-r from-[#6B2FA0] to-[#4ECDC4] text-white transition-opacity hover:opacity-90 disabled:opacity-40"
+        {/* Input */}
+        <div className="shrink-0 px-4 py-3" style={{ borderTop: "1px solid rgba(255,255,255,0.1)" }}>
+          <form onSubmit={(e) => { e.preventDefault(); sendMessage(input); }}
+            className="flex items-center gap-2 rounded-xl px-3 py-2"
+            style={{ background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.2)" }}>
+            <input type="text" value={input} onChange={(e) => setInput(e.target.value.slice(0, MAX_LEN))}
+              placeholder="Ask me anything…" disabled={!sessionId || sending}
+              className="flex-1 bg-transparent font-inter text-[12px] focus:outline-none disabled:opacity-40"
+              style={{ color: "#fff" }} />
+            <button type="submit" disabled={!sessionId || sending || !input.trim()} aria-label="Send"
+              className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg transition-all disabled:opacity-30"
+              style={{ background: "#5e2d91" }}>
+              <Send size={12} style={{ color: "#fff" }} />
+            </button>
+          </form>
+        </div>
+      </div>
+    );
+  }
+
+  /* ══════════════════════════════════════
+     FULL PAGE MODE — Crystal Glass Omago-style
+  ══════════════════════════════════════ */
+  return (
+    <div className="relative flex h-full w-full flex-col">
+
+      {/* ── LANDING STATE: centered greeting + big input ── */}
+      <AnimatePresence>
+        {!hasMessages && (
+          <m.div
+            key="landing"
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+            className="flex flex-1 flex-col items-center justify-center px-4 pb-8"
+          >
+            {/* Greeting */}
+            <m.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="mb-8 text-center"
+            >
+              <p className="mb-2 font-inter text-[12px] uppercase tracking-[0.22em]"
+                style={{ color: "rgba(255,255,255,0.6)" }}>
+                ELEV8 Virtual Assistant
+              </p>
+              <h1 className="font-cormorant text-[38px] font-semibold leading-tight md:text-[46px]"
+                style={{ color: "#fff", textShadow: "0 2px 20px rgba(0,0,0,0.5)" }}>
+                Hi, I&apos;m ELEV8 V.A.
+              </h1>
+              <p className="mt-2 font-inter text-[14px]"
+                style={{ color: "rgba(255,255,255,0.7)" }}>
+                How can I elevate your experience today?
+              </p>
+            </m.div>
+
+            {/* Big input box */}
+            <m.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="w-full max-w-xl"
+            >
+              <div
+                className="w-full overflow-hidden rounded-2xl"
+                style={{
+                  background: "rgba(255,255,255,0.1)",
+                  backdropFilter: "blur(24px)",
+                  boxShadow: "0 20px 60px rgba(0,0,0,0.3)",
+                  border: "1px solid rgba(255,255,255,0.2)",
+                }}
+              >
+                <textarea
+                  ref={inputRef}
+                  value={input}
+                  onChange={(e) => setInput(e.target.value.slice(0, MAX_LEN))}
+                  onKeyDown={handleKey}
+                  placeholder="Ask anything…"
+                  rows={3}
+                  disabled={!sessionId}
+                  className="w-full resize-none bg-transparent px-5 pt-5 pb-2 font-inter text-[14px] text-white placeholder:text-white/40 focus:outline-none disabled:opacity-40"
+                />
+                {/* Bottom row of input box */}
+                <div className="flex items-center justify-between px-4 pb-4 pt-1">
+                  <span className="font-inter text-[11px]" style={{ color: "rgba(255,255,255,0.4)" }}>
+                    {input.length > MAX_LEN * 0.8 ? `${input.length}/${MAX_LEN}` : "Shift + Enter for new line"}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => sendMessage(input)}
+                    disabled={!sessionId || sending || !input.trim()}
+                    aria-label="Send"
+                    className="flex h-9 w-9 items-center justify-center rounded-xl transition-all disabled:opacity-30"
+                    style={{ background: "#5e2d91" }}
+                    onMouseEnter={(e) => { if (!(e.currentTarget as HTMLButtonElement).disabled) (e.currentTarget as HTMLElement).style.background = "#4a2270"; }}
+                    onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "#5e2d91"; }}
+                  >
+                    <Send size={15} style={{ color: "#fff" }} />
+                  </button>
+                </div>
+              </div>
+
+              {/* Suggestion chips — below the input */}
+              <m.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.4 }}
+                className="mt-4 flex flex-wrap justify-center gap-2"
+              >
+                {SUGGESTIONS.map((q) => (
+                  <button
+                    key={q}
+                    type="button"
+                    onClick={() => sendMessage(q)}
+                    className="rounded-full px-4 py-2 font-inter text-[12px] transition-all duration-150"
+                    style={{
+                      background: "rgba(255,255,255,0.08)",
+                      backdropFilter: "blur(12px)",
+                      border: "1px solid rgba(255,255,255,0.15)",
+                      color: "rgba(255,255,255,0.85)",
+                    }}
+                    onMouseEnter={(e) => {
+                      (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.15)";
+                      (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.3)";
+                      (e.currentTarget as HTMLElement).style.color = "#fff";
+                    }}
+                    onMouseLeave={(e) => {
+                      (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.08)";
+                      (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.15)";
+                      (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.85)";
+                    }}
+                  >
+                    {q}
+                  </button>
+                ))}
+              </m.div>
+            </m.div>
+          </m.div>
+        )}
+      </AnimatePresence>
+
+      {/* ── CHAT STATE: messages + bottom input bar ── */}
+      {hasMessages && (
+        <m.div
+          key="chat"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3 }}
+          className="flex flex-1 flex-col overflow-hidden"
         >
-          <Send size={15} />
-        </button>
-      </form>
+          {/* Messages scroll area */}
+          <div ref={scrollRef} className="flex flex-1 flex-col gap-4 overflow-y-auto px-4 py-6 md:px-8">
+            <AnimatePresence initial={false}>
+              {messages.map((msg) => (
+                <m.div
+                  key={msg.id}
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.22 }}
+                  className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
+                >
+                  <div
+                    className="max-w-[75%] rounded-2xl px-4 py-3 font-inter text-[13px] leading-relaxed"
+                    style={
+                      msg.role === "user"
+                        ? {
+                            background: "rgba(255,255,255,0.15)",
+                            backdropFilter: "blur(16px)",
+                            border: "1px solid rgba(255,255,255,0.25)",
+                            color: "#fff",
+                            borderBottomRightRadius: 6,
+                            boxShadow: "0 4px 20px rgba(0,0,0,0.15)",
+                          }
+                        : {
+                            background: "rgba(94,45,145,0.25)",
+                            backdropFilter: "blur(16px)",
+                            border: "1px solid rgba(94,45,145,0.4)",
+                            color: "#fff",
+                            borderBottomLeftRadius: 6,
+                            boxShadow: "0 4px 20px rgba(0,0,0,0.15)",
+                          }
+                    }
+                  >
+                    <p>{msg.content}</p>
+                    <span
+                      className="mt-1.5 block text-right font-inter text-[10px]"
+                      style={{ color: msg.role === "user" ? "rgba(255,255,255,0.6)" : "rgba(255,255,255,0.5)" }}
+                    >
+                      {new Date(msg.createdAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+                    </span>
+                  </div>
+                </m.div>
+              ))}
+            </AnimatePresence>
+            {sending && <TypingDots />}
+            {errorText && (
+              <p className="rounded-xl px-4 py-2 font-inter text-[12px]"
+                style={{ background: "rgba(239,68,68,0.2)", border: "1px solid rgba(239,68,68,0.3)", color: "#fca5a5" }}>
+                {errorText}
+              </p>
+            )}
+            <AnimatePresence>
+              {showEscalation && <EscalationPanel key="esc" />}
+              {showLead && !leadDismissed && sessionId && (
+                <LeadCapture key="lead" sessionId={sessionId}
+                  onDismiss={() => { setShowLead(false); setLeadDismissed(true); }} />
+              )}
+            </AnimatePresence>
+          </div>
+
+          {/* Bottom input bar */}
+          <div
+            className="shrink-0 px-4 py-4 md:px-8"
+            style={{
+              background: "rgba(255,255,255,0.06)",
+              backdropFilter: "blur(16px)",
+              borderTop: "1px solid rgba(255,255,255,0.1)",
+            }}
+          >
+            <div
+              className="flex items-end gap-3 overflow-hidden rounded-2xl"
+              style={{
+                background: "rgba(255,255,255,0.12)",
+                backdropFilter: "blur(16px)",
+                border: "1px solid rgba(255,255,255,0.2)",
+                boxShadow: "0 8px 30px rgba(0,0,0,0.2)",
+              }}
+            >
+              <textarea
+                ref={inputRef}
+                value={input}
+                onChange={(e) => setInput(e.target.value.slice(0, MAX_LEN))}
+                onKeyDown={handleKey}
+                placeholder="Ask me anything…"
+                rows={1}
+                disabled={!sessionId || sending}
+                className="flex-1 resize-none bg-transparent px-5 py-4 font-inter text-[13px] text-white placeholder:text-white/40 focus:outline-none disabled:opacity-40"
+                style={{
+                  minHeight: "52px",
+                  maxHeight: "120px",
+                  overflowY: "auto",
+                  lineHeight: "1.5",
+                }}
+                onInput={(e) => {
+                  const el = e.currentTarget;
+                  el.style.height = "auto";
+                  el.style.height = Math.min(el.scrollHeight, 120) + "px";
+                }}
+              />
+              <button
+                type="button"
+                onClick={() => sendMessage(input)}
+                disabled={!sessionId || sending || !input.trim()}
+                aria-label="Send message"
+                className="m-2.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl transition-all disabled:opacity-30"
+                style={{ background: "#5e2d91" }}
+                onMouseEnter={(e) => { if (!(e.currentTarget as HTMLButtonElement).disabled) (e.currentTarget as HTMLElement).style.background = "#4a2270"; }}
+                onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "#5e2d91"; }}
+              >
+                <Send size={15} style={{ color: "#fff" }} />
+              </button>
+            </div>
+            <p className="mt-2 text-center font-inter text-[10px]" style={{ color: "rgba(255,255,255,0.4)" }}>
+              Shift + Enter for new line
+            </p>
+          </div>
+        </m.div>
+      )}
     </div>
   );
 }

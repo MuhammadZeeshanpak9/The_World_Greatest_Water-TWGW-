@@ -34,7 +34,7 @@ export default function BackgroundMusic() {
         onClick={toggle}
         aria-label={playing ? "Mute background music" : "Play background music"}
         aria-pressed={playing}
-        className="fixed bottom-6 right-6 z-[8000] flex h-12 w-12 items-center justify-center rounded-full border border-white/15 bg-dark-base/90 text-white shadow-[0_8px_24px_rgba(0,0,0,0.4)] backdrop-blur-md transition-transform hover:scale-105 active:scale-95"
+        className="fixed bottom-24 right-6 z-[8000] flex h-12 w-12 items-center justify-center rounded-full border border-white/15 bg-dark-base/90 text-white shadow-[0_8px_24px_rgba(0,0,0,0.4)] backdrop-blur-md transition-transform hover:scale-105 active:scale-95"
       >
         {playing ? <Volume2 size={18} /> : <VolumeX size={18} />}
       </button>
