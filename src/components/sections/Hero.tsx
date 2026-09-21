@@ -15,14 +15,25 @@ export default function Hero() {
   const [rippling, setRippling] = useState(false);
 
   return (
-    <section className="relative flex min-h-screen items-center overflow-hidden pt-28 pb-16">
+    <section className="relative flex min-h-[100svh] items-center overflow-hidden pt-28 pb-16 sm:min-h-screen">
       {/* Full-bleed video background */}
       <div className="absolute inset-0">
-        <VideoWithFallback
-          src="/videos/main-section.mp4"
-          className="scale-125 object-cover object-top"
-          speed={0.45}
-        />
+        {/* Mobile-specific edit — shown below the sm breakpoint only */}
+        <div className="block h-full w-full sm:hidden">
+          <VideoWithFallback
+            src="/videos/main-section-mobile.mp4"
+            className="object-cover object-top"
+            speed={0.45}
+          />
+        </div>
+        {/* Desktop/tablet edit — shown at sm and above */}
+        <div className="hidden h-full w-full sm:block">
+          <VideoWithFallback
+            src="/videos/main-section.mp4"
+            className="scale-125 object-cover object-top"
+            speed={0.45}
+          />
+        </div>
         {/* faint wash only — keeps the video clear while lifting text contrast */}
         <div className="absolute inset-0 bg-white/6" />
         {/* soft bottom gradient so headline/CTA area stays readable */}
