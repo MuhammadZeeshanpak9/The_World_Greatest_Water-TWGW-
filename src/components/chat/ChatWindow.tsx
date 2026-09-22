@@ -57,12 +57,20 @@ export default function ChatWindow({
   language: controlledLanguage,
   onLanguageChange,
   showLanguageSelector = true,
+  forceMobileLayout = false,
 }: {
   mode?: "floating" | "full";
   onClose?: () => void;
   language?: string;
   onLanguageChange?: (code: string) => void;
   showLanguageSelector?: boolean;
+  /** Floating mode only. Set by ChatWidget from its own
+   * useIsMobileOrLandscapePhone check — true whenever the caller's wrapper
+   * is using the mobile full-screen layout, including landscape phones that
+   * are past the `sm` width breakpoint. Overrides the `sm:` panel-sizing
+   * classes below, since plain Tailwind breakpoints can't express that
+   * width-OR-(touch-and-short) condition. */
+  forceMobileLayout?: boolean;
 }) {
   const [sessionId, setSessionId] = useState<string | null>(null);
   const [internalLanguage, setInternalLanguage] = useState(detectBrowserLanguage);
@@ -135,7 +143,11 @@ export default function ChatWindow({
   if (!isFull) {
     return (
       <div
-        className="flex h-[560px] w-[380px] max-w-[calc(100vw-2rem)] flex-col overflow-hidden rounded-2xl"
+        className={
+          forceMobileLayout
+            ? "flex h-full w-full flex-col overflow-hidden rounded-none"
+            : "flex h-full w-full flex-col overflow-hidden rounded-none sm:h-[560px] sm:w-[380px] sm:max-w-[calc(100vw-2rem)] sm:rounded-2xl"
+        }
         style={{
           background: "rgba(255,255,255,0.1)",
           backdropFilter: "blur(24px)",
@@ -143,6 +155,14 @@ export default function ChatWindow({
           boxShadow: "0 24px 60px rgba(0,0,0,0.4)",
         }}
       >
+        {/* Mobile (incl. landscape phones via forceMobileLayout): this panel
+            just fills its parent wrapper (h-full above). The wrapper itself
+            (in ChatWidget.tsx) is what's actually pinned to the visual
+            viewport's top/height via --visual-viewport-offset-top and
+            --visual-viewport-height, so no separate maxHeight is needed
+            here — sizing the wrapper correctly is what keeps the header and
+            input bar on-screen when iOS scrolls the layout viewport for the
+            keyboard, not this element having its own cap. */}
         {/* Header */}
         <div
           className="flex shrink-0 items-center justify-between px-4 py-3"
@@ -173,7 +193,7 @@ export default function ChatWindow({
         </div>
 
         {/* Messages */}
-        <div ref={scrollRef} className="flex flex-1 flex-col gap-3 overflow-y-auto px-4 py-4">
+        <div ref={scrollRef} className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto px-4 py-4">
           {!hasMessages && (
             <div className="flex flex-col gap-2">
               <p className="font-inter text-[11px]" style={{ color: "rgba(255,255,255,0.5)" }}>Try asking:</p>
@@ -215,13 +235,26 @@ export default function ChatWindow({
         </div>
 
         {/* Input */}
-        <div className="shrink-0 px-4 py-3" style={{ borderTop: "1px solid rgba(255,255,255,0.1)" }}>
+        <div
+          className="shrink-0 px-4 pt-3"
+          style={{
+            borderTop: "1px solid rgba(255,255,255,0.1)",
+            // env() insets are inert without viewport-fit=cover in the page's
+            // viewport meta tag (not changed here, see audit report) — this
+            // padding is a no-op fallback until that's set, and harmless
+            // either way (falls back to the 0.75rem value).
+            paddingBottom: "max(0.75rem, env(safe-area-inset-bottom, 0px))",
+          }}
+        >
           <form onSubmit={(e) => { e.preventDefault(); sendMessage(input); }}
             className="flex items-center gap-2 rounded-xl px-3 py-2"
             style={{ background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.2)" }}>
             <input type="text" value={input} onChange={(e) => setInput(e.target.value.slice(0, MAX_LEN))}
               placeholder="Ask me anything…" disabled={!sessionId || sending}
-              className="flex-1 bg-transparent font-inter text-[12px] focus:outline-none disabled:opacity-40"
+              // text-base (16px) below sm avoids iOS Safari's auto-zoom-on-focus
+              // for inputs under 16px, which would disturb this panel's fixed
+              // positioning; sm:text-xs (12px) restores the original desktop size.
+              className="flex-1 bg-transparent font-inter text-base focus:outline-none disabled:opacity-40 sm:text-xs"
               style={{ color: "#fff" }} />
             <button type="submit" disabled={!sessionId || sending || !input.trim()} aria-label="Send"
               className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg transition-all disabled:opacity-30"

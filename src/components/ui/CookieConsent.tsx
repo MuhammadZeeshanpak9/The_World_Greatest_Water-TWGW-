@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, m } from "framer-motion";
 import Link from "next/link";
 import { getConsentLevel, setConsent, type ConsentLevel } from "@/lib/consent";
@@ -10,6 +10,35 @@ export default function CookieConsent() {
   // This component is always dynamically imported with ssr:false, so it only ever mounts
   // client-side — safe to read localStorage directly in the lazy initializer.
   const [visible, setVisible] = useState(() => getConsentLevel() === null);
+  const cardRef = useRef<HTMLDivElement | null>(null);
+
+  // Publish this banner's actual rendered height (including its own bottom
+  // safe-area padding) as a CSS var, so other fixed bottom-anchored UI (the
+  // chat bubble) can raise itself above the banner while it's visible
+  // instead of guessing a hardcoded offset.
+  useEffect(() => {
+    if (!visible) {
+      document.documentElement.style.setProperty("--cookie-banner-height", "0px");
+      return;
+    }
+    const el = cardRef.current;
+    if (!el) return;
+    const update = () => {
+      // getBoundingClientRect (sub-pixel) rather than offsetHeight (rounded
+      // to an integer): consumers subtract this value from the visual
+      // viewport height to size themselves exactly above the banner, and
+      // offsetHeight's rounding-down can leave a <1px gap where the two
+      // still visually overlap.
+      document.documentElement.style.setProperty("--cookie-banner-height", `${el.getBoundingClientRect().height}px`);
+    };
+    update();
+    const ro = new ResizeObserver(update);
+    ro.observe(el);
+    return () => {
+      ro.disconnect();
+      document.documentElement.style.setProperty("--cookie-banner-height", "0px");
+    };
+  }, [visible]);
 
   function handleChoice(level: ConsentLevel) {
     setConsent(level);
@@ -23,6 +52,7 @@ export default function CookieConsent() {
     <AnimatePresence>
       {visible && (
         <m.div
+          ref={cardRef}
           initial={{ y: 100, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: 100, opacity: 0 }}
