@@ -8,8 +8,8 @@ import { WELLNESS_SUBPAGES } from "@/data/content";
 
 const data = WELLNESS_SUBPAGES.find((w) => w.slug === "body")!;
 
-/** Entry-level tier — silver, distinct from MIND/SOUL/UNLOCK. */
-const TIER_COLOR = "#B8B9C0";
+/** Root chakra — soft red, per the Chakra color alignment (R = Root/BODY). */
+const TIER_COLOR = "#D96C6C";
 
 export const metadata = {
   title: "Thank You Body",

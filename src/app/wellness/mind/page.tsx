@@ -8,8 +8,8 @@ import { WELLNESS_SUBPAGES } from "@/data/content";
 
 const data = WELLNESS_SUBPAGES.find((w) => w.slug === "mind")!;
 
-/** Mid tier — rose gold, distinct from BODY (silver) and SOUL/UNLOCK. */
-const TIER_COLOR = "#C08A6B";
+/** Third-eye chakra — indigo, per the Chakra color alignment (I = Indigo/MIND). */
+const TIER_COLOR = "#4B4E9E";
 
 export const metadata = {
   title: "Thank You Mind",

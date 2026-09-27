@@ -8,8 +8,8 @@ import { WELLNESS_SUBPAGES } from "@/data/content";
 
 const data = WELLNESS_SUBPAGES.find((w) => w.slug === "soul")!;
 
-/** Upper tier — amethyst-violet, distinct from BODY/MIND and UNLOCK's gold. */
-const TIER_COLOR = "#9B7FC7";
+/** Crown chakra — silver, per the Chakra color alignment (S = Silver/SOUL). */
+const TIER_COLOR = "#B8B9C0";
 
 export const metadata = {
   title: "Thank You Soul",

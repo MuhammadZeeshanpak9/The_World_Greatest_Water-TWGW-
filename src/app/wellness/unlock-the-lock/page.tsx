@@ -8,8 +8,8 @@ import { WELLNESS_SUBPAGES } from "@/data/content";
 
 const data = WELLNESS_SUBPAGES.find((w) => w.slug === "unlock-the-lock")!;
 
-/** Top tier — gold, the most premium offering (GO WITHIN). */
-const TIER_COLOR = "#c9a84c";
+/** Violet, per the Chakra color alignment (V = Violet/UNLOCK THE LOCK). */
+const TIER_COLOR = "#9B7FC7";
 
 export const metadata = {
   title: "Unlock The Lock",

@@ -16,6 +16,17 @@ const CATEGORY_MATCH: Record<string, string> = {
   "essence-pods": "Essence Pods",
 };
 
+type WaveVariant = {
+  /** One of the 12 Understandings (e.g. "ALL", "YOU") this variant represents. */
+  name: string;
+  /** Flavor label shown alongside the Understanding (e.g. "Lavender"). */
+  flavor: string;
+  /** Short blurb for this specific Understanding (from the source flier art). */
+  description: string;
+  /** Studio/product shot, used as the variant's card thumbnail. */
+  image: string;
+};
+
 type WaveCategory = {
   id: string;
   tab: string;
@@ -26,6 +37,9 @@ type WaveCategory = {
   status: ProductStatus;
   cta: string;
   images: string[];
+  /** When set, renders a named/described grid of all 12 Understanding
+   * variants instead of the plain `images` thumbnail grid. */
+  variants?: WaveVariant[];
 };
 
 // Kept in alphabetical order by `tab` — add new categories in their alphabetical slot.
@@ -40,19 +54,93 @@ const WAVE_COLLECTION: WaveCategory[] = [
     price: "Coming Soon",
     status: "coming-soon",
     cta: "NOTIFY ME →",
-    images: ["/images/products/aluminum-bottle-1.jpg", "/images/products/aluminum-bottle-2.jpg"],
+    images: ["", ""],
   },
   {
     id: "elev8ated-ice",
     tab: "ELEV8ATED ICE",
     name: "ELEV8ATED Ice",
-    tagline: "Frozen. Purified. Elevated.",
+    tagline: "1 Water. 12 Understandings.",
     description:
-      "The same ultra-purified, 528hz frequency-infused ELEV8 Water, frozen into premium ice — for every drink, ritual, and moment that deserves the elevated experience.",
+      "The same ultra-purified, 528hz frequency-infused ELEV8 Water, frozen into premium flavored ice cubes — one for each of the 12 self-development understandings.",
     price: "Coming Soon",
     status: "coming-soon",
     cta: "NOTIFY ME →",
-    images: ["/images/products/elev8ated-ice-1.jpg", "/images/products/elev8ated-ice-2.jpg"],
+    images: ["", ""],
+    variants: [
+      {
+        name: "ALL",
+        flavor: "Lavender",
+        description: "Everyone without exception. The grand design.",
+        image: "/images/elev8ated-ice/all-lavender-product.png",
+      },
+      {
+        name: "YOU",
+        flavor: "Blueberry",
+        description: "The experiencer of the experience called life. I am You.",
+        image: "/images/elev8ated-ice/you-blueberry-product.png",
+      },
+      {
+        name: "DESIRE",
+        flavor: "Orange",
+        description: "The feeling that creates the will to move towards an experience in life.",
+        image: "/images/elev8ated-ice/desire-orange-product.png",
+      },
+      {
+        name: "ENERGY",
+        flavor: "Coconut",
+        description: "The source of the design.",
+        image: "/images/elev8ated-ice/energy-coconut-product.png",
+      },
+      {
+        name: "BELIEVE",
+        flavor: "Lemon",
+        description: "Trust in the unknown.",
+        image: "/images/elev8ated-ice/believe-lemon-product.png",
+      },
+      {
+        name: "GRATITUDE",
+        flavor: "Cucumber Mint",
+        description: "The feeling of connection to an undefined source of love.",
+        image: "/images/elev8ated-ice/gratitude-cucumber-mint-product.png",
+      },
+      {
+        name: "FREQUENCY",
+        flavor: "Ice Mint",
+        description: "The understanding of awareness to life.",
+        image: "/images/elev8ated-ice/frequency-ice-mint-product.png",
+      },
+      {
+        name: "THOUGHTS",
+        flavor: "Mango",
+        description: "Series of imagination.",
+        image: "/images/elev8ated-ice/thoughts-mango-product.png",
+      },
+      {
+        name: "CONSCIOUSNESS",
+        flavor: "Blackberry",
+        description: "Awareness of my existence in connection to all and everything.",
+        image: "/images/elev8ated-ice/consciousness-blackberry-product.png",
+      },
+      {
+        name: "VIBRATION",
+        flavor: "Blue Apple",
+        description: "Emotional connection to reality.",
+        image: "/images/elev8ated-ice/vibration-blue-apple-product.png",
+      },
+      {
+        name: "LOVE",
+        flavor: "Lime Basil",
+        description: "A feeling of selflessness in relation to life experiences.",
+        image: "/images/elev8ated-ice/love-lime-basil-product.png",
+      },
+      {
+        name: "MINDSET",
+        flavor: "Strawberry",
+        description: "My perspective of myself and the world around me.",
+        image: "/images/elev8ated-ice/mindset-strawberry-product.png",
+      },
+    ],
   },
   {
     id: "elev8ated-refresh",
@@ -64,7 +152,7 @@ const WAVE_COLLECTION: WaveCategory[] = [
     price: "Coming Soon",
     status: "coming-soon",
     cta: "NOTIFY ME →",
-    images: ["/images/products/elev8ated-refresh-1.jpg", "/images/products/elev8ated-refresh-2.jpg"],
+    images: ["", ""],
   },
   {
     id: "essence-pods",
@@ -76,11 +164,7 @@ const WAVE_COLLECTION: WaveCategory[] = [
     price: "From $47.77",
     status: "coming-soon",
     cta: "NOTIFY ME →",
-    images: [
-      "/images/products/essence-pods-teal.jpg",
-      "/images/products/essence-pods-flavors.jpg",
-      "/images/products/essence-pods-citrus.jpg",
-    ],
+    images: ["", "", ""],
   },
   {
     id: "flavor-caps",
@@ -92,7 +176,7 @@ const WAVE_COLLECTION: WaveCategory[] = [
     price: "Coming Soon",
     status: "coming-soon",
     cta: "NOTIFY ME →",
-    images: ["/images/products/water-caps-variety.jpg", "/images/products/water-caps-grid.jpg"],
+    images: ["", ""],
   },
   {
     id: "glass-bottles",
@@ -104,7 +188,7 @@ const WAVE_COLLECTION: WaveCategory[] = [
     price: "Coming Soon",
     status: "coming-soon",
     cta: "NOTIFY ME →",
-    images: ["/images/products/glass-bottle-1.jpg", "/images/products/glass-bottle-2.jpg"],
+    images: ["", ""],
   },
   {
     id: "paper-box",
@@ -116,7 +200,7 @@ const WAVE_COLLECTION: WaveCategory[] = [
     price: "Coming Soon",
     status: "coming-soon",
     cta: "NOTIFY ME →",
-    images: ["/images/products/paper-box-1.jpg", "/images/products/paper-box-2.jpg"],
+    images: ["", ""],
   },
   {
     id: "pet-bottles",
@@ -129,9 +213,9 @@ const WAVE_COLLECTION: WaveCategory[] = [
     status: "sold-out",
     cta: "NOTIFY ME →",
     images: [
-      "/images/products/bottle-1.jpg",
-      "/images/products/bottle-2.jpg",
-      "/images/products/bottle-3.jpg",
+      "/images/bottles2/ALL.png",
+      "/images/bottles2/YOU.png",
+      "/images/bottles2/LOVE.png",
     ],
   },
   {
@@ -144,7 +228,7 @@ const WAVE_COLLECTION: WaveCategory[] = [
     price: "Coming Soon",
     status: "coming-soon",
     cta: "NOTIFY ME →",
-    images: ["/images/products/smart-bottle.jpg", "/images/products/smart-bottle-2.jpg"],
+    images: ["", ""],
   },
 ];
 
@@ -270,27 +354,70 @@ export default function WaveCollection() {
                   transition: { duration: reduced ? 0.1 : 0.2 },
                 }}
               >
-                <div
-                  className={`grid grid-cols-2 gap-4 ${
-                    active.images.length >= 3 ? "sm:grid-cols-3" : ""
-                  }`}
-                >
-                  {active.images.map((src, i) => (
-                    <m.div
-                      key={src}
-                      whileHover={reduced ? undefined : { y: -4 }}
-                      className="flex h-[160px] items-center justify-center overflow-hidden rounded-2xl border border-violet/10 bg-white/80 p-4 backdrop-blur transition-shadow hover:shadow-[0_20px_40px_rgba(107,47,160,0.15)] hover:border-violet/30 md:h-[220px]"
-                    >
-                      <ImageWithFallback
-                        src={undefined}
-                        alt={`${active.name} — view ${i + 1}`}
-                        watermark={active.name}
-                        rounded="rounded-xl"
-                        className="object-contain"
-                      />
-                    </m.div>
-                  ))}
-                </div>
+                {active.variants ? (
+                  <div className="grid grid-cols-2 gap-5 sm:grid-cols-3">
+                    {active.variants.map((variant) => (
+                      <m.div
+                        key={variant.name}
+                        whileHover={reduced ? undefined : { y: -6 }}
+                        className="group flex flex-col overflow-hidden rounded-2xl border border-violet/10 bg-white shadow-[0_2px_12px_rgba(20,20,42,0.05)] transition-all duration-300 hover:shadow-[0_24px_48px_rgba(107,47,160,0.18)] hover:border-violet/25"
+                      >
+                        <div
+                          className="relative aspect-[4/5] w-full overflow-hidden"
+                          style={{
+                            background:
+                              "radial-gradient(circle at 50% 30%, rgba(107,47,160,0.08), rgba(78,205,196,0.05) 60%, transparent 100%)",
+                          }}
+                        >
+                          <div className="absolute inset-0 flex items-center justify-center p-3 transition-transform duration-500 group-hover:scale-[1.04]">
+                            <ImageWithFallback
+                              src={variant.image || undefined}
+                              alt={`ELEV8 ${variant.name} — ${variant.flavor}`}
+                              watermark={variant.name}
+                              rounded="rounded-none"
+                              className="object-contain"
+                              sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 220px"
+                            />
+                          </div>
+                        </div>
+                        <div className="border-t border-violet/10 px-3.5 py-3.5">
+                          <p className="font-inter text-[11px] font-semibold uppercase tracking-[0.12em] text-violet">
+                            {variant.name}
+                            <span className="mx-1.5 text-violet/30">·</span>
+                            <span className="font-normal normal-case tracking-normal text-body">
+                              {variant.flavor}
+                            </span>
+                          </p>
+                          <p className="mt-1.5 font-inter text-[12px] leading-relaxed text-body/80">
+                            {variant.description}
+                          </p>
+                        </div>
+                      </m.div>
+                    ))}
+                  </div>
+                ) : (
+                  <div
+                    className={`grid grid-cols-2 gap-4 ${
+                      active.images.length >= 3 ? "sm:grid-cols-3" : ""
+                    }`}
+                  >
+                    {active.images.map((src, i) => (
+                      <m.div
+                        key={i}
+                        whileHover={reduced ? undefined : { y: -4 }}
+                        className="flex h-[160px] items-center justify-center overflow-hidden rounded-2xl border border-violet/10 bg-white/80 p-4 backdrop-blur transition-shadow hover:shadow-[0_20px_40px_rgba(107,47,160,0.15)] hover:border-violet/30 md:h-[220px]"
+                      >
+                        <ImageWithFallback
+                          src={src || undefined}
+                          alt={`${active.name} — view ${i + 1}`}
+                          watermark={active.name}
+                          rounded="rounded-xl"
+                          className="object-contain"
+                        />
+                      </m.div>
+                    ))}
+                  </div>
+                )}
 
                 <h3 className="mt-8 font-cormorant text-[36px] text-ink">{active.name}</h3>
                 <p className="mt-1 font-inter text-[14px] uppercase tracking-[0.1em] text-violet">

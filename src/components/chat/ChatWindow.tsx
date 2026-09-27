@@ -34,16 +34,15 @@ function TypingDots() {
       <div
         className="inline-flex items-center gap-1.5 rounded-2xl px-4 py-3"
         style={{
-          background: "rgba(255,255,255,0.1)",
-          backdropFilter: "blur(12px)",
-          border: "1px solid rgba(255,255,255,0.15)",
+          background: "#f3f4f6",
+          border: "1px solid #e5e7eb",
         }}
       >
         {[0, 1, 2].map((i) => (
           <span
             key={i}
             className="h-1.5 w-1.5 animate-bounce rounded-full"
-            style={{ background: "#fff", opacity: 0.6, animationDelay: `${i * 0.15}s` }}
+            style={{ background: "#6b7280", animationDelay: `${i * 0.15}s` }}
           />
         ))}
       </div>
@@ -138,7 +137,7 @@ export default function ChatWindow({
   }
 
   /* ══════════════════════════════════════
-     FLOATING MODE — crystal glass window
+     FLOATING MODE — solid white window
   ══════════════════════════════════════ */
   if (!isFull) {
     return (
@@ -149,10 +148,9 @@ export default function ChatWindow({
             : "flex h-full w-full flex-col overflow-hidden rounded-none sm:h-[560px] sm:w-[380px] sm:max-w-[calc(100vw-2rem)] sm:rounded-2xl"
         }
         style={{
-          background: "rgba(255,255,255,0.1)",
-          backdropFilter: "blur(24px)",
-          border: "1px solid rgba(255,255,255,0.15)",
-          boxShadow: "0 24px 60px rgba(0,0,0,0.4)",
+          background: "#ffffff",
+          border: "1px solid #e5e7eb",
+          boxShadow: "0 24px 60px rgba(0,0,0,0.18)",
         }}
       >
         {/* Mobile (incl. landscape phones via forceMobileLayout): this panel
@@ -166,7 +164,7 @@ export default function ChatWindow({
         {/* Header */}
         <div
           className="flex shrink-0 items-center justify-between px-4 py-3"
-          style={{ borderBottom: "1px solid rgba(255,255,255,0.1)" }}
+          style={{ borderBottom: "1px solid #e5e7eb" }}
         >
           <div className="flex items-center gap-2.5">
             <div
@@ -176,16 +174,16 @@ export default function ChatWindow({
               <Sparkles size={14} />
             </div>
             <div>
-              <p className="font-cormorant text-[15px] font-semibold leading-none text-white">ELEV8 V.A.</p>
-              <p className="font-inter text-[10px] uppercase tracking-[0.12em]" style={{ color: "#3dd6cb" }}>● Online</p>
+              <p className="font-cormorant text-[15px] font-semibold leading-none" style={{ color: "#1f2937" }}>ELEV8 V.A.</p>
+              <p className="font-inter text-[10px] uppercase tracking-[0.12em]" style={{ color: "#0d9488" }}>● Online</p>
             </div>
           </div>
           <div className="flex items-center gap-1.5">
             {showLanguageSelector && <LanguageSelector value={language} onChange={setLanguage} compact />}
             {onClose && (
-              <button type="button" onClick={onClose} aria-label="Close" style={{ color: "rgba(255,255,255,0.6)" }}
-                onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = "#fff"; }}
-                onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.6)"; }}>
+              <button type="button" onClick={onClose} aria-label="Close" style={{ color: "#9ca3af" }}
+                onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = "#1f2937"; }}
+                onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = "#9ca3af"; }}>
                 <X size={16} />
               </button>
             )}
@@ -196,13 +194,13 @@ export default function ChatWindow({
         <div ref={scrollRef} className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto px-4 py-4">
           {!hasMessages && (
             <div className="flex flex-col gap-2">
-              <p className="font-inter text-[11px]" style={{ color: "rgba(255,255,255,0.5)" }}>Try asking:</p>
+              <p className="font-inter text-[11px]" style={{ color: "#9ca3af" }}>Try asking:</p>
               {SUGGESTIONS.map((q) => (
                 <button key={q} type="button" onClick={() => sendMessage(q)}
                   className="rounded-xl px-3 py-2.5 text-left font-inter text-[12px] transition-all"
-                  style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)", color: "rgba(255,255,255,0.8)" }}
-                  onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = "#fff"; (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.3)"; (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.12)"; }}
-                  onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.8)"; (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.1)"; (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.06)"; }}>
+                  style={{ background: "#f9fafb", border: "1px solid #e5e7eb", color: "#374151" }}
+                  onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = "#1f2937"; (e.currentTarget as HTMLElement).style.borderColor = "#5e2d91"; (e.currentTarget as HTMLElement).style.background = "#f3f0f8"; }}
+                  onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = "#374151"; (e.currentTarget as HTMLElement).style.borderColor = "#e5e7eb"; (e.currentTarget as HTMLElement).style.background = "#f9fafb"; }}>
                   {q}
                 </button>
               ))}
@@ -214,10 +212,10 @@ export default function ChatWindow({
                 className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
                 <div className="max-w-[80%] rounded-2xl px-3.5 py-2.5 font-inter text-[12px] leading-relaxed"
                   style={msg.role === "user"
-                    ? { background: "rgba(255,255,255,0.2)", backdropFilter: "blur(12px)", color: "#fff", borderBottomRightRadius: 6, border: "1px solid rgba(255,255,255,0.3)" }
-                    : { background: "rgba(94,45,145,0.25)", backdropFilter: "blur(12px)", border: "1px solid rgba(94,45,145,0.4)", color: "#fff", borderBottomLeftRadius: 6 }}>
+                    ? { background: "#5e2d91", color: "#fff", borderBottomRightRadius: 6 }
+                    : { background: "#f3f4f6", border: "1px solid #e5e7eb", color: "#1f2937", borderBottomLeftRadius: 6 }}>
                   <p>{msg.content}</p>
-                  <span className="mt-1 block text-right text-[10px]" style={{ color: msg.role === "user" ? "rgba(255,255,255,0.7)" : "rgba(255,255,255,0.5)" }}>
+                  <span className="mt-1 block text-right text-[10px]" style={{ color: msg.role === "user" ? "rgba(255,255,255,0.7)" : "#9ca3af" }}>
                     {new Date(msg.createdAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
                   </span>
                 </div>
@@ -225,7 +223,7 @@ export default function ChatWindow({
             ))}
           </AnimatePresence>
           {sending && <TypingDots />}
-          {errorText && <p className="font-inter text-[11px]" style={{ color: "#fca5a5" }}>{errorText}</p>}
+          {errorText && <p className="font-inter text-[11px]" style={{ color: "#dc2626" }}>{errorText}</p>}
           <AnimatePresence>
             {showEscalation && <EscalationPanel key="esc" />}
             {showLead && !leadDismissed && sessionId && (
@@ -238,7 +236,7 @@ export default function ChatWindow({
         <div
           className="shrink-0 px-4 pt-3"
           style={{
-            borderTop: "1px solid rgba(255,255,255,0.1)",
+            borderTop: "1px solid #e5e7eb",
             // env() insets are inert without viewport-fit=cover in the page's
             // viewport meta tag (not changed here, see audit report) — this
             // padding is a no-op fallback until that's set, and harmless
@@ -248,14 +246,14 @@ export default function ChatWindow({
         >
           <form onSubmit={(e) => { e.preventDefault(); sendMessage(input); }}
             className="flex items-center gap-2 rounded-xl px-3 py-2"
-            style={{ background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.2)" }}>
+            style={{ background: "#f9fafb", border: "1px solid #d1d5db" }}>
             <input type="text" value={input} onChange={(e) => setInput(e.target.value.slice(0, MAX_LEN))}
               placeholder="Ask me anything…" disabled={!sessionId || sending}
               // text-base (16px) below sm avoids iOS Safari's auto-zoom-on-focus
               // for inputs under 16px, which would disturb this panel's fixed
               // positioning; sm:text-xs (12px) restores the original desktop size.
-              className="flex-1 bg-transparent font-inter text-base focus:outline-none disabled:opacity-40 sm:text-xs"
-              style={{ color: "#fff" }} />
+              className="flex-1 bg-transparent font-inter text-base placeholder:text-gray-400 focus:outline-none disabled:opacity-40 sm:text-xs"
+              style={{ color: "#1f2937" }} />
             <button type="submit" disabled={!sessionId || sending || !input.trim()} aria-label="Send"
               className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg transition-all disabled:opacity-30"
               style={{ background: "#5e2d91" }}>
