@@ -1,14 +1,14 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { checkRateLimit, getClientIp } from "@/lib/rateLimit";
+import { respond, type ChatHistoryItem } from "@/lib/va/respond";
 
 const MAX_MESSAGE_LENGTH = 500;
+export const maxDuration = 30; // Vercel Hobby/Pro default function timeout — reduce tool-call rounds first if your plan caps lower.
 
-const MOCK_RESPONSE =
-  "I AM your ELEV8 V.A. — your personal guide to THE WORLD'S GREATEST WATER ecosystem. How can I ELEV8 your experience today?";
-
-/** Milestone 1: mock response only — no real AI/RAG call yet. Every user + assistant message is
- * still persisted to chat_messages so Milestone 2 can plug in a real model against real history. */
+/** Milestone 2: real RAG (retrieval + OpenAI) backend — see src/lib/va/respond.ts. Every user +
+ * assistant message is persisted to chat_messages as before; RAG-specific debug metadata
+ * (retrieved chunks, tool calls, fallback flag) is logged separately to va_message_meta. */
 export async function POST(request: NextRequest) {
   const ip = getClientIp(request);
   const { allowed } = checkRateLimit(`chat-message:${ip}`, {
@@ -48,9 +48,9 @@ export async function POST(request: NextRequest) {
 
   const admin = createAdminClient();
 
-  const { error: sessionError } = await admin
+  const { data: session, error: sessionError } = await admin
     .from("chat_sessions")
-    .select("session_id")
+    .select("session_id, language")
     .eq("session_id", sessionId)
     .maybeSingle();
   if (sessionError) {
@@ -66,14 +66,54 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Unable to send message right now" }, { status: 500 });
   }
 
-  const { error: assistantInsertError } = await admin
+  const { data: historyRows } = await admin
     .from("chat_messages")
-    .insert({ session_id: sessionId, role: "assistant", content: MOCK_RESPONSE });
+    .select("role, content, created_at")
+    .eq("session_id", sessionId)
+    .order("created_at", { ascending: false })
+    .limit(13); // last ~6 turns (user+assistant pairs) plus the message just inserted above
+
+  const history: ChatHistoryItem[] = (historyRows ?? [])
+    .filter((r) => r.role === "user" || r.role === "assistant")
+    .reverse()
+    .slice(0, -1) // drop the just-inserted user message — respond() appends it separately
+    .map((r) => ({ role: r.role as "user" | "assistant", content: r.content as string }));
+
+  const result = await respond({
+    message,
+    language: session?.language || "en",
+    history,
+  });
+
+  const { data: assistantRow, error: assistantInsertError } = await admin
+    .from("chat_messages")
+    .insert({ session_id: sessionId, role: "assistant", content: result.text })
+    .select("id")
+    .maybeSingle();
   if (assistantInsertError) {
     console.error("[chat/message] assistant message insert failed:", assistantInsertError.message);
-    // The user's message is already saved — still return the mock response rather than erroring
-    // out on a logging-adjacent failure the visitor can't do anything about.
+    // The user's message is already saved — still return the response rather than erroring out
+    // on a logging-adjacent failure the visitor can't do anything about.
   }
 
-  return NextResponse.json({ response: MOCK_RESPONSE, session_id: sessionId });
+  // RAG debug metadata is logged best-effort, after the reply is already decided — a failure
+  // here must never affect what the visitor sees.
+  try {
+    await admin.from("va_message_meta").insert({
+      message_id: assistantRow?.id ?? null,
+      session_id: sessionId,
+      retrieved_chunk_ids: result.retrievedChunkIds,
+      top_similarity: result.topSimilarity,
+      fallback: result.fallback,
+      tool_calls: result.toolCalls,
+      model: result.model,
+      prompt_tokens: result.promptTokens,
+      completion_tokens: result.completionTokens,
+      latency_ms: result.latencyMs,
+    });
+  } catch (e) {
+    console.error("[chat/message] va_message_meta insert failed:", e instanceof Error ? e.message : e);
+  }
+
+  return NextResponse.json({ response: result.text, session_id: sessionId });
 }
