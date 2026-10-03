@@ -112,7 +112,14 @@ export type ProductCategory =
   | "Water Bottles"
   | "Essence Pods"
   | "Smart Bottles"
-  | "Gift Cards";
+  | "Gift Cards"
+  | "Aluminum Bottles"
+  | "Glass Bottles"
+  | "Paper Box"
+  | "PET Water Bottles"
+  | "ELEV8 Hydration Pump"
+  | "ELEV8 Refresh"
+  | "ELEV8ated Ice";
 
 export type Product = {
   name: string;
