@@ -11,6 +11,9 @@ import NotifyMeForm from "@/components/ui/NotifyMeForm";
 import ProductStatusBadge, { getProductCta } from "./ProductStatusBadge";
 
 function formatPrice(price: number) {
+  // price <= 0 means pricing isn't set yet (e.g. a newly-announced
+  // coming-soon category) — show "TBA" instead of a misleading $0.00.
+  if (price <= 0) return "TBA";
   return `$${price.toFixed(2)}`;
 }
 

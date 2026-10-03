@@ -4,8 +4,7 @@ import Link from "next/link";
 import { m } from "framer-motion";
 import { Mail, MessageCircleMore, Phone } from "lucide-react";
 
-// TODO: replace with the real ELEV8 WhatsApp business number before launch.
-const WHATSAPP_NUMBER = "10000000000";
+const WHATSAPP_NUMBER = "13059059006"; // +1 (305) 905-9006
 
 const CONTACTS = [
   { href: "/contact", label: "Contact Form", icon: Phone, external: false, isLink: true },

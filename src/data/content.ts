@@ -896,7 +896,7 @@ export const FOOTER_COLUMNS: FooterColumn[] = [
 
 export const SOCIALS: Social[] = [
   { name: "Twitter", href: "#", glow: "rgba(29,161,242,0.6)" },
-  { name: "Facebook", href: "#", glow: "rgba(59,89,152,0.6)" },
+  { name: "Facebook", href: "https://www.facebook.com/share/19cQS6LkgR/", glow: "rgba(59,89,152,0.6)" },
   { name: "Youtube", href: "https://youtube.com/@theworldsgreatestwater111", glow: "rgba(255,0,0,0.6)" },
   { name: "Instagram", href: "https://www.instagram.com/theworldsgreatestwater", glow: "rgba(107,47,160,0.6)" },
   { name: "Pinterest", href: "#", glow: "rgba(230,0,35,0.6)" },
