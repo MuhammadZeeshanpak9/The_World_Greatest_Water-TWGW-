@@ -40,14 +40,6 @@ function ImageBubble({
 
   return (
     <div className="relative mx-auto w-full max-w-xl" style={{ aspectRatio: aspect }}>
-      {/* Rotating gilded ring frame */}
-      {!reduced && (
-        <div
-          className="gold-ring-spin absolute -inset-3 -z-10"
-          style={{ borderRadius }}
-          aria-hidden
-        />
-      )}
       <div
         className="absolute -inset-3 -z-10 opacity-70"
         style={{ borderRadius, boxShadow: "0 0 60px rgba(201,168,76,0.25)" }}

@@ -102,6 +102,12 @@ export type Bottle = {
   chakra: string;
   color: string; // hex accent (chakra matched)
   blurb: string;
+  /** Condensed, card-length version of `blurb` — the single source of truth
+   * for this Understanding's meaning wherever a short form is needed (e.g.
+   * ELEV8ATED Ice variant cards), so the same meaning never drifts between
+   * sections. Must stay faithful to `blurb`, not introduce a different
+   * emphasis. */
+  shortBlurb: string;
   placeholder?: boolean;
   image?: string;
 };
@@ -182,6 +188,11 @@ export type ProcessStep = {
 export type ComingSoonProduct = {
   type: string;
   description: string;
+  /** Primary image, and an optional second image shown on hover (slides in
+   * from the right) — when absent, the card falls back to the generic
+   * gradient placeholder. */
+  image?: string;
+  hoverImage?: string;
 };
 
 export type Testimonial = {

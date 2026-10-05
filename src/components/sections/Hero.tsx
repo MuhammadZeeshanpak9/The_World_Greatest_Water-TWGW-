@@ -111,7 +111,7 @@ export default function Hero() {
               WATER FOR MY MIND
             </span>
             <span className="font-inter text-[13px] text-white/90 drop-shadow-md">
-              Packaged in bottles to ELEV8 my life
+              The Greatest Brand & Products to ELEV8 my LIFE
             </span>
           </m.div>
 

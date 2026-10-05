@@ -189,7 +189,7 @@ export default function BottleCoverflow({ items }: Props) {
                     style={{ backgroundColor: cardColor, boxShadow: `0 0 8px ${withAlpha(cardColor, 0.7)}` }}
                   />
                   <p className="max-w-[240px] font-inter text-[12px] italic leading-snug text-white/85 drop-shadow-md">
-                    {bottle.blurb.split(".")[0]}.
+                    {bottle.shortBlurb}
                   </p>
                 </div>
               </div>
