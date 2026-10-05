@@ -601,6 +601,7 @@ export const BOTTLES: Bottle[] = [
     placeholder: false,
     image: "/images/bottles2/ALL.png",
     blurb: "Everyone without Exception. The GRAND DESIGN. I will ELEV8 my awareness to see ALL as ONE. In times like this, self development and mental awareness will enhance the quality of life for ALL and promote the spread of love and happiness with all consciousness, bringing joy to homes and families worldwide.",
+    shortBlurb: "Everyone without exception. The grand design.",
   },
   {
     name: "YOU",
@@ -609,6 +610,7 @@ export const BOTTLES: Bottle[] = [
     placeholder: false,
     image: "/images/bottles2/YOU.png",
     blurb: "I AM the experiencer of this experience called life in my beautiful mind. I AM YOU | THE GRAND DESIGNER of the grand design LIFE.",
+    shortBlurb: "The experiencer of the experience called life. THE GRAND DESIGNER.",
   },
   {
     name: "LOVE",
@@ -617,6 +619,7 @@ export const BOTTLES: Bottle[] = [
     placeholder: false,
     image: "/images/bottles2/LOVE.png",
     blurb: "I will ELEV8 LOVE by understanding that love begins within MYSELF. When I love myself unconditionally I naturally radiate love to everything and everyone around me. LOVE is the highest frequency. 528Hz is the frequency of LOVE and it is infused in every drop of MY personal water.",
+    shortBlurb: "Love begins within myself, then radiates to everything around me.",
   },
   {
     name: "DESIRE",
@@ -625,6 +628,7 @@ export const BOTTLES: Bottle[] = [
     placeholder: false,
     image: "/images/bottles2/DESIRE.png",
     blurb: "I will ELEV8 my DESIRE by understanding it as my Illusional Emotional Intelligence — the wisdom to feel a desire fully while questioning the illusion my mind builds around it. I will honor what is real in every desire and release what is not, taking inspired action only on what serves my highest self.",
+    shortBlurb: "The feeling that creates the will to move towards an experience in life.",
   },
   {
     name: "ENERGY",
@@ -633,6 +637,7 @@ export const BOTTLES: Bottle[] = [
     placeholder: false,
     image: "/images/bottles2/ENERGY.png",
     blurb: "I will ELEV8 my ENERGY by understanding that everything is energy including MYSELF. I will protect and direct my energy intentionally. I will choose thoughts, environments and people that raise my vibration and give energy to my highest self.",
+    shortBlurb: "Everything is energy, including myself. I direct it intentionally.",
   },
   {
     name: "BELIEVE",
@@ -641,6 +646,7 @@ export const BOTTLES: Bottle[] = [
     placeholder: false,
     image: "/images/bottles2/BELIEVE.png",
     blurb: "I will ELEV8 my BELIEVE by understanding that my beliefs create my reality. I will choose to believe in my unlimited potential. I will replace every limiting belief with a belief that serves my greatest self. I BELIEVE in MYSELF without a doubt.",
+    shortBlurb: "My beliefs create my reality. I believe in myself without a doubt.",
   },
   {
     name: "VIBRATION",
@@ -649,6 +655,7 @@ export const BOTTLES: Bottle[] = [
     placeholder: false,
     image: "/images/bottles2/VIBRATION.png",
     blurb: "To ELEV8 my VIBRATION I will have to be aware of what emotions I allow to run in my body. I will focus on gratitude and appreciation to creation for allowing me to experience this beautiful grand design called life. I will commit to giving myself the mindset to always put out good vibes ONLY to myself and the world around me.",
+    shortBlurb: "Emotional connection to reality — always putting out good vibes.",
   },
   {
     name: "MINDSET",
@@ -657,6 +664,7 @@ export const BOTTLES: Bottle[] = [
     placeholder: false,
     image: "/images/bottles2/MINDSET.png",
     blurb: "I will ELEV8 my MINDSET by understanding that my mind is the most powerful tool I possess. I will feed my mind with positive empowering thoughts and information. What I consistently think about I bring about. My MINDSET creates my reality.",
+    shortBlurb: "My perspective of myself and the world around me creates my reality.",
   },
   {
     name: "GRATITUDE",
@@ -665,6 +673,7 @@ export const BOTTLES: Bottle[] = [
     placeholder: false,
     image: "/images/bottles2/GRATITUDE.png",
     blurb: "I will ELEV8 my GRATITUDE by developing the practice of being thankful for everything in my life. Gratitude is the gateway to abundance. When I am grateful for what I have I attract more to be grateful for. I am grateful for this water, for this moment, for this life.",
+    shortBlurb: "The feeling of connection to an undefined source of love.",
   },
   {
     name: "FREQUENCY",
@@ -673,6 +682,7 @@ export const BOTTLES: Bottle[] = [
     placeholder: false,
     image: "/images/bottles2/FREQUENCY.png",
     blurb: "I will ELEV8 my FREQUENCY by understanding that I am a vibrational being. The 528Hz frequency infused in every bottle of MY personal water ELEV8 WATER is the frequency of transformation and love. I will tune myself to the highest frequency possible and watch my life transform.",
+    shortBlurb: "The understanding of awareness to life.",
   },
   {
     name: "THOUGHTS",
@@ -681,6 +691,7 @@ export const BOTTLES: Bottle[] = [
     placeholder: false,
     image: "/images/bottles2/THOUGHTS.png",
     blurb: "I will ELEV8 my THOUGHTS by understanding that my thoughts are the seeds of my reality. Every thought I think is either moving me closer to or further from the life I desire. I will be the guardian of my mind and only allow thoughts that serve my highest good.",
+    shortBlurb: "My thoughts are the seeds of my reality — series of imagination.",
   },
   {
     name: "CONSCIOUSNESS",
@@ -689,6 +700,7 @@ export const BOTTLES: Bottle[] = [
     placeholder: false,
     image: "/images/bottles2/CONCIOUNESS.png",
     blurb: "I will ELEV8 my CONSCIOUSNESS by expanding my awareness beyond my physical reality. I am more than my body, more than my thoughts, more than my circumstances. I AM CONSCIOUSNESS experiencing itself. I will wake up to the infinite power within me.",
+    shortBlurb: "Awareness of my existence in connection to all and everything.",
   },
 ];
 
@@ -819,12 +831,14 @@ export const COMING_SOON: ComingSoonProduct[] = [
     description: "Your personal water, delivered on your frequency.",
   },
   {
-    type: "ELEV8 Clothing",
+    type: "iELEV8MY LUX FASHION",
     description: "Wear your understanding. Premium apparel line.",
   },
   {
     type: "Love Gift Sets",
     description: "Curated gifting to elevate the ones you love.",
+    image: "/images/gift-cards/gift-card-1.png",
+    hoverImage: "/images/gift-cards/gift-card-2.png",
   },
 ];
 

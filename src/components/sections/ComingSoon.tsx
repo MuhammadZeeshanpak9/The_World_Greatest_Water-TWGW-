@@ -1,9 +1,37 @@
 "use client";
 
+import { useState } from "react";
+import Image from "next/image";
 import { m } from "framer-motion";
 import { COMING_SOON } from "@/data/content";
 import { GradientPlaceholder } from "@/components/ui/MediaWithFallback";
 import NotifyMeForm from "@/components/ui/NotifyMeForm";
+
+function ComingSoonImage({ type, image, hoverImage }: { type: string; image?: string; hoverImage?: string }) {
+  const [hovered, setHovered] = useState(false);
+
+  if (!image) return <GradientPlaceholder watermark="Coming Soon" className="rounded-xl" />;
+
+  return (
+    <div
+      className="relative h-full w-full"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      <Image src={image} alt={type} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover" />
+      {hoverImage && (
+        <m.div
+          className="absolute inset-0"
+          initial={false}
+          animate={{ x: hovered ? "0%" : "100%" }}
+          transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <Image src={hoverImage} alt={`${type} — alternate view`} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover" />
+        </m.div>
+      )}
+    </div>
+  );
+}
 
 export default function ComingSoon() {
   return (
@@ -30,7 +58,7 @@ export default function ComingSoon() {
               style={{ background: "rgba(255,255,255,0.8)", backdropFilter: "blur(10px)" }}
             >
               <div className="relative h-[200px] overflow-hidden rounded-xl">
-                <GradientPlaceholder watermark="Coming Soon" className="rounded-xl" />
+                <ComingSoonImage type={item.type} image={item.image} hoverImage={item.hoverImage} />
               </div>
               <h3 className="mt-5 font-cormorant text-[24px] text-ink">{item.type}</h3>
               <p className="mt-2 font-inter text-[13px] leading-relaxed text-body">

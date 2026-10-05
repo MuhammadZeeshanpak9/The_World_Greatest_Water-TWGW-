@@ -320,7 +320,7 @@ export default function WhyElev8() {
             </p>
 
             <h3 className="font-inter font-bold text-[16px] text-white uppercase mt-auto mb-4 tracking-widest">
-              WHY WE CHOOSE<br />
+              WHY CHOOSE<br />
               12 BOTTLES?
             </h3>
 

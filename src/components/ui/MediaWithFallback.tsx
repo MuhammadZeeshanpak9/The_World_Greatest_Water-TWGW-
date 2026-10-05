@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type BaseProps = {
   src?: string;
@@ -38,21 +38,64 @@ export function ImageWithFallback({
   sizes = "(max-width: 768px) 100vw, 50vw",
 }: BaseProps) {
   if (src) {
-    return (
-      <Image
-        src={src}
-        alt={alt}
-        fill
-        priority={priority}
-        loading={priority ? undefined : "lazy"}
-        placeholder={placeholder}
-        blurDataURL={placeholder === "blur" ? blurDataURL : undefined}
-        sizes={sizes}
-        className={`object-cover ${rounded} ${className}`}
-      />
-    );
+    // Default to object-cover, but let a caller-supplied className override
+    // it (e.g. object-contain for a product shot that must show in full,
+    // not get cropped to fill the box) — both classes set `object-fit`, so
+    // appending object-cover unconditionally after the caller's class was
+    // silently winning over an intended object-contain.
+    const objectFit = /\bobject-(cover|contain|fill|none|scale-down)\b/.test(className)
+      ? ""
+      : "object-cover";
+    return <FadeInImage src={src} alt={alt} objectFit={objectFit} rounded={rounded} className={className} priority={priority} placeholder={placeholder} blurDataURL={blurDataURL} sizes={sizes} />;
   }
   return <GradientPlaceholder watermark={watermark} className={`${rounded} ${className}`} />;
+}
+
+/** Softens the final blur-placeholder-to-photo swap into a short transition
+ * instead of an instant pop — on a slow mobile connection the blur
+ * placeholder can be visible for a few seconds, and an abrupt pop once the
+ * real image arrives reads as a glitch/flash. */
+function FadeInImage({
+  src,
+  alt,
+  objectFit,
+  rounded,
+  className,
+  priority,
+  placeholder,
+  blurDataURL,
+  sizes,
+}: {
+  src: string;
+  alt: string;
+  objectFit: string;
+  rounded: string;
+  className: string;
+  priority: boolean;
+  placeholder: "blur" | "empty";
+  blurDataURL: string;
+  sizes: string;
+}) {
+  const [loaded, setLoaded] = useState(false);
+
+  return (
+    <Image
+      src={src}
+      alt={alt}
+      fill
+      priority={priority}
+      loading={priority ? undefined : "lazy"}
+      placeholder={placeholder}
+      blurDataURL={placeholder === "blur" ? blurDataURL : undefined}
+      sizes={sizes}
+      onLoad={() => setLoaded(true)}
+      // Next's own blur-up placeholder renders as this element's background
+      // immediately (so the box is never empty); this transition only
+      // softens the final swap from blur to the fully-loaded photo once
+      // `onLoad` fires, instead of an instant pop.
+      className={`${objectFit} ${rounded} ${className} transition-[filter] duration-500 ${loaded ? "" : "blur-[2px]"}`}
+    />
+  );
 }
 
 export function GradientPlaceholder({
