@@ -930,6 +930,11 @@ export const PAYMENTS = [
 /* ------------------------------------------------------------------
    SUBSCRIPTION
 ------------------------------------------------------------------ */
+// Weekly/Monthly are now inquiry-only (no checkout, no displayed price) — see
+// PlanComparison.tsx. price16oz/price1L/badge/ctaLabel are kept here as the
+// real underlying values (frequencies and prices unchanged, per the client's
+// instruction to leave plan names/frequencies/prices as they are) even
+// though the inquiry-only UI doesn't currently render price16oz/price1L/badge.
 export const SUBSCRIPTION_PLANS: SubscriptionPlan[] = [
   {
     name: "WEEKLY",
@@ -941,9 +946,8 @@ export const SUBSCRIPTION_PLANS: SubscriptionPlan[] = [
       "Fresh delivery every week",
       "Pause or cancel anytime",
       "Priority shipping",
-      "Exclusive subscriber discounts",
     ],
-    ctaLabel: "SUBSCRIBE WEEKLY",
+    ctaLabel: "INQUIRE",
   },
   {
     name: "MONTHLY",
@@ -953,10 +957,10 @@ export const SUBSCRIPTION_PLANS: SubscriptionPlan[] = [
     price1L: "$77.77/month",
     features: [
       "Monthly delivery to your door",
-      "Save 15% vs single orders",
+      "Inquire for pricing details",
       "Pause or cancel anytime",
     ],
-    ctaLabel: "SUBSCRIBE MONTHLY",
+    ctaLabel: "INQUIRE",
   },
 ];
 

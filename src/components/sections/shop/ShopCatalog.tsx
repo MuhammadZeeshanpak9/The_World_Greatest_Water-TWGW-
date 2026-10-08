@@ -1,6 +1,8 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import Link from "next/link";
+import { MessageCircle } from "lucide-react";
 import type { DbProduct } from "@/types";
 import ProductCard from "./ProductCard";
 
@@ -42,6 +44,19 @@ export default function ShopCatalog({ products }: { products: DbProduct[] }) {
               {cat}
             </button>
           ))}
+        </div>
+
+        <div className="mt-6 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-violet/10 bg-violet/5 px-6 py-4">
+          <p className="font-inter text-[13px] text-body">
+            Looking for bulk pricing? We can help with larger orders.
+          </p>
+          <Link
+            href={`/contact?subject=${encodeURIComponent("Bulk order inquiry")}`}
+            className="group flex shrink-0 items-center gap-2 rounded-full border border-violet/30 px-5 py-2 font-inter text-[11px] font-semibold uppercase tracking-[0.15em] text-violet transition-colors hover:border-violet hover:bg-violet/10"
+          >
+            <MessageCircle size={14} />
+            Inquire For Bulk Orders
+          </Link>
         </div>
 
         {visible.length === 0 ? (

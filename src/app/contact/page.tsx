@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import PageHero from "@/components/layout/PageHero";
@@ -25,7 +26,9 @@ export default function ContactPage() {
       />
       <WaveTransition fromColor={TINT} toColor={WHITE} variant={3} />
 
-      <ContactForm />
+      <Suspense fallback={null}>
+        <ContactForm />
+      </Suspense>
       <SocialRow />
 
       <Footer />
