@@ -955,7 +955,6 @@ export const SUBSCRIPTION_PLANS: SubscriptionPlan[] = [
       "Monthly delivery to your door",
       "Save 15% vs single orders",
       "Pause or cancel anytime",
-      "Free shipping on all orders",
     ],
     ctaLabel: "SUBSCRIBE MONTHLY",
   },

@@ -38,7 +38,6 @@ function generateOrderNumber(): string {
   return `ELEV8-${part1}-${part2}`;
 }
 
-const FREE_SHIPPING_THRESHOLD = 75;
 const MAX_SHIPPING_RATE = 100;
 
 export async function GET() {
@@ -134,15 +133,14 @@ export async function POST(request: NextRequest) {
 
   // Shipping cost: the client echoes back the rate it was already quoted by /api/shipping/rates
   // (that quote was computed server-side there), clamped to a sane range here as a backstop —
-  // never trusted blindly, and the $75+ free-shipping rule is re-enforced here regardless of
-  // what the client claims, so a forged shippingRate can't be used to manipulate the charged
-  // total. Full protection (re-verifying the exact quoted rate against Shippo) is a further
-  // hardening step, not required to close the actual amount-manipulation risk this addresses.
+  // never trusted blindly. Now that there is no free-shipping threshold to fall back on, this
+  // clamp is the ONLY thing standing between a forged shippingRate and the charged total: today,
+  // a client that sends shippingRate: 0 (or omits it) is accepted as-is — a $0 shipping charge
+  // goes through with no error. Before real payments go live, this must be hardened to
+  // re-verify the exact quoted rate against Shippo (e.g. by rate ID) rather than trusting a
+  // client-echoed number, even a clamped one.
   const rawShippingRate = typeof b.shippingRate === "number" ? b.shippingRate : 0;
-  const shippingRate =
-    cart.total >= FREE_SHIPPING_THRESHOLD
-      ? 0
-      : Math.max(0, Math.min(rawShippingRate, MAX_SHIPPING_RATE));
+  const shippingRate = Math.max(0, Math.min(rawShippingRate, MAX_SHIPPING_RATE));
   const shippingCarrier =
     shippingRate > 0 && typeof b.shippingCarrier === "string" ? b.shippingCarrier.slice(0, 100) : null;
   const shippingService =
