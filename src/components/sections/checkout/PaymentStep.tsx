@@ -18,12 +18,10 @@ export default function PaymentStep({
   contact,
   shipping,
   selectedRate,
-  freeShipping,
 }: {
   contact: ContactValues;
   shipping: ShippingValues;
   selectedRate: SelectedRate | null;
-  freeShipping: boolean;
 }) {
   const router = useRouter();
   const { items, total, refreshCart } = useCart();
@@ -74,9 +72,9 @@ export default function PaymentStep({
             zip: shipping.zip,
             country: shipping.country,
           },
-          shippingCarrier: freeShipping ? null : selectedRate?.carrier,
-          shippingService: freeShipping ? null : selectedRate?.service,
-          shippingRate: freeShipping ? 0 : (selectedRate?.rate ?? 0),
+          shippingCarrier: selectedRate?.carrier,
+          shippingService: selectedRate?.service,
+          shippingRate: selectedRate?.rate ?? 0,
         }),
       });
       const json = await res.json();
@@ -271,7 +269,7 @@ export default function PaymentStep({
         )}
       </div>
 
-      <OrderSummary items={items} total={total} selectedRate={selectedRate} freeShipping={freeShipping} />
+      <OrderSummary items={items} total={total} selectedRate={selectedRate} />
     </div>
   );
 }

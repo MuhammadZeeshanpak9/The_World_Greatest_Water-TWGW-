@@ -7,7 +7,6 @@ export type PersistedCheckoutState = {
   contact: ContactValues | null;
   shipping: ShippingValues | null;
   selectedRate: SelectedRate | null;
-  freeShipping: boolean;
 };
 
 export function readCheckoutState(): PersistedCheckoutState | null {

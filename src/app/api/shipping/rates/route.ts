@@ -6,8 +6,6 @@ import { isShippoEnabled } from "@/lib/payments/config";
 import { getShippingRates, type ShippingRate } from "@/lib/shipping/shippo";
 import type { OrderShippingAddress } from "@/types";
 
-const FREE_SHIPPING_THRESHOLD = 75;
-
 const MOCK_RATES: ShippingRate[] = [
   { id: "mock_standard", carrier: "USPS", service: "Priority Mail", rate: 12.5, days: "2-3" },
   { id: "mock_express", carrier: "FedEx", service: "Express", rate: 24.99, days: "1-2" },
@@ -33,10 +31,8 @@ function isValidAddress(value: unknown): value is OrderShippingAddress {
   );
 }
 
-/** Rate quotes only — never used to charge anything, but the subtotal that decides the free-
- * shipping threshold still comes from the authenticated user's real server-side cart, not a
- * client-supplied number, so it can't be gamed. Items for parcel-dimension purposes come from
- * that same cart. */
+/** Rate quotes only — never used to charge anything. Items for parcel-dimension purposes come
+ * from the authenticated user's real server-side cart, not client-supplied data. */
 export async function POST(request: NextRequest) {
   const ip = getClientIp(request);
   const { allowed } = checkRateLimit(`shipping-rates:${ip}`, { maxAttempts: 10, windowMs: 60 * 1000 });
@@ -71,24 +67,20 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Your cart is empty" }, { status: 400 });
   }
 
-  if (cart.total >= FREE_SHIPPING_THRESHOLD) {
-    return NextResponse.json({ freeShipping: true, rates: [] });
-  }
-
   const items = cart.items.map((item) => ({
     productSlug: item.product?.slug ?? "default",
     quantity: item.quantity,
   }));
 
   if (!isShippoEnabled()) {
-    return NextResponse.json({ freeShipping: false, rates: MOCK_RATES });
+    return NextResponse.json({ rates: MOCK_RATES });
   }
 
   const rates = await getShippingRates(toAddress, items);
 
   if (rates === null || rates.length === 0) {
-    return NextResponse.json({ freeShipping: false, rates: [], message: UNAVAILABLE_MESSAGE });
+    return NextResponse.json({ rates: [], message: UNAVAILABLE_MESSAGE });
   }
 
-  return NextResponse.json({ freeShipping: false, rates });
+  return NextResponse.json({ rates });
 }

@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { ArrowLeft, ArrowRight, MessageCircle } from "lucide-react";
 import type { DbProduct } from "@/types";
 import { GradientPlaceholder } from "@/components/ui/MediaWithFallback";
 import { useCart } from "@/context/CartContext";
@@ -88,13 +88,22 @@ export default function ProductDetail({ product }: { product: DbProduct }) {
             )}
 
             {product.status === "available" ? (
-              <button
-                onClick={() => addToCart(product.id)}
-                className="group mt-8 flex h-[52px] items-center justify-center gap-2 rounded-full bg-gradient-brand btn-glow px-8 font-inter text-[12px] font-semibold uppercase tracking-[0.15em] text-white transition-transform duration-300 hover:scale-[1.02]"
-              >
-                {cta.label}
-                <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
-              </button>
+              <div className="mt-8 flex flex-wrap items-center gap-4">
+                <button
+                  onClick={() => addToCart(product.id)}
+                  className="group flex h-[52px] items-center justify-center gap-2 rounded-full bg-gradient-brand btn-glow px-8 font-inter text-[12px] font-semibold uppercase tracking-[0.15em] text-white transition-transform duration-300 hover:scale-[1.02]"
+                >
+                  {cta.label}
+                  <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+                </button>
+                <Link
+                  href={`/contact?subject=${encodeURIComponent("Bulk order inquiry")}`}
+                  className="group flex h-[52px] items-center justify-center gap-2 rounded-full border border-violet/30 px-8 font-inter text-[12px] font-semibold uppercase tracking-[0.15em] text-violet transition-colors hover:border-violet hover:bg-violet/5"
+                >
+                  <MessageCircle size={16} />
+                  Inquire For Bulk Orders
+                </Link>
+              </div>
             ) : product.status === "sold-out" ? (
               <NotifyMeForm label={cta.label} source="product-detail-sold-out" className="mt-8" />
             ) : (

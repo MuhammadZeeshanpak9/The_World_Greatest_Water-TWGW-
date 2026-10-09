@@ -9,14 +9,12 @@ export default function OrderSummary({
   items,
   total,
   selectedRate,
-  freeShipping,
 }: {
   items: CartItem[];
   total: number;
   selectedRate?: SelectedRate | null;
-  freeShipping?: boolean;
 }) {
-  const shippingCost = freeShipping ? 0 : (selectedRate?.rate ?? 0);
+  const shippingCost = selectedRate?.rate ?? 0;
   // TODO: promo/discount code system — deferred to post-launch Phase 2. When it lands, subtract
   // the discount here before computing grandTotal.
   const grandTotal = total + shippingCost;
@@ -47,15 +45,13 @@ export default function OrderSummary({
         <div className="flex items-center justify-between font-inter text-[13px] text-body">
           <span>
             Shipping
-            {selectedRate && !freeShipping && (
+            {selectedRate && (
               <span className="ml-1 text-muted">
                 ({selectedRate.carrier} — {selectedRate.service})
               </span>
             )}
           </span>
-          <span className={freeShipping ? "font-semibold text-teal" : ""}>
-            {freeShipping ? "Free" : selectedRate ? formatCurrency(shippingCost) : "—"}
-          </span>
+          <span>{selectedRate ? formatCurrency(shippingCost) : "—"}</span>
         </div>
         <div className="mt-2 flex items-center justify-between border-t border-violet/10 pt-3 font-inter text-[15px] font-semibold text-ink">
           <span>Total</span>

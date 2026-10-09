@@ -19,7 +19,6 @@ export default function CheckoutFlow() {
   const [contact, setContact] = useState<ContactValues | null>(restored?.contact ?? null);
   const [shipping, setShipping] = useState<ShippingValues | null>(restored?.shipping ?? null);
   const [selectedRate, setSelectedRate] = useState<SelectedRate | null>(restored?.selectedRate ?? null);
-  const [freeShipping, setFreeShipping] = useState(restored?.freeShipping ?? false);
   const { items, total, loading: cartLoading } = useCart();
   const { user } = useSession();
   const router = useRouter();
@@ -47,8 +46,8 @@ export default function CheckoutFlow() {
   // Persist progress on every step transition, so an accidental refresh mid-checkout doesn't
   // lose it. Cleared on order success from within PaymentStep.
   useEffect(() => {
-    writeCheckoutState({ step, contact, shipping, selectedRate, freeShipping });
-  }, [step, contact, shipping, selectedRate, freeShipping]);
+    writeCheckoutState({ step, contact, shipping, selectedRate });
+  }, [step, contact, shipping, selectedRate]);
 
   const fullName =
     typeof user?.user_metadata?.full_name === "string" ? user.user_metadata.full_name : "";
@@ -83,21 +82,15 @@ export default function CheckoutFlow() {
             {step === 2 && (
               <ShippingStep
                 initialValues={shipping ?? undefined}
-                onContinue={(values, rate, isFree) => {
+                onContinue={(values, rate) => {
                   setShipping(values);
                   setSelectedRate(rate);
-                  setFreeShipping(isFree);
                   setStep(3);
                 }}
               />
             )}
             {step === 3 && contact && shipping && (
-              <PaymentStep
-                contact={contact}
-                shipping={shipping}
-                selectedRate={selectedRate}
-                freeShipping={freeShipping}
-              />
+              <PaymentStep contact={contact} shipping={shipping} selectedRate={selectedRate} />
             )}
           </m.div>
         </AnimatePresence>

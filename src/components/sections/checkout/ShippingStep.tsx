@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState, type FormEvent } from "react";
-import { ArrowRight, Check } from "lucide-react";
+import { useState, type FormEvent } from "react";
+import { ArrowRight } from "lucide-react";
 import FormField from "@/components/ui/FormField";
 import type { ShippingValues as Values, SelectedRate } from "./types";
 
@@ -22,7 +22,6 @@ function formatCurrency(value: number) {
 type RatesState =
   | { status: "idle" }
   | { status: "loading" }
-  | { status: "free" }
   | { status: "options"; rates: SelectedRate[] }
   | { status: "unavailable"; message: string };
 
@@ -31,7 +30,7 @@ export default function ShippingStep({
   onContinue,
 }: {
   initialValues?: Partial<Values>;
-  onContinue: (values: Values, rate: SelectedRate | null, freeShipping: boolean) => void;
+  onContinue: (values: Values, rate: SelectedRate | null) => void;
 }) {
   const [values, setValues] = useState<Values>({
     address1: initialValues?.address1 ?? "",
@@ -65,10 +64,6 @@ export default function ShippingStep({
       const json = await res.json();
       if (!res.ok) throw new Error(json.error ?? "Unable to calculate shipping rates");
 
-      if (json.freeShipping) {
-        setRatesState({ status: "free" });
-        return;
-      }
       if (!json.rates || json.rates.length === 0) {
         setRatesState({
           status: "unavailable",
@@ -87,21 +82,13 @@ export default function ShippingStep({
     }
   }
 
-  // Free shipping needs no selection — auto-continue once the badge has had a moment to show.
-  useEffect(() => {
-    if (ratesState.status !== "free") return;
-    const timer = setTimeout(() => onContinue(values, null, true), 700);
-    return () => clearTimeout(timer);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ratesState.status]);
-
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
     if (ratesState.status === "options") {
       const rate = ratesState.rates.find((r) => r.id === selectedRateId);
       if (!rate) return;
-      onContinue(values, rate, false);
+      onContinue(values, rate);
       return;
     }
 
@@ -179,15 +166,6 @@ export default function ShippingStep({
           <span className="h-3 w-3 animate-spin rounded-full border-2 border-violet border-t-transparent" />
           Calculating shipping rates…
         </p>
-      )}
-
-      {ratesState.status === "free" && (
-        <div className="mt-2 flex items-center gap-2 rounded-xl border border-teal/30 bg-teal/10 px-4 py-3">
-          <Check size={16} className="text-teal" />
-          <span className="font-inter text-[12px] font-semibold tracking-[0.1em] text-teal uppercase">
-            Free Shipping Applied
-          </span>
-        </div>
       )}
 
       {ratesState.status === "unavailable" && (

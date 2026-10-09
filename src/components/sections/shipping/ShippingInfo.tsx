@@ -27,7 +27,7 @@ export default function ShippingInfo() {
 
         <div className="mx-auto mt-12 max-w-2xl text-center">
           <p className="font-inter text-base leading-[1.9] text-body">
-            Free shipping on all domestic orders over $75. We proudly deliver ELEV8 WATER and
+            Shipping calculated at checkout. We proudly deliver ELEV8 WATER and
             wellness products worldwide — shipping rates and delivery windows are calculated at
             checkout based on destination and order weight.
           </p>
