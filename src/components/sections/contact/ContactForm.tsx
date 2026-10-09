@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { m } from "framer-motion";
 import { ArrowRight, Check } from "lucide-react";
 import FormField from "@/components/ui/FormField";
@@ -10,7 +11,16 @@ import { trackLead } from "@/lib/analytics";
 type Errors = Partial<Record<"name" | "email" | "subject" | "message", string>>;
 
 export default function ContactForm() {
-  const [values, setValues] = useState({ name: "", email: "", subject: "", message: "" });
+  const searchParams = useSearchParams();
+  // Lets an "INQUIRE" link elsewhere on the site (subscription plans, bulk
+  // orders) pre-select this form's Subject field via ?subject=... — reuses
+  // this exact form/route, no new fields or backend.
+  const [values, setValues] = useState({
+    name: "",
+    email: "",
+    subject: searchParams.get("subject") ?? "",
+    message: "",
+  });
   const [errors, setErrors] = useState<Errors>({});
   const { status, errorMessage, submit } = useFormSubmit();
 
