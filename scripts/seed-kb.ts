@@ -28,7 +28,16 @@ import {
   SUBSCRIPTION_PLANS,
   GIFT_TIERS,
   COURSE_BENEFITS,
+  ANNOUNCEMENTS,
 } from "../src/data/content";
+
+// "1 WATER. 12 UNDERSTANDINGS" — the exact ANNOUNCEMENTS entry used verbatim
+// below. Asserted at module load so a future edit to that string in
+// content.ts can't silently desync the Q&A sources from the real site copy.
+const ONE_WATER_TAGLINE = ANNOUNCEMENTS.find((a) => a.includes("12 UNDERSTANDINGS"));
+if (!ONE_WATER_TAGLINE) {
+  throw new Error('ANNOUNCEMENTS no longer contains a "12 UNDERSTANDINGS" entry — update seed-kb.ts');
+}
 
 const EMBEDDING_MODEL = process.env.VA_EMBEDDING_MODEL || "text-embedding-3-small";
 const SUB_BRAND = "elev8-water";
@@ -64,6 +73,62 @@ function buildSources(): SourceDef[] {
         "ELEV8_GENERAL",
         "Brand identity",
         `Full name: "${BRAND.name}". Short name: "${BRAND.short}". Tagline: "${BRAND.tagline}".`,
+      ),
+    ],
+  });
+
+  // --- Q&A: "What is TWGW?" --------------------------------------------
+  // Built entirely from BRAND (content.ts), the same single source of
+  // truth used by the "Brand identity" source above — no new facts.
+  sources.push({
+    external_id: "qa-what-is-twgw",
+    category: "ELEV8_GENERAL",
+    title: "What is TWGW?",
+    status: "approved",
+    chunks: [
+      prefixed(
+        "ELEV8_GENERAL",
+        "What is TWGW?",
+        `TWGW stands for "${BRAND.name}", also known by its short name "${BRAND.short}". Tagline: "${BRAND.tagline}".`,
+      ),
+    ],
+  });
+
+  // --- Q&A: "What are the 12 Understandings?" ---------------------------
+  // Lists all 12 BOTTLES names in their canonical order, tied to the real
+  // "1 WATER. 12 UNDERSTANDINGS" announcement-bar copy. No blurb text is
+  // added here (that's each Bottle — <NAME> source above); this source
+  // exists so a direct "what are the 12 Understandings" / "name them"
+  // question gets a single chunk listing all 12 names together, rather
+  // than depending on 12 separate top-K hits to enumerate them.
+  sources.push({
+    external_id: "qa-twelve-understandings",
+    category: "BOTTLES",
+    title: "What are the 12 Understandings?",
+    status: "approved",
+    chunks: [
+      prefixed(
+        "BOTTLES",
+        "What are the 12 Understandings?",
+        `"${ONE_WATER_TAGLINE}" — the 12 Understandings are: ${BOTTLES.map((b) => b.name).join(", ")}.`,
+      ),
+    ],
+  });
+
+  // --- Q&A: "Tell me about the 12 bottles" -------------------------------
+  // Same 12 names plus each one's shortBlurb, in canonical order, so this
+  // single chunk can answer "tell me about the 12 bottles" without relying
+  // on match_count (8) to surface all 12 individual Bottle — <NAME> chunks.
+  sources.push({
+    external_id: "qa-tell-me-about-the-12-bottles",
+    category: "BOTTLES",
+    title: "Tell me about the 12 bottles",
+    status: "approved",
+    chunks: [
+      prefixed(
+        "BOTTLES",
+        "Tell me about the 12 bottles",
+        `"${ONE_WATER_TAGLINE}" — the 12 bottles, in order: ${BOTTLES.map((b) => `${b.name} (${b.shortBlurb})`).join(" | ")}.`,
       ),
     ],
   });
@@ -170,11 +235,37 @@ function buildSources(): SourceDef[] {
 
   // --- Wellness tiers: one chunk per tier overview, one per sub-offering,
   //     one per booking-tier price list -----------------------------------
+  // Overview text deliberately does NOT always include tier.pricingLabel/
+  // price1yr/price2yr: content.ts's MIND tier object carries price1yr
+  // "1 Year Membership — $2,500" / price2yr "2 Year Membership — $5,000"
+  // at the tier-overview level, but neither of MIND's two offerings
+  // (Mental Health, Mental Wealth) has a pricingLabel/price1yr of its own —
+  // OfferingBlock.tsx's hasMembershipForm check reads the OFFERING's own
+  // price1yr, not the tier's, so this membership text never actually
+  // renders anywhere on the live /wellness/mind page (confirmed by
+  // reading the live page's rendered text — only the 12 consultation
+  // bookingTiers prices appear, no "1 Year"/"2 Year" membership text at
+  // all). BODY and SOUL don't have this gap: every one of their offerings
+  // repeats the same tier-level price1yr/price2yr as its own fields, so
+  // their tier-level numbers DO render live. Surfacing MIND's unused
+  // tier-level field in the KB would have the bot state a $2,500/$5,000
+  // Mind membership that doesn't exist on the site and isn't
+  // client-confirmed — so it's excluded here, specifically for MIND, by
+  // slug rather than by a generic "does any offering use it" check (which
+  // would be more robust long-term, but slug-matching is the smallest
+  // change that fixes today's known case without guessing at a general
+  // rule from a single example).
   for (const tier of WELLNESS_SUBPAGES) {
+    const showTierLevelMembership = tier.slug !== "mind";
     const overview = [
       tier.subtitle ? `${tier.title} — ${tier.subtitle}. Starting price: ${tier.price}.` : `${tier.title}. Starting price: ${tier.price}.`,
       tier.description,
-      tier.pricingLabel && tier.price1yr ? `${tier.pricingLabel} ${tier.price1yr}${tier.price2yr ? `, ${tier.price2yr}` : ""}` : "",
+      showTierLevelMembership && tier.pricingLabel && tier.price1yr
+        ? `${tier.pricingLabel} ${tier.price1yr}${tier.price2yr ? `, ${tier.price2yr}` : ""}`
+        : "",
+      tier.slug === "mind"
+        ? "Mind has no 1 Year / 2 Year membership — pricing for Mind is per consultation (see the booking tiers for Mental Health and Mental Wealth below)."
+        : "",
       tier.pricingNote || "",
     ]
       .filter(Boolean)
@@ -276,6 +367,12 @@ function buildSources(): SourceDef[] {
   }
 
   // --- Shipping ---------------------------------------------------------
+  // Client confirmed in writing: there is no free shipping. The site no
+  // longer has a free-shipping threshold anywhere (removed from
+  // ShippingInfo.tsx, the subscription page, and the /api/shipping/rates
+  // and /api/orders threshold logic) — this chunk must not claim one
+  // either. Shipping cost always comes from live carrier rates at
+  // checkout, never a flat/free amount quoted here.
   const shippingBody = SHIPPING_INFO.map((c) => `${c.title}: ${c.value}`).join(". ");
   sources.push({
     external_id: "shipping-info",
@@ -286,12 +383,23 @@ function buildSources(): SourceDef[] {
       prefixed(
         "SHIPPING",
         "Shipping information",
-        `${shippingBody}. Free shipping on all domestic orders over $75. We ship worldwide; international rates are calculated at checkout based on location and weight.`,
+        `${shippingBody}. Shipping is calculated at checkout based on destination and order weight — there is no free shipping or free-shipping threshold. We ship worldwide.`,
       ),
     ],
   });
 
-  // --- Subscription plans ------------------------------------------------
+  // --- Subscription plans (inquiry-only) ----------------------------------
+  // Weekly/Monthly subscriptions are now inquiry-only on the live site
+  // (PlanComparison.tsx shows no price, no badge, no "Save 15%", and no
+  // checkout button — every plan links to the contact form instead). This
+  // chunk deliberately does NOT read plan.price16oz/price1L/badge — those
+  // fields still exist in content.ts (kept verbatim per an earlier
+  // instruction: "keep plan names, frequencies and prices exactly as they
+  // are" in the DATA), but the inquiry-only UI never renders them, and the
+  // KB must match what the bot is allowed to say, not the unused data
+  // field. The bot never quotes a subscription price or a discount/
+  // savings percentage for Weekly or Monthly — it points to the contact
+  // page. Bulk orders are the same: inquiry-only, no price ever quoted.
   for (const plan of SUBSCRIPTION_PLANS) {
     sources.push({
       external_id: `subscription-plan-${plan.name.toLowerCase()}`,
@@ -302,11 +410,26 @@ function buildSources(): SourceDef[] {
         prefixed(
           "SUBSCRIPTION",
           `Subscription plan — ${plan.name}`,
-          `${plan.badge}. 16.9oz: ${plan.price16oz}. 1L: ${plan.price1L}. Features: ${plan.features.join("; ")}.`,
+          `The ${plan.name} subscription plan (${plan.features.join("; ")}) is inquiry-only — ELEV8 WATER does not quote a subscription price, savings, or discount for this plan. Direct the customer to the Contact page to inquire about ${plan.name.toLowerCase()} subscription pricing.`,
         ),
       ],
     });
   }
+
+  // --- Bulk orders (inquiry-only) -----------------------------------------
+  sources.push({
+    external_id: "bulk-orders",
+    category: "ORDERS",
+    title: "Bulk orders",
+    status: "approved",
+    chunks: [
+      prefixed(
+        "ORDERS",
+        "Bulk orders",
+        "Bulk orders are inquiry-only — ELEV8 WATER does not quote a bulk-order price. Direct the customer to the Contact page (or the \"Inquire For Bulk Orders\" link on the shop and product pages) to inquire about bulk pricing.",
+      ),
+    ],
+  });
 
   // --- Gift card tiers -----------------------------------------------
   for (const tier of GIFT_TIERS) {
@@ -431,10 +554,16 @@ function hashContent(chunks: string[]): string {
  * so it can be caught by review before the key arrives, not after. */
 const STALE_WORDING_FLAGS: { label: string; pattern: RegExp }[] = [
   { label: "Apple Pay / Google Pay", pattern: /apple pay|google pay/i },
-  { label: '"Save 15%"', pattern: /save 15%/i },
-  { label: '"free shipping on all orders" (unconditional)', pattern: /free shipping on all orders/i },
+  { label: '"Save 15%" / subscription discount', pattern: /save \d+%/i },
+  { label: "free shipping (any mention)", pattern: /free shipping/i },
   { label: "Cal.com / live booking calendar claim", pattern: /cal\.com|live booking calendar|book.{0,15}calendar/i },
+  { label: "subscription $ price (16.9oz/1L)", pattern: /77\.77|47\.77/ },
 ];
+// "1 Year Membership" is NOT flagged here — BODY/SOUL legitimately say it
+// (their live pages show it), so a blanket flag would fire constantly on
+// correct content. The MIND-specific check (that source must NOT say it)
+// is done separately, scoped to that one source, in the post-seed
+// verification query (PHASE 2 step 6), not in this generic flag list.
 
 function flagsForText(text: string): string[] {
   return STALE_WORDING_FLAGS.filter((f) => f.pattern.test(text)).map((f) => f.label);

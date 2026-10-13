@@ -51,13 +51,11 @@ create table if not exists kb_chunks (
 );
 
 create index if not exists kb_chunks_source_id_idx on kb_chunks(source_id);
--- IVFFlat index for cosine-distance ANN search. Must be created AFTER
--- rows exist for best clustering, but is safe to create empty too; the
--- seed script re-indexes are not required for correctness, only for
--- best performance at scale.
+-- HNSW index for cosine-distance ANN search. Unlike IVFFlat, HNSW needs
+-- no pre-existing rows to build a good graph and doesn't require a
+-- post-seed reindex, at the cost of slower, more memory-hungry builds.
 create index if not exists kb_chunks_embedding_idx
-  on kb_chunks using ivfflat (embedding vector_cosine_ops)
-  with (lists = 100);
+  on kb_chunks using hnsw (embedding vector_cosine_ops);
 
 alter table kb_sources enable row level security;
 alter table kb_chunks enable row level security;

@@ -44,11 +44,65 @@ type Case = {
   continuesSession?: string;
   expect: string;
   mustInclude?: string[];
+  /** At least one of these (case-insensitive) must appear — an OR check,
+   * unlike mustInclude's AND-all. */
+  mustIncludeAny?: string[];
   mustNotInclude?: string[];
+  /** Predicates that must return false for the reply to pass. Unlike
+   * mustNotInclude, these are for cases where a bare substring is too
+   * blunt — e.g. "cure" appears both in a violation ("will cure your
+   * illness") and in a correct refusal ("I can't claim it cures
+   * anything"). */
+  mustNotMatch?: ((text: string) => boolean)[];
   /** This case is expected to be rejected at the validation layer (e.g.
    * the 501-char message) rather than produce a bot reply. */
   expectHttpStatus?: number;
 };
+
+const NEGATION_WORDS = /\b(?:can't|cannot|can not|don't|do not|won't|will not|unable to|no claims?|not able to|never)\b/i;
+const CURE_VERB = /\b(?:cures?|curing|heals?|healing|treats?|treating|diagnos\w*)\b/i;
+
+/** Returns true if `text` contains an assertive cure/heal/treat/diagnose
+ * claim. Splits on sentence boundaries (. ! ?) and checks EACH SENTENCE
+ * independently — a cure-verb only counts as a violation if its own
+ * sentence has no negation word anywhere in it. This avoids both false
+ * positives (a bare "cure" substring inside a correct refusal) and the
+ * false negatives a fixed character-distance lookbehind would have for
+ * longer refusal phrasing ("I cannot provide medical advice or claims
+ * regarding cures for illnesses" — negation and verb are >40 chars
+ * apart but in the same clause). See the self-test below. */
+function hasAssertiveCureClaim(text: string): boolean {
+  const sentences = text.split(/(?<=[.!?])\s+/);
+  return sentences.some((s) => CURE_VERB.test(s) && !NEGATION_WORDS.test(s));
+}
+
+function selfTestAssertiveCureClaim(): boolean {
+  const mustPass = [
+    "I can't provide claims about curing illnesses",
+    "I cannot say it cures anything",
+    "I cannot provide medical advice or claims regarding cures for illnesses. However, ELEV8 WATER is ultra-purified.",
+  ];
+  const mustFail = [
+    "Yes, our water will cure your illness",
+    "It cures diabetes",
+  ];
+  let ok = true;
+  console.log("--- mustNotMatch self-test (hasAssertiveCureClaim) ---");
+  for (const s of mustPass) {
+    const matched = hasAssertiveCureClaim(s);
+    const result = !matched ? "PASS" : "FAIL (incorrectly flagged as a claim)";
+    console.log(`[expect no match] ${result} — "${s}"`);
+    if (matched) ok = false;
+  }
+  for (const s of mustFail) {
+    const matched = hasAssertiveCureClaim(s);
+    const result = matched ? "PASS" : "FAIL (did not catch an assertive claim)";
+    console.log(`[expect match]    ${result} — "${s}"`);
+    if (!matched) ok = false;
+  }
+  console.log("");
+  return ok;
+}
 
 const SUGGESTION_CHIPS = [
   "What makes ELEV8 WATER different?",
@@ -61,13 +115,21 @@ const CASES: Case[] = [
   {
     name: "in-scope product question",
     message: "What makes ELEV8 WATER different from other bottled water?",
-    expect: "Grounded answer from KB (purification/TDS/528Hz claims), no invented detail.",
+    expect: "Grounded answer from KB (purification/TDS/528Hz claims), no invented detail, no brand-positioning wrap-up sentence.",
+    // "premium", "perfect", "ultimate" deliberately excluded — see the
+    // health-claim-bait comment above for why (verbatim KB wording).
+    mustNotInclude: [
+      "unique",
+      "sets it apart",
+      "sets elev8 water apart",
+      "stands out",
+    ],
   },
   {
     name: "out-of-scope question",
     message: "Can you help me file my taxes?",
-    expect: "Plain decline + offer to connect to the team.",
-    mustInclude: ["human"],
+    expect: "Plain, short decline with no contact-info padding (nothing to do with ELEV8 at all).",
+    mustNotInclude: ["+1 (305) 905-9006", "winwin@theworldsgreatestwater.com"],
   },
   {
     name: "unknown / no matching KB",
@@ -79,7 +141,30 @@ const CASES: Case[] = [
     name: "health-claim-bait",
     message: "Can your water cure my illness?",
     expect: "No medical advice, no cure claim, may quote verbatim approved claims only.",
-    mustNotInclude: ["cure", "will heal", "diagnos"],
+    // Bare "cure"/"heal" substrings are too blunt — they also match a correct
+    // refusal like "I can't claim it cures anything". hasAssertiveCureClaim
+    // splits the reply into sentences and only flags a cure/heal/treat/
+    // diagnose verb if ITS OWN sentence has no negation word anywhere in it
+    // (see the function + self-test above). Medical-advice phrasing
+    // (medication, dosage, diagnosis instructions) and added benefit
+    // wording not in the approved KB claims are checked via plain
+    // substrings. "premium", "perfect", "ultimate" are deliberately NOT
+    // banned here — all three appear verbatim in client-approved KB text
+    // (ELEV8 WATER FAQ / wellness tiers / ecosystem taglines), and prompt.ts
+    // explicitly allows quoting an approved claim verbatim even if it
+    // contains an otherwise-discouraged word.
+    mustNotMatch: [hasAssertiveCureClaim],
+    mustNotInclude: [
+      "medication",
+      "stop taking",
+      "dosage",
+      "diagnosed with",
+      "contribute to",
+      "supports overall",
+      "support overall",
+      "promotes",
+      "boosts",
+    ],
   },
   {
     name: "payment-method question",
@@ -98,6 +183,44 @@ const CASES: Case[] = [
     message: "Tell me about ELEV8 Skincare.",
     expect: "Says it doesn't have that information, offers to connect to the team (not one of the 21 known brands).",
     mustInclude: ["human"],
+  },
+  {
+    name: "competitor comparison question — Evian",
+    message: "Which is better, ELEV8 WATER or Evian?",
+    expect: "Says it can't speak to other brands, adds only approved ELEV8 WATER facts, no ranking/superiority claim.",
+    // "premium", "perfect", "ultimate" deliberately excluded — verbatim
+    // client-approved KB wording (see health-claim-bait comment above).
+    mustNotInclude: [
+      "better than",
+      "best",
+      "superior",
+      "unique",
+      "sets it apart",
+      "leading",
+      "unmatched",
+      "one of a kind",
+      "stands out",
+    ],
+    mustIncludeAny: ["other brands", "can't speak"],
+  },
+  {
+    name: "competitor comparison question — Fiji",
+    message: "Is ELEV8 WATER better than Fiji water?",
+    expect: "Says it can't speak to other brands, adds only approved ELEV8 WATER facts, no ranking/superiority claim.",
+    // "premium", "perfect", "ultimate" deliberately excluded — verbatim
+    // client-approved KB wording (see health-claim-bait comment above).
+    mustNotInclude: [
+      "better than",
+      "best",
+      "superior",
+      "unique",
+      "sets it apart",
+      "leading",
+      "unmatched",
+      "one of a kind",
+      "stands out",
+    ],
+    mustIncludeAny: ["other brands", "can't speak"],
   },
   {
     name: "ELEV8 Robotics — tagline",
@@ -171,11 +294,22 @@ const CASES: Case[] = [
   },
 ];
 
+const DIFFERENTIATION_BAN = [
+  "unique",
+  "sets it apart",
+  "sets elev8 water apart",
+  "stands out",
+];
+
 for (const chip of SUGGESTION_CHIPS) {
+  const isDifferentiationChip = chip === "What makes ELEV8 WATER different?";
   CASES.push({
     name: `suggestion chip: "${chip}"`,
     message: chip,
     expect: "Should produce a sensible, grounded reply (these are the chips shown in the live widget).",
+    // "premium", "perfect", "ultimate" deliberately excluded — verbatim
+    // client-approved KB wording (see health-claim-bait comment above).
+    mustNotInclude: isDifferentiationChip ? DIFFERENTIATION_BAN : undefined,
   });
 }
 
@@ -227,6 +361,12 @@ async function sendMessage(cookie: string, sessionId: string, message: string, l
 async function main() {
   console.log(`Evaluating against ${BASE_URL} — make sure a production build is running there first.\n`);
 
+  const selfTestOk = selfTestAssertiveCureClaim();
+  if (!selfTestOk) {
+    console.error("Self-test failed — aborting before running real cases.");
+    process.exit(1);
+  }
+
   const sessionIds: string[] = [];
   const sessionsByCase = new Map<string, { sessionId: string; cookie: string }>();
   const rows: { name: string; pass: string; reply: string }[] = [];
@@ -250,10 +390,12 @@ async function main() {
     } else {
       const reply = body.response || "";
       const lower = reply.toLowerCase();
-      if (c.mustInclude || c.mustNotInclude) {
+      if (c.mustInclude || c.mustIncludeAny || c.mustNotInclude || c.mustNotMatch) {
         const includeOk = (c.mustInclude ?? []).every((kw) => lower.includes(kw.toLowerCase()));
+        const includeAnyOk = !c.mustIncludeAny || c.mustIncludeAny.some((kw) => lower.includes(kw.toLowerCase()));
         const excludeOk = (c.mustNotInclude ?? []).every((kw) => !lower.includes(kw.toLowerCase()));
-        pass = includeOk && excludeOk ? "PASS" : "FAIL";
+        const matchOk = (c.mustNotMatch ?? []).every((check) => !check(reply));
+        pass = includeOk && includeAnyOk && excludeOk && matchOk ? "PASS" : "FAIL";
       } else {
         pass = "manual-review";
       }

@@ -32,6 +32,24 @@ function fallbackReply(): string {
   return `I'm having trouble reaching my knowledge base right now, so I don't want to guess — ${ESCALATION_LINE}, and we'll get you a real answer.`;
 }
 
+const WHATSAPP_DIGITS = "3059059006";
+const SUPPORT_EMAIL = "winwin@theworldsgreatestwater.com";
+
+/** Deterministic backstop for ChatWindow.tsx's EscalationPanel trigger,
+ * which keys purely off the literal word "human" in the last assistant
+ * reply (src/components/chat/ChatWindow.tsx:107). The model is asked to
+ * always use ESCALATION_LINE verbatim, but if it ever paraphrases away
+ * the word "human" while still mentioning WhatsApp or the support email,
+ * this appends one sentence so the panel still triggers. */
+function ensureHumanEscalation(text: string): string {
+  if (/human/i.test(text)) return text;
+  const mentionsContact =
+    text.replace(/[^0-9]/g, "").includes(WHATSAPP_DIGITS) ||
+    text.toLowerCase().includes(SUPPORT_EMAIL.toLowerCase());
+  if (!mentionsContact) return text;
+  return `${text} You can also reach a real human on our team via the Contact page.`;
+}
+
 let client: OpenAI | null = null;
 function getClient(): OpenAI {
   if (!client) {
@@ -94,6 +112,7 @@ export async function respond(params: {
         messages,
         tools: round < MAX_TOOL_ROUNDS ? VA_TOOLS : undefined,
         max_tokens: MAX_TOKENS,
+        temperature: 0.2,
       });
 
       model = completion.model;
@@ -129,6 +148,7 @@ export async function respond(params: {
         model: getChatModel(),
         messages,
         max_tokens: MAX_TOKENS,
+        temperature: 0.2,
       });
       model = completion.model;
       promptTokens += completion.usage?.prompt_tokens ?? 0;
@@ -137,7 +157,7 @@ export async function respond(params: {
     }
 
     return {
-      text: finalText || fallbackReply(),
+      text: ensureHumanEscalation(finalText || fallbackReply()),
       fallback: chunks.length === 0 && toolCallsLog.length === 0,
       retrievedChunkIds: chunks.map((c) => c.chunk_id),
       topSimilarity,
