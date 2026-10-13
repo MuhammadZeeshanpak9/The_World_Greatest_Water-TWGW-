@@ -21,13 +21,15 @@
     "framer-motion": "^12.42.2",
     "lucide-react": "^1.23.0",
     "next": "16.2.10",
+    "openai": "^6.49.0",
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "react-hot-toast": "^2.6.0",
     "resend": "^6.20.0",
     "server-only": "^0.0.1",
     "shippo": "^2.18.0",
-    "stripe": "^22.5.0"
+    "stripe": "^22.5.0",
+    "zod": "^4.6.5"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^16.2.10",
@@ -35,9 +37,11 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "dotenv": "^18.0.5",
     "eslint": "^9",
     "eslint-config-next": "16.2.10",
     "tailwindcss": "^4",
+    "tsx": "^4.23.15",
     "typescript": "^5"
   }
 }
