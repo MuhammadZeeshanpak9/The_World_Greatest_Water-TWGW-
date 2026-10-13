@@ -13,8 +13,8 @@ const CONTACTS = [
 ];
 
 const itemStyle: React.CSSProperties = {
-  background: "rgba(255,255,255,0.08)",
-  border: "1px solid rgba(255,255,255,0.15)",
+  background: "#f9fafb",
+  border: "1px solid #d8cce8",
   borderRadius: "12px",
   padding: "10px 14px",
   display: "flex",
@@ -22,7 +22,7 @@ const itemStyle: React.CSSProperties = {
   gap: "10px",
   fontFamily: "inherit",
   fontSize: "12px",
-  color: "rgba(255,255,255,0.85)",
+  color: "#5e2d91",
   textDecoration: "none",
   transition: "border-color 0.15s, color 0.15s, background 0.15s",
   cursor: "pointer",
@@ -36,33 +36,32 @@ export default function EscalationPanel() {
       transition={{ duration: 0.25 }}
       className="rounded-2xl p-4"
       style={{
-        background: "rgba(255,255,255,0.06)",
-        backdropFilter: "blur(12px)",
-        border: "1px solid rgba(255,255,255,0.15)",
+        background: "#f3f0f8",
+        border: "1px solid #d8cce8",
       }}
     >
-      <p className="mb-3 font-inter text-[12px]" style={{ color: "rgba(255,255,255,0.6)" }}>
+      <p className="mb-3 font-inter text-[12px]" style={{ color: "#7c5a95" }}>
         Want to speak with a real person? Reach the ELEV8 team:
       </p>
       <div className="flex flex-col gap-2">
         {CONTACTS.map(({ href, label, icon: Icon, external, isLink }) => {
           const inner = (
             <>
-              <Icon size={13} style={{ color: "#3dd6cb", flexShrink: 0 }} />
+              <Icon size={13} style={{ color: "#5e2d91", flexShrink: 0 }} />
               {label}
             </>
           );
 
           const handlers = {
             onMouseEnter: (e: React.MouseEvent<HTMLElement>) => {
-              (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.3)";
-              (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.15)";
-              (e.currentTarget as HTMLElement).style.color = "#fff";
+              (e.currentTarget as HTMLElement).style.borderColor = "#5e2d91";
+              (e.currentTarget as HTMLElement).style.background = "#ffffff";
+              (e.currentTarget as HTMLElement).style.color = "#4a2270";
             },
             onMouseLeave: (e: React.MouseEvent<HTMLElement>) => {
-              (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.15)";
-              (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.08)";
-              (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.85)";
+              (e.currentTarget as HTMLElement).style.borderColor = "#d8cce8";
+              (e.currentTarget as HTMLElement).style.background = "#f9fafb";
+              (e.currentTarget as HTMLElement).style.color = "#5e2d91";
             },
           };
 

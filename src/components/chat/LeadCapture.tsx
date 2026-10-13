@@ -43,13 +43,13 @@ export default function LeadCapture({
 
   const inputStyle: React.CSSProperties = {
     width: "100%",
-    background: "rgba(255,255,255,0.08)",
-    border: "1px solid rgba(255,255,255,0.2)",
+    background: "#f9fafb",
+    border: "1px solid #d8cce8",
     borderRadius: "10px",
     padding: "10px 12px",
     fontFamily: "inherit",
     fontSize: "12px",
-    color: "#fff",
+    color: "#2d1b3d",
     outline: "none",
   };
 
@@ -61,9 +61,8 @@ export default function LeadCapture({
       transition={{ duration: 0.25 }}
       className="relative rounded-2xl p-4"
       style={{
-        background: "rgba(255,255,255,0.06)",
-        backdropFilter: "blur(12px)",
-        border: "1px solid rgba(255,255,255,0.15)",
+        background: "#f3f0f8",
+        border: "1px solid #d8cce8",
       }}
     >
       <button
@@ -71,9 +70,9 @@ export default function LeadCapture({
         onClick={onDismiss}
         aria-label="Dismiss"
         className="absolute right-3 top-3"
-        style={{ color: "rgba(255,255,255,0.5)" }}
-        onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = "#fff"; }}
-        onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.5)"; }}
+        style={{ color: "#9b7fb8" }}
+        onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = "#5e2d91"; }}
+        onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = "#9b7fb8"; }}
       >
         <X size={14} />
       </button>
@@ -84,18 +83,18 @@ export default function LeadCapture({
           animate={{ opacity: 1 }}
           className="flex items-center gap-2 pr-4"
         >
-          <CheckCircle size={16} style={{ color: "#3dd6cb" }} />
-          <p className="font-inter text-[12px] text-white">
+          <CheckCircle size={16} style={{ color: "#5e2d91" }} />
+          <p className="font-inter text-[12px]" style={{ color: "#2d1b3d" }}>
             Thank you — we&apos;ll be in touch.
           </p>
         </m.div>
       ) : (
         <form onSubmit={handleSubmit} className="flex flex-col gap-2.5 pr-4">
           <div>
-            <p className="font-cormorant text-[16px] font-semibold text-white">
+            <p className="font-cormorant text-[16px] font-semibold" style={{ color: "#5e2d91" }}>
               Stay connected with ELEV8
             </p>
-            <p className="font-inter text-[11px]" style={{ color: "rgba(255,255,255,0.6)" }}>
+            <p className="font-inter text-[11px]" style={{ color: "#7c5a95" }}>
               Get exclusive updates and offers.
             </p>
           </div>
@@ -106,8 +105,8 @@ export default function LeadCapture({
             onChange={(e) => setName(e.target.value)}
             maxLength={200}
             style={inputStyle}
-            onFocus={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.4)"; (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.12)"; }}
-            onBlur={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.2)"; (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.08)"; }}
+            onFocus={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "#5e2d91"; (e.currentTarget as HTMLElement).style.background = "#ffffff"; }}
+            onBlur={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "#d8cce8"; (e.currentTarget as HTMLElement).style.background = "#f9fafb"; }}
           />
           <input
             type="email"
@@ -116,11 +115,11 @@ export default function LeadCapture({
             onChange={(e) => setEmail(e.target.value)}
             required
             style={inputStyle}
-            onFocus={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.4)"; (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.12)"; }}
-            onBlur={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.2)"; (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.08)"; }}
+            onFocus={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "#5e2d91"; (e.currentTarget as HTMLElement).style.background = "#ffffff"; }}
+            onBlur={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "#d8cce8"; (e.currentTarget as HTMLElement).style.background = "#f9fafb"; }}
           />
           {error && (
-            <p className="font-inter text-[11px]" style={{ color: "#fca5a5" }}>{error}</p>
+            <p className="font-inter text-[11px]" style={{ color: "#dc2626" }}>{error}</p>
           )}
           <button
             type="submit"
