@@ -6,9 +6,11 @@ import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import type { DbProduct } from "@/types";
 import { GradientPlaceholder } from "@/components/ui/MediaWithFallback";
+import ProductImageCarousel from "@/components/ui/ProductImageCarousel";
 import { useCart } from "@/context/CartContext";
 import NotifyMeForm from "@/components/ui/NotifyMeForm";
 import { getProductCta } from "@/components/sections/shop/ProductStatusBadge";
+import { formatPrice, getProductImages } from "@/lib/productDisplay";
 
 export default function ShopSection({ products }: { products: DbProduct[] }) {
   const featured = products.slice(0, 3);
@@ -35,6 +37,7 @@ export default function ShopSection({ products }: { products: DbProduct[] }) {
         <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {featured.map((product, i) => {
             const cta = getProductCta(product.status);
+            const images = getProductImages(product);
             return (
               <m.div
                 key={product.id}
@@ -47,9 +50,11 @@ export default function ShopSection({ products }: { products: DbProduct[] }) {
               >
                 <Link
                   href={`/shop/${product.slug}`}
-                  className="relative h-[280px] overflow-hidden rounded-xl"
+                  className="relative aspect-[4/5] overflow-hidden rounded-xl"
                 >
-                  {product.image_url ? (
+                  {images.length > 0 ? (
+                    <ProductImageCarousel images={images} alt={product.name} />
+                  ) : product.image_url ? (
                     <Image
                       src={product.image_url}
                       alt={product.name}
@@ -73,7 +78,7 @@ export default function ShopSection({ products }: { products: DbProduct[] }) {
                   </h3>
                 </Link>
                 <p className="mt-2 font-inter text-[22px] font-bold text-violet">
-                  ${product.price.toFixed(2)}
+                  {formatPrice(product.price)}
                 </p>
 
                 {product.status === "available" ? (

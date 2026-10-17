@@ -6,20 +6,16 @@ import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import type { DbProduct } from "@/types";
 import { GradientPlaceholder } from "@/components/ui/MediaWithFallback";
+import ProductImageCarousel from "@/components/ui/ProductImageCarousel";
 import { useCart } from "@/context/CartContext";
 import NotifyMeForm from "@/components/ui/NotifyMeForm";
 import ProductStatusBadge, { getProductCta } from "./ProductStatusBadge";
-
-function formatPrice(price: number) {
-  // price <= 0 means pricing isn't set yet (e.g. a newly-announced
-  // coming-soon category) — show "TBA" instead of a misleading $0.00.
-  if (price <= 0) return "TBA";
-  return `$${price.toFixed(2)}`;
-}
+import { formatPrice, getProductImages } from "@/lib/productDisplay";
 
 export default function ProductCard({ product, index }: { product: DbProduct; index: number }) {
   const cta = getProductCta(product.status);
   const { addToCart } = useCart();
+  const images = getProductImages(product);
 
   return (
     <m.div
@@ -33,9 +29,11 @@ export default function ProductCard({ product, index }: { product: DbProduct; in
     >
       <Link
         href={`/shop/${product.slug}`}
-        className="relative h-[240px] overflow-hidden rounded-xl"
+        className="relative aspect-[4/5] overflow-hidden rounded-xl"
       >
-        {product.image_url ? (
+        {images.length > 0 ? (
+          <ProductImageCarousel images={images} alt={product.name} />
+        ) : product.image_url ? (
           <Image
             src={product.image_url}
             alt={product.name}

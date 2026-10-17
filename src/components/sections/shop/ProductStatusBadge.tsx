@@ -7,7 +7,7 @@ export function getProductCta(status: ProductStatus): { label: string; disabled:
     case "available":
       return { label: "Add To Cart", disabled: false };
     case "coming-soon":
-      return { label: "Coming Soon", disabled: true };
+      return { label: "On The Way", disabled: true };
   }
 }
 
@@ -28,7 +28,7 @@ export default function ProductStatusBadge({ status }: { status: ProductStatus }
   }
   return (
     <span className="rounded-full border border-violet px-3 py-1 font-inter text-[10px] font-semibold uppercase tracking-[0.15em] text-violet">
-      Coming Soon
+      On The Way
     </span>
   );
 }
