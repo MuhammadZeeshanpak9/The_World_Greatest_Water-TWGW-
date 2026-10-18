@@ -481,8 +481,13 @@ function buildSources(): SourceDef[] {
   });
 
   // --- ELEV8 ecosystem brands (addendum) --------------------------------
+  // NOTE: "THE GRAND DESIGNER" was removed from this list — it was being
+  // treated as a company/brand with a marketing tagline, which is the
+  // wrong, off-brand answer to "Who is the Grand Designer?" (a client-
+  // reported correction). THE GRAND DESIGNER is a philosophical concept,
+  // not a business unit — see the dedicated "People / philosophical
+  // concepts" source below for the correct, client-approved answer.
   const ecosystemBrands: { name: string; tagline: string }[] = [
-    { name: "THE GRAND DESIGNER", tagline: "#1 mental/physical wellness experience in the youniverse guaranteed to reveal the greatness in Y.O.U." },
     { name: "THE WORLD'S GREATEST WATER. ELEV8 WATER", tagline: "#1 premium self-development and wellness ultra purified water brand packaged in bottles." },
     { name: "ELEV8 GOD WITHIN GLOBAL MINISTRIES", tagline: "#1 spiritual and physical mental wellness movement in the youniverse." },
     { name: "ELEV8 MENTALVERSITY", tagline: "#1 spirituality & science experience center in the youniverse." },
@@ -529,7 +534,46 @@ function buildSources(): SourceDef[] {
       prefixed(
         "ELEV8_ECOSYSTEM",
         "ELEV8 ecosystem — full brand list",
-        `The ELEV8 ecosystem includes 21 brands: ${ecosystemBrands.map((b) => `${b.name} (${b.tagline})`).join("; ")}.`,
+        `The ELEV8 ecosystem includes ${ecosystemBrands.length} brands: ${ecosystemBrands.map((b) => `${b.name} (${b.tagline})`).join("; ")}.`,
+      ),
+    ],
+  });
+
+  // --- People / philosophical concepts (client corrections) ------------
+  // "Who is the Grand Designer?" — client-reported correction. The old
+  // answer (THE GRAND DESIGNER as an ecosystem brand with a marketing
+  // tagline, removed above) was wrong/off-brand. This is the client's
+  // exact required wording, verbatim — do not paraphrase, trim, or
+  // clean up the grammar.
+  sources.push({
+    external_id: "qa-who-is-the-grand-designer",
+    category: "ELEV8_GENERAL",
+    title: "Who is the Grand Designer?",
+    status: "approved",
+    metadata: { origin: "client-supplied correction" },
+    chunks: [
+      prefixed(
+        "ELEV8_GENERAL",
+        "Who is the Grand Designer?",
+        "THE GRAND DESIGNER is the experiencer of this crazy beautiful experience called life, using the soul, mind and body to experience itself in all forms and perspectives in the illusion of time, energy and form. The I .AM of YOU, MYSELF, LIGHT, DARK, GOOD, BAD, NEGATIVE, POSITIVE, YING, YANG, GOD AND DEVIL playing hide and seek with myself until my last breath in the creativity of my imagination.",
+      ),
+    ],
+  });
+
+  // "Who is Damilare Sherubawon?" — no existing KB entry covered this
+  // person. Minimal source using only the client-supplied profile link;
+  // no biographical details are invented beyond what's known.
+  sources.push({
+    external_id: "qa-who-is-damilare-sherubawon",
+    category: "ELEV8_GENERAL",
+    title: "Who is Damilare Sherubawon?",
+    status: "approved",
+    metadata: { origin: "client-supplied correction" },
+    chunks: [
+      prefixed(
+        "ELEV8_GENERAL",
+        "Who is Damilare Sherubawon?",
+        "Damilare Sherubawon is part of the ELEV8 team. View full profile: https://damilare-sherubawon-profile.elev8enterprisesinc.chatgpt.site/",
       ),
     ],
   });
@@ -633,6 +677,39 @@ async function main() {
 
   const supabase = createClient(supabaseUrl, serviceKey, { auth: { persistSession: false } });
   const openai = new OpenAI({ apiKey: openaiKey });
+
+  // One-off deletion: seed-kb.ts's upsert loop below only creates/updates
+  // by external_id — it never prunes a kb_sources row whose external_id
+  // was removed from buildSources(). "ecosystem-the-grand-designer" was
+  // just removed from the ecosystemBrands list above (wrong/off-brand
+  // answer, replaced by "qa-who-is-the-grand-designer"), so without this
+  // explicit delete its old row/chunks/embeddings would stay live forever
+  // and keep being retrievable by match_kb_chunks() alongside the new,
+  // correct source — giving the bot conflicting context. This targets
+  // only this one known external_id; it is not a general prune-on-removal
+  // mechanism for the script.
+  const REMOVED_EXTERNAL_IDS = ["ecosystem-the-grand-designer"];
+  for (const externalId of REMOVED_EXTERNAL_IDS) {
+    const { data: toDelete, error: findError } = await supabase
+      .from("kb_sources")
+      .select("id")
+      .eq("external_id", externalId)
+      .maybeSingle();
+    if (findError) {
+      console.error(`[seed-kb] lookup failed for removed source ${externalId}:`, findError.message);
+      continue;
+    }
+    if (!toDelete) {
+      console.log(`[seed-kb] removed source ${externalId} not found in DB — nothing to delete.`);
+      continue;
+    }
+    const { error: deleteError } = await supabase.from("kb_sources").delete().eq("id", toDelete.id);
+    if (deleteError) {
+      console.error(`[seed-kb] delete failed for removed source ${externalId}:`, deleteError.message);
+    } else {
+      console.log(`[seed-kb] deleted removed source ${externalId} (id ${toDelete.id}) and its chunks (on delete cascade).`);
+    }
+  }
 
   let created = 0;
   let updated = 0;

@@ -1,7 +1,7 @@
 import OpenAI from "openai";
 import type { ChatCompletionMessageParam } from "openai/resources/chat/completions";
 import { getChatModel, isOpenAiConfigured } from "./env";
-import { retrieveChunks } from "./retrieve";
+import { retrieveChunks, type RetrievedChunk } from "./retrieve";
 import { buildSystemPrompt, ESCALATION_LINE } from "./prompt";
 import { VA_TOOLS, runVaTool } from "./tools";
 
@@ -50,6 +50,28 @@ function ensureHumanEscalation(text: string): string {
   return `${text} You can also reach a real human on our team via the Contact page.`;
 }
 
+// Client-mandated verbatim answer for "Who is the Grand Designer?" — the
+// LLM paraphrases retrieved context by nature (it had already added
+// stray Oxford commas on a real run), which isn't acceptable here: the
+// client supplied this exact wording and wants it returned character-
+// for-character, not "close." Matched by the kb_chunks content prefix
+// seed-kb.ts's prefixed() always writes ("Category: X. Title: Y.\n..."),
+// so this stays correct even if the row is ever re-seeded with a new id.
+const GRAND_DESIGNER_CHUNK_PREFIX = "Category: ELEV8_GENERAL. Title: Who is the Grand Designer?.";
+const GRAND_DESIGNER_VERBATIM_REPLY =
+  "THE GRAND DESIGNER is the experiencer of this crazy beautiful experience called life, using the soul, mind and body to experience itself in all forms and perspectives in the illusion of time, energy and form. The I .AM of YOU, MYSELF, LIGHT, DARK, GOOD, BAD, NEGATIVE, POSITIVE, YING, YANG, GOD AND DEVIL playing hide and seek with myself until my last breath in the creativity of my imagination.";
+
+/** Returns the verbatim Grand Designer answer when the top-ranked
+ * retrieved chunk is that specific KB source, bypassing the LLM entirely
+ * for this one question so the client's exact wording is guaranteed
+ * every time — never paraphrased, never varying between runs. */
+function grandDesignerVerbatimOverride(chunks: RetrievedChunk[]): string | null {
+  if (chunks.length === 0) return null;
+  const top = chunks.reduce((best, c) => (c.similarity > best.similarity ? c : best), chunks[0]);
+  if (top.content.startsWith(GRAND_DESIGNER_CHUNK_PREFIX)) return GRAND_DESIGNER_VERBATIM_REPLY;
+  return null;
+}
+
 let client: OpenAI | null = null;
 function getClient(): OpenAI {
   if (!client) {
@@ -90,6 +112,21 @@ export async function respond(params: {
   try {
     const chunks = await retrieveChunks(params.message);
     const topSimilarity = chunks.length ? Math.max(...chunks.map((c) => c.similarity)) : null;
+
+    const grandDesignerOverride = grandDesignerVerbatimOverride(chunks);
+    if (grandDesignerOverride) {
+      return {
+        text: grandDesignerOverride,
+        fallback: false,
+        retrievedChunkIds: chunks.map((c) => c.chunk_id),
+        topSimilarity,
+        toolCalls: [],
+        model: null,
+        promptTokens: null,
+        completionTokens: null,
+        latencyMs: Date.now() - start,
+      };
+    }
 
     const systemPrompt = buildSystemPrompt({ language: params.language, retrievedChunks: chunks });
     const recentHistory = params.history.slice(-MAX_HISTORY_TURNS);
