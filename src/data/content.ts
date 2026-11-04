@@ -276,6 +276,7 @@ export const NAV_LINKS: NavLink[] = [
       { label: "Love Gift", href: "/shop/love-gift" },
       { label: "Gift Cards", href: "/gift-cards" },
       { label: "Courses", href: "/courses" },
+      { label: "Intelligent Collection", href: "/shop/intelligent-collection" },
       { label: "Lux Fashion", href: "https://www.ielev8my.com", external: true },
     ],
   },
