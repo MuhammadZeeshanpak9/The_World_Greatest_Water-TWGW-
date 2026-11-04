@@ -58,6 +58,22 @@ export default function RetailerCards() {
           Own a store or represent a retailer? Tell us below — we&apos;d love to
           partner with you.
         </p>
+
+        {/* Placeholder map while real retailer locations/API key are pending */}
+        <div className="mt-12 overflow-hidden rounded-[20px] border border-violet/10">
+          <iframe
+            title="ELEV8 WATER retailer map (placeholder — real locations coming soon)"
+            src="https://www.google.com/maps?q=United+States&output=embed"
+            width="100%"
+            height="360"
+            style={{ border: 0 }}
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+          />
+        </div>
+        <p className="mt-3 text-center font-inter text-[12px] text-body/70">
+          Retailer locations coming soon — map will update once partner stores are confirmed.
+        </p>
       </div>
     </section>
   );
