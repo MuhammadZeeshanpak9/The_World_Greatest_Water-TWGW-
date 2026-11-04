@@ -10,7 +10,7 @@ import ProductImageCarousel from "@/components/ui/ProductImageCarousel";
 import { useCart } from "@/context/CartContext";
 import NotifyMeForm from "@/components/ui/NotifyMeForm";
 import { getProductCta } from "@/components/sections/shop/ProductStatusBadge";
-import { formatPrice, getProductImages } from "@/lib/productDisplay";
+import { formatPrice, getProductImages, getCarouselStartIndex } from "@/lib/productDisplay";
 
 export default function ShopSection({ products }: { products: DbProduct[] }) {
   const featured = products.slice(0, 3);
@@ -38,6 +38,7 @@ export default function ShopSection({ products }: { products: DbProduct[] }) {
           {featured.map((product, i) => {
             const cta = getProductCta(product.status);
             const images = getProductImages(product);
+            const startIndex = getCarouselStartIndex(images, i);
             return (
               <m.div
                 key={product.id}
@@ -53,7 +54,7 @@ export default function ShopSection({ products }: { products: DbProduct[] }) {
                   className="relative aspect-[4/5] overflow-hidden rounded-xl"
                 >
                   {images.length > 0 ? (
-                    <ProductImageCarousel images={images} alt={product.name} />
+                    <ProductImageCarousel images={images} alt={product.name} startIndex={startIndex} />
                   ) : product.image_url ? (
                     <Image
                       src={product.image_url}

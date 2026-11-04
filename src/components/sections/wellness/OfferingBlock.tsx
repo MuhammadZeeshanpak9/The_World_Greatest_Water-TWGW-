@@ -367,17 +367,20 @@ export default function OfferingBlock({
               </div>
             )}
             {session && (
-              <div className="mt-3 border-t border-gold/15 pt-6">
-                <h3 className="font-inter text-[12px] font-bold uppercase tracking-[0.3em] text-white">
+              <div className="glass-card-gold relative mt-3 overflow-hidden rounded-[24px] p-8 text-left">
+                <span className="absolute left-4 top-4 h-3 w-3 border-l border-t border-gold/50" aria-hidden />
+                <span className="absolute right-4 top-4 h-3 w-3 border-r border-t border-gold/50" aria-hidden />
+                <span className="absolute bottom-4 left-4 h-3 w-3 border-b border-l border-gold/50" aria-hidden />
+                <span className="absolute bottom-4 right-4 h-3 w-3 border-b border-r border-gold/50" aria-hidden />
+                <h3 className="font-cormorant text-[26px] font-semibold uppercase tracking-[0.1em] text-gradient-gold">
                   {session.heading}
-                  {session.subheading && (
-                    <span className="font-semibold normal-case tracking-normal text-white/60">
-                      {" "}
-                      {session.subheading}
-                    </span>
-                  )}
                 </h3>
-                <p className="mt-3 font-inter text-[14px] font-light leading-[1.9] text-white/65">
+                {session.subheading && (
+                  <p className="mt-1 font-inter text-[12px] font-semibold uppercase tracking-[0.25em] text-white/60">
+                    {session.subheading}
+                  </p>
+                )}
+                <p className="mt-4 font-inter text-[14px] font-light leading-[1.9] text-white/65">
                   {session.description}
                 </p>
                 {session.extraParagraph && (

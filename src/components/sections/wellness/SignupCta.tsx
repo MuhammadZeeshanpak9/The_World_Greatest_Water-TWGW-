@@ -47,7 +47,7 @@ export default function SignupCta() {
           Sign Up Today To ELEV8 Your Life
         </m.h2>
         <p className="mt-4 font-inter text-base text-white/65">
-          And drink your ultra-purified personal water created with you in
+          And drink my ultra-purified personal water created with me in
           mind.
         </p>
 

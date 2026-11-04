@@ -7,7 +7,7 @@ export function welcomeEmail(params: { name: string; shopUrl: string }): {
   const name = escapeHtml(params.name || "there");
 
   const body = `
-    <h1 style="font-family:Georgia,serif;font-size:28px;color:#14142A;margin:0 0 16px;">Welcome to THE WORLD'S GREATEST WATER</h1>
+    <h1 style="font-family:Georgia,serif;font-size:28px;color:#14142A;margin:0 0 16px;">Welcome to THE WORLD'S GREATEST WATER™</h1>
     <p style="font-family:Arial,sans-serif;font-size:15px;line-height:1.6;color:#4a4a5a;margin:0 0 16px;">
       Hi ${name},
     </p>
@@ -20,7 +20,7 @@ export function welcomeEmail(params: { name: string; shopUrl: string }): {
   `;
 
   return {
-    subject: "Welcome to ELEV8 WATER",
+    subject: "Welcome to ELEV8 WATER™",
     html: emailLayout(body, "I AM created with YOU in mind."),
   };
 }

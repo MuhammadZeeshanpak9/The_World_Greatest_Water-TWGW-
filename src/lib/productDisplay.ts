@@ -210,3 +210,47 @@ export function getProductImages(product: { slug: string }): string[] {
   if (!entry) return [];
   return entry.files.map((file) => `/images/${entry.folder}/${file}`);
 }
+
+// Canonical 12-Understanding order used elsewhere on the site, for
+// picking each grid card's default starting image. NOTE: this is
+// deliberately separate from PRODUCT_IMAGE_FOLDERS' own file order
+// (alphabetical, e.g. "all, believe, consciousness, desire..."), which
+// must stay untouched since it's what the carousel's prev/next arrows
+// cycle through — reordering it would change existing arrow behavior.
+const UNDERSTANDING_ORDER = [
+  "all",
+  "you",
+  "love",
+  "desire",
+  "energy",
+  "believe",
+  "vibration",
+  "mindset",
+  "gratitude",
+  "frequency",
+  "thoughts",
+  "consciousness",
+];
+
+/** Picks which image a grid card's carousel should START on, so adjacent
+ * cards in a row don't all open on the same "ALL" bottle. `position` is
+ * the card's index within the currently displayed list (e.g. ShopCatalog's
+ * filtered `visible` array, or ShopSection's 3 featured products) — NOT
+ * the product's own catalog id. Cycles through UNDERSTANDING_ORDER
+ * (wrapping past 12 cards), then finds that Understanding's image within
+ * THIS product's own file list by filename prefix match (e.g. "you-" also
+ * matches "you-blueberry-product.png" for flavor-suffixed folders).
+ * Falls back to index 0 — the carousel's existing default — whenever the
+ * target Understanding isn't present (e.g. gift-cards' 2 plain images, or
+ * a product with fewer than 12 photos), so nothing breaks for partial
+ * image sets. Purely cosmetic: does not change `images`, their order, or
+ * what prev/next cycle through. */
+export function getCarouselStartIndex(images: string[], position: number): number {
+  if (images.length === 0) return 0;
+  const understanding = UNDERSTANDING_ORDER[position % UNDERSTANDING_ORDER.length];
+  const found = images.findIndex((src) => {
+    const filename = src.slice(src.lastIndexOf("/") + 1).toLowerCase();
+    return filename.startsWith(`${understanding}-`);
+  });
+  return found === -1 ? 0 : found;
+}

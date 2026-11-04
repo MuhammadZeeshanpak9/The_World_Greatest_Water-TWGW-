@@ -213,7 +213,7 @@ export default function WhyElev8() {
             <AnimatedArrow color="#4f46e5" topOffset="72%" delay={0.3} />
 
             <h3 className="font-inter text-[18px] font-bold text-white uppercase mb-6 leading-tight">
-              THE WORLD&apos;S<br />GREATEST WATER
+              THE WORLD&apos;S<br />GREATEST WATER™
             </h3>
 
             <p className="font-inter text-[13px] text-gray-300 leading-loose tracking-wide">
@@ -353,7 +353,7 @@ export default function WhyElev8() {
 
             <p className="font-inter text-[13px] text-gray-300 leading-loose tracking-wide">
               Setting a positive intention<br />
-              before drinking your<br />
+              before drinking my<br />
               personal water allows<br />
               you to stay focused on<br />
               <span className="text-white font-bold">GRATITUDE</span> and being<br />

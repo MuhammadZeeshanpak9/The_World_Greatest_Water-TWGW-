@@ -12,6 +12,12 @@ export function parseYouTubeUrl(input: string): { id: string; start?: number } |
   try {
     const url = new URL(trimmed);
 
+    if (url.hostname.includes("youtu.be")) {
+      const id = url.pathname.slice(1);
+      const t = url.searchParams.get("t") ?? url.searchParams.get("start");
+      return id ? { id, start: parseStart(t) } : null;
+    }
+
     const watchId = url.searchParams.get("v");
     if (watchId) {
       const t = url.searchParams.get("t") ?? url.searchParams.get("start");

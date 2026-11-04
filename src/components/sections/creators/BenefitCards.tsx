@@ -4,8 +4,8 @@ import { m } from "framer-motion";
 import { Percent, TrendingUp, Users } from "lucide-react";
 
 const BENEFITS = [
-  { icon: Percent, name: "Earn Commission", text: "Become an affiliate" },
-  { icon: TrendingUp, name: "Grow Your Brand", text: "Partner with ELEV8" },
+  { icon: Percent, name: "Earn Compensation", text: "Become an affiliate" },
+  { icon: TrendingUp, name: "ELEV8 Your Brand", text: "Collaborate with ELEV8" },
   { icon: Users, name: "ELEV8 Together", text: "Community mission" },
 ];
 

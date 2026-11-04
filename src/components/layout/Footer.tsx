@@ -107,11 +107,11 @@ export default function Footer() {
             <div className="flex items-center gap-2">
               <WaterDrop />
               <span className="font-cormorant text-[22px] text-white">
-                {BRAND.name}
+                {BRAND.name}™
               </span>
             </div>
             <p className="mt-2 font-inter text-[11px] uppercase tracking-[0.25em] text-teal">
-              {BRAND.short}
+              {BRAND.short}™
             </p>
             <p className="mt-4 max-w-xs font-inter text-[13px] leading-[1.7] text-white/45">
               Ultra-purified water infused with 528hz. One water, twelve
@@ -200,7 +200,7 @@ export default function Footer() {
           />
           <div className="mt-6 flex flex-col items-center justify-between gap-4 md:flex-row">
             <p className="font-inter text-[12px] text-white/30">
-              © 2026 {BRAND.name}. All Rights Reserved.
+              © 2026 {BRAND.name}™. All Rights Reserved.
             </p>
             <div className="flex flex-wrap items-center gap-3">
               {PAYMENTS.map((p) => (

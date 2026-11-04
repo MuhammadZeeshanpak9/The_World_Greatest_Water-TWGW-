@@ -10,7 +10,7 @@ export default function GiftTiers() {
     <section className="bg-white py-24 md:py-32">
       <div className="mx-auto max-w-5xl px-6 text-center">
         <h2 className="font-cormorant text-[40px] text-ink md:text-[52px] text-glow-violet">
-          Gift THE WORLD&apos;S GREATEST WATER
+          Gift THE WORLD&apos;S GREATEST WATER™
         </h2>
         <p className="mx-auto mt-4 max-w-xl font-inter text-base text-body">
           Give someone you love the experience of ultra-purified consciousness water

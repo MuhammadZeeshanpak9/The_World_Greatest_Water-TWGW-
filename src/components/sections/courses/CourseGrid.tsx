@@ -3,8 +3,10 @@
 import { useMemo, useState } from "react";
 import { m } from "framer-motion";
 import Link from "next/link";
-import { ArrowRight, Search } from "lucide-react";
+import { ArrowRight, Play, Search } from "lucide-react";
 import { GradientPlaceholder } from "@/components/ui/MediaWithFallback";
+import { SITE_TAGLINE } from "@/data/content";
+import { parseYouTubeUrl } from "@/lib/youtube";
 import type { CourseSummary } from "@/lib/courses";
 
 export default function CourseGrid({ courses }: { courses: CourseSummary[] }) {
@@ -20,7 +22,7 @@ export default function CourseGrid({ courses }: { courses: CourseSummary[] }) {
     <section className="bg-white py-24 md:py-32">
       <div className="mx-auto max-w-7xl px-6">
         <h2 className="text-center font-cormorant text-[40px] text-ink md:text-[52px] text-glow-violet">
-          12 Courses. 12 Understandings.
+          {SITE_TAGLINE}
         </h2>
         <p className="mx-auto mt-4 max-w-xl text-center font-inter text-base text-body">
           Each course is a comprehensive, value-packed journey into one of the 12 most important
@@ -51,6 +53,7 @@ export default function CourseGrid({ courses }: { courses: CourseSummary[] }) {
                 course.lessonCount > 0
                   ? Math.round((course.completedLessons / course.lessonCount) * 100)
                   : 0;
+              const videoId = course.video_url ? parseYouTubeUrl(course.video_url)?.id : undefined;
 
               return (
                 <m.div
@@ -65,10 +68,27 @@ export default function CourseGrid({ courses }: { courses: CourseSummary[] }) {
                     href={`/courses/${course.slug}`}
                     className="relative h-[160px] overflow-hidden rounded-xl"
                   >
-                    <GradientPlaceholder
-                      watermark={course.topic ?? "ELEV8"}
-                      className="rounded-xl"
-                    />
+                    {videoId ? (
+                      <>
+                        {/* eslint-disable-next-line @next/next/no-img-element -- external YouTube
+                            thumbnail URL, not a local/optimizable asset */}
+                        <img
+                          src={`https://img.youtube.com/vi/${videoId}/hqdefault.jpg`}
+                          alt={course.title}
+                          className="h-full w-full object-cover"
+                        />
+                        <div className="absolute inset-0 flex items-center justify-center bg-black/20">
+                          <span className="flex h-12 w-12 items-center justify-center rounded-full bg-white/90 shadow-lg">
+                            <Play size={20} className="ml-0.5 fill-violet text-violet" />
+                          </span>
+                        </div>
+                      </>
+                    ) : (
+                      <GradientPlaceholder
+                        watermark={course.topic ?? "ELEV8"}
+                        className="rounded-xl"
+                      />
+                    )}
                   </Link>
 
                   <Link href={`/courses/${course.slug}`}>

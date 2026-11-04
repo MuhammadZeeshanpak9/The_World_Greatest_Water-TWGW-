@@ -33,14 +33,14 @@ export const metadata: Metadata = {
   description: DESCRIPTION,
   alternates: { canonical: "/" },
   openGraph: {
-    title: "THE WORLD'S GREATEST WATER — ELEV8 WATER",
+    title: "THE WORLD'S GREATEST WATER™ — ELEV8 WATER™",
     description: DESCRIPTION,
     url: "/",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "THE WORLD'S GREATEST WATER — ELEV8 WATER",
+    title: "THE WORLD'S GREATEST WATER™ — ELEV8 WATER™",
     description: DESCRIPTION,
   },
 };

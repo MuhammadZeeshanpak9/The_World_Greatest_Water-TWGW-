@@ -57,10 +57,21 @@ export default function ComingSoon() {
               className="overflow-hidden rounded-[20px] border border-violet/10 p-5 text-left transition-shadow hover:shadow-[0_20px_50px_rgba(107,47,160,0.12)]"
               style={{ background: "rgba(255,255,255,0.8)", backdropFilter: "blur(10px)" }}
             >
-              <div className="relative h-[200px] overflow-hidden rounded-xl">
-                <ComingSoonImage type={item.type} image={item.image} hoverImage={item.hoverImage} />
-              </div>
-              <h3 className="mt-5 font-cormorant text-[24px] text-ink">{item.type}</h3>
+              {item.href ? (
+                <a href={item.href} target="_blank" rel="noopener noreferrer" className="block">
+                  <div className="relative h-[200px] overflow-hidden rounded-xl">
+                    <ComingSoonImage type={item.type} image={item.image} hoverImage={item.hoverImage} />
+                  </div>
+                  <h3 className="mt-5 font-cormorant text-[24px] text-ink hover:text-violet">{item.type}</h3>
+                </a>
+              ) : (
+                <>
+                  <div className="relative h-[200px] overflow-hidden rounded-xl">
+                    <ComingSoonImage type={item.type} image={item.image} hoverImage={item.hoverImage} />
+                  </div>
+                  <h3 className="mt-5 font-cormorant text-[24px] text-ink">{item.type}</h3>
+                </>
+              )}
               <p className="mt-2 font-inter text-[13px] leading-relaxed text-body">
                 {item.description}
               </p>

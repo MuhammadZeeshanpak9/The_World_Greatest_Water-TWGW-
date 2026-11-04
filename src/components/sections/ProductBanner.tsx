@@ -60,7 +60,7 @@ export default function ProductBanner() {
             transition={{ delay: 0.2 }}
             className="mt-8 font-inter text-base font-bold uppercase tracking-[0.2em] text-violet"
           >
-            What&apos;s not in your personal water:
+            What&apos;s not in my personal water:
           </m.h3>
 
           <m.p

@@ -15,12 +15,18 @@ export default function ProductImageCarousel({
   images,
   alt,
   className,
+  startIndex = 0,
 }: {
   images: string[];
   alt: string;
   className?: string;
+  /** Which image to open on — defaults to 0 (unchanged behavior, e.g. the
+   * product detail page). Grid contexts pass a per-card computed index
+   * (see getCarouselStartIndex in productDisplay.ts) so adjacent cards
+   * don't all start on the same image. Does not affect prev/next cycling. */
+  startIndex?: number;
 }) {
-  const [index, setIndex] = useState(0);
+  const [index, setIndex] = useState(startIndex);
 
   if (images.length === 0) return null;
 

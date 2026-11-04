@@ -19,7 +19,7 @@ export function orderDeliveredEmail({
   `;
 
   return {
-    subject: "Your ELEV8 WATER order has been delivered!",
+    subject: "Your ELEV8 WATER™ order has been delivered!",
     html: emailLayout(bodyHtml, "Your order has arrived"),
   };
 }

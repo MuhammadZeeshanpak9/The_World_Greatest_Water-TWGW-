@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "THE WORLD'S GREATEST WATER — ELEV8 WATER";
+export const alt = "THE WORLD'S GREATEST WATER™ — ELEV8 WATER™";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -28,7 +28,7 @@ export default async function Image() {
             textAlign: "center",
           }}
         >
-          THE WORLD&apos;S GREATEST WATER
+          THE WORLD&apos;S GREATEST WATER™
         </div>
         <div
           style={{
@@ -40,7 +40,7 @@ export default async function Image() {
             display: "flex",
           }}
         >
-          ELEV8 WATER
+          ELEV8 WATER™
         </div>
       </div>
     ),

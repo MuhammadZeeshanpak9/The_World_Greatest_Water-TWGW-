@@ -62,7 +62,7 @@ export default function Hero() {
             transition={{ delay: 0.5 }}
             className="font-cormorant font-bold leading-[0.95] text-white [text-shadow:0_4px_24px_rgba(0,0,0,0.45)] text-[38px] md:text-[60px] lg:text-[72px]"
           >
-            GREATEST WATER.
+            GREATEST WATER™.
           </m.h1>
 
           <m.p
@@ -71,7 +71,7 @@ export default function Hero() {
             transition={{ delay: 0.65 }}
             className="mt-3 font-inter text-[15px] font-semibold uppercase tracking-[0.5em] text-white drop-shadow-md"
           >
-            ELEV8 WATER
+            ELEV8 WATER™
           </m.p>
 
           <m.span

@@ -271,12 +271,12 @@ export const NAV_LINKS: NavLink[] = [
     label: "Shop To ELEV8",
     href: "/shop",
     children: [
-      { label: "Your Personal Water", href: "/shop" },
+      { label: "My Personal Water", href: "/shop" },
       { label: "Subscription", href: "/subscription" },
       { label: "Love Gift", href: "/shop/love-gift" },
       { label: "Gift Cards", href: "/gift-cards" },
       { label: "Courses", href: "/courses" },
-      { label: "Clothing", href: "https://www.ielev8my.com", external: true },
+      { label: "Lux Fashion", href: "https://www.ielev8my.com", external: true },
     ],
   },
   { label: "Trending", href: "https://www.youtube.com", external: true },
@@ -294,12 +294,18 @@ export const NAV_LINKS: NavLink[] = [
 ];
 
 /* ------------------------------------------------------------------
+   SITE TAGLINE — single source of truth, reused in the announcement
+   bar and the /courses heading so the two never drift apart.
+------------------------------------------------------------------ */
+export const SITE_TAGLINE = "1 WATER. 12 UNDERSTANDINGS";
+
+/* ------------------------------------------------------------------
    ANNOUNCEMENT BAR (rotating)
 ------------------------------------------------------------------ */
 export const ANNOUNCEMENTS: AnnouncementMessage[] = [
   "I WILL ELEV8 MY LIFE TODAY",
-  "1 WATER. 12 UNDERSTANDINGS",
-  "FREE FROM ADDITIVES · THE WORLD'S GREATEST WATER",
+  SITE_TAGLINE,
+  "FREE FROM ADDITIVES · THE WORLD'S GREATEST WATER™",
 ];
 
 /* ------------------------------------------------------------------
@@ -313,7 +319,7 @@ export const WELLNESS_CARDS: WellnessCard[] = [
     blurb: "Physical wellness & vitality",
     price: "$5,000+",
     description:
-      "Physical and mental wellness experience. Complete body transformation.",
+      "Physical and mental wellness experience. Complete body experience.",
     href: "/wellness/body",
   },
   {
@@ -330,7 +336,7 @@ export const WELLNESS_CARDS: WellnessCard[] = [
     cta: "Book Session",
     blurb: "Inner peace & alignment",
     price: "$5,000+",
-    description: "Deep spiritual wellness. Reconnect with your highest self.",
+    description: "Profound spiritual wellness. Reconnect with your higher self.",
     href: "/wellness/soul",
   },
   {
@@ -338,7 +344,7 @@ export const WELLNESS_CARDS: WellnessCard[] = [
     cta: "Enquire",
     blurb: "THE GRAND DESIGNER.",
     price: "$1,000,000+",
-    description: "The ultimate transformation experience.",
+    description: "The ultimate soul, mind and body experience as the TGD of LIFE.",
     href: "/wellness/unlock-the-lock",
   },
 ];
@@ -479,7 +485,7 @@ export const WELLNESS_SUBPAGES: WellnessSubPage[] = [
           'To be wealthy then rich and successful, it\'s important to understand "HOW" my mind operates the function of my physical manifestation in my reality in regards to money and success.',
           "The universe is mental. I AM a mental spiritual being having physical life experiences.",
           "WEALTH starts from WITHIN, expressed to the physical reality as riches and success for my ultimate well-being.",
-          'YES. YOU can be rich and successful when you know the mental "HOW".',
+          'YES. I can be rich and successful when I know the mental "HOW".',
         ],
         session: {
           heading: "The World's Greatest Movie About You",
@@ -522,7 +528,7 @@ export const WELLNESS_SUBPAGES: WellnessSubPage[] = [
     price2yr: "2 Year Membership — $10,000",
     offerings: [
       {
-        heading: "Mental Alignment and Spa",
+        heading: "Mental Alignment and Self Care",
         image: "/images/thank-you-soul.png",
         imageAspect: "1/1",
         pricingLabel: "Membership:",
@@ -536,7 +542,7 @@ export const WELLNESS_SUBPAGES: WellnessSubPage[] = [
           "It is always a Win-Win for the family of Greatness! It only gets GREATER.",
         contactEmail: "winwin@thegranddesigner.com",
         collaboratorPitch:
-          "Sign up today to be a global Mental Alignment and Spa collaborator.",
+          "Sign up today to be a global Mental Alignment and Self Care collaborator.",
         collaboratorItems: [
           "Ayahuasca centers",
           "Technology companies created to advance the human mind",
@@ -718,7 +724,7 @@ export const SHOP_PRODUCTS: Product[] = [
     slug: "elev8-water-16-9-fl-oz",
     cta: "Notify Me",
     description:
-      "Enjoy the smooth taste of ELEV8 WATER your personal water created for your everyday life, free from all Additives, Chlorine, Fluoride, and Sodium Bicarbonate.",
+      "Enjoy the smooth taste of ELEV8 WATER my personal water created for my everyday life, free from all Additives, Chlorine, Fluoride, and Sodium Bicarbonate.",
   },
   {
     name: "ELEV8 WATER 1 LITER",
@@ -730,7 +736,7 @@ export const SHOP_PRODUCTS: Product[] = [
     slug: "elev8-water-1-liter",
     cta: "Notify Me",
     description:
-      "Ultra-purified 1 Liter ELEV8 WATER. Your personal water for everyday life.",
+      "Ultra-purified 1 Liter ELEV8 WATER. My personal water for everyday life.",
   },
   {
     name: "LOVE GIFT",
@@ -828,11 +834,13 @@ export const PROCESS_STEPS: ProcessStep[] = [
 export const COMING_SOON: ComingSoonProduct[] = [
   {
     type: "Subscription",
-    description: "Your personal water, delivered on your frequency.",
+    description: "My personal water, delivered on my frequency.",
+    image: "/images/Subscription/DESIRE ALUMINUM BOTTLES.png",
   },
   {
     type: "iELEV8MY LUX FASHION",
     description: "Wear your understanding. Premium apparel line.",
+    href: "https://www.ielev8my.com",
   },
   {
     type: "Love Gift Sets",
@@ -967,7 +975,7 @@ export const SUBSCRIPTION_PLANS: SubscriptionPlan[] = [
 export const SUBSCRIPTION_STEPS: TitledItem[] = [
   { title: "CHOOSE YOUR PLAN", description: "Select weekly or monthly delivery" },
   { title: "RECEIVE YOUR WATER", description: "Fresh ELEV8 WATER delivered to your door" },
-  { title: "ELEV8 YOUR LIFE", description: "Set your intention. Drink consciously. Transform." },
+  { title: "ELEV8 YOUR LIFE", description: "Set your intention. Drink consciously. Aligned." },
 ];
 
 export const SUBSCRIPTION_FAQ: FaqItem[] = [

@@ -74,7 +74,7 @@ export default function Navbar() {
             <Link href="/" className="group flex shrink-0 items-center gap-2">
               <WaterDrop size={56} />
               <span className="hidden font-cormorant text-[14px] font-medium tracking-[0.03em] shimmer-text whitespace-nowrap xl:inline">
-                THE WORLD&apos;S GREATEST WATER
+                THE WORLD&apos;S GREATEST WATER™
               </span>
             </Link>
 

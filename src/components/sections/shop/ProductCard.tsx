@@ -10,12 +10,13 @@ import ProductImageCarousel from "@/components/ui/ProductImageCarousel";
 import { useCart } from "@/context/CartContext";
 import NotifyMeForm from "@/components/ui/NotifyMeForm";
 import ProductStatusBadge, { getProductCta } from "./ProductStatusBadge";
-import { formatPrice, getProductImages } from "@/lib/productDisplay";
+import { formatPrice, getProductImages, getCarouselStartIndex } from "@/lib/productDisplay";
 
 export default function ProductCard({ product, index }: { product: DbProduct; index: number }) {
   const cta = getProductCta(product.status);
   const { addToCart } = useCart();
   const images = getProductImages(product);
+  const startIndex = getCarouselStartIndex(images, index);
 
   return (
     <m.div
@@ -32,7 +33,7 @@ export default function ProductCard({ product, index }: { product: DbProduct; in
         className="relative aspect-[4/5] overflow-hidden rounded-xl"
       >
         {images.length > 0 ? (
-          <ProductImageCarousel images={images} alt={product.name} />
+          <ProductImageCarousel images={images} alt={product.name} startIndex={startIndex} />
         ) : product.image_url ? (
           <Image
             src={product.image_url}

@@ -135,7 +135,7 @@ export default function OurStory() {
                   <div>
                     <span className="flex items-center gap-1.5 font-inter text-[10px] font-bold uppercase tracking-[0.2em] text-green-400">
                       <Sparkles size={12} className="text-green-400" />
-                      ELEV8 WATER
+                      ELEV8 WATER™
                     </span>
                     <p className="mt-0.5 font-cormorant text-[18px] text-white">
                       ELEV8 LOVE + ALL

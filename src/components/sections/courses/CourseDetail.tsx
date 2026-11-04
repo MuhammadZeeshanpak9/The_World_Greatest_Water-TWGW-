@@ -7,6 +7,7 @@ import { ArrowLeft, ArrowRight, Check } from "lucide-react";
 import toast from "react-hot-toast";
 import { useSession } from "@/context/SessionContext";
 import { trackCourseView, trackLead } from "@/lib/analytics";
+import YouTubeEmbed from "@/components/ui/YouTubeEmbed";
 import type { DbBlogPost } from "@/types";
 import type { CourseLesson } from "@/lib/courses";
 
@@ -208,6 +209,12 @@ export default function CourseDetail({
         </h1>
         {course.teaser && (
           <p className="mt-4 font-inter text-base leading-[1.9] text-body">{course.teaser}</p>
+        )}
+
+        {course.video_url && (
+          <div className="mt-6">
+            <YouTubeEmbed url={course.video_url} title={course.title} />
+          </div>
         )}
 
         <p className="mt-4 font-inter text-[13px] tracking-[0.15em] text-muted uppercase">

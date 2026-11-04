@@ -164,6 +164,7 @@ export type DbBlogPost = {
   content: string | null;
   topic: string | null;
   published: boolean;
+  video_url: string | null;
   created_at: string;
   updated_at: string;
 };
@@ -193,6 +194,9 @@ export type ComingSoonProduct = {
    * gradient placeholder. */
   image?: string;
   hoverImage?: string;
+  /** Optional external link — when present, the whole card becomes a link
+   * (opens in a new tab). Absent for cards with no destination yet. */
+  href?: string;
 };
 
 export type Testimonial = {

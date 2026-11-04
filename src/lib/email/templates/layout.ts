@@ -27,8 +27,8 @@ export function emailLayout(bodyHtml: string, preheader = ""): string {
           <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="background-color:#ffffff;border-radius:16px;overflow:hidden;">
             <tr>
               <td style="background-color:${INK};padding:32px 40px;text-align:center;">
-                <div style="font-family:Georgia,serif;font-size:24px;color:#ffffff;letter-spacing:2px;">ELEV8 WATER</div>
-                <div style="font-family:Arial,sans-serif;font-size:10px;letter-spacing:3px;color:${BRAND_VIOLET};text-transform:uppercase;margin-top:4px;">THE WORLD'S GREATEST WATER</div>
+                <div style="font-family:Georgia,serif;font-size:24px;color:#ffffff;letter-spacing:2px;">ELEV8 WATER™</div>
+                <div style="font-family:Arial,sans-serif;font-size:10px;letter-spacing:3px;color:${BRAND_VIOLET};text-transform:uppercase;margin-top:4px;">THE WORLD'S GREATEST WATER™</div>
               </td>
             </tr>
             <tr>
@@ -38,7 +38,7 @@ export function emailLayout(bodyHtml: string, preheader = ""): string {
             </tr>
             <tr>
               <td style="padding:24px 40px;background-color:#f7f4fb;text-align:center;">
-                <div style="font-family:Arial,sans-serif;font-size:11px;color:#8e8e9e;">© ${new Date().getFullYear()} ELEV8 WATER. All Rights Reserved.</div>
+                <div style="font-family:Arial,sans-serif;font-size:11px;color:#8e8e9e;">© ${new Date().getFullYear()} ELEV8 WATER™. All Rights Reserved.</div>
               </td>
             </tr>
           </table>
