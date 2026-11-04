@@ -3,9 +3,10 @@
 import { useCallback, useEffect, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import Link from "next/link";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { ArrowLeft, ArrowRight, Play } from "lucide-react";
 import type { DbBlogPost } from "@/types";
 import { GradientPlaceholder } from "@/components/ui/MediaWithFallback";
+import { parseYouTubeUrl } from "@/lib/youtube";
 
 export default function RelatedCarousel({ posts }: { posts: DbBlogPost[] }) {
   const [emblaRef, emblaApi] = useEmblaCarousel({
@@ -44,7 +45,9 @@ export default function RelatedCarousel({ posts }: { posts: DbBlogPost[] }) {
       <div className="relative mt-6">
         <div className="overflow-hidden" ref={emblaRef}>
           <div className="flex gap-6">
-            {posts.map((post) => (
+            {posts.map((post) => {
+              const videoId = post.video_url ? parseYouTubeUrl(post.video_url)?.id : undefined;
+              return (
               <Link
                 key={post.slug}
                 href={`/blogs/${post.slug}`}
@@ -52,7 +55,24 @@ export default function RelatedCarousel({ posts }: { posts: DbBlogPost[] }) {
               >
                 <div className="rounded-[16px] border border-violet/10 p-4 transition-shadow hover:shadow-[0_16px_40px_rgba(107,47,160,0.12)]">
                   <div className="relative h-[140px] overflow-hidden rounded-xl">
-                    <GradientPlaceholder watermark={post.topic ?? "ELEV8"} className="rounded-xl" />
+                    {videoId ? (
+                      <>
+                        {/* eslint-disable-next-line @next/next/no-img-element -- external YouTube
+                            thumbnail URL, not a local/optimizable asset */}
+                        <img
+                          src={`https://img.youtube.com/vi/${videoId}/hqdefault.jpg`}
+                          alt={post.title}
+                          className="h-full w-full object-cover"
+                        />
+                        <div className="absolute inset-0 flex items-center justify-center bg-black/20">
+                          <span className="flex h-10 w-10 items-center justify-center rounded-full bg-white/90 shadow-lg">
+                            <Play size={16} className="ml-0.5 fill-violet text-violet" />
+                          </span>
+                        </div>
+                      </>
+                    ) : (
+                      <GradientPlaceholder watermark={post.topic ?? "ELEV8"} className="rounded-xl" />
+                    )}
                   </div>
                   <h4 className="mt-4 font-cormorant text-[20px] text-ink">{post.title}</h4>
                   {post.teaser && (
@@ -60,7 +80,8 @@ export default function RelatedCarousel({ posts }: { posts: DbBlogPost[] }) {
                   )}
                 </div>
               </Link>
-            ))}
+              );
+            })}
           </div>
         </div>
 
