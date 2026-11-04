@@ -1,5 +1,6 @@
 import type { DbBlogPost } from "@/types";
 import { GradientPlaceholder } from "@/components/ui/MediaWithFallback";
+import YouTubeEmbed from "@/components/ui/YouTubeEmbed";
 import ShareButtons from "./ShareButtons";
 
 export default function BlogDetailContent({ post }: { post: DbBlogPost }) {
@@ -10,9 +11,13 @@ export default function BlogDetailContent({ post }: { post: DbBlogPost }) {
 
   return (
     <div className="min-w-0 flex-1">
-      <div className="relative aspect-video w-full overflow-hidden rounded-2xl">
-        <GradientPlaceholder watermark={post.topic ?? "ELEV8"} className="rounded-2xl" />
-      </div>
+      {post.video_url ? (
+        <YouTubeEmbed url={post.video_url} title={post.title} rounded="rounded-2xl" />
+      ) : (
+        <div className="relative aspect-video w-full overflow-hidden rounded-2xl">
+          <GradientPlaceholder watermark={post.topic ?? "ELEV8"} className="rounded-2xl" />
+        </div>
+      )}
 
       {paragraphs.length > 0 ? (
         <div className="mt-8 flex flex-col gap-5">
