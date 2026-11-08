@@ -3,7 +3,7 @@ import Footer from "@/components/layout/Footer";
 import PageHero from "@/components/layout/PageHero";
 import WaveTransition from "@/components/ui/WaveTransition";
 import RetailerCards from "@/components/sections/join/RetailerCards";
-import InquiryForm from "@/components/sections/join/InquiryForm";
+import JoinPageClient from "@/components/sections/join/JoinPageClient";
 
 const TINT = "#f0e8f8";
 const WHITE = "#ffffff";
@@ -26,9 +26,8 @@ export default function JoinPage() {
       <WaveTransition fromColor={TINT} toColor={WHITE} variant={3} />
 
       <RetailerCards />
-      <WaveTransition fromColor={WHITE} toColor={TINT} variant={1} />
 
-      <InquiryForm />
+      <JoinPageClient />
 
       <Footer />
     </main>

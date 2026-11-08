@@ -8,6 +8,7 @@ import { useFormSubmit, isValidEmail, submitFormSubmission } from "@/lib/forms";
 import { trackLead } from "@/lib/analytics";
 
 type Values = {
+  market: string;
   business: string;
   contact: string;
   email: string;
@@ -16,12 +17,29 @@ type Values = {
 };
 type Errors = Partial<Record<keyof Values, string>>;
 
-const INITIAL: Values = { business: "", contact: "", email: "", phone: "", message: "" };
+const INITIAL: Values = {
+  market: "",
+  business: "",
+  contact: "",
+  email: "",
+  phone: "",
+  message: "",
+};
 
-export default function InquiryForm() {
+export default function InquiryForm({ presetMarket }: { presetMarket?: string }) {
   const [values, setValues] = useState<Values>(INITIAL);
   const [errors, setErrors] = useState<Errors>({});
+  const [appliedPreset, setAppliedPreset] = useState<string | undefined>(presetMarket);
   const { status, errorMessage, submit } = useFormSubmit();
+
+  // Fills the market field whenever a different market is selected from the
+  // Global Retail Expansion map above (even if the form is already open).
+  // Adjusted during render rather than in an effect, per React's guidance
+  // for "adjusting state when a prop changes" (avoids an extra render pass).
+  if (presetMarket !== appliedPreset) {
+    setAppliedPreset(presetMarket);
+    if (presetMarket) setValues((v) => ({ ...v, market: presetMarket }));
+  }
 
   const update = (field: keyof Values) => (value: string) =>
     setValues((v) => ({ ...v, [field]: value }));
@@ -42,7 +60,7 @@ export default function InquiryForm() {
   };
 
   return (
-    <section className="bg-violet-tint py-24 md:py-32">
+    <section id="join-inquiry-form" className="bg-violet-tint py-24 md:py-32">
       <m.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -55,6 +73,13 @@ export default function InquiryForm() {
           </p>
         ) : (
           <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+            <FormField
+              label="Market / Region"
+              name="market"
+              value={values.market}
+              onChange={update("market")}
+              placeholder="e.g. Miami, USA"
+            />
             <FormField
               label="Business Name"
               name="business"

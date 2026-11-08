@@ -25,6 +25,7 @@
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "react-hot-toast": "^2.6.0",
+    "react-simple-maps": "^5.0.5",
     "resend": "^6.20.0",
     "server-only": "^0.0.1",
     "shippo": "^2.18.0",
