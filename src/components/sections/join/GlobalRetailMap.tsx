@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { ComposableMap, Geographies, Geography, Marker, ZoomableGroup } from "react-simple-maps";
 import { ArrowRight, Undo2 } from "lucide-react";
-import { usePrefersReducedMotion } from "@/lib/hooks";
+import { useIsMobile, usePrefersReducedMotion } from "@/lib/hooks";
 import { ImageWithFallback } from "@/components/ui/MediaWithFallback";
 import { CityIcon } from "@/components/sections/join/cityIcons";
 import {
@@ -37,6 +37,13 @@ function easeInOutCubic(t: number) {
 
 export default function GlobalRetailMap({ onSelectMarket }: { onSelectMarket: (market: RetailMarket) => void }) {
   const reducedMotion = usePrefersReducedMotion();
+  // The map is edge-to-edge and narrower on mobile (see JoinPageClient),
+  // so markers are scaled up here to stay comfortably tappable — the
+  // viewBox is fixed at 800x600 regardless of rendered width, so a
+  // marker that reads fine at desktop width shrinks to a sliver on a
+  // ~390px-wide phone unless its own radius compensates.
+  const isMobile = useIsMobile(640);
+  const markerScale = isMobile ? 1.8 : 1;
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [activeTarget, setActiveTarget] = useState<CardTarget | null>(null);
   const [view, setView] = useState<{ center: [number, number]; zoom: number }>(WORLD_VIEW);
@@ -111,7 +118,7 @@ export default function GlobalRetailMap({ onSelectMarket }: { onSelectMarket: (m
 
   return (
     <div ref={containerRef} className="relative">
-      <div className="overflow-hidden rounded-[28px] border border-violet/10 bg-violet-tint/40 p-2 md:p-6">
+      <div className="overflow-hidden border border-violet/10 bg-violet-tint/40 p-2 sm:rounded-[28px] md:p-6">
         {isZoomedIn && (
           <button
             onClick={closeCard}
@@ -155,7 +162,8 @@ export default function GlobalRetailMap({ onSelectMarket }: { onSelectMarket: (m
                 into one marker; its card lists all 6 individually. */}
             <MapMarker
               position={USA_GROUP_POSITION}
-              size={9}
+              size={9 * markerScale}
+              hitRadius={22 * markerScale}
               reducedMotion={reducedMotion}
               label="USA — 6 priority markets, now onboarding retail partners"
               onActivate={() => openCard({ kind: "usa-group" }, USA_GROUP_POSITION, USA_GROUP_ZOOM)}
@@ -165,7 +173,8 @@ export default function GlobalRetailMap({ onSelectMarket }: { onSelectMarket: (m
               <MapMarker
                 key={market.id}
                 position={market.coordinates}
-                size={6}
+                size={6 * markerScale}
+                hitRadius={22 * markerScale}
                 reducedMotion={reducedMotion}
                 label={`${market.name} — Priority Market, now onboarding retail partners`}
                 onActivate={() => openCard({ kind: "single", market }, market.coordinates, CITY_ZOOM)}
@@ -184,8 +193,8 @@ export default function GlobalRetailMap({ onSelectMarket }: { onSelectMarket: (m
   );
 }
 
-function MapMarker({ position, size, reducedMotion, label, onActivate }: {
-  position: [number, number]; size: number; reducedMotion: boolean; label: string;
+function MapMarker({ position, size, hitRadius = 22, reducedMotion, label, onActivate }: {
+  position: [number, number]; size: number; hitRadius?: number; reducedMotion: boolean; label: string;
   onActivate: () => void;
 }) {
   return (
@@ -203,8 +212,11 @@ function MapMarker({ position, size, reducedMotion, label, onActivate }: {
       }}
       style={{ cursor: "pointer", outline: "none" }}
     >
-      {/* Invisible 44px-equivalent hit area for comfortable mobile tapping. */}
-      <circle r={22} fill="transparent" />
+      {/* Invisible hit area, sized in viewBox units — since the map's
+          800x600 viewBox is scaled down to a much narrower rendered
+          width on mobile, this needs to be noticeably larger there (see
+          `markerScale`) to still cover a real ~44px touch target. */}
+      <circle r={hitRadius} fill="transparent" />
       {!reducedMotion && (
         <circle r={size} fill="#3dd6cb" opacity={0.35} className="animate-ping" />
       )}
