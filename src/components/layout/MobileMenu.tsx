@@ -1,12 +1,13 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, m } from "framer-motion";
 import Link from "next/link";
-import { Sparkles, X } from "lucide-react";
+import { ChevronDown, Sparkles, X } from "lucide-react";
 import { NAV_LINKS } from "@/data/content";
 import { useScrollLock } from "@/lib/hooks";
+import type { NavLink } from "@/types";
 
 export default function MobileMenu({
   open,
@@ -16,6 +17,17 @@ export default function MobileMenu({
   onClose: () => void;
 }) {
   const pathname = usePathname();
+  const [expanded, setExpanded] = useState<string | null>(null);
+  const [wasOpen, setWasOpen] = useState(open);
+
+  // Collapse any open submenu whenever the panel itself closes, so
+  // reopening it later starts fresh rather than mid-submenu. Adjusted
+  // during render (React's pattern for "state derived from a prop
+  // change") rather than in an effect, to avoid an extra render pass.
+  if (open !== wasOpen) {
+    setWasOpen(open);
+    if (!open) setExpanded(null);
+  }
 
   // Close on route change — covers browser back/forward and any navigation
   // that doesn't already call onClose (nav links inside the menu do, via
@@ -76,7 +88,38 @@ export default function MobileMenu({
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.1 + i * 0.05 }}
               >
-                {link.external ? (
+                {link.children ? (
+                  <>
+                    <button
+                      onClick={() => setExpanded((cur) => (cur === link.label ? null : link.label))}
+                      aria-expanded={expanded === link.label}
+                      className="flex w-full items-center justify-between gap-3 font-cormorant text-4xl font-light text-ink transition-colors hover:text-violet"
+                    >
+                      {link.label}
+                      <ChevronDown
+                        size={24}
+                        className={`shrink-0 transition-transform duration-200 ${expanded === link.label ? "rotate-180" : ""}`}
+                      />
+                    </button>
+                    <AnimatePresence initial={false}>
+                      {expanded === link.label && (
+                        <m.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: "auto" }}
+                          exit={{ opacity: 0, height: 0 }}
+                          transition={{ duration: 0.25, ease: "easeInOut" }}
+                          className="overflow-hidden"
+                        >
+                          <div className="mt-3 flex flex-col gap-3 border-l border-violet/15 pl-4">
+                            {link.children.map((child) => (
+                              <MobileSubLink key={child.label} link={child} onClose={onClose} />
+                            ))}
+                          </div>
+                        </m.div>
+                      )}
+                    </AnimatePresence>
+                  </>
+                ) : link.external ? (
                   <a
                     href={link.href}
                     target="_blank"
@@ -115,5 +158,30 @@ export default function MobileMenu({
         </m.div>
       )}
     </AnimatePresence>
+  );
+}
+
+function MobileSubLink({ link, onClose }: { link: NavLink; onClose: () => void }) {
+  if (link.external) {
+    return (
+      <a
+        href={link.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={onClose}
+        className="font-inter text-base text-body transition-colors hover:text-violet"
+      >
+        {link.label}
+      </a>
+    );
+  }
+  return (
+    <Link
+      href={link.href}
+      onClick={onClose}
+      className="font-inter text-base text-body transition-colors hover:text-violet"
+    >
+      {link.label}
+    </Link>
   );
 }
