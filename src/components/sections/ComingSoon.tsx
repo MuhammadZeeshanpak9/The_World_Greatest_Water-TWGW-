@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { m } from "framer-motion";
+import { ArrowRight } from "lucide-react";
 import { COMING_SOON } from "@/data/content";
 import { GradientPlaceholder } from "@/components/ui/MediaWithFallback";
 import NotifyMeForm from "@/components/ui/NotifyMeForm";
@@ -75,12 +76,24 @@ export default function ComingSoon() {
               <p className="mt-2 font-inter text-[13px] leading-relaxed text-body">
                 {item.description}
               </p>
-              <NotifyMeForm
-                label="Notify Me"
-                source="coming-soon"
-                variant="outline"
-                className="mt-5"
-              />
+              {item.href ? (
+                <a
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group/btn mt-5 inline-flex w-full items-center justify-center gap-2 rounded-full border border-violet px-6 py-3 font-inter text-[11px] font-semibold uppercase tracking-[0.15em] text-violet transition-colors hover:bg-violet hover:text-white"
+                >
+                  Visit Site
+                  <ArrowRight size={14} className="transition-transform group-hover/btn:translate-x-1" />
+                </a>
+              ) : (
+                <NotifyMeForm
+                  label="Notify Me"
+                  source="coming-soon"
+                  variant="outline"
+                  className="mt-5"
+                />
+              )}
             </m.div>
           ))}
         </div>

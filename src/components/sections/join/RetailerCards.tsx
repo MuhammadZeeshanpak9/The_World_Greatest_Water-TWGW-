@@ -4,11 +4,12 @@ import { m } from "framer-motion";
 import { Building2, Globe2, Store } from "lucide-react";
 
 // Real retailer partnerships aren't live yet — these are the 3 categories
-// we're actively pursuing, shown honestly as "coming soon" rather than as
-// 3 unlabeled placeholder boxes. Once real retailers sign on, replace each
-// entry's icon/description with that retailer's own name/logo/location (a
-// future map view would also live here once we have a maps API key and
-// real retailer address data).
+// we're actively pursuing. Each invites the viewer to apply (the inquiry
+// form below), rather than reading as a passive "coming soon" with no
+// action to take. Once real retailers sign on, replace each entry's
+// icon/description with that retailer's own name/logo/location (a future
+// map view would also live here once we have a maps API key and real
+// retailer address data).
 const CATEGORIES = [
   {
     icon: Store,
@@ -48,9 +49,12 @@ export default function RetailerCards() {
                 {c.name}
               </h3>
               <p className="mt-2 font-inter text-[14px] text-body">{c.text}</p>
-              <span className="mt-4 inline-block rounded-full bg-violet/10 px-3 py-1 font-inter text-[10px] font-semibold uppercase tracking-[0.2em] text-violet">
-                Coming Soon
-              </span>
+              <a
+                href="#join-inquiry-form"
+                className="mt-4 inline-block rounded-full bg-violet/10 px-3 py-1 font-inter text-[10px] font-semibold uppercase tracking-[0.2em] text-violet transition-colors hover:bg-violet hover:text-white"
+              >
+                Enter To Collaborate
+              </a>
             </m.div>
           ))}
         </div>

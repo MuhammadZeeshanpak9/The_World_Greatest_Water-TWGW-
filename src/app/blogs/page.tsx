@@ -11,7 +11,7 @@ const WHITE = "#ffffff";
 export const revalidate = 300;
 
 export const metadata = {
-  title: "Blogs",
+  title: "12 Understandings",
   description: "How to ELEV8 — 12 understandings for elevating every part of your life.",
 };
 
@@ -22,7 +22,7 @@ export default async function BlogsPage() {
     <main>
       <Navbar />
 
-      <PageHero variant="dark" title="BLOGS" subtitle="How to ELEV8 Your Life" />
+      <PageHero variant="dark" title="12 UNDERSTANDINGS" subtitle="How to ELEV8 Your Life" />
       <WaveTransition fromColor={DARK} toColor={WHITE} variant={2} animated />
 
       <BlogGrid posts={posts} />

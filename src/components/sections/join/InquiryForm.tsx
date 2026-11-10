@@ -8,6 +8,7 @@ import { useFormSubmit, isValidEmail, submitFormSubmission } from "@/lib/forms";
 import { trackLead } from "@/lib/analytics";
 
 type Values = {
+  partnershipType: string;
   market: string;
   business: string;
   contact: string;
@@ -18,6 +19,7 @@ type Values = {
 type Errors = Partial<Record<keyof Values, string>>;
 
 const INITIAL: Values = {
+  partnershipType: "",
   market: "",
   business: "",
   contact: "",
@@ -25,6 +27,12 @@ const INITIAL: Values = {
   phone: "",
   message: "",
 };
+
+const PARTNERSHIP_TYPE_OPTIONS = [
+  { label: "Wholesaler", value: "Wholesaler" },
+  { label: "Retailer", value: "Retailer" },
+  { label: "Franchise", value: "Franchise" },
+];
 
 export default function InquiryForm({ presetMarket }: { presetMarket?: string }) {
   const [values, setValues] = useState<Values>(INITIAL);
@@ -47,6 +55,7 @@ export default function InquiryForm({ presetMarket }: { presetMarket?: string })
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const nextErrors: Errors = {};
+    if (!values.partnershipType) nextErrors.partnershipType = "Select a partnership type.";
     if (!values.business.trim()) nextErrors.business = "Business name is required.";
     if (!values.contact.trim()) nextErrors.contact = "Contact name is required.";
     if (!isValidEmail(values.email)) nextErrors.email = "Enter a valid email address.";
@@ -73,6 +82,17 @@ export default function InquiryForm({ presetMarket }: { presetMarket?: string })
           </p>
         ) : (
           <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+            <FormField
+              label="Partnership Type"
+              name="partnershipType"
+              type="select"
+              options={PARTNERSHIP_TYPE_OPTIONS}
+              value={values.partnershipType}
+              onChange={update("partnershipType")}
+              placeholder="Select a partnership type"
+              required
+              error={errors.partnershipType}
+            />
             <FormField
               label="Market / Region"
               name="market"

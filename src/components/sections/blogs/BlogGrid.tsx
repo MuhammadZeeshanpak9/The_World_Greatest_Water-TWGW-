@@ -67,7 +67,7 @@ export default function BlogGrid({ posts }: { posts: DbBlogPost[] }) {
                 href={`/blogs/${post.slug}`}
                 className="group mt-4 inline-flex items-center gap-1 font-inter text-[12px] font-semibold uppercase tracking-[0.15em] text-violet"
               >
-                Read More
+                Know More
                 <ArrowRight size={13} className="transition-transform group-hover:translate-x-1" />
               </Link>
             </m.div>

@@ -68,7 +68,12 @@ export default function ShopSection({ products }: { products: DbProduct[] }) {
                   )}
                   {product.status === "sold-out" && (
                     <span className="absolute left-4 top-4 rounded-full border border-violet px-3 py-1 font-inter text-[10px] font-semibold uppercase tracking-[0.15em] text-violet">
-                      Sold Out
+                      Sold Out!
+                    </span>
+                  )}
+                  {product.status === "coming-soon" && (
+                    <span className="absolute left-4 top-4 rounded-full border border-violet px-3 py-1 font-inter text-[10px] font-semibold uppercase tracking-[0.15em] text-violet">
+                      Pre-Order
                     </span>
                   )}
                 </Link>
@@ -79,7 +84,7 @@ export default function ShopSection({ products }: { products: DbProduct[] }) {
                   </h3>
                 </Link>
                 <p className="mt-2 font-inter text-[22px] font-bold text-violet">
-                  {formatPrice(product.price)}
+                  {formatPrice(product.price, product.status)}
                 </p>
 
                 {product.status === "available" ? (
@@ -94,18 +99,9 @@ export default function ShopSection({ products }: { products: DbProduct[] }) {
                     />
                   </button>
                 ) : product.status === "sold-out" ? (
-                  <NotifyMeForm label={cta.label} source="homepage-shop" className="mt-5" />
+                  <NotifyMeForm label={cta.label} source="homepage-shop-sold-out" className="mt-5" />
                 ) : (
-                  <Link
-                    href={`/shop/${product.slug}`}
-                    className="group/btn mt-5 inline-flex items-center justify-center gap-2 rounded-full bg-gradient-brand px-6 py-3 font-inter text-[11px] font-semibold uppercase tracking-[0.15em] text-white btn-glow"
-                  >
-                    {cta.label}
-                    <ArrowRight
-                      size={14}
-                      className="transition-transform group-hover/btn:translate-x-1"
-                    />
-                  </Link>
+                  <NotifyMeForm label={cta.label} source="homepage-shop-pre-order" className="mt-5" />
                 )}
               </m.div>
             );

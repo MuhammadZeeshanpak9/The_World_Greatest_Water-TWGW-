@@ -61,7 +61,7 @@ export default function ProductCard({ product, index }: { product: DbProduct; in
       {product.subtitle && <p className="font-inter text-[13px] text-body">{product.subtitle}</p>}
       <div className="mt-2 flex items-baseline gap-2">
         <p className="font-inter text-[20px] font-bold text-violet">
-          {formatPrice(product.price)}
+          {formatPrice(product.price, product.status)}
         </p>
         {product.per_unit && (
           <span className="font-inter text-[12px] text-muted">({product.per_unit})</span>
@@ -79,12 +79,7 @@ export default function ProductCard({ product, index }: { product: DbProduct; in
       ) : product.status === "sold-out" ? (
         <NotifyMeForm label={cta.label} source="shop-sold-out" className="mt-5" />
       ) : (
-        <button
-          disabled
-          className="mt-5 inline-flex items-center justify-center gap-2 rounded-full border border-muted/40 px-6 py-3 font-inter text-[11px] font-semibold uppercase tracking-[0.15em] text-muted disabled:cursor-not-allowed"
-        >
-          {cta.label}
-        </button>
+        <NotifyMeForm label={cta.label} source="shop-pre-order" className="mt-5" />
       )}
     </m.div>
   );

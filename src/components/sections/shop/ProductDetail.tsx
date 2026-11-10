@@ -68,7 +68,7 @@ export default function ProductDetail({ product }: { product: DbProduct }) {
 
             <div className="mt-5 flex items-baseline gap-3">
               <p className="font-inter text-[28px] font-bold text-violet">
-                {formatPrice(product.price)}
+                {formatPrice(product.price, product.status)}
               </p>
               {product.per_unit && (
                 <span className="font-inter text-[13px] text-muted">({product.per_unit})</span>
@@ -105,12 +105,7 @@ export default function ProductDetail({ product }: { product: DbProduct }) {
             ) : product.status === "sold-out" ? (
               <NotifyMeForm label={cta.label} source="product-detail-sold-out" className="mt-8" />
             ) : (
-              <button
-                disabled
-                className="mt-8 flex h-[52px] items-center justify-center gap-2 rounded-full bg-muted/40 px-8 font-inter text-[12px] font-semibold uppercase tracking-[0.15em] text-white disabled:cursor-not-allowed"
-              >
-                {cta.label}
-              </button>
+              <NotifyMeForm label={cta.label} source="product-detail-pre-order" className="mt-8" />
             )}
           </div>
         </div>

@@ -7,7 +7,7 @@ export function getProductCta(status: ProductStatus): { label: string; disabled:
     case "available":
       return { label: "Add To Cart", disabled: false };
     case "coming-soon":
-      return { label: "On The Way", disabled: true };
+      return { label: "Pre-Order", disabled: false };
   }
 }
 
@@ -15,7 +15,7 @@ export default function ProductStatusBadge({ status }: { status: ProductStatus }
   if (status === "sold-out") {
     return (
       <span className="rounded-full border border-muted/40 px-3 py-1 font-inter text-[10px] font-semibold uppercase tracking-[0.15em] text-muted">
-        Sold Out
+        Sold Out!
       </span>
     );
   }
@@ -28,7 +28,7 @@ export default function ProductStatusBadge({ status }: { status: ProductStatus }
   }
   return (
     <span className="rounded-full border border-violet px-3 py-1 font-inter text-[10px] font-semibold uppercase tracking-[0.15em] text-violet">
-      On The Way
+      Pre-Order
     </span>
   );
 }

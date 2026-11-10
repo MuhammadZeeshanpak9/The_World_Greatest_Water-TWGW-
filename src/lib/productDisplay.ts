@@ -5,10 +5,17 @@
 // module graph, which breaks when a "use client" component (ShopSection,
 // ProductCard, ProductDetail) tries to import it too.
 
-export function formatPrice(price: number) {
-  // price <= 0 means pricing isn't set yet (e.g. a newly-announced
-  // coming-soon category) — show "TBA" instead of a misleading $0.00.
-  if (price <= 0) return "TBA";
+import type { ProductStatus } from "@/types";
+
+export function formatPrice(price: number, status?: ProductStatus) {
+  // price <= 0 means pricing isn't set yet. What that means to the
+  // shopper depends on why: a sold-out item reads as "SOLD OUT!", while
+  // a not-yet-released one invites an exclusive pre-order instead of a
+  // misleading $0.00.
+  if (price <= 0) {
+    if (status === "sold-out") return "SOLD OUT!";
+    return "ORDER EXCLUSIVELY";
+  }
   return `$${price.toFixed(2)}`;
 }
 
@@ -165,6 +172,26 @@ const PRODUCT_IMAGE_FOLDERS: Record<string, { folder: string; files: string[] }>
     ],
   },
   "pet-water-bottles": {
+    folder: "per-water-bottle",
+    files: [
+      "all-product.png",
+      "believe-product.png",
+      "consciousness-product.png",
+      "desire-product.png",
+      "energy-product.png",
+      "frequency-product.png",
+      "gratitude-product.png",
+      "love-product.png",
+      "mindset-product.png",
+      "thoughts-product.png",
+      "vibration-product.png",
+      "you-product.png",
+    ],
+  },
+  // Plain case-of-12 water bottle (no Understanding variant) — reuses the
+  // same real bottle photos as pet-water-bottles, since it's physically
+  // the same 16.9 FL OZ (500 mL) bottle, per client direction.
+  "elev8-water-16-9-fl-oz": {
     folder: "per-water-bottle",
     files: [
       "all-product.png",
