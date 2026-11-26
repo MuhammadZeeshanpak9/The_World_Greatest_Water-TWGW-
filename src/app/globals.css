@@ -192,6 +192,17 @@
    GRADIENT UTILITIES (spec gradient system)
    ============================================================ */
 @layer utilities {
+  /* Hides the scrollbar on a horizontally-swipeable row while keeping it
+   * scrollable by touch/drag/trackpad — used for things like category
+   * filter pills meant to feel like a single slidable row, not a list. */
+  .no-scrollbar {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE/Edge legacy */
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none; /* Chrome/Safari/Edge */
+  }
+
   .bg-gradient-hero {
     background: linear-gradient(135deg, #0a0410 0%, #120826 50%, #060608 100%);
   }

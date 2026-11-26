@@ -20,30 +20,32 @@ export default function ShopCatalog({ products }: { products: DbProduct[] }) {
   return (
     <section className="bg-white py-24 md:py-32">
       <div className="mx-auto max-w-7xl px-6">
-        <div className="sticky top-[100px] z-40 -mx-6 flex flex-wrap gap-2 border-b border-violet/10 bg-white/90 px-6 py-4 backdrop-blur-md">
-          <button
-            onClick={() => setSelected("ALL")}
-            className={`rounded-full border px-4 py-2 font-inter text-[11px] font-semibold uppercase tracking-[0.15em] transition-colors ${
-              selected === "ALL"
-                ? "border-violet bg-violet text-white"
-                : "border-violet/20 text-body hover:border-violet hover:text-violet"
-            }`}
-          >
-            All
-          </button>
-          {categories.map((cat) => (
+        <div className="sticky top-[100px] z-40 -mx-6 border-b border-violet/10 bg-white/90 px-6 py-4 backdrop-blur-md">
+          <div className="no-scrollbar flex gap-2 overflow-x-auto">
             <button
-              key={cat}
-              onClick={() => setSelected(cat)}
-              className={`rounded-full border px-4 py-2 font-inter text-[11px] font-semibold uppercase tracking-[0.15em] transition-colors ${
-                selected === cat
+              onClick={() => setSelected("ALL")}
+              className={`shrink-0 rounded-full border px-4 py-2 font-inter text-[11px] font-semibold uppercase tracking-[0.15em] transition-colors ${
+                selected === "ALL"
                   ? "border-violet bg-violet text-white"
                   : "border-violet/20 text-body hover:border-violet hover:text-violet"
               }`}
             >
-              {cat}
+              All
             </button>
-          ))}
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setSelected(cat)}
+                className={`shrink-0 rounded-full border px-4 py-2 font-inter text-[11px] font-semibold uppercase tracking-[0.15em] transition-colors ${
+                  selected === cat
+                    ? "border-violet bg-violet text-white"
+                    : "border-violet/20 text-body hover:border-violet hover:text-violet"
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
         </div>
 
         <div className="mt-6 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-violet/10 bg-violet/5 px-6 py-4">
