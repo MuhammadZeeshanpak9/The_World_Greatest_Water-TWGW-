@@ -2,6 +2,7 @@
 
 import { useState, type ReactNode } from "react";
 import { m } from "framer-motion";
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Sparkles } from "lucide-react";
 import FormField from "@/components/ui/FormField";
@@ -11,6 +12,7 @@ import { useFormSubmit, submitFormSubmission } from "@/lib/forms";
 import { trackLead } from "@/lib/analytics";
 import GoWithinArt from "@/components/sections/wellness/GoWithinArt";
 import MindCardArt from "@/components/sections/wellness/MindCardArt";
+import UnlockTheLockArt from "@/components/sections/wellness/UnlockTheLockArt";
 import SectionParticles from "@/components/sections/SectionParticles";
 import type { WellnessOffering } from "@/types";
 
@@ -30,7 +32,7 @@ function ImageBubble({
   alt: string;
   reduced: boolean;
   delay?: number;
-  heroArt?: "go-within" | "mind-card";
+  heroArt?: "go-within" | "mind-card" | "unlock-the-lock";
   plain?: boolean;
   /** CSS aspect-ratio value ("1/1", "3/4", "6/5"...) matched to the real
    * photo's own proportions so object-cover doesn't crop it oddly. */
@@ -58,6 +60,8 @@ function ImageBubble({
           <GoWithinArt />
         ) : heroArt === "mind-card" ? (
           <MindCardArt />
+        ) : heroArt === "unlock-the-lock" ? (
+          <UnlockTheLockArt />
         ) : (
           <ImageWithFallback src={src} alt={alt} watermark={alt} rounded="" />
         )}
@@ -105,6 +109,7 @@ export default function OfferingBlock({
   session,
   bookingTiers,
   bookingLabel,
+  bookingBackgroundVideo,
   pricingLabel,
   price1yr,
   price2yr,
@@ -114,6 +119,8 @@ export default function OfferingBlock({
   collaboratorPitch,
   collaboratorItems,
   accentColor,
+  backgroundImage,
+  backgroundImageMobile,
 }: WellnessOffering & { accentColor?: string }) {
   const [values, setValues] = useState<Values>(EMPTY_VALUES);
   const { status, errorMessage, submit } = useFormSubmit();
@@ -243,7 +250,22 @@ export default function OfferingBlock({
       </form>
     </div>
   ) : bookingTiers && bookingTiers.length > 0 ? (
-    <div className="glass-card-gold relative overflow-hidden rounded-[28px] p-10 text-left">
+    <div className="glass-card-gold relative mx-auto max-w-5xl overflow-hidden rounded-[28px] p-6 text-left sm:p-10 md:p-16">
+      {bookingBackgroundVideo && (
+        <>
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="absolute inset-0 -z-10 h-full w-full object-cover opacity-70"
+            src={bookingBackgroundVideo}
+            aria-hidden
+          />
+          <div className="absolute inset-0 -z-10 bg-dark-base/40" aria-hidden />
+        </>
+      )}
+
       <span className="absolute left-5 top-5 h-4 w-4 border-l border-t border-gold/50" aria-hidden />
       <span className="absolute right-5 top-5 h-4 w-4 border-r border-t border-gold/50" aria-hidden />
       <span className="absolute bottom-5 left-5 h-4 w-4 border-b border-l border-gold/50" aria-hidden />
@@ -252,24 +274,24 @@ export default function OfferingBlock({
       <p className="text-center font-inter text-[10px] font-semibold uppercase tracking-[0.5em] text-gold">
         {bookingLabel ?? "Booking"}
       </p>
-      <ul className="mt-6 flex flex-col gap-3">
+      <ul className="mx-auto mt-6 flex max-w-xl flex-col gap-3">
         {bookingTiers.map((tier) => (
           <li
             key={tier.label}
-            className="flex flex-wrap items-center justify-between gap-3 border-b border-gold/20 pb-3"
+            className="flex flex-col items-start gap-3 border-b border-gold/20 pb-3 sm:flex-row sm:items-center sm:justify-between sm:gap-4"
           >
-            <span className="font-inter text-[14px] text-white/70">
-              {tier.label} :{" "}
+            <span className="font-inter text-[14px] text-white/70">{tier.label}</span>
+            <span className="flex w-full items-center justify-between gap-3 sm:w-auto sm:shrink-0">
               <span className="text-gradient-gold font-cormorant text-[20px] font-light">
                 {tier.price}
               </span>
+              <Link
+                href="/contact"
+                className="rounded-full border border-gold/50 bg-gold/5 px-5 py-2 font-inter text-[10px] font-bold uppercase tracking-[0.2em] text-gold backdrop-blur-sm transition-colors hover:border-gold hover:bg-gold hover:text-dark-base"
+              >
+                Reserve
+              </Link>
             </span>
-            <Link
-              href="/contact"
-              className="btn-gold-sheen shrink-0 rounded-full px-5 py-2 font-inter text-[10px] font-bold uppercase tracking-[0.2em]"
-            >
-              Reserve
-            </Link>
           </li>
         ))}
       </ul>
@@ -319,6 +341,38 @@ export default function OfferingBlock({
 
   return (
     <section className="relative overflow-hidden bg-dark-base py-24 md:py-36" style={accentStyle}>
+      {backgroundImage && (
+        <div className="absolute inset-x-0 top-0 h-[560px] w-full sm:h-[480px] md:aspect-[1855/848] md:h-auto">
+          <Image
+            src={backgroundImageMobile ?? backgroundImage}
+            alt=""
+            fill
+            sizes="100vw"
+            className="object-cover object-right md:hidden"
+            aria-hidden
+          />
+          <Image
+            src={backgroundImage}
+            alt=""
+            fill
+            sizes="100vw"
+            className="hidden object-cover object-right md:block"
+            aria-hidden
+          />
+          <div
+            className="absolute inset-0 bg-gradient-to-r from-dark-base via-dark-base/40 to-transparent"
+            aria-hidden
+          />
+          <div
+            className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-dark-base to-transparent md:h-32"
+            aria-hidden
+          />
+          <div
+            className="absolute inset-x-0 bottom-0 h-3/4 bg-gradient-to-b from-transparent to-dark-base md:h-1/2"
+            aria-hidden
+          />
+        </div>
+      )}
       {/* Ambient luxury background: drifting light + gold particles + grain */}
       <m.div
         className="pointer-events-none absolute -top-20 left-1/4 h-[520px] w-[520px] rounded-full bg-gold/10 blur-[150px]"
@@ -342,7 +396,9 @@ export default function OfferingBlock({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.7, ease: "easeOut" }}
-          className="grid gap-10 md:grid-cols-2 md:items-center md:gap-16"
+          className={`grid gap-10 md:grid-cols-2 md:items-center md:gap-16 ${
+            backgroundImage ? "pt-28 md:pt-36" : ""
+          }`}
         >
           <div className="flex flex-col gap-6 text-left">
             <span className="flex items-center gap-3">
@@ -422,7 +478,9 @@ export default function OfferingBlock({
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-60px" }}
             transition={{ duration: 0.6, ease: "easeOut", delay: 0.1 }}
-            className="mx-auto mt-20 max-w-md text-center md:mt-24"
+            className={`mx-auto mt-20 text-center md:mt-24 ${
+              bookingTiers && bookingTiers.length > 0 ? "max-w-5xl" : "max-w-xl"
+            }`}
           >
             <span className="mx-auto flex w-24 items-center justify-center gap-2" aria-hidden>
               <span className="h-px flex-1 bg-gradient-to-r from-transparent to-gold" />

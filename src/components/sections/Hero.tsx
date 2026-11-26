@@ -45,7 +45,7 @@ export default function Hero() {
       </m.span>
 
       {/* Content overlay */}
-      <div className="relative z-10 mx-auto grid w-full max-w-7xl grid-cols-1 items-center gap-12 px-6 lg:grid-cols-2">
+      <div className="relative z-10 mx-auto grid w-full max-w-[96rem] grid-cols-1 items-center gap-12 px-6 lg:grid-cols-2 lg:gap-24 lg:px-12 xl:px-20">
         {/* LEFT — headline */}
         <div className="text-center lg:text-left">
           <m.h1
@@ -62,7 +62,7 @@ export default function Hero() {
             transition={{ delay: 0.5 }}
             className="font-cormorant font-bold leading-[0.95] text-white [text-shadow:0_4px_24px_rgba(0,0,0,0.45)] text-[38px] md:text-[60px] lg:text-[72px]"
           >
-            GREATEST WATER™.
+            GREATEST WATER<span className="align-super text-[0.35em]">™</span>.
           </m.h1>
 
           <m.p

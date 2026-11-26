@@ -280,7 +280,7 @@ export const NAV_LINKS: NavLink[] = [
       { label: "Lux Fashion", href: "https://www.ielev8my.com", external: true },
     ],
   },
-  { label: "Trending", href: "https://www.youtube.com", external: true },
+  { label: "Trending", href: "https://youtube.com/@theworldsgreatestwater111?si=qEVj68Vkzh5Pmufs", external: true },
   {
     label: "12 Understandings",
     href: "/blogs",
@@ -576,12 +576,14 @@ export const WELLNESS_SUBPAGES: WellnessSubPage[] = [
     offerings: [
       {
         heading: "Unlock The Lock.",
-        heroArt: "go-within",
+        heroArt: "unlock-the-lock",
         bodyParagraphs: [
           "This session is a custom mental and emotional analysis integrated with spiritual understanding of SELF that has been proven to be 100% accurate and precise as the UNIVERSAL SECRET.",
           "All 1 on 1 Consultation Experience Includes A Luxury Private Jet To A Highly Confidential Location.",
         ],
         bookingLabel: "Body. Mind. Soul.",
+        bookingBackgroundVideo:
+          "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260514_135830_bb6491d1-9b66-4aec-9722-13b4dfe3fb46.mp4",
         bookingTiers: [
           { label: "1 hour consultation online", price: "$1,000,000" },
           { label: "30 minutes one-on-one consultation", price: "$2,000,000" },
@@ -591,6 +593,8 @@ export const WELLNESS_SUBPAGES: WellnessSubPage[] = [
           { label: "30 minutes public speaking", price: "$10,000,000" },
           { label: "1 hour public speaking", price: "$25,000,000" },
         ],
+        backgroundImage: "/images/ELEV8 Experience Resort at Sunset.png",
+        backgroundImageMobile: "/images/Golden Hour ELEV8 Resort Lounge mobile view.png",
       },
     ],
   },
@@ -608,7 +612,7 @@ export const BOTTLES: Bottle[] = [
     placeholder: false,
     image: "/images/bottles2/ALL.png",
     blurb: "Everyone without Exception. The GRAND DESIGN. I will ELEV8 my awareness to see ALL as ONE. In times like this, self development and mental awareness will enhance the quality of life for ALL and promote the spread of love and happiness with all consciousness, bringing joy to homes and families worldwide.",
-    shortBlurb: "Everyone without Exception. The GRAND DESIGN.",
+    shortBlurb: "Everyone without exception. The grand design.",
   },
   {
     name: "YOU",
@@ -617,7 +621,7 @@ export const BOTTLES: Bottle[] = [
     placeholder: false,
     image: "/images/bottles2/YOU.png",
     blurb: "I AM the experiencer of this experience called life in my beautiful mind. I AM YOU | THE GRAND DESIGNER of the grand design LIFE.",
-    shortBlurb: "I will ELEV8 myself by only speaking and thinking of the experience I want to have.",
+    shortBlurb: "The experiencer of the experience called life. THE GRAND DESIGNER.",
   },
   {
     name: "LOVE",
@@ -626,7 +630,7 @@ export const BOTTLES: Bottle[] = [
     placeholder: false,
     image: "/images/bottles2/LOVE.png",
     blurb: "I will ELEV8 LOVE by understanding that love begins within MYSELF. When I love myself unconditionally I naturally radiate love to everything and everyone around me. LOVE is the highest frequency. 528Hz is the frequency of LOVE and it is infused in every drop of MY personal water.",
-    shortBlurb: "I will ELEV8 LOVE by understanding that love begins within MYSELF.",
+    shortBlurb: "Love begins within myself, then radiates to everything around me.",
   },
   {
     name: "DESIRE",
@@ -635,7 +639,7 @@ export const BOTTLES: Bottle[] = [
     placeholder: false,
     image: "/images/bottles2/DESIRE.png",
     blurb: "I will ELEV8 my DESIRE by understanding it as my Illusional Emotional Intelligence — the wisdom to feel a desire fully while questioning the illusion my mind builds around it. I will honor what is real in every desire and release what is not, taking inspired action only on what serves my highest self.",
-    shortBlurb: "Desire is the beginning of all creation.",
+    shortBlurb: "The feeling that creates the will to move towards an experience in life.",
   },
   {
     name: "ENERGY",
@@ -644,7 +648,7 @@ export const BOTTLES: Bottle[] = [
     placeholder: false,
     image: "/images/bottles2/ENERGY.png",
     blurb: "I will ELEV8 my ENERGY by understanding that everything is energy including MYSELF. I will protect and direct my energy intentionally. I will choose thoughts, environments and people that raise my vibration and give energy to my highest self.",
-    shortBlurb: "Energy flows where attention goes.",
+    shortBlurb: "Everything is energy, including myself. I direct it intentionally.",
   },
   {
     name: "BELIEVE",
@@ -653,7 +657,7 @@ export const BOTTLES: Bottle[] = [
     placeholder: false,
     image: "/images/bottles2/BELIEVE.png",
     blurb: "I will ELEV8 my BELIEVE by understanding that my beliefs create my reality. I will choose to believe in my unlimited potential. I will replace every limiting belief with a belief that serves my greatest self. I BELIEVE in MYSELF without a doubt.",
-    shortBlurb: "Belief is the foundation of all achievement.",
+    shortBlurb: "My beliefs create my reality. I believe in myself without a doubt.",
   },
   {
     name: "VIBRATION",
@@ -662,7 +666,7 @@ export const BOTTLES: Bottle[] = [
     placeholder: false,
     image: "/images/bottles2/VIBRATION.png",
     blurb: "To ELEV8 my VIBRATION I will have to be aware of what emotions I allow to run in my body. I will focus on gratitude and appreciation to creation for allowing me to experience this beautiful grand design called life. I will commit to giving myself the mindset to always put out good vibes ONLY to myself and the world around me.",
-    shortBlurb: "Raise your vibration. Raise your reality.",
+    shortBlurb: "Emotional connection to reality — always putting out good vibes.",
   },
   {
     name: "MINDSET",
@@ -671,7 +675,7 @@ export const BOTTLES: Bottle[] = [
     placeholder: false,
     image: "/images/bottles2/MINDSET.png",
     blurb: "I will ELEV8 my MINDSET by understanding that my mind is the most powerful tool I possess. I will feed my mind with positive empowering thoughts and information. What I consistently think about I bring about. My MINDSET creates my reality.",
-    shortBlurb: "Your mindset creates your world.",
+    shortBlurb: "My perspective of myself and the world around me creates my reality.",
   },
   {
     name: "GRATITUDE",
@@ -680,7 +684,7 @@ export const BOTTLES: Bottle[] = [
     placeholder: false,
     image: "/images/bottles2/GRATITUDE.png",
     blurb: "I will ELEV8 my GRATITUDE by developing the practice of being thankful for everything in my life. Gratitude is the gateway to abundance. When I am grateful for what I have I attract more to be grateful for. I am grateful for this water, for this moment, for this life.",
-    shortBlurb: "Gratitude transforms what you have into enough.",
+    shortBlurb: "The feeling of connection to an undefined source of love.",
   },
   {
     name: "FREQUENCY",
@@ -689,7 +693,7 @@ export const BOTTLES: Bottle[] = [
     placeholder: false,
     image: "/images/bottles2/FREQUENCY.png",
     blurb: "I will ELEV8 my FREQUENCY by understanding that I am a vibrational being. The 528Hz frequency infused in every bottle of MY personal water ELEV8 WATER is the frequency of transformation and love. I will tune myself to the highest frequency possible and watch my life transform.",
-    shortBlurb: "528Hz — the frequency of love and healing.",
+    shortBlurb: "The understanding of awareness to life.",
   },
   {
     name: "THOUGHTS",
@@ -698,7 +702,7 @@ export const BOTTLES: Bottle[] = [
     placeholder: false,
     image: "/images/bottles2/THOUGHTS.png",
     blurb: "I will ELEV8 my THOUGHTS by understanding that my thoughts are the seeds of my reality. Every thought I think is either moving me closer to or further from the life I desire. I will be the guardian of my mind and only allow thoughts that serve my highest good.",
-    shortBlurb: "My thoughts are the seeds of my reality.",
+    shortBlurb: "My thoughts are the seeds of my reality — series of imagination.",
   },
   {
     name: "CONSCIOUSNESS",
@@ -707,7 +711,7 @@ export const BOTTLES: Bottle[] = [
     placeholder: false,
     image: "/images/bottles2/CONCIOUNESS.png",
     blurb: "I will ELEV8 my CONSCIOUSNESS by expanding my awareness beyond my physical reality. I am more than my body, more than my thoughts, more than my circumstances. I AM CONSCIOUSNESS experiencing itself. I will wake up to the infinite power within me.",
-    shortBlurb: "Expand your awareness. Expand your life.",
+    shortBlurb: "Awareness of my existence in connection to all and everything.",
   },
 ];
 
@@ -878,7 +882,7 @@ export const TESTIMONIALS: Testimonial[] = [
 export const TRENDING_CIRCLES: TrendingCircle[] = [
   { platform: "Instagram", label: "Instagram", href: "https://www.instagram.com/theworldsgreatestwater" },
   { platform: "Tiktok", label: "TikTok", href: "https://www.tiktok.com/@theworldsgreatestwater" },
-  { platform: "Youtube", label: "YouTube", href: "https://youtube.com/@theworldsgreatestwater111" },
+  { platform: "Youtube", label: "YouTube", href: "https://youtube.com/@theworldsgreatestwater111?si=qEVj68Vkzh5Pmufs" },
 ];
 
 export const VIDEO_CARDS: VideoCard[] = [
@@ -895,7 +899,7 @@ export const FOOTER_COLUMNS: FooterColumn[] = [
     links: [
       { label: "Know More", href: "/faq" },
       { label: "Our Story", href: "/our-story" },
-      { label: "Trending", href: "https://www.youtube.com", external: true },
+      { label: "Trending", href: "https://youtube.com/@theworldsgreatestwater111?si=qEVj68Vkzh5Pmufs", external: true },
       { label: "Creators", href: "/creators" },
     ],
   },
@@ -921,7 +925,7 @@ export const FOOTER_COLUMNS: FooterColumn[] = [
 export const SOCIALS: Social[] = [
   { name: "Twitter", href: "#", glow: "rgba(29,161,242,0.6)" },
   { name: "Facebook", href: "https://www.facebook.com/share/19cQS6LkgR/", glow: "rgba(59,89,152,0.6)" },
-  { name: "Youtube", href: "https://youtube.com/@theworldsgreatestwater111", glow: "rgba(255,0,0,0.6)" },
+  { name: "Youtube", href: "https://youtube.com/@theworldsgreatestwater111?si=qEVj68Vkzh5Pmufs", glow: "rgba(255,0,0,0.6)" },
   { name: "Instagram", href: "https://www.instagram.com/theworldsgreatestwater", glow: "rgba(107,47,160,0.6)" },
   { name: "Pinterest", href: "#", glow: "rgba(230,0,35,0.6)" },
   { name: "Tiktok", href: "https://www.tiktok.com/@theworldsgreatestwater", glow: "rgba(255,255,255,0.6)" },

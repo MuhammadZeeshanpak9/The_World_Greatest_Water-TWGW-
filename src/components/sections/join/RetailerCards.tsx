@@ -24,7 +24,7 @@ const CATEGORIES = [
   {
     icon: Globe2,
     name: "International Partners",
-    text: "Bringing ELEV8 WATER to retailers beyond the U.S.",
+    text: "Bringing ELEV8 WATER to retailers beyond the U.S.A.",
   },
 ];
 
@@ -59,8 +59,8 @@ export default function RetailerCards() {
           ))}
         </div>
         <p className="mt-10 text-center font-inter text-[14px] text-body">
-          Own a store or represent a retailer? Tell us below — we&apos;d love to
-          partner with you.
+          Own a wholesale or retail store? Collaborate with THE WORLD&apos;S GREATEST WATER.  ELEV8
+          WATER to elevate the universe within &amp; OUTSIDE.
         </p>
       </div>
     </section>

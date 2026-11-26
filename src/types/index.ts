@@ -60,13 +60,16 @@ export type WellnessOffering = {
   secondaryImageAspect?: string;
   hasSecondaryImage?: boolean;
   hasPrimaryImage?: boolean;
-  heroArt?: "go-within" | "mind-card";
+  heroArt?: "go-within" | "mind-card" | "unlock-the-lock";
   imagePlain?: boolean;
   tagline?: string;
   bodyParagraphs?: string[];
   session?: WellnessSession;
   bookingTiers?: BookingTier[];
   bookingLabel?: string;
+  /** Looping video behind the booking-tiers card only, scoped to that card's
+   * rounded bounds (not the hero or the whole section). */
+  bookingBackgroundVideo?: string;
   pricingLabel?: string;
   price1yr?: string;
   price2yr?: string;
@@ -75,6 +78,15 @@ export type WellnessOffering = {
   contactEmail?: string;
   collaboratorPitch?: string;
   collaboratorItems?: string[];
+  /** Full-bleed photographic backdrop behind the whole section (e.g. the
+   * luxury interior visual on Unlock The Lock), layered under the existing
+   * bg-dark-base fill so the section still reads as a single dark surface
+   * rather than a literal photo cutout. */
+  backgroundImage?: string;
+  /** Portrait-cropped variant of `backgroundImage` shown below the `md`
+   * breakpoint instead (CSS-switched, no hydration mismatch). Falls back to
+   * `backgroundImage` on mobile if not given. */
+  backgroundImageMobile?: string;
 };
 
 export type WellnessSubPage = {

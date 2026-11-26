@@ -8,8 +8,9 @@ import { WELLNESS_SUBPAGES } from "@/data/content";
 
 const data = WELLNESS_SUBPAGES.find((w) => w.slug === "unlock-the-lock")!;
 
-/** Violet, per the Chakra color alignment (V = Violet/UNLOCK THE LOCK). */
-const TIER_COLOR = "#9B7FC7";
+/** Royal gold — per the client's "soft, new money" luxury direction for
+ * this page, overriding the Chakra violet used elsewhere. */
+const TIER_COLOR = "#C9A646";
 
 export const metadata = {
   title: "Unlock The Lock",
@@ -22,7 +23,12 @@ export default function WellnessUnlockTheLockPage() {
       <WellnessViewTracker wellnessType="unlock-the-lock" />
       <Navbar />
 
-      <PageHero variant="dark" title={data.title} subtitle={data.subtitle} />
+      <PageHero
+        variant="dark"
+        title={data.title}
+        subtitle={data.subtitle}
+        backgroundVideo="/videos/unlock-the-lock-hero.mp4"
+      />
 
       {data.offerings?.map((offering) => (
         <OfferingBlock key={offering.heading} {...offering} />
